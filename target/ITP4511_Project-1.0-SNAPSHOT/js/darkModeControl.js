@@ -27,7 +27,6 @@ function loadDarkModePreference(){
 loadDarkModePreference();
 $(document).ready(function(){
     loadDarkModePreference();
-    alert("loaded");
     $('#darkModeToogle').click(function() {
         setDarkModePreference();
     });
