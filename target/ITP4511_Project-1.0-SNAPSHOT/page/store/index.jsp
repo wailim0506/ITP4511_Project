@@ -1,10 +1,11 @@
 <%-- 
     Document   : index
-    Created on : 2025年3月13日, 上午1:21:25
-    Author     : Wai Lim Fung
+    Created on : 2025年3月27日, 下午7:21:34
+    Author     : wailim0506
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="../../components/store/navBar.jsp" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -17,10 +18,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="./js/darkModeControl.js"></script>
+        <script src="../../js/darkModeControl.js"></script>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>This is store home page.</h1>
+        <%@include file="../../components/store/footer.jsp" %>
         <i id="darkModeToogle" class="material-icons"
         style="position:fixed; bottom: 10px; right: 10px; cursor: pointer;">wb_sunny</i>
     </body>
