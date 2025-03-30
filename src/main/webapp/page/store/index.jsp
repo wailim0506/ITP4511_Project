@@ -28,7 +28,7 @@
             <div class="hero-section text-center shadow-sm">
                 <h1 class="display-5 fw-bold text-primary">Acer International Bakery</h1>
                 <p class="lead mb-4">Shop Management Dashboard</p>
-                <p class="text-muted mb-0">Manage your fruit inventory, reservations, and borrowing requests</p>
+                <p class="text-muted mb-0">Manage fruit inventory, reservations, and borrowing requests</p>
             </div>
             
             <!-- Dashboard Cards -->
@@ -51,7 +51,7 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">bookmark</i>
                             <h5 class="card-title">My Reservations</h5>
-                            <p class="card-text text-muted">View and manage your current fruit reservations</p>
+                            <p class="card-text text-muted">View and manage current fruit reservations</p>
                             <a href="#" class="btn btn-outline-primary mt-2">See Reservations</a>
                         </div>
                     </div>
@@ -62,8 +62,8 @@
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">swap_horiz</i>
-                            <h5 class="card-title">Borrowed Fruit</h5>
-                            <p class="card-text text-muted">Track fruits borrowed from other shops</p>
+                            <h5 class="card-title">Borrow Fruit</h5>
+                            <p class="card-text text-muted">Borrow fruits from other shops</p>
                             <a href="#" class="btn btn-outline-primary mt-2">View Borrowed</a>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">send</i>
                             <h5 class="card-title">Borrow Requests</h5>
-                            <p class="card-text text-muted">Request fruits from other shops in your city</p>
+                            <p class="card-text text-muted">Handle borrow requests from other shops</p>
                             <a href="#" class="btn btn-outline-primary mt-2">Manage Requests</a>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">inventory</i>
                             <h5 class="card-title">Stock Management</h5>
-                            <p class="card-text text-muted">Check and manage your shop's fruit inventory</p>
+                            <p class="card-text text-muted">Check and manage shop's fruit inventory</p>
                             <a href="#" class="btn btn-outline-primary mt-2">View Inventory</a>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">account_circle</i>
                             <h5 class="card-title">Profile</h5>
-                            <p class="card-text text-muted">View and update your shop profile information</p>
+                            <p class="card-text text-muted">View and update profile information</p>
                             <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">people</i>
                             <h5 class="card-title">User List</h5>
-                            <p class="card-text text-muted">Manage users associated with your shop</p>
+                            <p class="card-text text-muted">View users associated with the system</p>
                             <a href="#" class="btn btn-outline-primary mt-2">View Users</a>
                         </div>
                     </div>
