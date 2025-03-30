@@ -20,48 +20,7 @@
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="../../js/darkModeControl.js"></script>
-        <style>
-            .dashboard-card {
-                transition: transform 0.3s, box-shadow 0.3s;
-                cursor: pointer;
-                height: 100%;
-            }
-            .dashboard-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-            .card-icon {
-                font-size: 48px;
-            }
-            [data-bs-theme="light"] .hero-section {
-                background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            }
-            [data-bs-theme="dark"] .hero-section {
-                background: linear-gradient(135deg, #212529 0%, #343a40 100%);
-            }
-            .hero-section {
-                padding: 3rem 0;
-                margin-bottom: 2rem;
-                border-radius: 0.5rem;
-            }
-            
-            /* Dark mode specific styles */
-            [data-bs-theme="dark"] .dashboard-card {
-                border: 1px solid #495057 !important;
-            }
-            
-            [data-bs-theme="dark"] .card-icon {
-                color: #adb5bd;
-            }
-            
-            [data-bs-theme="light"] .dashboard-card {
-                box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            }
-            
-            [data-bs-theme="dark"] .dashboard-card {
-                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-            }
-        </style>
+        <link href="../../css/store/index.css" rel="stylesheet">
     </head>
     <body>
         <div class="container py-4">
