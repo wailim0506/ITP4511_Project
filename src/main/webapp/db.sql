@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 12:12 PM
+-- Generation Time: Mar 31, 2025 at 08:46 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -312,6 +312,28 @@ INSERT INTO `country_region` (`ID`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fruit`
+--
+
+CREATE TABLE `fruit` (
+  `ID` char(4) NOT NULL,
+  `Name` varchar(20) NOT NULL,
+  `CountryRegion` char(2) NOT NULL,
+  `ImgName` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `fruit`
+--
+
+INSERT INTO `fruit` (`ID`, `Name`, `CountryRegion`, `ImgName`) VALUES
+('F001', 'Apple', 'GB', 'F001_Apple.jpg'),
+('F002', 'Orange', 'CN', 'F002_Orange.jpg'),
+('F003', 'Banana', 'PH', 'F003_Banana.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shop`
 --
 
@@ -501,6 +523,13 @@ ALTER TABLE `country_region`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `fruit`
+--
+ALTER TABLE `fruit`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `CountryRegion_fk` (`CountryRegion`);
+
+--
 -- Indexes for table `shop`
 --
 ALTER TABLE `shop`
@@ -524,6 +553,13 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `fruit`
+--
+ALTER TABLE `fruit`
+  ADD CONSTRAINT `CountryRegion_fk` FOREIGN KEY (`CountryRegion`) REFERENCES `country_region` (`ID`),
+  ADD CONSTRAINT `Country_region_fk` FOREIGN KEY (`CountryRegion`) REFERENCES `country_region` (`ID`);
 
 --
 -- Constraints for table `shop`
