@@ -32,6 +32,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">inventory</i> Stock</a>
                 </li>
+                <%-- logout --%>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">logout</i> Logout</a>
+                </li>
             </ul>
             <div class="d-flex align-items-center">
                 <div class="dropdown">
