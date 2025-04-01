@@ -5,6 +5,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>ACER - Login</title>
+        <!-- favicon -->
+        <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
         <!-- bootstrap 5 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -16,6 +19,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <script src="./js/darkModeControl.js"></script>
         <link href="./css/index.css" rel="stylesheet">
+    
     </head>
     <body>
         <div class="login-container">
