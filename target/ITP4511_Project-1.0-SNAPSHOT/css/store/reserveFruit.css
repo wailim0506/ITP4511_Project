@@ -1,0 +1,154 @@
+/* Header styling */
+.header-section {
+  padding: 2rem 0;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+}
+
+[data-bs-theme="light"] .header-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+[data-bs-theme="dark"] .header-section {
+  background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+}
+
+/* Form styling */
+.form-control,
+.input-group-text {
+  border-radius: 8px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb), 0.25);
+  border-color: var(--bs-primary);
+}
+
+/* Style for native date picker in dark mode */
+[data-bs-theme="dark"] input[type="date"] {
+  color-scheme: dark;
+  background-color: rgba(33, 37, 41, 0.8);
+}
+
+/* Fruit Selection Container */
+.fruit-selection-container {
+  position: relative;
+  max-height: 420px;
+  overflow-y: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  background-color: rgba(var(--bs-body-bg-rgb), 0.6);
+}
+
+[data-bs-theme="dark"] .fruit-selection-container {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(33, 37, 41, 0.3);
+}
+
+/* Custom scrollbar styling */
+.fruit-selection-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.fruit-selection-container::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.fruit-selection-container::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--bs-primary-rgb), 0.4);
+  border-radius: 10px;
+}
+
+.fruit-selection-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--bs-primary-rgb), 0.6);
+}
+
+/* Fruit item styling */
+.fruit-item {
+  transition: all 0.2s ease;
+  border-radius: 10px;
+}
+
+.fruit-item:hover {
+  transform: translateX(3px);
+  border-left: 3px solid var(--bs-primary);
+}
+
+[data-bs-theme="dark"] .fruit-item:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.fruit-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 2px solid rgba(var(--bs-primary-rgb), 0.2);
+}
+
+/* Fruit search results info styling */
+.fruit-results-info {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+/* Fade effect at bottom of container to indicate scrollability */
+.fruit-selection-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to top, var(--bs-body-bg) 0%, transparent 100%);
+  pointer-events: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+[data-bs-theme="dark"] .fruit-selection-container::after {
+  background: linear-gradient(
+    to top,
+    rgba(33, 37, 41, 0.9) 0%,
+    transparent 100%
+  );
+}
+
+/* Card styling */
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+[data-bs-theme="light"] .card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 0.5px solid #dee2e6 !important;
+}
+
+[data-bs-theme="dark"] .card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background-color: rgba(var(--bs-dark-rgb), 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dark mode toggle button */
+#darkModeToogle {
+  transition: all 0.3s ease;
+}
+
+[data-bs-theme="light"] #darkModeToogle {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+[data-bs-theme="dark"] #darkModeToogle {
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+
+/* List group in dark mode */
+[data-bs-theme="dark"] .list-group-item {
+  background-color: transparent;
+  color: #f8f9fa;
+}
