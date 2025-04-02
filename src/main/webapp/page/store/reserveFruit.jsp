@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="../../components/store/navBar.jsp" %>
+<%@page import ="ict.bean.*, java.util.*" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -13,8 +14,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Reserve Fruit - ACER Shop</title>
         <!-- favicon -->
-        <link rel="icon" href="../../img/favicon.ico" type="image/x-icon">
-        <link rel="shortcut icon" href="../../img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
         <!-- bootstrap 5 -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -25,8 +26,8 @@
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         
-        <script src="../../js/darkModeControl.js"></script>
-        <link href="../../css/store/reserveFruit.css" rel="stylesheet">
+        <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
+        <link href="${pageContext.request.contextPath}/css/store/reserveFruit.css" rel="stylesheet">
     </head>
     <body>
         <div class="container py-4">
@@ -94,317 +95,36 @@
                                     <!-- Scrollable Container for Fruits -->
                                     <div class="fruit-selection-container">
                                         <div class="fruit-selection">
-                                            <!-- Apple -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="apple" data-category="japan">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Apple" class="img-fluid rounded fruit-img">
+                                            <%
+                                                ArrayList<FruitsBean> fruitsList = (ArrayList<FruitsBean>)request.getAttribute("fruitsList");
+                                                if (fruitsList != null && !fruitsList.isEmpty()) {
+                                                    for (int i = 0; i < fruitsList.size(); i++) {
+                                                        FruitsBean fruit = fruitsList.get(i);
+                                            %>
+                                                        <div class="fruit-item card mb-3" data-fruit-name="<%= fruit.getName().toLowerCase() %>" data-category="<%= fruit.getCountryRegion().toLowerCase() %>">
+                                                            <div class="card-body">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
+                                                                        <img src="${pageContext.request.contextPath}/img/<%= fruit.getImgName() %>" alt="<%= fruit.getName() %>" class="img-fluid rounded fruit-img">
+                                                                    </div>
+                                                                    <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
+                                                                        <h5 class="mb-1"><%= fruit.getName() %></h5>
+                                                                        <p class="text-muted mb-0 small">Origin: <%= fruit.getCountryRegion() %></p>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <p class="mb-1 small">Available: <span class="text-success">100 (hardcode now)</span></p>
+                                                                        <p class="mb-0 small">Unit: pc</p>
+                                                                    </div>
+                                                                    <div class="col-md-3 col-sm-6">
+                                                                        <label class="form-label small">Quantity</label>
+                                                                        <input type="number" class="form-control form-control-sm" 
+                                                                               name="fruit_<%= fruit.getId() %>_qty" min="0" max="5" value="0">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Apple</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Japan</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">120 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_1_qty" min="0" max="120" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Banana -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="banana" data-category="usa">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Banana" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Banana</h5>
-                                                            <p class="text-muted mb-0 small">Origin: USA</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">85 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_2_qty" min="0" max="85" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Strawberry -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="strawberry" data-category="hong-kong">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Strawberry" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Strawberry</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Hong Kong</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">50 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_3_qty" min="0" max="50" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Mango -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="mango" data-category="japan">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Mango" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Mango</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Japan</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">65 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_4_qty" min="0" max="65" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Blueberry -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="blueberry" data-category="usa">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Blueberry" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Blueberry</h5>
-                                                            <p class="text-muted mb-0 small">Origin: USA</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">35 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_5_qty" min="0" max="35" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Dragon Fruit -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="dragon fruit" data-category="hong-kong">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Dragon Fruit" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Dragon Fruit</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Hong Kong</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">45 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_6_qty" min="0" max="45" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Durian -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="durian" data-category="other">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Durian" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Durian</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Thailand</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">30 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_7_qty" min="0" max="30" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Peach -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="peach" data-category="japan">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Peach" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Peach</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Japan</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">70 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_8_qty" min="0" max="70" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Kiwi -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="kiwi" data-category="other">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Kiwi" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Kiwi</h5>
-                                                            <p class="text-muted mb-0 small">Origin: New Zealand</p>
-                                                        </div>
-                                                        <div class="col-md3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">55 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_9_qty" min="0" max="55" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Orange -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="orange" data-category="usa">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Orange" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Orange</h5>
-                                                            <p class="text-muted mb-0 small">Origin: USA</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">90 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_10_qty" min="0" max="90" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Lychee -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="lychee" data-category="hong-kong">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Lychee" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Lychee</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Hong Kong</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">40 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_11_qty" min="0" max="40" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Watermelon -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="watermelon" data-category="japan">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Watermelon" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Watermelon</h5>
-                                                            <p class="text-muted mb-0 small">Origin: Japan</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">150 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_12_qty" min="0" max="150" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <!-- Pineapple -->
-                                            <div class="fruit-item card mb-3" data-fruit-name="pineapple" data-category="usa">
-                                                <div class="card-body">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                            <img src="../../img/F002_Orange.jpg" alt="Pineapple" class="img-fluid rounded fruit-img">
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                            <h5 class="mb-1">Pineapple</h5>
-                                                            <p class="text-muted mb-0 small">Origin: USA</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <p class="mb-1 small">Available: <span class="text-success">80 pc</span></p>
-                                                            <p class="mb-0 small">Unit: pc</p>
-                                                        </div>
-                                                        <div class="col-md-3 col-sm-6">
-                                                            <label class="form-label small">Quantity</label>
-                                                            <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_13_qty" min="0" max="80" value="0">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <%}}%>
+                                        
                                         </div>
                                     </div>
                                     <div class="text-center mt-2 fruit-results-info d-none">
@@ -478,6 +198,6 @@
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
         
-        <script src="../../js/shop/reserveFruit.js"></script>
+        <script src="${pageContext.request.contextPath}/js/shop/reserveFruit.js"></script>
     </body>
 </html>

@@ -5,6 +5,8 @@
 package ict.test;
 
 import ict.db.ProjectDB;
+import java.util.*;
+import ict.bean.*;
 
 /**
  *
@@ -15,6 +17,16 @@ public class test {
         String url = "jdbc:mysql://localhost:3306/ITP4511_Project_DB";
         String username = "root";
         String password = "";
-        ProjectDB custDb = new ProjectDB(url, username, password);        
+        ProjectDB db = new ProjectDB(url, username, password);     
+        
+        ArrayList<FruitsBean> list = db.getAllFruit();
+        
+        for (int i = 0; i < list.size();i++){
+            FruitsBean fb = list.get(i);
+            System.out.print(fb.getId() + " ");
+            System.out.print(fb.getName() + " ");
+            System.out.print(fb.getCountryRegion() + " ");
+            System.out.println(fb.getImgName());
+        }
     }
 }

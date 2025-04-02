@@ -9,13 +9,13 @@
     <div class="container">
         <!-- Navigation Links -->
         <nav class="nav justify-content-center flex-nowrap">
-            <a class="nav-link text-secondary" href="#">
+            <a class="nav-link text-secondary" href="${pageContext.request.contextPath}/page/store/reserveFruit.jsp">
                 <div class="d-flex align-items-center">
                     <i class="material-icons small me-1">home</i>
                     <span>Dashboard</span>
                 </div>
             </a>
-            <a class="nav-link text-secondary" href="#">
+            <a class="nav-link text-secondary" href="/ITP4511_Project/reserveFruit?action=list">
                 <div class="d-flex align-items-center">
                     <i class="material-icons small me-1">shopping_cart</i>
                     <span>Reserve</span>

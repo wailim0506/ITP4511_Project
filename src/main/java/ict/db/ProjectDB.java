@@ -6,12 +6,15 @@ package ict.db;
 
 import java.io.*;
 import java.sql.*;
+import ict.bean.*;
+import java.util.*;
 
 /**
  *
  * @author Wai Lim Fung
  */
 public class ProjectDB {
+
     private String url = "";
     private String username = "";
     private String password = "";
@@ -30,4 +33,35 @@ public class ProjectDB {
         }
         return DriverManager.getConnection(url, username, password);
     }
+
+    //for fruit table
+    public ArrayList<FruitsBean> getAllFruit() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        FruitsBean fb = null;
+        ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,y.Name AS CountryRegion FROM fruit x, country_region y WHERE x.CountryRegion = y.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fb = new FruitsBean();
+                fb.setId(rs.getString("ID"));
+                fb.setName(rs.getString("Name"));
+                fb.setCountryRegion(rs.getString("CountryRegion"));
+                fb.setImgName(rs.getString("ImgName"));
+                fruits.add(fb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fruits;
+    }
+    //for fruit table
 }

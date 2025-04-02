@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">home</i> Dashboard</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/page/store/index.jsp"><i class="material-icons small align-middle me-1">home</i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">shopping_cart</i> Reserve</a>
+                    <a class="nav-link" href="/ITP4511_Project/reserveFruit?action=list"><i class="material-icons small align-middle me-1">shopping_cart</i> Reserve</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">bookmark</i> Reservations</a>
@@ -44,7 +44,7 @@
                         <li><a class="dropdown-item" href="#"><i class="material-icons small me-2">person</i>Profile</a></li>
                         <li><a class="dropdown-item" href="#"><i class="material-icons small me-2">settings</i>Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="../../index.jsp"><i class="material-icons small me-2">logout</i>Logout</a></li>
+                        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/index.jsp"><i class="material-icons small me-2">logout</i>Logout</a></li>
                     </ul>
                 </div>
             </div>
