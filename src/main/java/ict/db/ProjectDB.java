@@ -93,7 +93,6 @@ public class ProjectDB {
         }
         return fruits;
     }
-
     // for fruit table
 
     // for country_region table
@@ -123,6 +122,5 @@ public class ProjectDB {
         }
         return countryRegion;
     }
-
     // for country_region table
 }

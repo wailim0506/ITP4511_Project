@@ -86,6 +86,7 @@
                                                             boolean isAllSelected = selectedCountryRegionId == null || "all".equals(selectedCountryRegionId);
                                                         %>
                                                         <option value="all" <%= isAllSelected ? "selected" : "" %>>All Countries/ Regions</option>
+                                                        <option value="--" disabled>------------------------------</option>
                                                         <jsp:useBean id="countryRegionList" class="java.util.ArrayList" scope="request"/>
                                                         <%
                                                             for (int i = 0; i < countryRegionList.size();i++){
