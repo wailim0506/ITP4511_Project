@@ -34,7 +34,7 @@ public class ProjectDB {
         return DriverManager.getConnection(url, username, password);
     }
 
-    //for fruit table
+    // for fruit table
     public ArrayList<FruitsBean> getAllFruit() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -63,5 +63,34 @@ public class ProjectDB {
         }
         return fruits;
     }
-    //for fruit table
+    // for fruit table
+
+    // for country_region table
+    public ArrayList<CountryRegionBean> getAllCountryRegion() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        CountryRegionBean crb = null;
+        ArrayList<CountryRegionBean> countryRegion = new ArrayList<CountryRegionBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM country_region;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                crb = new CountryRegionBean();
+                crb.setId(rs.getString("ID"));
+                crb.setName(rs.getString("Name"));
+                countryRegion.add(crb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return countryRegion;
+    }
+    // for country_region table
 }

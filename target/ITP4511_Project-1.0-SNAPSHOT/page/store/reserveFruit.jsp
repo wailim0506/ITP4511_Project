@@ -46,7 +46,7 @@
                         <div class="card-body p-4">
                             <h4 class="mb-4"><i class="material-icons align-middle me-2">shopping_cart</i>New Reservation</h4>
                             
-                            <form id="reservationForm" action="reserveFruit.jsp" method="post">
+                            <form id="reservationForm" action="/ITP4511_Project/reserveFruit?" method="post">
                                 <!-- Date Selection -->
                                 <div class="mb-4">
                                     <label class="form-label fw-medium">Delivery Date <span class="text-danger">*</span></label>
@@ -82,10 +82,13 @@
                                                     </span>
                                                     <select class="form-select" id="countryFilter">
                                                         <option value="all" selected>All Countries/ Regions</option>
-                                                        <option value="japan">Japan</option>
-                                                        <option value="usa">USA</option>
-                                                        <option value="hong-kong">Hong Kong</option>
-                                                        <option value="other">Other Countries/ Regions</option>
+                                                        <jsp:useBean id="countryRegionList" class="java.util.ArrayList" scope="request"/>
+                                                        <%
+                                                            for (int i = 0; i < countryRegionList.size();i++){
+                                                                CountryRegionBean crb = (CountryRegionBean) countryRegionList.get(i);
+                                                                out.println("<option value=\"" + crb.getId() + "\">" + crb.getName() + "</option>");
+                                                            }
+                                                        %>
                                                     </select>
                                                 </div>
                                             </div>
@@ -124,7 +127,6 @@
                                                             </div>
                                                         </div>
                                             <%}}%>
-                                        
                                         </div>
                                     </div>
                                     <div class="text-center mt-2 fruit-results-info d-none">

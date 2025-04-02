@@ -32,6 +32,11 @@ public class reserveFruitServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        //country region list is need in every action for selection box
+        ArrayList<CountryRegionBean> countryRegionList = db.getAllCountryRegion();
+        request.setAttribute("countryRegionList",countryRegionList);
+        
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
             ArrayList<FruitsBean> fruitsList = db.getAllFruit();
@@ -39,6 +44,10 @@ public class reserveFruitServlet extends HttpServlet {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
             rd.forward(request, response);
+        }else{
+            out.println("<p>Test</p>");
+            String deliveryDate = request.getParameter("fruit_F001_qty");
+            out.println("<p>"+deliveryDate+"</p>");
         }
     }
 
@@ -58,5 +67,4 @@ public class reserveFruitServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

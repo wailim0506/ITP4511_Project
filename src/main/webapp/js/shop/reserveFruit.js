@@ -36,6 +36,7 @@ $(document).ready(function () {
 
     $('#countryFilter').on('change', function () {
         filterFruits();
+        console.log('Country filter changed to: ' + $(this).val());
     });
 
     // Initialize fruit count
