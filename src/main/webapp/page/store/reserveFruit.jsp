@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="../../components/store/navBar.jsp" %>
 <%@page import ="ict.bean.*, java.util.*" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
@@ -30,6 +29,7 @@
         <link href="${pageContext.request.contextPath}/css/store/reserveFruit.css" rel="stylesheet">
     </head>
     <body>
+        <%@include file="../../components/store/navBar.jsp" %>
         <div class="container py-4">
             <!-- Header Section -->
             <div class="header-section text-center shadow-sm mb-4">
@@ -67,7 +67,7 @@
                                     <!-- Search and Filter Bar -->
                                     <div class="mb-3">
                                         <div class="row g-2">
-                                            <div class="col-md-6 col-sm-12">
+                                            <div class="col-md-5 col-sm-12">
                                                 <div class="input-group">
                                                     <span class="input-group-text border-0 bg-transparent">
                                                         <i class="material-icons text-muted">search</i>
@@ -101,6 +101,9 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <button type="button" class="btn btn-outline-secondary col-md-1 col-sm-12" id="resetFilterBtn">
+                                                <i class="material-icons">refresh</i> 
+                                            </button>
                                         </div>
                                     </div>
                                     

@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@include file="../../components/store/navBar.jsp" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -26,6 +25,7 @@
         <link href="../../css/store/index.css" rel="stylesheet">
     </head>
     <body>
+        <%@include file="../../components/store/navBar.jsp" %>
         <div class="container py-4">
             <!-- Hero Section -->
             <div class="hero-section text-center shadow-sm">

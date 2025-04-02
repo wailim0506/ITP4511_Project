@@ -38,6 +38,11 @@ $(document).ready(function () {
         filterByCountryRegion();
     });
 
+    $("#resetFilterBtn").on("click", function () {
+        var url = "/ITP4511_Project/reserveFruit?action=listAll";
+        window.location.href = url;
+    });
+
     // Initialize fruit count
     updateFruitCount();
 
