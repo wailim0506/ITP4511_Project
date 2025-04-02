@@ -43,7 +43,7 @@
                             <i class="material-icons card-icon mb-3">shopping_cart</i>
                             <h5 class="card-title">Reserve Fruit</h5>
                             <p class="card-text text-muted">Place reservations for fruits in the next 14 days</p>
-                            <a href="/ITP4511_Project/reserveFruit?action=list" class="btn btn-outline-primary mt-2">Go to Reservation</a>
+                            <a href="/ITP4511_Project/reserveFruit?action=listAll" class="btn btn-outline-primary mt-2">Go to Reservation</a>
                         </div>
                     </div>
                 </div>

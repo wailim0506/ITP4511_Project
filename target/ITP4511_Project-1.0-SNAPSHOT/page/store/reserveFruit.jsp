@@ -81,12 +81,20 @@
                                                         <i class="material-icons text-muted">public</i>
                                                     </span>
                                                     <select class="form-select" id="countryFilter">
-                                                        <option value="all" selected>All Countries/ Regions</option>
+                                                        <%
+                                                            String selectedCountryRegionId = (String) request.getAttribute("selectedCountryRegionId");
+                                                            boolean isAllSelected = selectedCountryRegionId == null || "all".equals(selectedCountryRegionId);
+                                                        %>
+                                                        <option value="all" <%= isAllSelected ? "selected" : "" %>>All Countries/ Regions</option>
                                                         <jsp:useBean id="countryRegionList" class="java.util.ArrayList" scope="request"/>
                                                         <%
                                                             for (int i = 0; i < countryRegionList.size();i++){
                                                                 CountryRegionBean crb = (CountryRegionBean) countryRegionList.get(i);
-                                                                out.println("<option value=\"" + crb.getId() + "\">" + crb.getName() + "</option>");
+                                                                String crId = crb.getId();
+                                                                boolean isSelected = !isAllSelected && crId.equals(selectedCountryRegionId);
+                                                                out.println("<option value=\"" + crId + "\" " + 
+                                                                           (isSelected ? "selected" : "") + ">" + 
+                                                                           crb.getName() + "</option>");
                                                             }
                                                         %>
                                                     </select>

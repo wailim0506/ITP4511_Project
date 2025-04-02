@@ -35,8 +35,7 @@ $(document).ready(function () {
     });
 
     $('#countryFilter').on('change', function () {
-        filterFruits();
-        console.log('Country filter changed to: ' + $(this).val());
+        filterByCountryRegion();
     });
 
     // Initialize fruit count
@@ -61,6 +60,17 @@ $(document).ready(function () {
         });
 
         updateFruitCount();
+    }
+
+    function filterByCountryRegion() {
+        var cr = $('#countryFilter').val();
+        var url;
+        if (cr === 'all') {
+            url = '/ITP4511_Project/reserveFruit?action=listAll';
+        } else {
+            url = `/ITP4511_Project/reserveFruit?action=listByCountryRegion&cr=${cr}`;
+        }
+        window.location.href = url;
     }
 
     function updateFruitCount() {

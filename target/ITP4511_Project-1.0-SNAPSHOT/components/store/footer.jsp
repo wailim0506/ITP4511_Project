@@ -15,7 +15,7 @@
                     <span>Dashboard</span>
                 </div>
             </a>
-            <a class="nav-link text-secondary" href="/ITP4511_Project/reserveFruit?action=list">
+            <a class="nav-link text-secondary" href="/ITP4511_Project/reserveFruit?action=listAll">
                 <div class="d-flex align-items-center">
                     <i class="material-icons small me-1">shopping_cart</i>
                     <span>Reserve</span>

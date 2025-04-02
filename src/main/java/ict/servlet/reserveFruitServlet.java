@@ -16,7 +16,7 @@ import java.util.*;
  *
  * @author wailim0506
  */
-@WebServlet(name = "reserveFruitServlet", urlPatterns = {"/reserveFruit"})
+@WebServlet(name = "reserveFruitServlet", urlPatterns = { "/reserveFruit" })
 public class reserveFruitServlet extends HttpServlet {
 
     private ProjectDB db;
@@ -32,22 +32,26 @@ public class reserveFruitServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        //country region list is need in every action for selection box
+
+        // country region list is need in every action for selection box
         ArrayList<CountryRegionBean> countryRegionList = db.getAllCountryRegion();
-        request.setAttribute("countryRegionList",countryRegionList);
-        
+        request.setAttribute("countryRegionList", countryRegionList);
+
         String action = request.getParameter("action");
-        if ("list".equalsIgnoreCase(action)) {
+        if ("listAll".equalsIgnoreCase(action)) {
             ArrayList<FruitsBean> fruitsList = db.getAllFruit();
-            request.setAttribute("fruitsList",fruitsList);
+            request.setAttribute("fruitsList", fruitsList);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
             rd.forward(request, response);
-        }else{
-            out.println("<p>Test</p>");
-            String deliveryDate = request.getParameter("fruit_F001_qty");
-            out.println("<p>"+deliveryDate+"</p>");
+        } else if ("listByCountryRegion".equalsIgnoreCase(action)) {
+            String id = request.getParameter("cr");
+            ArrayList<FruitsBean> fruitsList = db.getFruitsByCountryRegion(id);
+            request.setAttribute("fruitsList", fruitsList);
+            request.setAttribute("selectedCountryRegionId", id);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
+            rd.forward(request, response);
         }
     }
 

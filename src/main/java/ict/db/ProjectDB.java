@@ -63,6 +63,37 @@ public class ProjectDB {
         }
         return fruits;
     }
+
+    public ArrayList<FruitsBean> getFruitsByCountryRegion(String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        FruitsBean fb = null;
+        ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,y.Name AS CountryRegion FROM fruit x, country_region y WHERE x.CountryRegion = y.ID and y.ID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fb = new FruitsBean();
+                fb.setId(rs.getString("ID"));
+                fb.setName(rs.getString("Name"));
+                fb.setCountryRegion(rs.getString("CountryRegion"));
+                fb.setImgName(rs.getString("ImgName"));
+                fruits.add(fb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fruits;
+    }
+
     // for fruit table
 
     // for country_region table
@@ -73,7 +104,7 @@ public class ProjectDB {
         ArrayList<CountryRegionBean> countryRegion = new ArrayList<CountryRegionBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT * FROM country_region;";
+            String preQueryStatement = "SELECT * FROM country_region ORDER BY Name;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
@@ -92,5 +123,6 @@ public class ProjectDB {
         }
         return countryRegion;
     }
+
     // for country_region table
 }

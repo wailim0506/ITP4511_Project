@@ -21,7 +21,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/page/store/index.jsp"><i class="material-icons small align-middle me-1">home</i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ITP4511_Project/reserveFruit?action=list"><i class="material-icons small align-middle me-1">shopping_cart</i> Reserve</a>
+                    <a class="nav-link" href="/ITP4511_Project/reserveFruit?action=listAll"><i class="material-icons small align-middle me-1">shopping_cart</i> Reserve</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">bookmark</i> Reservations</a>

@@ -30,11 +30,21 @@ public class test {
         // }
 
         // test getAllCountryRegion()
-        ArrayList<CountryRegionBean> list = db.getAllCountryRegion();
+        // ArrayList<CountryRegionBean> list = db.getAllCountryRegion();
+        // for (int i = 0; i < list.size(); i++) {
+        // CountryRegionBean crb = list.get(i);
+        // System.out.print(crb.getId() + " ");
+        // System.out.println(crb.getName());
+        // }
+
+        // test getFruitByCountry()
+        ArrayList<FruitsBean> list = db.getFruitsByCountryRegion("GB");
         for (int i = 0; i < list.size(); i++) {
-            CountryRegionBean crb = list.get(i);
-            System.out.print(crb.getId() + " ");
-            System.out.println(crb.getName());
+            FruitsBean fb = list.get(i);
+            System.out.print(fb.getId() + " ");
+            System.out.print(fb.getName() + " ");
+            System.out.print(fb.getCountryRegion() + " ");
+            System.out.println(fb.getImgName());
         }
     }
 }
