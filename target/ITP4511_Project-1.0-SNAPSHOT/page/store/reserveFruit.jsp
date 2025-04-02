@@ -46,7 +46,7 @@
                         <div class="card-body p-4">
                             <h4 class="mb-4"><i class="material-icons align-middle me-2">shopping_cart</i>New Reservation</h4>
                             
-                            <form id="reservationForm" action="submitReservation" method="post">
+                            <form id="reservationForm" action="reserveFruit.jsp" method="post">
                                 <!-- Date Selection -->
                                 <div class="mb-4">
                                     <label class="form-label fw-medium">Delivery Date <span class="text-danger">*</span></label>

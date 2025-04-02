@@ -84,7 +84,7 @@
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border: 2px solid rgba(var(--bs-primary-rgb), 0.2);
+  border-radius: 6px;
 }
 
 /* Fruit search results info styling */
