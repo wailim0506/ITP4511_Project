@@ -11,16 +11,16 @@ import java.io.Serializable;
  * @author HwH
  */
 public class FruitsBean implements Serializable {
-    private String name, countryRegion, imgName, id;
+    private String name, city, countryRegion, imgName, id;
 
     public FruitsBean() {
     }
-    
-    public void setId(String id){
+
+    public void setId(String id) {
         this.id = id;
     }
-    
-    public String getId(){
+
+    public String getId() {
         return this.id;
     }
 
@@ -38,6 +38,14 @@ public class FruitsBean implements Serializable {
 
     public String getCountryRegion() {
         return countryRegion;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public void setImgName(String ImgName) {

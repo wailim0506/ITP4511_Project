@@ -20,14 +20,14 @@ public class test {
         ProjectDB db = new ProjectDB(url, username, password);
 
         // test getAllFruit()
-        // ArrayList<FruitsBean> list = db.getAllFruit();
-        // for (int i = 0; i < list.size();i++){
-        // FruitsBean fb = list.get(i);
-        // System.out.print(fb.getId() + " ");
-        // System.out.print(fb.getName() + " ");
-        // System.out.print(fb.getCountryRegion() + " ");
-        // System.out.println(fb.getImgName());
-        // }
+         ArrayList<FruitsBean> list = db.getAllFruit();
+         for (int i = 0; i < list.size();i++){
+         FruitsBean fb = list.get(i);
+         System.out.print(fb.getId() + " ");
+         System.out.print(fb.getName() + " ");
+         System.out.print(fb.getCountryRegion() + " ");
+         System.out.println(fb.getImgName());
+         }
 
         // test getAllCountryRegion()
         // ArrayList<CountryRegionBean> list = db.getAllCountryRegion();
@@ -38,13 +38,13 @@ public class test {
         // }
 
         // test getFruitByCountry()
-        ArrayList<FruitsBean> list = db.getFruitsByCountryRegion("GB");
-        for (int i = 0; i < list.size(); i++) {
-            FruitsBean fb = list.get(i);
-            System.out.print(fb.getId() + " ");
-            System.out.print(fb.getName() + " ");
-            System.out.print(fb.getCountryRegion() + " ");
-            System.out.println(fb.getImgName());
-        }
+//        ArrayList<FruitsBean> list = db.getFruitsByCountryRegion("GB");
+//        for (int i = 0; i < list.size(); i++) {
+//            FruitsBean fb = list.get(i);
+//            System.out.print(fb.getId() + " ");
+//            System.out.print(fb.getName() + " ");
+//            System.out.print(fb.getCountryRegion() + " ");
+//            System.out.println(fb.getImgName());
+//        }
     }
 }

@@ -42,7 +42,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,y.Name AS CountryRegion FROM fruit x, country_region y WHERE x.CountryRegion = y.ID;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
@@ -52,6 +52,7 @@ public class ProjectDB {
                 fb.setName(rs.getString("Name"));
                 fb.setCountryRegion(rs.getString("CountryRegion"));
                 fb.setImgName(rs.getString("ImgName"));
+                fb.setCity(rs.getString("city"));
                 fruits.add(fb);
             }
             pStmnt.close();
@@ -71,7 +72,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,y.Name AS CountryRegion FROM fruit x, country_region y WHERE x.CountryRegion = y.ID and y.ID = ?;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
             pStmnt.executeQuery();
