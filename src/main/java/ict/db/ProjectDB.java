@@ -125,12 +125,12 @@ public class ProjectDB {
         return countryRegion;
     }
     // for country_region table
-    
+
     //for user table
-    public String getPassword(String user){
+    public String getPassword(String user) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT Password FROM USER WHERE UserName=? ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
@@ -142,18 +142,18 @@ public class ProjectDB {
             }
             pStmnt.close();
             cnnct.close();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return null;
     }
-    
-    public String getUserID(String user){
+
+    public String getUserID(String user) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
-        try{
+        try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT UserID FROM USER WHERE UserName=? ";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
@@ -165,21 +165,39 @@ public class ProjectDB {
             }
             pStmnt.close();
             cnnct.close();
-        }catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
         return null;
     }
-    
-    public UserBean getUserDetail(String username){
+
+    public UserBean getUserDetail(String username) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         UserBean ub = null;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.UserID, x.StaffName, x.UserName, y.Type AS AccountType, z.ID AS ShopID, zz.ID AS WarehouseID FROM user x LEFT JOIN account_type y ON x.AccountType = y.ID LEFT JOIN shop z ON x.ShopID = z.ID LEFT JOIN warehouse zz ON x.WarehouseID = zz.ID ORDER BY x.UserID;";
+            String preQueryStatement = "SELECT \n"
+                    + "    a.UserID,\n"
+                    + "    a.UserName,\n"
+                    + "    b.StaffName AS ShopStaffName,\n"
+                    + "    d.Address AS ShopAddress,\n"
+                    + "    sc.City AS ShopCity,\n"
+                    + "    cr_shop.Name AS ShopCountry,\n"
+                    + "    c.StaffName AS WarehouseStaffName,\n"
+                    + "    f.ID AS WarehouseID,\n"
+                    + "    cr_warehouse.Name AS WarehouseCountry\n"
+                    + "FROM user a\n"
+                    + "LEFT JOIN shop_staff b ON a.UserID = b.UserID\n"
+                    + "LEFT JOIN warehouse_staff c ON a.UserID = c.UserID\n"
+                    + "LEFT JOIN shop d ON b.ShopID = d.ID\n"
+                    + "LEFT JOIN shop_city sc ON d.City = sc.ID\n"
+                    + "LEFT JOIN country_region cr_shop ON sc.CountryRegionID = cr_shop.ID\n"
+                    + "LEFT JOIN warehouse f ON c.WarehouseID = f.ID\n"
+                    + "LEFT JOIN country_region cr_warehouse ON f.CountryRegionID = cr_warehouse.ID\n"
+                    + "ORDER BY a.UserID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
