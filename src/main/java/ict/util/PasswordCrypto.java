@@ -53,7 +53,7 @@ public class PasswordCrypto {
     }
 
     // Helper method to normalize IV to 16 bytes
-    private static byte[] normalizeIv(byte[] inputIv) {
+    public static byte[] normalizeIv(byte[] inputIv) {
         byte[] normalizedIv = new byte[IV_LENGTH];
         
         if (inputIv.length == IV_LENGTH) {
