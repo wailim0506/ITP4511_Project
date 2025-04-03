@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2025 at 01:23 PM
+-- Generation Time: Apr 03, 2025 at 09:02 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -22,26 +22,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `ITP4511_Project_DB` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `ITP4511_Project_DB`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `account_type`
---
-
-CREATE TABLE `account_type` (
-  `ID` char(2) NOT NULL,
-  `Type` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `account_type`
---
-
-INSERT INTO `account_type` (`ID`, `Type`) VALUES
-('T1', 'shop'),
-('T2', 'warehouse'),
-('T3', 'SeniorManagement');
 
 -- --------------------------------------------------------
 
@@ -1726,27 +1706,43 @@ INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shop_staff`
+--
+
+CREATE TABLE `shop_staff` (
+  `ID` char(3) NOT NULL,
+  `StaffName` varchar(50) NOT NULL,
+  `ShopID` char(4) NOT NULL,
+  `UserID` char(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shop_staff`
+--
+
+INSERT INTO `shop_staff` (`ID`, `StaffName`, `ShopID`, `UserID`) VALUES
+('001', 'Alvin', 'S001', 'U001');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
   `UserID` char(5) NOT NULL,
-  `StaffName` varchar(50) NOT NULL,
   `UserName` varchar(50) NOT NULL,
-  `Password` varchar(100) NOT NULL,
-  `AccountType` char(2) NOT NULL,
-  `ShopID` char(4) DEFAULT NULL,
-  `WarehouseID` char(4) DEFAULT NULL
+  `Password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserID`, `StaffName`, `UserName`, `Password`, `AccountType`, `ShopID`, `WarehouseID`) VALUES
-('001', 'Alvin', 'Test1', '123456', 'T1', 'S001', NULL),
-('002', 'Alvin', 'Test2', '123456', 'T2', NULL, 'W001'),
-('003', 'Alvin', 'Test3', '123456', 'T2', NULL, 'W004');
+INSERT INTO `user` (`UserID`, `UserName`, `Password`) VALUES
+('U001', 'User 1', 'MDAxAAAAAAAAAAAAAAAAAA=='),
+('U002', 'User 2', 'MDAyAAAAAAAAAAAAAAAAAA=='),
+('U003', 'User 3', 'MDAzAAAAAAAAAAAAAAAAAA==');
 
 -- --------------------------------------------------------
 
@@ -1769,7 +1765,7 @@ INSERT INTO `warehouse` (`ID`, `CountryRegionID`, `Type`, `PhoneNumber`) VALUES
 ('W001', 'JP', 'Central', '+81 3-1234-5678'),
 ('W002', 'US', 'Central', '+1 212-987-6543'),
 ('W003', 'HK', 'Central', '+852 2345 6789'),
-('W004', NULL, 'Source', '+44 20 7946 0823');
+('W004', 'CN', 'Source', '+44 20 7946 0823');
 
 -- --------------------------------------------------------
 
@@ -1843,15 +1839,30 @@ INSERT INTO `warehouse_fruit_stock` (`WarehouseID`, `FruitID`, `Qty`) VALUES
 ('W003', 'F017', 41),
 ('W003', 'F018', 183);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `warehouse_staff`
+--
+
+CREATE TABLE `warehouse_staff` (
+  `ID` char(3) NOT NULL,
+  `StaffName` varchar(50) NOT NULL,
+  `WarehouseID` char(4) NOT NULL,
+  `UserID` char(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `warehouse_staff`
+--
+
+INSERT INTO `warehouse_staff` (`ID`, `StaffName`, `WarehouseID`, `UserID`) VALUES
+('001', 'Peter', 'W001', 'U002'),
+('002', 'Tom', 'W004', 'U003');
+
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `account_type`
---
-ALTER TABLE `account_type`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `country_region`
@@ -1901,13 +1912,18 @@ ALTER TABLE `shop_fruit_stock`
   ADD KEY `FruitID_fk` (`FruitID`);
 
 --
+-- Indexes for table `shop_staff`
+--
+ALTER TABLE `shop_staff`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ShopID` (`ShopID`),
+  ADD KEY `UserID` (`UserID`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`UserID`),
-  ADD KEY `type_fk` (`AccountType`),
-  ADD KEY `shop_fk` (`ShopID`),
-  ADD KEY `WarehouseID_fk` (`WarehouseID`);
+  ADD PRIMARY KEY (`UserID`);
 
 --
 -- Indexes for table `warehouse`
@@ -1922,6 +1938,14 @@ ALTER TABLE `warehouse`
 ALTER TABLE `warehouse_fruit_stock`
   ADD PRIMARY KEY (`WarehouseID`,`FruitID`),
   ADD KEY `FruitID` (`FruitID`);
+
+--
+-- Indexes for table `warehouse_staff`
+--
+ALTER TABLE `warehouse_staff`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `WarehouseID` (`WarehouseID`),
+  ADD KEY `UserID` (`UserID`);
 
 --
 -- Constraints for dumped tables
@@ -1959,12 +1983,11 @@ ALTER TABLE `shop_fruit_stock`
   ADD CONSTRAINT `ShopID_fk` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`);
 
 --
--- Constraints for table `user`
+-- Constraints for table `shop_staff`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `WarehouseID_fk` FOREIGN KEY (`WarehouseID`) REFERENCES `warehouse` (`ID`),
-  ADD CONSTRAINT `shop_fk` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`),
-  ADD CONSTRAINT `type_fk` FOREIGN KEY (`AccountType`) REFERENCES `account_type` (`ID`);
+ALTER TABLE `shop_staff`
+  ADD CONSTRAINT `shop_staff_ibfk_1` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`),
+  ADD CONSTRAINT `shop_staff_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
 
 --
 -- Constraints for table `warehouse`
@@ -1978,6 +2001,13 @@ ALTER TABLE `warehouse`
 ALTER TABLE `warehouse_fruit_stock`
   ADD CONSTRAINT `warehouse_fruit_stock_ibfk_1` FOREIGN KEY (`WarehouseID`) REFERENCES `warehouse` (`ID`),
   ADD CONSTRAINT `warehouse_fruit_stock_ibfk_2` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`);
+
+--
+-- Constraints for table `warehouse_staff`
+--
+ALTER TABLE `warehouse_staff`
+  ADD CONSTRAINT `warehouse_staff_ibfk_1` FOREIGN KEY (`WarehouseID`) REFERENCES `warehouse` (`ID`),
+  ADD CONSTRAINT `warehouse_staff_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
