@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 03, 2025 at 09:02 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 03, 2025 at 10:11 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ITP4511_Project_DB`
+-- Database: `itp4511_project_db`
 --
-CREATE DATABASE IF NOT EXISTS `ITP4511_Project_DB` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `ITP4511_Project_DB`;
+CREATE DATABASE IF NOT EXISTS `itp4511_project_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `itp4511_project_db`;
 
 -- --------------------------------------------------------
 
@@ -1740,9 +1740,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserID`, `UserName`, `Password`) VALUES
-('U001', 'User 1', 'MDAxAAAAAAAAAAAAAAAAAA=='),
-('U002', 'User 2', 'MDAyAAAAAAAAAAAAAAAAAA=='),
-('U003', 'User 3', 'MDAzAAAAAAAAAAAAAAAAAA==');
+('U001', 'User 1', '7VMRVdnaqD2rjKgdc4PSkA=='),
+('U002', 'User 2', 'Aw7uB0qKuHrV1v5jqHtPhw=='),
+('U003', 'User 3', 'CpWhvOs//62LN7EVZk60ew==');
 
 -- --------------------------------------------------------
 
