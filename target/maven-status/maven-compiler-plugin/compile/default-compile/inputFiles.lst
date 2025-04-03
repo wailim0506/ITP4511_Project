@@ -2,10 +2,12 @@
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/FruitsBean.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/WarehouseBean.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/CountryRegionBean.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/LoginController.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/ShopBean.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/OrderBean.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/hk/edu/ive/itp4511/itp4511_project/JakartaRestConfiguration.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/reserveFruitController.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/hk/edu/ive/itp4511/itp4511_project/resources/JakartaEE10Resource.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/UserBean.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/db/ProjectDB.java
-/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/ShopBean.java
-/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/reserveFruitServlet.java
-/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/OrderBean.java
-/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/hk/edu/ive/itp4511/itp4511_project/JakartaRestConfiguration.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/util/PasswordCrypto.java

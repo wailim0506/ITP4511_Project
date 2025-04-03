@@ -9,7 +9,7 @@ package ict.bean;
  * @author HwH
  */
 public class UserBean {
-    private String userID, StaffName, UserName, Password, AccountType, shop;
+    private String userID, staffName, userName, password, accountType, shopId, warehouseId;
 
     public UserBean() {
     }
@@ -23,42 +23,50 @@ public class UserBean {
     }
 
     public String getStaffName() {
-        return StaffName;
+        return staffName;
     }
 
     public void setStaffName(String StaffName) {
-        this.StaffName = StaffName;
+        this.staffName = StaffName;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String UserName) {
-        this.UserName = UserName;
+        this.userName = UserName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String Password) {
-        this.Password = Password;
+        this.password = Password;
     }
 
     public String getAccountType() {
-        return AccountType;
+        return accountType;
     }
 
     public void setAccountType(String AccountType) {
-        this.AccountType = AccountType;
+        this.accountType = AccountType;
     }
 
-    public String getShop() {
-        return shop;
+    public String getShopId() {
+        return shopId;
     }
 
-    public void setShop(String shop) {
-        this.shop = shop;
+    public void setShopId(String shop) {
+        this.shopId = shop;
+    }
+
+    public void setWarehouseId(String warehouseId) {
+        this.warehouseId = warehouseId;
+    }
+
+    public String getWarehouseId() {
+        return this.warehouseId;
     }
 }

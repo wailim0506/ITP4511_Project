@@ -83,6 +83,7 @@ public class ProjectDB {
                 fb.setName(rs.getString("Name"));
                 fb.setCountryRegion(rs.getString("CountryRegion"));
                 fb.setImgName(rs.getString("ImgName"));
+                fb.setCity(rs.getString("city"));
                 fruits.add(fb);
             }
             pStmnt.close();
@@ -124,4 +125,78 @@ public class ProjectDB {
         return countryRegion;
     }
     // for country_region table
+    
+    //for user table
+    public String getPassword(String user){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try{
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT Password FROM USER WHERE UserName=? ";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, user);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                return rs.getString("Password");
+            }
+            pStmnt.close();
+            cnnct.close();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public String getUserID(String user){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try{
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT UserID FROM USER WHERE UserName=? ";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, user);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                return rs.getString("UserID");
+            }
+            pStmnt.close();
+            cnnct.close();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    public UserBean getUserDetail(String username){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        UserBean ub = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.UserID, x.StaffName, x.UserName, y.Type AS AccountType, z.ID AS ShopID, zz.ID AS WarehouseID FROM user x LEFT JOIN account_type y ON x.AccountType = y.ID LEFT JOIN shop z ON x.ShopID = z.ID LEFT JOIN warehouse zz ON x.WarehouseID = zz.ID ORDER BY x.UserID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                crb = new CountryRegionBean();
+                crb.setId(rs.getString("ID"));
+                crb.setName(rs.getString("Name"));
+                countryRegion.add(crb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return countryRegion;
+    }
+    //for user table
 }
