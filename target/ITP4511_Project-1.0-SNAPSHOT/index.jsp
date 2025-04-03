@@ -35,7 +35,8 @@
                 <div class="login-body">
                     <h4 class="mb-4">Sign In to Your Account</h4>
                     
-                    <form action="login" method="post">
+                    <form action="/ITP4511_Project/login" method="post">
+                        <input type="hidden" name="action" value="authenticate"/>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <div class="input-group">

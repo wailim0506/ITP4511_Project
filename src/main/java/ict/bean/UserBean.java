@@ -9,64 +9,87 @@ package ict.bean;
  * @author HwH
  */
 public class UserBean {
-    private String userID, staffName, userName, password, accountType, shopId, warehouseId;
+    private String userId;
+    private String userName;
+    private String staffName;
+    private String shopId;
+    private String shopAddress;
+    private String shopCity;
+    private String shopCountry;
+    private String wareHouseId;
+    private String warehouseCountry;
 
-    public UserBean() {
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getStaffName() {
-        return staffName;
-    }
-
-    public void setStaffName(String StaffName) {
-        this.staffName = StaffName;
+    // Getters
+    public String getUserId() {
+        return userId;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String UserName) {
-        this.userName = UserName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String Password) {
-        this.password = Password;
-    }
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String AccountType) {
-        this.accountType = AccountType;
+    public String getStaffName() {
+        return staffName;
     }
 
     public String getShopId() {
         return shopId;
     }
 
-    public void setShopId(String shop) {
-        this.shopId = shop;
+    public String getShopAddress() {
+        return shopAddress;
     }
 
-    public void setWarehouseId(String warehouseId) {
-        this.warehouseId = warehouseId;
+    public String getShopCity() {
+        return shopCity;
     }
 
-    public String getWarehouseId() {
-        return this.warehouseId;
+    public String getShopCountry() {
+        return shopCountry;
+    }
+
+    public String getWareHouseId() {
+        return wareHouseId;
+    }
+
+    public String getWarehouseCountry() {
+        return warehouseCountry;
+    }
+
+    // Setters
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
+    }
+
+    public void setShopCity(String shopCity) {
+        this.shopCity = shopCity;
+    }
+
+    public void setShopCountry(String shopCountry) {
+        this.shopCountry = shopCountry;
+    }
+
+    public void setWareHouseId(String wareHouseId) {
+        this.wareHouseId = wareHouseId;
+    }
+
+    public void setWarehouseCountry(String warehouseCountry) {
+        this.warehouseCountry = warehouseCountry;
     }
 }

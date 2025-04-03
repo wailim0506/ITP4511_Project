@@ -50,19 +50,68 @@ public class test {
         // Example usage
 //        try {
 //            // Encrypt with different IV lengths
-//            PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456", "003");
+//            PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
+//                    "U003");
 //            System.out.println("Encrypted Text 1: " + result1.encryptedText);
 //            System.out.println("IV 1: " + result1.iv);
 //
 //            // Decrypt
-//            String decrypted1 = PasswordCrypto.decrypt(result1.encryptedText, result1.iv);
+//            String decrypted1 = PasswordCrypto.decrypt(result1.encryptedText,
+//                    result1.iv);
 //            System.out.println("Decrypted Text 1: " + decrypted1);
 //
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+        // test getPassword()
+        // System.out.println(db.getUserID("Shop 1"));
+        // test getUserDetail()
+        // UserBean uBean = db.getUserDetail("User 2");
+        // System.out.println("User ID: " + uBean.getUserId());
+        // System.out.println("User Name: " + uBean.getUserName());
+        // System.out.println("Staff Name: " + uBean.getStaffName());
+        // System.out.println("Shop ID: " + uBean.getShopId());
+//        String passwordFromDB = db.getPassword("User 1");
+//        String UserIDFromDB = db.getUserID("User 1");
+//
+//        System.out.println("Password from DB: " + passwordFromDB);
+        //System.out.println("UserID from DB: " + UserIDFromDB);
+        // try {
+        // boolean f = password.equals(PasswordCrypto.decrypt(passwordFromDB,
+        // UserIDFromDB));
+        // if (f) {
+        // System.out.println("Password is correct!");
+        // } else {
+        // System.out.println("Password is incorrect!");
+        // }
+        // } catch (Exception e) {
+        // }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        try {
+             //Encrypt with different IV lengths
+            PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
+                    "U002");
+            System.out.println("Encrypted Text 1: " + result1.encryptedText);
+            System.out.println("IV 1: " + result1.iv);
 
-        // try getPassword()
-        System.out.println(db.getUserID("Shop 1"));
+            // Decrypt
+            String decrypted1 = PasswordCrypto.decrypt("CpWhvOs//62LN7EVZk60ew==",
+                   "VTAwMwAAAAAAAAAAAAAAAA==");
+            System.out.println("Decrypted Text 1: " + decrypted1);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        
     }
 }

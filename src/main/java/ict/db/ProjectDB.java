@@ -126,7 +126,7 @@ public class ProjectDB {
     }
     // for country_region table
 
-    //for user table
+    // for user table
     public String getPassword(String user) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -182,12 +182,13 @@ public class ProjectDB {
             String preQueryStatement = "SELECT \n"
                     + "    a.UserID,\n"
                     + "    a.UserName,\n"
+                    + "    d.ID AS ShopID,\n"
                     + "    b.StaffName AS ShopStaffName,\n"
                     + "    d.Address AS ShopAddress,\n"
                     + "    sc.City AS ShopCity,\n"
                     + "    cr_shop.Name AS ShopCountry,\n"
-                    + "    c.StaffName AS WarehouseStaffName,\n"
                     + "    f.ID AS WarehouseID,\n"
+                    + "    c.StaffName AS WarehouseStaffName,\n"
                     + "    cr_warehouse.Name AS WarehouseCountry\n"
                     + "FROM user a\n"
                     + "LEFT JOIN shop_staff b ON a.UserID = b.UserID\n"
@@ -197,15 +198,31 @@ public class ProjectDB {
                     + "LEFT JOIN country_region cr_shop ON sc.CountryRegionID = cr_shop.ID\n"
                     + "LEFT JOIN warehouse f ON c.WarehouseID = f.ID\n"
                     + "LEFT JOIN country_region cr_warehouse ON f.CountryRegionID = cr_warehouse.ID\n"
-                    + "ORDER BY a.UserID;";
+                    + "WHERE a.UserName = ? ORDER BY a.UserID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, username);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
             while (rs.next()) {
-                crb = new CountryRegionBean();
-                crb.setId(rs.getString("ID"));
-                crb.setName(rs.getString("Name"));
-                countryRegion.add(crb);
+                // if is shop user
+                if (rs.getString("ShopID") != null) {
+                    ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setUserName(rs.getString("UserName"));
+                    ub.setStaffName(rs.getString("ShopStaffName"));
+                    ub.setShopId(rs.getString("ShopID"));
+                    ub.setShopAddress(rs.getString("ShopAddress"));
+                    ub.setShopCity(rs.getString("ShopCity"));
+                    ub.setShopCountry(rs.getString("ShopCountry"));
+                } // if is warehouse user
+                else if (rs.getString("WarehouseID") != null) {
+                    ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setUserName(rs.getString("UserName"));
+                    ub.setStaffName(rs.getString("WarehouseStaffName"));
+                    ub.setWareHouseId(rs.getString("WarehouseID"));
+                    ub.setWarehouseCountry(rs.getString("WarehouseCountry"));
+                }
             }
             pStmnt.close();
             cnnct.close();
@@ -214,7 +231,7 @@ public class ProjectDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return countryRegion;
+        return ub;
     }
-    //for user table
+    // for user table
 }

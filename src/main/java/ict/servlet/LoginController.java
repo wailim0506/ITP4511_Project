@@ -11,8 +11,10 @@ import jakarta.servlet.http.*;
 import ict.db.*;
 import ict.bean.*;
 import ict.util.*;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 @WebServlet(name = "LoginController", urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
@@ -59,25 +61,39 @@ public class LoginController extends HttpServlet {
             throws IOException, ServletException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String targetURL;
+        String targetURL = "index.jsp";
+
         String passwordFromDB = db.getPassword(username);
         String UserIDFromDB = db.getUserID(username);
+        byte[] getDecrptionIV = PasswordCrypto.normalizeIv(UserIDFromDB.getBytes("UTF-8"));
         try {
-            if (password.equals(PasswordCrypto.decrypt(passwordFromDB, UserIDFromDB))) {
+            if (password.equals(PasswordCrypto.decrypt(passwordFromDB, Base64.getEncoder().encodeToString(getDecrptionIV)))) {
                 // obtain session from request
                 HttpSession session = request.getSession(true);
-                UserBean bean = new UserBean();
-                bean.setUserName(username);
+                UserBean bean = db.getUserDetail(username);
                 // store the userInfo to the session
                 session.setAttribute("userInfo", bean);
-                targetURL = "welcome.jsp";
+                if (bean.getShopId() != null) {
+                    session.setAttribute("userType", "shop");
+                    targetURL = "page/store/index.jsp"; // Change to shop homepage path
+                } else if (bean.getWareHouseId() != null) {
+                    session.setAttribute("userType", "warehouse");
+                    targetURL = "page/warehouse/index.jsp"; // Change to warehouse homepage path
+                } else {
+                    // Handle other user types if needed
+                    targetURL = "index.jsp";
+                    request.setAttribute("errorMsg", "Invalid user type");
+                }
             } else {
-                targetURL = "loginError.jsp";
+                targetURL = "index.jsp";
+                request.setAttribute("errorMsg", "Invalid username or password");
             }
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-            targetURL = "loginError.jsp";
+            targetURL = "index.jsp";
+            request.setAttribute("errorMsg", "System error: " + ex.getMessage());
         }
+
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
