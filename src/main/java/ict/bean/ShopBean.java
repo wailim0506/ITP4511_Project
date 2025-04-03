@@ -9,40 +9,48 @@ package ict.bean;
  * @author HwH
  */
 public class ShopBean {
-    private String ID, Address, City, PhoneNumber;
+    private String id, address, city, phoneNumber, countryRegion;
 
     public ShopBean() {
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID(String id) {
+        this.id = id;
     }
 
     public String getID() {
-        return ID;
+        return id;
     }
 
-    public void setAddress(String Address) {
-        this.Address = Address;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
-    public void setCity(String City) {
-        this.City = City;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getPhoneNumber() {
-        return PhoneNumber;
+        return phoneNumber;
+    }
+
+    public void setCountryRegion(String countryRegion) {
+        this.countryRegion = countryRegion;
+    }
+
+    public String getCountryRegion() {
+        return countryRegion;
     }
 }

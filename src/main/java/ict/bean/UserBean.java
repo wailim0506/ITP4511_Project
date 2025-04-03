@@ -19,7 +19,6 @@ public class UserBean {
     private String wareHouseId;
     private String warehouseCountry;
 
-    // Getters
     public String getUserId() {
         return userId;
     }
@@ -56,7 +55,6 @@ public class UserBean {
         return warehouseCountry;
     }
 
-    // Setters
     public void setUserId(String userId) {
         this.userId = userId;
     }
