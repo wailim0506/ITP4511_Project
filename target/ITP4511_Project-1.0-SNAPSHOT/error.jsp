@@ -33,7 +33,7 @@
             String errorMsg = (String) request.getAttribute("errorMsg");
             
             if (errorTitle == null)
-                errorTitle = "Oops! Something went wrong.";
+                errorTitle = "Oops! We can't find that page.";
             if (errorMsg == null)
                 errorMsg = "";
         %>
@@ -59,7 +59,7 @@
                         <span class="fw-bold icon-font">ACER</span>
                     </p>
 
-                    <h1>Oops! We can't find that page.</h1>
+                    <h1><%= errorTitle%></h1>
                     </br>
                     <h6><b><%= errorMsg%></b></h6>
                 </div>
