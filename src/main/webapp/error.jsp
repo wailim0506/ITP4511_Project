@@ -29,7 +29,13 @@
         <%
             String navType = (String) request.getAttribute("navType");
             String footerType = (String) request.getAttribute("footerType");
+            String errorTitle =  (String) request.getAttribute("errorTitle");
             String errorMsg = (String) request.getAttribute("errorMsg");
+            
+            if (errorTitle == null)
+                errorTitle = "Oops! Something went wrong.";
+            if (errorMsg == null)
+                errorMsg = "";
         %>
         
         <% if(navType != null){ %>
@@ -53,7 +59,7 @@
                         <span class="fw-bold icon-font">ACER</span>
                     </p>
 
-                    <h1>Oops! Something went wrong.</h1>
+                    <h1>Oops! We can't find that page.</h1>
                     </br>
                     <h6><b><%= errorMsg%></b></h6>
                 </div>
