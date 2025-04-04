@@ -26,11 +26,25 @@
         <link href="./css/error.css" rel="stylesheet">
     </head>
     <body>
-        <% 
-            String navType = request.getParameter("navType");
-            String footerType = request.getParameter("footerType");
+        <%
+            String navType = (String) request.getAttribute("navType");
+            String footerType = (String) request.getAttribute("footerType");
+            String errorMsg = (String) request.getAttribute("errorMsg");
         %>
-        <jsp:include page="<%= navType%>" />
+        
+        <% if(navType != null){ %>
+            <jsp:include page="navType" />
+        <% }else{ %>
+            <nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center" href="index.jsp">
+                        <i class="material-icons text-primary me-2">bakery_dining</i>
+                        <span class="fw-bold">ACER</span>
+                    </a>
+                </div>
+            </nav>
+        <% } %>
+
         <div class="error-container">
             <div class="error-row"> 
                 <div class="error-col">
@@ -39,13 +53,29 @@
                         <span class="fw-bold icon-font">ACER</span>
                     </p>
 
-                    <h1>Oops! We can't find that page.</h1>
+                    <h1>Oops! Something went wrong.</h1>
                     </br>
-                    <h3><b><%= exception%></b></h3>
+                    <h6><b><%= errorMsg%></b></h6>
                 </div>
                 <img src="img/Error.png" class="errorImg">
             </div>
         </div>
-        <jsp:include page="<%=footerType%>" />
+                        
+        <% if(footerType != null){ %>    
+            <jsp:include page="<%= footerType%>" />
+        <% }else{ %>
+            <div class="mt-4 py-3" style="border-top: var(--bs-border-width) solid var(--bs-border-color);">
+                <div class="container">
+                    <!-- Copyright -->
+                    <div class="text-center text-muted small mt-2">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <i class="material-icons small me-1">bakery_dining</i>
+                            <span>ACER International Bakery</span>
+                        </div>
+                        <p class="mb-0 mt-1">&copy; 2025 ACER. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        <% } %>
     </body>
 </html>
