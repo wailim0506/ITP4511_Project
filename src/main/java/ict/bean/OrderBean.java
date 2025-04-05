@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class OrderBean implements Serializable {
     private String id, shopId, orderDate, deliveryDate, status, notes;
-    private String fruidId, fruitName, city, countryRegion, imgName;
+    private String fruidId, fruitName, city, countryRegion, imgName, type, unit;
     private int qty;
 
     public OrderBean() {
@@ -113,5 +113,21 @@ public class OrderBean implements Serializable {
 
     public void setQty(int qty) {
         this.qty = qty;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

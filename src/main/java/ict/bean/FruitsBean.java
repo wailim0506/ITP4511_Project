@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author HwH
  */
 public class FruitsBean implements Serializable {
-    private String name, city, countryRegion, imgName, id;
+    private String name, city, countryRegion, imgName, id, type, unit;
 
     public FruitsBean() {
     }
@@ -54,5 +54,21 @@ public class FruitsBean implements Serializable {
 
     public String getImgName() {
         return imgName;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getUnit() {
+        return unit;
     }
 }

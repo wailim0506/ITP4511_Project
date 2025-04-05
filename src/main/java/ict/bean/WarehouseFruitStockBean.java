@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author Wai Lim Fung
  */
 public class WarehouseFruitStockBean implements Serializable {
-    private String wareHouseId, fruitId, fruitName, city, countryRegion, imgName, qty;
+    private String wareHouseId, fruitId, fruitName, city, countryRegion, imgName, qty, type, unit;
 
     public String getWareHouseId() {
         return wareHouseId;
@@ -67,5 +67,21 @@ public class WarehouseFruitStockBean implements Serializable {
 
     public void setQty(String qty) {
         this.qty = qty;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

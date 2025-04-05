@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 03, 2025 at 10:11 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Apr 05, 2025 at 07:32 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -264,6 +264,8 @@ INSERT INTO `country_region` (`ID`, `Name`) VALUES
 CREATE TABLE `fruit` (
   `ID` char(4) NOT NULL,
   `Name` varchar(20) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `unit` varchar(10) NOT NULL,
   `ImgName` varchar(30) NOT NULL,
   `FruitCityID` char(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -272,25 +274,25 @@ CREATE TABLE `fruit` (
 -- Dumping data for table `fruit`
 --
 
-INSERT INTO `fruit` (`ID`, `Name`, `ImgName`, `FruitCityID`) VALUES
-('F001', 'Apple', 'F001_Apple.jpg', '001'),
-('F002', 'Orange', 'F002_Orange.jpg', '002'),
-('F003', 'Banana', 'F003_Banana.jpg', '003'),
-('F004', 'Mango', 'F004_Mango.jpg', '004'),
-('F005', 'Pineapple', 'F005_Pineapple.jpg', '005'),
-('F006', 'Grape', 'F006_Grape.jpg', '006'),
-('F007', 'Strawberry', 'F007_Strawberry.jpg', '007'),
-('F008', 'Cherry', 'F008_Cherry.jpg', '008'),
-('F009', 'Papaya', 'F009_Papaya.jpg', '009'),
-('F010', 'Kiwi', 'F010_Kiwi.jpg', '010'),
-('F011', 'Watermelon', 'F011_Watermelon.jpg', '011'),
-('F012', 'Peach', 'F012_Peach.jpg', '012'),
-('F013', 'Pomegranate', 'F013_Pomegranate.jpg', '013'),
-('F014', 'Guava', 'F014_Guava.jpg', '014'),
-('F015', 'Blueberry', 'F015_Blueberry.jpg', '015'),
-('F016', 'Lychee', 'F016_Lychee.jpg', '016'),
-('F017', 'Fig', 'F017_Fig.jpg', '017'),
-('F018', 'Dragon Fruit', 'F018_DragonFruit.jpg', '018');
+INSERT INTO `fruit` (`ID`, `Name`, `type`, `unit`, `ImgName`, `FruitCityID`) VALUES
+('F001', 'Apple', 'Single Fruit', 'piece', 'F001_Apple.jpg', '001'),
+('F002', 'Orange', 'Single Fruit', 'piece', 'F002_Orange.jpg', '002'),
+('F003', 'Banana', 'Bunch Fruit', 'bunch', 'F003_Banana.jpg', '003'),
+('F004', 'Mango', 'Single Fruit', 'piece', 'F004_Mango.jpg', '004'),
+('F005', 'Pineapple', 'Single Fruit', 'piece', 'F005_Pineapple.jpg', '005'),
+('F006', 'Grape', 'Berry', 'gram', 'F006_Grape.jpg', '006'),
+('F007', 'Strawberry', 'Berry', 'gram', 'F007_Strawberry.jpg', '007'),
+('F008', 'Cherry', 'Berry', 'gram', 'F008_Cherry.jpg', '008'),
+('F009', 'Papaya', 'Single Fruit', 'piece', 'F009_Papaya.jpg', '009'),
+('F010', 'Kiwi', 'Single Fruit', 'piece', 'F010_Kiwi.jpg', '010'),
+('F011', 'Watermelon', 'Large Fruit', 'piece', 'F011_Watermelon.jpg', '011'),
+('F012', 'Peach', 'Single Fruit', 'piece', 'F012_Peach.jpg', '012'),
+('F013', 'Pomegranate', 'Large Fruit', 'piece', 'F013_Pomegranate.jpg', '013'),
+('F014', 'Guava', 'Single Fruit', 'piece', 'F014_Guava.jpg', '014'),
+('F015', 'Blueberry', 'Berry', 'gram', 'F015_Blueberry.jpg', '015'),
+('F016', 'Lychee', 'Berry', 'gram', 'F016_Lychee.jpg', '016'),
+('F017', 'Fig', 'Single Fruit', 'piece', 'F017_Fig.jpg', '017'),
+('F018', 'Dragon Fruit', 'Single Fruit', 'piece', 'F018_DragonFruit.jpg', '018');
 
 -- --------------------------------------------------------
 
