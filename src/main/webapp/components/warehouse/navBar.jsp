@@ -24,7 +24,10 @@
                     <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">inventory_2</i> Inventory</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">bookmark</i> Delivery</a>
+                    <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">receipt_long</i> Order</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">local_shipping</i> Delivery</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="material-icons small align-middle me-1">manage_accounts</i> Staffing</a>
