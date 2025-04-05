@@ -127,7 +127,7 @@
                                                                         <p class="text-muted mb-0 small">Origin: <%= fruit.getCountryRegion() %></p>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6">
-                                                                        <p class="mb-1 small">Available: <span class="text-success">100 (hardcode now)</span></p>
+                                                                        <%-- <p class="mb-1 small">Available: <span class="text-success">100</span></p> --%>
                                                                         <p class="mb-0 small">Unit: pc</p>
                                                                     </div>
                                                                     <div class="col-md-3 col-sm-6">
@@ -212,6 +212,6 @@
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
         
-        <script src="${pageContext.request.contextPath}/js/shop/reserveFruit.js"></script>
+        <script src="${pageContext.request.contextPath}/js/store/reserveFruit.js"></script>
     </body>
 </html>

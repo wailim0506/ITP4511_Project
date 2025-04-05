@@ -22,14 +22,14 @@ public class test {
         ProjectDB db = new ProjectDB(url, username, password);
 
         // test getAllFruit()
-        // ArrayList<FruitsBean> list = db.getAllFruit();
-        // for (int i = 0; i < list.size(); i++) {
-        // FruitsBean fb = list.get(i);
-        // System.out.print(fb.getId() + " ");
-        // System.out.print(fb.getName() + " ");
-        // System.out.print(fb.getCountryRegion() + " ");
-        // System.out.println(fb.getImgName());
-        // }
+         ArrayList<FruitsBean> list = db.getAllFruit();
+         for (int i = 0; i < list.size(); i++) {
+         FruitsBean fb = list.get(i);
+         System.out.print(fb.getId() + " ");
+         System.out.print(fb.getName() + " ");
+         System.out.print(fb.getCountryRegion() + " ");
+         System.out.println(fb.getImgName());
+         }
         // test getAllCountryRegion()
         // ArrayList<CountryRegionBean> list = db.getAllCountryRegion();
         // for (int i = 0; i < list.size(); i++) {
@@ -86,30 +86,29 @@ public class test {
         // }
         // } catch (Exception e) {
         // }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        try {
-             //Encrypt with different IV lengths
-            PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
-                    "U002");
-            System.out.println("Encrypted Text 1: " + result1.encryptedText);
-            System.out.println("IV 1: " + result1.iv);
+//        try {
+//             //Encrypt with different IV lengths
+//            PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
+//                    "U002");
+//            System.out.println("Encrypted Text 1: " + result1.encryptedText);
+//            System.out.println("IV 1: " + result1.iv);
+//
+//            // Decrypt
+//            String decrypted1 = PasswordCrypto.decrypt("CpWhvOs//62LN7EVZk60ew==",
+//                   "VTAwMwAAAAAAAAAAAAAAAA==");
+//            System.out.println("Decrypted Text 1: " + decrypted1);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-            // Decrypt
-            String decrypted1 = PasswordCrypto.decrypt("CpWhvOs//62LN7EVZk60ew==",
-                   "VTAwMwAAAAAAAAAAAAAAAA==");
-            System.out.println("Decrypted Text 1: " + decrypted1);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//         ArrayList<CountryRegionBean> list = db.getFruitCountryRegion();
+//         for (int i = 0; i < list.size(); i++) {
+//         CountryRegionBean crb = list.get(i);
+//         System.out.print(crb.getId() + " ");
+//         System.out.println(crb.getName());
+//         }
         
         
         

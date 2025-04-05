@@ -34,7 +34,7 @@ public class reserveFruitController extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         // country region list is need in every action for selection box
-        ArrayList<CountryRegionBean> countryRegionList = db.getAllCountryRegion();
+        ArrayList<CountryRegionBean> countryRegionList = db.getFruitCountryRegion();
         request.setAttribute("countryRegionList", countryRegionList);
 
         String action = request.getParameter("action");

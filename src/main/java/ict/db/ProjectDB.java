@@ -124,6 +124,36 @@ public class ProjectDB {
         }
         return countryRegion;
     }
+
+    public ArrayList<CountryRegionBean> getFruitCountryRegion() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        CountryRegionBean crb = null;
+        ArrayList<CountryRegionBean> countryRegion = new ArrayList<CountryRegionBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT DISTINCT cr.ID, cr.Name FROM country_region cr " +
+                    "JOIN fruit_city fc ON cr.ID = fc.CountryRegionID " +
+                    "JOIN fruit f ON f.FruitCityID = fc.ID " +
+                    "ORDER BY cr.Name";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                crb = new CountryRegionBean();
+                crb.setId(rs.getString("ID"));
+                crb.setName(rs.getString("Name"));
+                countryRegion.add(crb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return countryRegion;
+    }
     // for country_region table
 
     // for user table
