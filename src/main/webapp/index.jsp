@@ -19,7 +19,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <script src="./js/darkModeControl.js"></script>
         <link href="./css/index.css" rel="stylesheet">
-    
+        <script src="./js/index.js"></script>
     </head>
     <body>
         <div class="login-container">
