@@ -167,8 +167,8 @@
                                                         <div class="col-md-3 col-sm-6">
                                                             <label class="form-label small">Quantity</label>
                                                             <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_<%= fruit.getId() %>_qty" min="0" max="10000" value="0"
-                                                                   data-unit="<%= fruit.getUnit() %>">
+                                                                   name="<%= fruit.getId() %>" min="0" max="10000" value="0"
+                                                                   data-unit="<%= fruit.getUnit() %>" data-name="fruit_<%= fruit.getId() %>_qty">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -191,7 +191,7 @@
                                 <!-- Buttons -->
                                 <div class="d-flex justify-content-end gap-2 mt-4">
                                     <button type="button" id="resetFormBtn" class="btn btn-outline-danger me-auto">
-                                        <i class="material-icons align-middle me-1 small">refresh</i> Reset All Quantities
+                                        <i class="material-icons align-middle me-1 small">refresh</i> Reset
                                     </button>
                                     <a href="index.jsp" class="btn btn-outline-secondary">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Submit Reservation</button>

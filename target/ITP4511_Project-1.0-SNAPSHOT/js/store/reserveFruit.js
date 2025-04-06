@@ -56,14 +56,18 @@ $(document).ready(function () {
 
     $("#resetFormBtn").on("click", function () {
         localStorage.removeItem('fruitQuantities');
+        localStorage.removeItem('fruitName');
+        localStorage.removeItem('fruitUnit');
         var url = "/ITP4511_Project/reserveFruit?action=listAll";
         window.location.href = url;
     });
 
     $("#reservationForm").on("submit", function (event) {
+        event.preventDefault();
         localStorage.removeItem('fruitQuantities'); // Clear local storage
         localStorage.removeItem('fruitName'); // Clear local storage
         localStorage.removeItem('fruitUnit'); // Clear local storage
+        this.submit();
     });
 
     // Initialize fruit count and summary
@@ -170,7 +174,7 @@ $(document).ready(function () {
 
         // Loop through all fruit quantity inputs
         $('input[type=number]').each(function () {
-            var inputName = $(this).attr('name');
+            var inputName = $(this).data('name');
             // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
@@ -184,7 +188,7 @@ $(document).ready(function () {
         var fruitsName = {};
         //store all fruit name
         $('input[type=number]').each(function () {
-            var inputName = $(this).attr('name');
+            var inputName = $(this).data('name');
             // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
@@ -199,7 +203,7 @@ $(document).ready(function () {
         var fruitsUnit = {};
         //store all fruit unit
         $('input[type=number]').each(function () {
-            var inputName = $(this).attr('name');
+            var inputName = $(this).data('name');
             // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
@@ -217,7 +221,7 @@ $(document).ready(function () {
 
         // Loop through all fruit quantity inputs
         $('input[type=number]').each(function () {
-            var inputName = $(this).attr('name');
+            var inputName = $(this).data('name');
             // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
@@ -236,7 +240,7 @@ $(document).ready(function () {
 
         // Loop through all fruit quantity inputs
         $('input[type=number]').each(function () {
-            var inputName = $(this).attr('name');
+            var inputName = $(this).data('name');
             // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
