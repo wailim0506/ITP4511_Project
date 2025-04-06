@@ -46,7 +46,8 @@
                         <div class="card-body p-4">
                             <h4 class="mb-4"><i class="material-icons align-middle me-2">shopping_cart</i>New Reservation</h4>
 
-                            <form id="reservationForm" action="/ITP4511_Project/reserveFruit?" method="post">
+                            <form id="reservationForm" action="/ITP4511_Project/reserveFruit" method="post">
+                                <input type="hidden" name="action" value="submit">
                                 <!-- Date Selection -->
                                 <%-- <div class="mb-4">
                                     <label class="form-label fw-medium">Delivery Date <span class="text-danger">*</span></label>

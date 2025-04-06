@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page isErrorPage="true" %>
 <!DOCTYPE html>
-<html>
+<html id="html" lang="en" data-bs-theme="light">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +22,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="../../js/darkModeControl.js"></script>
+        <script src="./js/darkModeControl.js"></script>
         <link href="./css/error.css" rel="stylesheet">
     </head>
     <body>
@@ -83,5 +83,8 @@
                 </div>
             </div>
         <% } %>
+        
+        <i id="darkModeToogle" class="material-icons"
+           style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
     </body>
 </html>

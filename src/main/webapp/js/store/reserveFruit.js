@@ -60,6 +60,12 @@ $(document).ready(function () {
         window.location.href = url;
     });
 
+    $("#reservationForm").on("submit", function (event) {
+        localStorage.removeItem('fruitQuantities'); // Clear local storage
+        localStorage.removeItem('fruitName'); // Clear local storage
+        localStorage.removeItem('fruitUnit'); // Clear local storage
+    });
+
     // Initialize fruit count and summary
     updateFruitCount();
     updateSummary();
