@@ -42,7 +42,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
@@ -53,6 +53,8 @@ public class ProjectDB {
                 fb.setCountryRegion(rs.getString("CountryRegion"));
                 fb.setImgName(rs.getString("ImgName"));
                 fb.setCity(rs.getString("city"));
+                fb.setType(rs.getString("type"));
+                fb.setUnit(rs.getString("unit"));
                 fruits.add(fb);
             }
             pStmnt.close();
@@ -72,7 +74,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ?;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
             pStmnt.executeQuery();
@@ -84,6 +86,8 @@ public class ProjectDB {
                 fb.setCountryRegion(rs.getString("CountryRegion"));
                 fb.setImgName(rs.getString("ImgName"));
                 fb.setCity(rs.getString("city"));
+                fb.setUnit(rs.getString("unit"));
+                fb.setType(rs.getString("type"));
                 fruits.add(fb);
             }
             pStmnt.close();
@@ -94,6 +98,97 @@ public class ProjectDB {
             e.printStackTrace();
         }
         return fruits;
+    }
+
+    public ArrayList<FruitsBean> getFruitsByType(String type) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        FruitsBean fb = null;
+        ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and x.type=?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, type);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fb = new FruitsBean();
+                fb.setId(rs.getString("ID"));
+                fb.setName(rs.getString("Name"));
+                fb.setCountryRegion(rs.getString("CountryRegion"));
+                fb.setImgName(rs.getString("ImgName"));
+                fb.setCity(rs.getString("city"));
+                fb.setUnit(rs.getString("unit"));
+                fb.setType(rs.getString("type"));
+                fruits.add(fb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fruits;
+    }
+
+    public ArrayList<FruitsBean> getFruitsByCountryAndType(String id, String type) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        FruitsBean fb = null;
+        ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ? and x.type=?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.setString(2, type);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fb = new FruitsBean();
+                fb.setId(rs.getString("ID"));
+                fb.setName(rs.getString("Name"));
+                fb.setCountryRegion(rs.getString("CountryRegion"));
+                fb.setImgName(rs.getString("ImgName"));
+                fb.setCity(rs.getString("city"));
+                fb.setUnit(rs.getString("unit"));
+                fb.setType(rs.getString("type"));
+
+                fruits.add(fb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fruits;
+    }
+
+    public ArrayList<String> getFruitType() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> type = new ArrayList<String>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT DISTINCT type FROM fruit;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                type.add(rs.getString("type"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return type;
     }
     // for fruit table
 

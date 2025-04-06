@@ -36,6 +36,8 @@ public class reserveFruitController extends HttpServlet {
         // country region list is need in every action for selection box
         ArrayList<CountryRegionBean> countryRegionList = db.getFruitCountryRegion();
         request.setAttribute("countryRegionList", countryRegionList);
+        ArrayList<String> fruitTypeList = db.getFruitType();
+        request.setAttribute("fruitTypeList", fruitTypeList);
 
         String action = request.getParameter("action");
         if ("listAll".equalsIgnoreCase(action)) {
@@ -49,6 +51,26 @@ public class reserveFruitController extends HttpServlet {
             ArrayList<FruitsBean> fruitsList = db.getFruitsByCountryRegion(id);
             request.setAttribute("fruitsList", fruitsList);
             request.setAttribute("selectedCountryRegionId", id);
+
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
+            rd.forward(request, response);
+        } else if ("listByType".equalsIgnoreCase(action)) {
+            String type = request.getParameter("type");
+            ArrayList<FruitsBean> fruitsList = db.getFruitsByType(type);
+            request.setAttribute("fruitsList", fruitsList);
+            request.setAttribute("selectedCountryRegionId", "all");
+            request.setAttribute("selectedType", type);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
+            rd.forward(request, response);
+        } else if ("listByBoth".equalsIgnoreCase(action)) {
+            String id = request.getParameter("cr");
+            String type = request.getParameter("type");
+            ArrayList<FruitsBean> fruitsList = db.getFruitsByCountryAndType(id, type);
+            request.setAttribute("fruitsList", fruitsList);
+            request.setAttribute("selectedCountryRegionId", id);
+            request.setAttribute("selectedType", type);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
             rd.forward(request, response);

@@ -38,6 +38,10 @@ $(document).ready(function () {
         filterByCountryRegion();
     });
 
+    $('#typeFilter').on('change', function () {
+        filterByFruitType();
+    });
+
     $("#resetFilterBtn").on("click", function () {
         var url = "/ITP4511_Project/reserveFruit?action=listAll";
         window.location.href = url;
@@ -68,12 +72,21 @@ $(document).ready(function () {
     }
 
     function filterByCountryRegion() {
+        filterByFruitType();
+    }
+
+    function filterByFruitType() {
+        var type = $('#typeFilter').val();
         var cr = $('#countryFilter').val();
         var url;
-        if (cr === 'all') {
+        if (type === 'all' && cr === 'all') {
             url = '/ITP4511_Project/reserveFruit?action=listAll';
-        } else {
+        } else if (type === 'all' && cr !== 'all') {
             url = `/ITP4511_Project/reserveFruit?action=listByCountryRegion&cr=${cr}`;
+        } else if (cr === 'all' && type !== 'all') {
+            url = `/ITP4511_Project/reserveFruit?action=listByType&type=${type}`;
+        } else {
+            url = `/ITP4511_Project/reserveFruit?action=listByBoth&cr=${cr}&type=${type}`;
         }
         window.location.href = url;
     }

@@ -24,7 +24,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        
+
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
         <link href="${pageContext.request.contextPath}/css/store/reserveFruit.css" rel="stylesheet">
     </head>
@@ -37,7 +37,7 @@
                 <p class="lead">Reserve fruits for your bakery needs in the next 14 days</p>
                 <p class="text-muted small mb-0">Your reservation helps us plan for efficient fruit deliveries</p>
             </div>
-            
+
             <!-- Main Content -->
             <div class="row g-4">
                 <!-- Reservation Form -->
@@ -45,10 +45,10 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
                             <h4 class="mb-4"><i class="material-icons align-middle me-2">shopping_cart</i>New Reservation</h4>
-                            
+
                             <form id="reservationForm" action="/ITP4511_Project/reserveFruit?" method="post">
                                 <!-- Date Selection -->
-                                <div class="mb-4">
+                                <%-- <div class="mb-4">
                                     <label class="form-label fw-medium">Delivery Date <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <span class="input-group-text border-0 bg-transparent">
@@ -58,16 +58,16 @@
                                                required>
                                     </div>
                                     <div class="form-text">Select a date from tomorrow up to 14 days from now</div>
-                                </div>
-                                
+                                </div> --%>
+
                                 <!-- Fruit Selection -->
                                 <div class="mb-4">
                                     <label class="form-label fw-medium">Select Fruits <span class="text-danger">*</span></label>
-                                    
+
                                     <!-- Search and Filter Bar -->
                                     <div class="mb-3">
                                         <div class="row g-2">
-                                            <div class="col-md-5 col-sm-12">
+                                            <div class="col-md-4 col-sm-12">
                                                 <div class="input-group">
                                                     <span class="input-group-text border-0 bg-transparent">
                                                         <i class="material-icons text-muted">search</i>
@@ -75,7 +75,32 @@
                                                     <input type="text" class="form-control" id="fruitSearch" placeholder="Search fruits...">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-sm-12">
+                                            <div class="col-md-3 col-sm-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-text border-0 bg-transparent">
+                                                        <i class="material-icons text-muted">category</i>
+                                                    </span>
+                                                    <select class="form-select" id="typeFilter">
+                                                        <%
+                                                            String selectedFruitType = (String) request.getAttribute("selectedType");
+                                                            boolean isAllTypeSelected = selectedFruitType == null || "all".equals(selectedFruitType);
+                                                        %>
+                                                        <option value="all" selected>All Types</option>
+                                                        <option value="--" disabled>------------------------------</option>
+                                                        <jsp:useBean id="fruitTypeList" class="java.util.ArrayList" scope="request"/>
+                                                        <%
+                                                            for (int i = 0; i < fruitTypeList.size();i++){
+                                                                String type = (String) fruitTypeList.get(i);
+                                                                boolean isTypeSelected = !isAllTypeSelected && type.equals(selectedFruitType);
+                                                                out.println("<option value=\"" + type + "\" " + 
+                                                                           (isTypeSelected ? "selected" : "") + ">" + 
+                                                                           type + "</option>");
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-12">
                                                 <div class="input-group">
                                                     <span class="input-group-text border-0 bg-transparent">
                                                         <i class="material-icons text-muted">public</i>
@@ -106,7 +131,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Scrollable Container for Fruits -->
                                     <div class="fruit-selection-container">
                                         <div class="fruit-selection">
@@ -116,28 +141,36 @@
                                                     for (int i = 0; i < fruitsList.size(); i++) {
                                                         FruitsBean fruit = fruitsList.get(i);
                                             %>
-                                                        <div class="fruit-item card mb-3" data-fruit-name="<%= fruit.getName().toLowerCase() %>" data-category="<%= fruit.getCountryRegion().toLowerCase() %>">
-                                                            <div class="card-body">
-                                                                <div class="row align-items-center">
-                                                                    <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                                        <img src="${pageContext.request.contextPath}/img/<%= fruit.getImgName() %>" alt="<%= fruit.getName() %>" class="img-fluid rounded fruit-img">
-                                                                    </div>
-                                                                    <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
-                                                                        <h5 class="mb-1"><%= fruit.getName() %></h5>
-                                                                        <p class="text-muted mb-0 small">Origin: <%= fruit.getCountryRegion() %></p>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-6">
-                                                                        <%-- <p class="mb-1 small">Available: <span class="text-success">100</span></p> --%>
-                                                                        <p class="mb-0 small">Unit: pc</p>
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-6">
-                                                                        <label class="form-label small">Quantity</label>
-                                                                        <input type="number" class="form-control form-control-sm" 
-                                                                               name="fruit_<%= fruit.getId() %>_qty" min="0" max="5" value="0">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                            <% 
+                                                HashMap<String, String> fruitUnitMap = new HashMap<>();
+                                                fruitUnitMap.put("piece", "Piece (pc)");
+                                                fruitUnitMap.put("gram", "Gram (g)");
+                                                fruitUnitMap.put("bunch", "Bunch");
+                                            %>
+                                            <div class="fruit-item card mb-3" >
+                                                <div class="card-body">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
+                                                            <img src="${pageContext.request.contextPath}/img/<%= fruit.getImgName() %>" alt="<%= fruit.getName() %>" class="img-fluid rounded fruit-img">
                                                         </div>
+                                                        <div class="col-md-4 col-sm-9 mb-3 mb-md-0">
+                                                            <h5 class="mb-1"><%= fruit.getName() %></h5>
+                                                            <p class="text-muted mb-0 small">Type: <%= fruit.getType() %></p>
+                                                            <p class="text-muted mb-0 small">Origin: <%=fruit.getCity()%>, <%= fruit.getCountryRegion() %></p>
+
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <%-- <p class="mb-1 small">Available: <span class="text-success">100</span></p> --%>
+                                                            <p class="mb-0 small">Unit: <%=fruitUnitMap.get(fruit.getUnit())%></p>
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6">
+                                                            <label class="form-label small">Quantity</label>
+                                                            <input type="number" class="form-control form-control-sm" 
+                                                                   name="fruit_<%= fruit.getId() %>_qty" min="0" max="10000" value="0">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <%}}%>
                                         </div>
                                     </div>
@@ -145,14 +178,14 @@
                                         <span class="badge bg-secondary">Showing <span id="visibleFruitCount">0</span> of <span id="totalFruitCount">0</span> fruits</span>
                                     </div>
                                 </div>
-                                
+
                                 <!-- Notes -->
                                 <div class="mb-4">
                                     <label for="notes" class="form-label fw-medium">Additional Notes</label>
                                     <textarea class="form-control" id="notes" name="notes" rows="3" 
                                               placeholder="Any specific requirements or comments"></textarea>
                                 </div>
-                                
+
                                 <!-- Buttons -->
                                 <div class="d-flex justify-content-end gap-2 mt-4">
                                     <a href="index.jsp" class="btn btn-outline-secondary">Cancel</a>
@@ -162,7 +195,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Sidebar -->
                 <div class="col-lg-4">
                     <!-- Reservation Summary -->
@@ -179,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Reservation Guidelines -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
@@ -207,11 +240,11 @@
                 </div>
             </div>
         </div>
-        
+
         <%@include file="../../components/store/footer.jsp" %>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
-        
+
         <script src="${pageContext.request.contextPath}/js/store/reserveFruit.js"></script>
     </body>
 </html>
