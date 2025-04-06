@@ -74,6 +74,10 @@ public class reserveFruitController extends HttpServlet {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
             rd.forward(request, response);
+        } else {
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/error.jsp");
+            rd.forward(request, response);
         }
     }
 

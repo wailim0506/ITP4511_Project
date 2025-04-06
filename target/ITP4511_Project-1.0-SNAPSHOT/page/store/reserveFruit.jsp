@@ -147,7 +147,7 @@
                                                 fruitUnitMap.put("gram", "Gram (g)");
                                                 fruitUnitMap.put("bunch", "Bunch");
                                             %>
-                                            <div class="fruit-item card mb-3" >
+                                            <div class="fruit-item card mb-3" data-fruit-name="<%= fruit.getName().toLowerCase() %>">
                                                 <div class="card-body">
                                                     <div class="row align-items-center">
                                                         <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
@@ -166,7 +166,8 @@
                                                         <div class="col-md-3 col-sm-6">
                                                             <label class="form-label small">Quantity</label>
                                                             <input type="number" class="form-control form-control-sm" 
-                                                                   name="fruit_<%= fruit.getId() %>_qty" min="0" max="10000" value="0">
+                                                                   name="fruit_<%= fruit.getId() %>_qty" min="0" max="10000" value="0"
+                                                                   data-unit="<%= fruit.getUnit() %>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -188,6 +189,9 @@
 
                                 <!-- Buttons -->
                                 <div class="d-flex justify-content-end gap-2 mt-4">
+                                    <button type="button" id="resetFormBtn" class="btn btn-outline-danger me-auto">
+                                        <i class="material-icons align-middle me-1 small">refresh</i> Reset All Quantities
+                                    </button>
                                     <a href="index.jsp" class="btn btn-outline-secondary">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Submit Reservation</button>
                                 </div>
@@ -205,11 +209,11 @@
                             <div id="reservationSummary" class="mb-3">
                                 <p class="text-muted text-center py-4">No items selected yet</p>
                             </div>
-                            <hr>
-                            <div class="d-flex justify-content-between">
+                            <%-- <hr> --%>
+                            <%-- <div class="d-flex justify-content-between">
                                 <span>Total Items:</span>
                                 <span id="totalItems">0</span>
-                            </div>
+                            </div> --%>
                         </div>
                     </div>
 
@@ -220,11 +224,11 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">calendar_today</i>
-                                    Reservations must be made 1-14 days in advance
+                                    Reservations will be collected every 14 days automatically (1st-14th, 15th-last day of month)
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">update</i>
-                                    Reservations can be modified up to 24 hours before delivery
+                                    Reservations can be modified on the 13th and the day before the last day of month
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">inventory</i>
@@ -232,7 +236,7 @@
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">swap_horiz</i>
-                                    Unable to find what you need? Try borrowing from nearby shops
+                                    For immediate fruit requirements, we advise borrowing from other shops within the same city
                                 </li>
                             </ul>
                         </div>

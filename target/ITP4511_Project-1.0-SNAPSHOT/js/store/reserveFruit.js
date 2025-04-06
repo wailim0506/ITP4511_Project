@@ -5,6 +5,12 @@
 
 
 $(document).ready(function () {
+    if (!localStorage.getItem('fruitQuantities') || !localStorage.getItem('fruitName') || !localStorage.getItem('fruitUnit')) {
+        InitializeLocalStorage();
+    } else {
+        fillInputBoxWithLocalStorage();
+    }
+
     // Set min and max date for date input
     const today = new Date();
     const tomorrow = new Date(today);
@@ -26,6 +32,7 @@ $(document).ready(function () {
 
     // Update summary when quantity changes
     $('input[type=number]').on('change', function () {
+        updateLocalStorage();
         updateSummary();
     });
 
@@ -47,8 +54,15 @@ $(document).ready(function () {
         window.location.href = url;
     });
 
-    // Initialize fruit count
+    $("#resetFormBtn").on("click", function () {
+        localStorage.removeItem('fruitQuantities');
+        var url = "/ITP4511_Project/reserveFruit?action=listAll";
+        window.location.href = url;
+    });
+
+    // Initialize fruit count and summary
     updateFruitCount();
+    updateSummary();
 
     function filterFruits() {
         var searchText = $('#fruitSearch').val().toLowerCase();
@@ -109,17 +123,25 @@ $(document).ready(function () {
         let summary = '';
         let totalItems = 0;
 
-        $('input[type=number]').each(function () {
-            let qty = parseInt($(this).val());
+        const fruitQuantities = JSON.parse(localStorage.getItem('fruitQuantities')) || {};
+        const fruitNames = JSON.parse(localStorage.getItem('fruitName')) || {};
+        const fruitUnits = JSON.parse(localStorage.getItem('fruitUnit')) || {};
+
+
+        //loop fruitQuantities to get fruit information
+        for (const fruitId in fruitQuantities) {
+            const qty = fruitQuantities[fruitId] || 0;
             if (qty > 0) {
-                let fruitName = $(this).closest('.fruit-item').find('h5').text();
+                const fruitName = fruitNames[fruitId];
+                const unit = fruitUnits[fruitId];
                 summary += `<div class="d-flex justify-content-between mb-2">
-                                          <span>${fruitName}</span>
-                                          <span>${qty} pc</span>
-                                       </div>`;
+                                <span>${fruitName}</span>   
+                                <span>${qty} ${unit}</span>
+                            </div>`;
                 totalItems += qty;
             }
-        });
+        }
+
 
         if (summary === '') {
             $('#reservationSummary').html('<p class="text-muted text-center py-4">No items selected yet</p>');
@@ -127,6 +149,94 @@ $(document).ready(function () {
             $('#reservationSummary').html(summary);
         }
 
-        $('#totalItems').text(totalItems + ' pc');
+        $('#totalItems').text(totalItems);
+    }
+
+    // Also save when using search filter
+    $('#fruitSearch').on('input', function () {
+        filterFruits();
+        // No need to save here as we're not reloading the page
+    });
+
+    function InitializeLocalStorage() {
+        // Initialize local storage for fruit quantities
+        var fruits = {};
+
+        // Loop through all fruit quantity inputs
+        $('input[type=number]').each(function () {
+            var inputName = $(this).attr('name');
+            // Extract fruit ID from the input name pattern "fruit_X_qty"
+            if (inputName && inputName.startsWith('fruit_')) {
+                var fruitId = inputName.split('_')[1];
+                fruits[fruitId] = 0;
+            }
+        });
+
+        // Store in localStorage if needed
+        localStorage.setItem('fruitQuantities', JSON.stringify(fruits));
+
+        var fruitsName = {};
+        //store all fruit name
+        $('input[type=number]').each(function () {
+            var inputName = $(this).attr('name');
+            // Extract fruit ID from the input name pattern "fruit_X_qty"
+            if (inputName && inputName.startsWith('fruit_')) {
+                var fruitId = inputName.split('_')[1];
+                var fruitName = $(this).closest('.fruit-item').find('h5').text();
+                fruitsName[fruitId] = fruitName;
+            }
+        });
+        // Store in localStorage if needed
+        localStorage.setItem('fruitName', JSON.stringify(fruitsName));
+
+        //store fruit unit
+        var fruitsUnit = {};
+        //store all fruit unit
+        $('input[type=number]').each(function () {
+            var inputName = $(this).attr('name');
+            // Extract fruit ID from the input name pattern "fruit_X_qty"
+            if (inputName && inputName.startsWith('fruit_')) {
+                var fruitId = inputName.split('_')[1];
+                var unit = $(this).data('unit');
+                fruitsUnit[fruitId] = unit;
+            }
+        });
+        // Store in localStorage if needed
+        localStorage.setItem('fruitUnit', JSON.stringify(fruitsUnit));
+    }
+
+    function updateLocalStorage() {
+        // Update local storage with current fruit quantities
+        var fruits = JSON.parse(localStorage.getItem('fruitQuantities')) || {};
+
+        // Loop through all fruit quantity inputs
+        $('input[type=number]').each(function () {
+            var inputName = $(this).attr('name');
+            // Extract fruit ID from the input name pattern "fruit_X_qty"
+            if (inputName && inputName.startsWith('fruit_')) {
+                var fruitId = inputName.split('_')[1];
+                var qty = parseInt($(this).val()) || 0;
+                fruits[fruitId] = qty;
+            }
+        });
+
+        // Store in localStorage
+        localStorage.setItem('fruitQuantities', JSON.stringify(fruits));
+    }
+
+    function fillInputBoxWithLocalStorage() {
+        // Fill input boxes with values from local storage
+        var fruits = JSON.parse(localStorage.getItem('fruitQuantities')) || {};
+
+        // Loop through all fruit quantity inputs
+        $('input[type=number]').each(function () {
+            var inputName = $(this).attr('name');
+            // Extract fruit ID from the input name pattern "fruit_X_qty"
+            if (inputName && inputName.startsWith('fruit_')) {
+                var fruitId = inputName.split('_')[1];
+                var qty = fruits[fruitId] || 0;
+                $(this).val(qty);
+            }
+        });
     }
 });
