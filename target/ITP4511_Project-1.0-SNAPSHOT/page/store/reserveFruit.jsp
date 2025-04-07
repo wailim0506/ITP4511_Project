@@ -62,19 +62,6 @@
 
                             <form id="reservationForm" action="/ITP4511_Project/reserveFruit" method="post">
                                 <input type="hidden" name="action" value="submit">
-                                <!-- Date Selection -->
-                                <%-- <div class="mb-4">
-                                    <label class="form-label fw-medium">Delivery Date <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <span class="input-group-text border-0 bg-transparent">
-                                            <i class="material-icons text-muted">event</i>
-                                        </span>
-                                        <input type="date" class="form-control" id="deliveryDate" name="deliveryDate" 
-                                               required>
-                                    </div>
-                                    <div class="form-text">Select a date from tomorrow up to 14 days from now</div>
-                                </div> --%>
-
                                 <!-- Fruit Selection -->
                                 <div class="mb-4">
                                     <label class="form-label fw-medium">Select Fruits <span class="text-danger">*</span></label>

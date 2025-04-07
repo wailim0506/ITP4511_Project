@@ -49,11 +49,8 @@ public class reserveFruitConfirmationPageController extends HttpServlet {
             request.setAttribute("orderDetail", orderDetail);
         }
 
-        // ArrayList<OrderBean> orderItemList = db.getOrderItemById(orderId);
-        ArrayList<OrderBean> orderItems = db.getOrderItemById("O0001");
-        OrderBean orderItem = orderItems.get(1);
-        request.setAttribute("orderItem", orderItem);
-        // request.setAttribute("orderItemList", orderItems);
+        ArrayList<OrderBean> orderItemList = db.getOrderItemById(orderId);
+        request.setAttribute("orderItemList", orderItemList);
 
         rd = getServletContext().getRequestDispatcher("/page/store/reserveFruitConfirmationPage.jsp");
         rd.forward(request, response);

@@ -159,26 +159,31 @@ public class test {
                 // db.insertOrderItem("O0001", "F001", 5);
                 // }
                 // test getOrderById()
-                // OrderBean ob = (OrderBean) db.getOrderById("O0001");
-                // System.out.println("Order ID: " + ob.getId());
-                // System.out.println("Shop ID: " + ob.getShopId());
-                // System.out.println("Order Date: " + ob.getOrderDate());
+                OrderBean ob = (OrderBean) db.getOrderById("O0001");
+                System.out.println("Order ID: " + ob.getId());
+                System.out.println("Shop ID: " + ob.getShopId());
+                System.out.println("Order Date: " + ob.getOrderDate());
+                if (ob.getNotes() == null || ob.getNotes().isEmpty()) {
+                        System.out.println("Notes: No notes provided.");
+                } else {
+                        System.out.println("Notes: " + ob.getNotes());
+                }
                 // System.out.println("Notes: " + ob.getNotes());
-                // System.out.println("Status: " + ob.getStatus());
+                System.out.println("Status: " + ob.getStatus());
 
                 // test getOrderItemById()
-                ArrayList<OrderBean> orderItems = db.getOrderItemById("O0001");
-                System.out.println("Order Items for Order ID: O0001");
-                System.out.println("Total items found: " + orderItems.size());
+                // ArrayList<OrderBean> orderItems = db.getOrderItemById("O0001");
+                // System.out.println("Order Items for Order ID: O0001");
+                // System.out.println("Total items found: " + orderItems.size());
 
-                for (OrderBean item : orderItems) {
-                        System.out.println("Fruit ID: " + item.getFruidId());
-                        System.out.println("Fruit Name: " + item.getFruitName());
-                        System.out.println("Unit: " + item.getUnit());
-                        System.out.println("City: " + item.getCity());
-                        System.out.println("Country Region: " + item.getCountryRegion());
-                        System.out.println("Quantity: " + item.getQty());
-                        System.out.println("---------------------");
-                }
+                // for (OrderBean item : orderItems) {
+                // System.out.println("Fruit ID: " + item.getFruidId());
+                // System.out.println("Fruit Name: " + item.getFruitName());
+                // System.out.println("Unit: " + item.getUnit());
+                // System.out.println("City: " + item.getCity());
+                // System.out.println("Country Region: " + item.getCountryRegion());
+                // System.out.println("Quantity: " + item.getQty());
+                // System.out.println("---------------------");
+                // }
         }
 }

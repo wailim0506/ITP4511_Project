@@ -25,7 +25,6 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
         <link href="${pageContext.request.contextPath}/css/store/reserveFruit.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/store/reserveFruitConfirmationPage.css" rel="stylesheet">
@@ -33,22 +32,20 @@
     <body>
         <%@include file="../../components/store/navBar.jsp" %>
         <% 
+            //get order detail from shop_fruit_order
             OrderBean orderDetail = (OrderBean)request.getAttribute("orderDetail");
-           // out.println("<p>"+orderItemList.size()+"</p>");
             if (orderDetail == null) {
                 throw new Exception();
             }
         %>
-        <jsp:useBean id="orderItem" class="ict.bean.OrderBean" scope="request"/>
-        <%
-            out.println("<p>"+orderItem.getCity()+"</p>");
-        %>
+        <!-- get order item from shop_fruit_order_item -->
+        <jsp:useBean id="orderItemList" class="java.util.ArrayList" scope="request"/>
+
         <div class="container py-4">
             <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
-                <h2 class="display-6 fw-bold text-primary">Reservation Confirmed</h2>
-                <p class="lead">Thank you for your fruit reservation</p>
-                <p class="text-muted small mb-0">Your reservation has been successfully processed and will be ready for collection</p>
+                <h2 class="display-6 fw-bold text-primary">Reservation Submitted</h2>
+                <p class="text-muted small mb-0">Your reservation has been successfully submitted and will be processed</p>
             </div>
 
             <!-- Main Content -->
@@ -61,7 +58,7 @@
                                 <div class="confirmationIcon mb-3">
                                     <i class="material-icons text-success">check_circle</i>
                                 </div>
-                                <h4 class="mb-2">Your Reservation is Confirmed</h4>
+                                <h4 class="mb-2">Your Reservation is Submitted</h4>
                                 <p class="text-muted">Reservation ID: <span class="fw-medium"><%=orderDetail.getId()%></span></p>
                             </div>
                             
@@ -69,16 +66,12 @@
                             <div class="collectionDetails p-3 mb-4 rounded">
                                 <h5 class="mb-3"><i class="material-icons align-middle me-2">calendar_today</i>Collection Details</h5>
                                 <div class="row">
-                                    <%-- <div class="col-md-6 mb-3 mb-md-0">
-                                        <p class="mb-1 fw-medium">Collection Date:</p>
-                                        <p id="collectionDate" class="mb-0"></p>
-                                    </div> --%>
                                     <div class="col-md-6">
                                         <span class="mb-1 fw-medium me-2">Reservation Date:</span>
                                         <span class="mb-0"><%=orderDetail.getOrderDate()%></span>
                                     </div>
                                     <div class="col-md-6">
-                                        <span class="mb-1 fw-medium me-2">Reservation Collection Date:</span>
+                                        <span class="mb-1 fw-medium me-2">Reservation Cut Off Date:</span>
                                         <span class="mb-0" id="reserveCollectDate"></span>
                                     </div>
                                 </div>
@@ -98,31 +91,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Apple</td>
-                                            <td>USA</td>
-                                            <td>10</td>
-                                            <td>kg</td>
-                                            </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Banana</td>
-                                            <td>Malaysia</td>
-                                            <td>5</td>
-                                            <td>kg</td>
-                                        </tr>
+                                        <% 
+                                            HashMap<String, String> fruitUnitMap = new HashMap<>();
+                                            fruitUnitMap.put("piece", "Piece (pc)");
+                                            fruitUnitMap.put("gram", "Gram (g)");
+                                            fruitUnitMap.put("bunch", "Bunch");
+                                            for (int i = 0; i < orderItemList.size(); i++) {
+                                                OrderBean ob = (OrderBean) orderItemList.get(i);
+                                                out.println("<tr>");
+                                                out.println("<td>" + ob.getFruidId() + "</td>");
+                                                out.println("<td>" + ob.getFruitName() + "</td>");
+                                                out.println("<td>" + ob.getCity() + ", " + ob.getCountryRegion() + "</td>");
+                                                out.println("<td>" + ob.getQty() + "</td>");
+                                                out.println("<td>" + fruitUnitMap.get(ob.getUnit()) + "</td>");
+                                                out.println("</tr>");
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                             </div>
                             
                             <!-- Additional Notes -->
-                            <% //if(request.getParameter("notes") != null && !request.getParameter("notes").isEmpty()) { 
-                            if (true){%>
+                            <% if((orderDetail.getNotes() != null) && !orderDetail.getNotes().isEmpty()) { %>
                                 <div class="additionalNotes mb-4">
                                     <h5 class="mb-2"><i class="material-icons align-middle me-2">note</i>Additional Notes</h5>
                                     <div class="p-3 rounded noteContainer">
-                                        <p class="mb-0">Notes Here</p>
+                                        <p class="mb-0"><%=orderDetail.getNotes()%></p>
                                     </div>
                                 </div>
                             <% } %>
@@ -146,15 +140,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">inventory</i>
-                                    Your reservation will be processed and sent to the central warehouse
-                                </li>
-                                <li class="list-group-item border-0 ps-0 py-2">
-                                    <i class="material-icons text-muted align-middle me-2 small">local_shipping</i>
-                                    Fruits will be prepared for delivery on the collection date
-                                </li>
-                                <li class="list-group-item border-0 ps-0 py-2">
-                                    <i class="material-icons text-muted align-middle me-2 small">notifications</i>
-                                    You'll receive a notification when your order is ready for collection
+                                    Your reservation will be processed and sent to the warehouse
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">edit</i>
