@@ -80,7 +80,7 @@ $(document).ready(function () {
         var searchText = $('#fruitSearch').val().toLowerCase();
         var country = $('#countryFilter').val();
 
-        $('.fruit-item').each(function () {
+        $('.fruitItem').each(function () {
             var fruitName = $(this).data('fruit-name').toLowerCase();
             var fruitCategory = $(this).data('category');
 
@@ -118,16 +118,16 @@ $(document).ready(function () {
     }
 
     function updateFruitCount() {
-        var totalFruits = $('.fruit-item').length;
-        var visibleFruits = $('.fruit-item:visible').length;
+        var totalFruits = $('.fruitItem').length;
+        var visibleFruits = $('.fruitItem:visible').length;
 
         $('#visibleFruitCount').text(visibleFruits);
         $('#totalFruitCount').text(totalFruits);
 
         if (visibleFruits < totalFruits) {
-            $('.fruit-results-info').removeClass('d-none');
+            $('.fruitResultInfo').removeClass('d-none');
         } else {
-            $('.fruit-results-info').addClass('d-none');
+            $('.fruitResultInfo').addClass('d-none');
         }
     }
 
@@ -194,7 +194,7 @@ $(document).ready(function () {
             // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
-                var fruitName = $(this).closest('.fruit-item').find('h5').text();
+                var fruitName = $(this).closest('.fruitItem').find('h5').text();
                 fruitsName[fruitId] = fruitName;
             }
         });

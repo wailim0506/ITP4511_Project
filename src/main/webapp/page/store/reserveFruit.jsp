@@ -46,7 +46,7 @@
         %>
         <div class="container py-4">
             <!-- Header Section -->
-            <div class="header-section text-center shadow-sm mb-4">
+            <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Reserve Fruits</h2>
                 <p class="lead">Reserve fruits for your bakery needs in the next 14 days</p>
                 <p class="text-muted small mb-0">Your reservation helps us plan for efficient fruit deliveries</p>
@@ -148,8 +148,8 @@
                                     </div>
 
                                     <!-- Scrollable Container for Fruits -->
-                                    <div class="fruit-selection-container">
-                                        <div class="fruit-selection">
+                                    <div class="fruitSelectionContainer">
+                                        <div class="fruitSelection">
                                             <%
                                                 ArrayList<FruitsBean> fruitsList = (ArrayList<FruitsBean>)request.getAttribute("fruitsList");
                                                 if (fruitsList != null && !fruitsList.isEmpty()) {
@@ -162,7 +162,7 @@
                                                 fruitUnitMap.put("gram", "Gram (g)");
                                                 fruitUnitMap.put("bunch", "Bunch");
                                             %>
-                                            <div class="fruit-item card mb-3" data-fruit-name="<%= fruit.getName().toLowerCase() %>">
+                                            <div class="fruitItem card mb-3" data-fruit-name="<%= fruit.getName().toLowerCase() %>">
                                                 <div class="card-body">
                                                     <div class="row align-items-center">
                                                         <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
@@ -190,7 +190,7 @@
                                             <%}}%>
                                         </div>
                                     </div>
-                                    <div class="text-center mt-2 fruit-results-info d-none">
+                                    <div class="text-center mt-2 fruitResultInfo d-none">
                                         <span class="badge bg-secondary">Showing <span id="visibleFruitCount">0</span> of <span id="totalFruitCount">0</span> fruits</span>
                                     </div>
                                 </div>
