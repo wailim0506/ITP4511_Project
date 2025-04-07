@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 07, 2025 at 02:00 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Apr 07, 2025 at 03:18 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -510,17 +510,8 @@ CREATE TABLE `shop_fruit_order` (
 --
 
 INSERT INTO `shop_fruit_order` (`ID`, `ShopID`, `OrderDate`, `DeliveryDate`, `Status`, `Notes`) VALUES
-('O0001', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0002', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0003', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0004', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0005', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0006', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0007', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0008', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0009', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0010', 'S001', '2025-04-07', NULL, 'Pending', ''),
-('O0011', 'S001', '2025-04-07', NULL, 'Pending', '');
+('O0001', 'S001', '2025-04-07', NULL, 'Pending', 'This is order 1'),
+('O0002', 'S001', '2025-04-07', NULL, 'Pending', '');
 
 -- --------------------------------------------------------
 
@@ -539,18 +530,15 @@ CREATE TABLE `shop_fruit_order_item` (
 --
 
 INSERT INTO `shop_fruit_order_item` (`OrderID`, `FruitID`, `Qty`) VALUES
-('O0001', 'F001', 2),
-('O0001', 'F002', 1),
-('O0002', 'F010', 2),
-('O0003', 'F001', 1),
-('O0004', 'F001', 1),
-('O0005', 'F001', 1),
-('O0006', 'F001', 1),
-('O0007', 'F001', 1),
-('O0008', 'F001', 1),
-('O0009', 'F001', 1),
-('O0010', 'F001', 1),
-('O0011', 'F001', 1);
+('O0001', 'F001', 20),
+('O0001', 'F003', 10),
+('O0001', 'F005', 10),
+('O0001', 'F007', 30),
+('O0001', 'F010', 15),
+('O0002', 'F002', 90),
+('O0002', 'F009', 200),
+('O0002', 'F012', 200),
+('O0002', 'F015', 98);
 
 -- --------------------------------------------------------
 
