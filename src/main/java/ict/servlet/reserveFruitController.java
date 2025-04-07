@@ -129,7 +129,8 @@ public class reserveFruitController extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/reserveFruit?action=listAll");
                     return;
                 }
-                out.println("<p>Reserve successfully!</p>");
+
+                response.sendRedirect(request.getContextPath() + "/rfcp?oid=" + newOrderId);
             }
 
         } else {

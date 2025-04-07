@@ -430,6 +430,35 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+
+    public OrderBean getOrderById(String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderBean ob = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM shop_fruit_order WHERE ID = ? ORDER BY OrderDate DESC ;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopID"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setNotes(rs.getString("Notes"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ob;
+    }
     // for shop_fruit_order
 
     // for shop_fruit_order_item
@@ -454,6 +483,38 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return isSuccess;
+    }
+
+    public ArrayList<OrderBean> getOrderItemById(String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderBean ob = null;
+        ArrayList<OrderBean> orderItemList = new ArrayList<OrderBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT y.ID,y.Name,y.unit,z.City,a.Name AS CountryRegion,x.Qty FROM shop_fruit_order_item x, fruit y, fruit_city z, country_region a WHERE x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = a.ID and x.OrderID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                ob = new OrderBean();
+                ob.setFruidId(rs.getString("ID"));
+                ob.setFruitName(rs.getString("Name"));
+                ob.setUnit(rs.getString("unit"));
+                ob.setCity(rs.getString("City"));
+                ob.setCountryRegion(rs.getString("CountryRegion"));
+                ob.setQty(rs.getInt("Qty"));
+                orderItemList.add(ob);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return orderItemList;
     }
     // for shop_fruit_order_item
 }

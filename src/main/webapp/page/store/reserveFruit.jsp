@@ -11,7 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Reserve Fruit - ACER Shop</title>
+        <title>Reserve Fruit - ACER</title>
         <!-- favicon -->
         <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">

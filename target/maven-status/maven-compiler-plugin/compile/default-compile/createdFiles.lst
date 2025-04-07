@@ -4,6 +4,7 @@ ict\db\ProjectDB.class
 ict\bean\ShopBean.class
 ict\bean\FruitsBean.class
 ict\test\test.class
+ict\servlet\reserveFruitConfirmationPageController.class
 ict\util\PasswordCrypto$CryptoResult.class
 ict\servlet\LoginController.class
 ict\util\PasswordCrypto.class

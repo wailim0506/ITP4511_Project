@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 05, 2025 at 07:32 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Apr 07, 2025 at 02:00 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -505,6 +505,23 @@ CREATE TABLE `shop_fruit_order` (
   `Notes` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `shop_fruit_order`
+--
+
+INSERT INTO `shop_fruit_order` (`ID`, `ShopID`, `OrderDate`, `DeliveryDate`, `Status`, `Notes`) VALUES
+('O0001', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0002', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0003', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0004', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0005', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0006', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0007', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0008', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0009', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0010', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0011', 'S001', '2025-04-07', NULL, 'Pending', '');
+
 -- --------------------------------------------------------
 
 --
@@ -512,10 +529,28 @@ CREATE TABLE `shop_fruit_order` (
 --
 
 CREATE TABLE `shop_fruit_order_item` (
-  `OrderID` char(4) NOT NULL,
+  `OrderID` char(5) NOT NULL,
   `FruitID` char(4) NOT NULL,
   `Qty` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shop_fruit_order_item`
+--
+
+INSERT INTO `shop_fruit_order_item` (`OrderID`, `FruitID`, `Qty`) VALUES
+('O0001', 'F001', 2),
+('O0001', 'F002', 1),
+('O0002', 'F010', 2),
+('O0003', 'F001', 1),
+('O0004', 'F001', 1),
+('O0005', 'F001', 1),
+('O0006', 'F001', 1),
+('O0007', 'F001', 1),
+('O0008', 'F001', 1),
+('O0009', 'F001', 1),
+('O0010', 'F001', 1),
+('O0011', 'F001', 1);
 
 -- --------------------------------------------------------
 
@@ -1901,10 +1936,18 @@ ALTER TABLE `shop_city`
   ADD KEY `FK_shop_city_country_region` (`CountryRegionID`);
 
 --
+-- Indexes for table `shop_fruit_order`
+--
+ALTER TABLE `shop_fruit_order`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ShopID_fk2` (`ShopID`);
+
+--
 -- Indexes for table `shop_fruit_order_item`
 --
 ALTER TABLE `shop_fruit_order_item`
-  ADD PRIMARY KEY (`OrderID`,`FruitID`);
+  ADD PRIMARY KEY (`OrderID`,`FruitID`),
+  ADD KEY `FruitID_fk2` (`FruitID`);
 
 --
 -- Indexes for table `shop_fruit_stock`
@@ -1976,6 +2019,19 @@ ALTER TABLE `shop`
 --
 ALTER TABLE `shop_city`
   ADD CONSTRAINT `FK_shop_city_country_region` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
+
+--
+-- Constraints for table `shop_fruit_order`
+--
+ALTER TABLE `shop_fruit_order`
+  ADD CONSTRAINT `ShopID_fk2` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`);
+
+--
+-- Constraints for table `shop_fruit_order_item`
+--
+ALTER TABLE `shop_fruit_order_item`
+  ADD CONSTRAINT `FruitID_fk2` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`),
+  ADD CONSTRAINT `OrderID_fk2` FOREIGN KEY (`OrderID`) REFERENCES `shop_fruit_order` (`ID`);
 
 --
 -- Constraints for table `shop_fruit_stock`

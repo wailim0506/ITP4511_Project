@@ -8,6 +8,7 @@ import ict.db.ProjectDB;
 import java.util.*;
 import ict.bean.*;
 import ict.util.*;
+import java.time.LocalDate;
 
 /**
  *
@@ -115,18 +116,69 @@ public class test {
                 // }
                 // }
                 // test getFruitByCountry()
-                HashMap<String, String> fruitUnitMap = new HashMap<>();
-                fruitUnitMap.put("piece", "Piece (pcs)");
-                fruitUnitMap.put("gram", "Gram (g)");
-                fruitUnitMap.put("bunch", "Kilogram (kg)");
-                ArrayList<FruitsBean> list = db.getFruitsByCountryAndType("CA", "Single Fruit");
-                for (int i = 0; i < list.size(); i++) {
-                        FruitsBean fb = list.get(i);
-                        System.out.print(fb.getId() + " ");
-                        System.out.print(fb.getName() + " ");
-                        System.out.print(fb.getCountryRegion() + " ");
-                        System.out.println(fb.getImgName());
-                        System.out.println(fruitUnitMap.get(fb.getUnit()));
+                // HashMap<String, String> fruitUnitMap = new HashMap<>();
+                // fruitUnitMap.put("piece", "Piece (pcs)");
+                // fruitUnitMap.put("gram", "Gram (g)");
+                // fruitUnitMap.put("bunch", "Kilogram (kg)");
+                // ArrayList<FruitsBean> list = db.getFruitsByCountryAndType("CA", "Single
+                // Fruit");
+                // for (int i = 0; i < list.size(); i++) {
+                // FruitsBean fb = list.get(i);
+                // System.out.print(fb.getId() + " ");
+                // System.out.print(fb.getName() + " ");
+                // System.out.print(fb.getCountryRegion() + " ");
+                // System.out.println(fb.getImgName());
+                // System.out.println(fruitUnitMap.get(fb.getUnit()));
+                // }
+                // test getAllFruitID()
+                // ArrayList<String> list = db.getAllFruitID();
+                // for (int i = 0; i < list.size(); i++) {
+                // System.out.println(list.get(i));
+                // }
+                // test getNumberOfOrder()
+                // System.out.println(db.getNumberOfOrder());
+                // int currentNumberOfOrder = Integer.parseInt(db.getNumberOfOrder());
+                // String newOrderId = "O";
+                // if (currentNumberOfOrder == 0){
+                // newOrderId += "0001";
+                // } else {
+                // currentNumberOfOrder++;
+                // String orderId = String.valueOf(currentNumberOfOrder);
+                // int length = orderId.length();
+                // for (int i = 0; i < 4 - length; i++) {
+                // newOrderId += "0";
+                // }
+                // newOrderId += orderId;
+                // }
+                // System.out.println(newOrderId);
+                // test createOrder()
+                // boolean f = db.createOrder("O0001","S001" , "2025-04-07", "D");
+                // System.out.println("Today's date is: " + String.valueOf(LocalDate.now()));
+
+                // //test insertOrderItem()
+                // db.insertOrderItem("O0001", "F001", 5);
+                // }
+                // test getOrderById()
+                // OrderBean ob = (OrderBean) db.getOrderById("O0001");
+                // System.out.println("Order ID: " + ob.getId());
+                // System.out.println("Shop ID: " + ob.getShopId());
+                // System.out.println("Order Date: " + ob.getOrderDate());
+                // System.out.println("Notes: " + ob.getNotes());
+                // System.out.println("Status: " + ob.getStatus());
+
+                // test getOrderItemById()
+                ArrayList<OrderBean> orderItems = db.getOrderItemById("O0001");
+                System.out.println("Order Items for Order ID: O0001");
+                System.out.println("Total items found: " + orderItems.size());
+
+                for (OrderBean item : orderItems) {
+                        System.out.println("Fruit ID: " + item.getFruidId());
+                        System.out.println("Fruit Name: " + item.getFruitName());
+                        System.out.println("Unit: " + item.getUnit());
+                        System.out.println("City: " + item.getCity());
+                        System.out.println("Country Region: " + item.getCountryRegion());
+                        System.out.println("Quantity: " + item.getQty());
+                        System.out.println("---------------------");
                 }
         }
 }
