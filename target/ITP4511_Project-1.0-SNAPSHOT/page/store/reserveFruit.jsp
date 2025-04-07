@@ -30,6 +30,20 @@
     </head>
     <body>
         <%@include file="../../components/store/navBar.jsp" %>
+        <%
+            try{
+                String errorMsg = (String) session.getAttribute("errorMsg");
+                if(errorMsg != null && !errorMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<strong>Error!</strong><span>" + errorMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                    session.removeAttribute("errorMsg");
+                }
+            }catch(Exception e){
+            }  
+        %>
         <div class="container py-4">
             <!-- Header Section -->
             <div class="header-section text-center shadow-sm mb-4">
@@ -44,7 +58,7 @@
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
-                            <h4 class="mb-4"><i class="material-icons align-middle me-2">shopping_cart</i>New Reservation</h4>
+                            <h4 class="mb-4"><i class="material-icons align-middle me-2">shopping_cart</i>Make Reservation for <span id="reserveCollectDate"></span></h4>
 
                             <form id="reservationForm" action="/ITP4511_Project/reserveFruit" method="post">
                                 <input type="hidden" name="action" value="submit">

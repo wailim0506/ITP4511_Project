@@ -67,6 +67,29 @@ public class ProjectDB {
         return fruits;
     }
 
+    public ArrayList<String> getAllFruitID() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> fruitIdList = new ArrayList<String>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT ID FROM fruit;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fruitIdList.add(rs.getString("ID"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fruitIdList;
+    }
+
     public ArrayList<FruitsBean> getFruitsByCountryRegion(String id) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -359,4 +382,78 @@ public class ProjectDB {
         return ub;
     }
     // for user table
+
+    // for shop_fruit_order
+    public String getNumberOfOrder() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS num FROM shop_fruit_order";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                return rs.getString("num");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean createOrder(String orderId, String shopId, String orderDate, String notes) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO shop_fruit_order (ID,ShopID,OrderDate,Status,Notes) VALUES(?,?,?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            pStmnt.setString(2, shopId);
+            pStmnt.setString(3, orderDate);
+            pStmnt.setString(4, "Pending");
+            pStmnt.setString(5, notes);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    // for shop_fruit_order
+
+    // for shop_fruit_order_item
+    public boolean insertOrderItem(String orderId, String fruitId, int qty) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO shop_fruit_order_item (OrderID,FruitID,Qty) VALUES(?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            pStmnt.setString(2, fruitId);
+            pStmnt.setInt(3, qty);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    // for shop_fruit_order_item
 }

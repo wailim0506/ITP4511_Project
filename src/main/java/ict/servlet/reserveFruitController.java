@@ -11,6 +11,7 @@ import jakarta.servlet.http.*;
 import ict.db.*;
 import ict.bean.*;
 import java.util.*;
+import java.time.LocalDate;
 
 /**
  *
@@ -75,7 +76,62 @@ public class reserveFruitController extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
             rd.forward(request, response);
         } else if ("submit".equalsIgnoreCase(action)) {
-            response.sendRedirect(request.getContextPath() + "/reserveFruit?action=listAll");
+            HttpSession session = request.getSession(false);
+            ArrayList<String> allFruitID = db.getAllFruitID();
+            ArrayList<String> selectedFruitID = new ArrayList<String>();
+            ArrayList<String> selectedFruitQty = new ArrayList<String>();
+            String notes = request.getParameter("notes");
+            try {
+                for (int i = 0; i < allFruitID.size(); i++) {
+                    String selected = request.getParameter(allFruitID.get(i));
+                    if (selected != null && !selected.equals("0")) {
+                        selectedFruitID.add(allFruitID.get(i));
+                        selectedFruitQty.add(selected);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (selectedFruitID.size() == 0) {
+                session.setAttribute("errorMsg", "Please select at least one fruit to reserve.");
+                response.sendRedirect(request.getContextPath() + "/reserveFruit?action=listAll");
+            } else { // create order
+                int currentNumberOfOrder = Integer.parseInt(db.getNumberOfOrder());
+                String newOrderId = "O";
+                if (currentNumberOfOrder == 0) {
+                    newOrderId += "0001";
+                } else {
+                    currentNumberOfOrder++;
+                    String orderId = String.valueOf(currentNumberOfOrder);
+                    int length = orderId.length();
+                    for (int i = 0; i < 4 - length; i++) {
+                        newOrderId += "0";
+                    }
+                    newOrderId += orderId;
+                }
+
+                UserBean user = (UserBean) session.getAttribute("userInfo");
+                if (db.createOrder(newOrderId, user.getShopId(), String.valueOf(LocalDate.now()),
+                        notes)) {
+                    for (int i = 0; i < selectedFruitID.size(); i++) {
+                        if (db.insertOrderItem(newOrderId, selectedFruitID.get(i),
+                                Integer.parseInt(selectedFruitQty.get(i)))) {
+                            continue;
+                        } else {
+                            session.setAttribute("errorMsg", "Please try again.");
+                            response.sendRedirect(request.getContextPath() + "/reserveFruit?action=listAll");
+                            return;
+                        }
+                    }
+                } else {
+                    session.setAttribute("errorMsg", "Please try again.");
+                    response.sendRedirect(request.getContextPath() + "/reserveFruit?action=listAll");
+                    return;
+                }
+                out.println("<p>Reserve successfully!</p>");
+            }
+
         } else {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/error.jsp");

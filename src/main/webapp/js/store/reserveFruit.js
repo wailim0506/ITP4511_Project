@@ -11,6 +11,8 @@ $(document).ready(function () {
         fillInputBoxWithLocalStorage();
     }
 
+    setReserveDate();
+
     // Set min and max date for date input
     const today = new Date();
     const tomorrow = new Date(today);
@@ -248,5 +250,28 @@ $(document).ready(function () {
                 $(this).val(qty);
             }
         });
+    }
+
+    function setReserveDate() {
+        // Set reserveCollectDate to either the 14th or last day of the month
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+
+        // Calculate the last day of current month
+        const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        if (currentDate <= new Date(currentYear, currentMonth, 14)) {
+            collectDay = 15;
+        }
+        else {
+            collectDay = lastDayOfMonth;
+        }
+
+        const collectDate = new Date(currentYear, currentMonth, collectDay);
+        const formattedDate = collectDate.toISOString().slice(0, 10);
+
+        // Change from .val() to .text() as we're working with a paragraph element, not an input
+        $("#reserveCollectDate").text(formattedDate);
     }
 });
