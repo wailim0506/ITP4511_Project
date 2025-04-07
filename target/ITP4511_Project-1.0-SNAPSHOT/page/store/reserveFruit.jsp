@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import ="ict.bean.*, java.util.*" %>
+<%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -90,6 +91,11 @@
                                                         <option value="all" selected>All Types</option>
                                                         <option value="--" disabled>------------------------------</option>
                                                         <jsp:useBean id="fruitTypeList" class="java.util.ArrayList" scope="request"/>
+                                                        <%
+                                                            if (fruitTypeList.size() == 0) {
+                                                                throw new Exception();
+                                                            }
+                                                        %>
                                                         <%
                                                             for (int i = 0; i < fruitTypeList.size();i++){
                                                                 String type = (String) fruitTypeList.get(i);
