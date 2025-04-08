@@ -210,17 +210,49 @@
                                 }else{
                                     OrderBean ob = (OrderBean) request.getAttribute("orderMadeWithinDate");
                                 %>
-                            <div class="alert alert-info mb-4">
-                                <h5 class="mb-3"><i class="material-icons align-middle me-2">check_circle</i>Reservation already made for <%= request.getAttribute("cutOffDate")%></h5>
-                                <p class="mb-1"><strong>Reserve ID:</strong> <%= ob.getId() %></p>
-                                <p class="mb-1"><strong>Reserve Date:</strong> <%= ob.getOrderDate() %></p>
-                                <p class="mb-1"><strong>Status:</strong> <%= ob.getStatus() %></p>
+                            <div class="card border-0 mb-4">
+                                <div class="card-body p-4">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
+                                            <i class="material-icons text-primary">check_circle</i>
+                                        </div>
+                                        <h5 class="mb-0">Reservation already made for <%= request.getAttribute("cutOffDate") %></h5>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4 mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <i class="material-icons text-muted me-2 small">receipt</i>
+                                                <span class="text-muted">Reserve ID:</span>
+                                            </div>
+                                            <p class="fw-medium mb-0"><%= ob.getId() %></p>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <i class="material-icons text-muted me-2 small">event</i>
+                                                <span class="text-muted">Reserve Date:</span>
+                                            </div>
+                                            <p class="fw-medium mb-0"><%= ob.getOrderDate() %></p>
+                                        </div>
+                                        <div class="col-md-4 mb-2">
+                                            <div class="d-flex align-items-center">
+                                                <i class="material-icons text-muted me-2 small">info</i>
+                                                <span class="text-muted">Status:</span>
+                                            </div>
+                                            <span class="badge <%= ob.getStatus().equals("Pending") ? "bg-warning" : ob.getStatus().equals("Delivered") ? "bg-success" : "bg-primary" %>">
+                                                <%= ob.getStatus() %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center gap-3 mt-3">
+                                        <a href="index.jsp" class="btn btn-outline-secondary px-4">
+                                            <i class="material-icons align-middle me-2 small">home</i>Back to Home
+                                        </a>
+                                        <a href="orderDetail.jsp?orderId=<%= ob.getId() %>" class="btn btn-primary px-4">
+                                            <i class="material-icons align-middle me-2 small">visibility</i>View Order Details
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-center">
-                                <a href="index.jsp" class="btn btn-outline-secondary">Back to Home</a>
-                                <a href="orderDetail.jsp?orderId=<%= ob.getId() %>" class="btn btn-primary">View Order Details</a>
-                            </div>
-
                              <%   }
                             %>
                         </div>

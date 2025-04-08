@@ -152,3 +152,44 @@
   background-color: transparent;
   color: #f8f9fa;
 }
+
+/* Reservation notification styling */
+.reservationNotification {
+  background-color: rgba(var(--bs-body-bg-rgb), 0.6);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .reservationNotification {
+  background-color: rgba(33, 37, 41, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.reservationNotification .iconContainer {
+  background-color: rgba(var(--bs-primary-rgb), 0.1);
+  border-radius: 50%;
+  padding: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+[data-bs-theme="dark"] .reservationNotification .iconContainer {
+  background-color: rgba(var(--bs-primary-rgb), 0.2);
+}
+
+.reservationNotification .statusBadge {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.reservationNotification .actionButton {
+  transition: all 0.2s ease;
+}
+
+.reservationNotification .actionButton:hover {
+  transform: translateY(-2px);
+}
