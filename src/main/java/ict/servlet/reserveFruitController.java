@@ -34,11 +34,62 @@ public class reserveFruitController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+        }
+        UserBean user = (UserBean) session.getAttribute("userInfo");
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+        }
+
         // country region list is need in every action for selection box
         ArrayList<CountryRegionBean> countryRegionList = db.getFruitCountryRegion();
         request.setAttribute("countryRegionList", countryRegionList);
         ArrayList<String> fruitTypeList = db.getFruitType();
         request.setAttribute("fruitTypeList", fruitTypeList);
+
+        HashMap<String, Integer> lastDateOfMonth = new HashMap<>();
+        lastDateOfMonth.put("1", 31);
+        lastDateOfMonth.put("2", 28);
+        lastDateOfMonth.put("3", 31);
+        lastDateOfMonth.put("4", 30);
+        lastDateOfMonth.put("5", 31);
+        lastDateOfMonth.put("6", 30);
+        lastDateOfMonth.put("7", 31);
+        lastDateOfMonth.put("8", 31);
+        lastDateOfMonth.put("9", 30);
+        lastDateOfMonth.put("10", 31);
+        lastDateOfMonth.put("11", 30);
+        lastDateOfMonth.put("12", 31);
+
+        // get today month
+        LocalDate today = LocalDate.now();
+        String todayMonth = String.valueOf(today.getMonthValue());
+        // get today date
+        String todayDate = String.valueOf(today.getDayOfMonth());
+        String cutOffDateStart;
+        String cutOffDateEnd;
+        if (Integer.parseInt(todayDate) <= 14) {
+            cutOffDateStart = String.valueOf(today.getYear()) + "-" + todayMonth + "-01";
+            cutOffDateEnd = String.valueOf(today.getYear()) + "-" + todayMonth + "-14";
+        } else {
+            cutOffDateStart = String.valueOf(today.getYear()) + "-" + todayMonth + "-15";
+            cutOffDateEnd = String.valueOf(today.getYear()) + "-" + todayMonth + "-"
+                    + lastDateOfMonth.get(todayMonth);
+        }
+        // check are there order within
+        boolean haveOrder = db.checkOrderWithinCutOff(user.getShopId(), cutOffDateStart, cutOffDateEnd);
+        if (haveOrder) {
+            request.setAttribute("haveOrder", true);
+            request.setAttribute("cutOffDate", cutOffDateEnd);
+            request.setAttribute("orderMadeWithinDate",
+                    db.getOrderByDate(user.getShopId(), cutOffDateStart, cutOffDateEnd));
+        } else {
+            request.setAttribute("haveOrder", false);
+        }
 
         String action = request.getParameter("action");
         if ("listAll".equalsIgnoreCase(action)) {
@@ -76,7 +127,7 @@ public class reserveFruitController extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/page/store/reserveFruit.jsp");
             rd.forward(request, response);
         } else if ("submit".equalsIgnoreCase(action)) {
-            HttpSession session = request.getSession(false);
+            session = request.getSession(false);
             ArrayList<String> allFruitID = db.getAllFruitID();
             ArrayList<String> selectedFruitID = new ArrayList<String>();
             ArrayList<String> selectedFruitQty = new ArrayList<String>();
@@ -111,7 +162,7 @@ public class reserveFruitController extends HttpServlet {
                     newOrderId += orderId;
                 }
 
-                UserBean user = (UserBean) session.getAttribute("userInfo");
+                user = (UserBean) session.getAttribute("userInfo");
                 if (db.createOrder(newOrderId, user.getShopId(), String.valueOf(LocalDate.now()),
                         notes)) {
                     for (int i = 0; i < selectedFruitID.size(); i++) {

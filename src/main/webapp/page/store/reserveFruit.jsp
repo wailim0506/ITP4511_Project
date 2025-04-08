@@ -52,7 +52,6 @@
                 <p class="lead">Reserve fruits for your bakery needs in the next 14 days</p>
                 <p class="text-muted small mb-0">Your reservation helps us plan for efficient fruit deliveries</p>
             </div>
-
             <!-- Main Content -->
             <div class="row g-4">
                 <!-- Reservation Form -->
@@ -60,7 +59,10 @@
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
                             <h4 class="mb-4"><i class="material-icons align-middle me-2">shopping_cart</i>Make Reservation for <span id="reserveCollectDate"></span></h4>
-
+                            <%
+                                boolean haveOrder = (boolean)request.getAttribute("haveOrder");
+                                if (!haveOrder){                                
+                            %>
                             <form id="reservationForm" action="/ITP4511_Project/reserveFruit" method="post">
                                 <input type="hidden" name="action" value="submit">
                                 <!-- Fruit Selection -->
@@ -204,6 +206,23 @@
                                     <button type="submit" class="btn btn-primary">Submit Reservation</button>
                                 </div>
                             </form>
+                            <%
+                                }else{
+                                    OrderBean ob = (OrderBean) request.getAttribute("orderMadeWithinDate");
+                                %>
+                            <div class="alert alert-info mb-4">
+                                <h5 class="mb-3"><i class="material-icons align-middle me-2">check_circle</i>Reservation already made for <%= request.getAttribute("cutOffDate")%></h5>
+                                <p class="mb-1"><strong>Reserve ID:</strong> <%= ob.getId() %></p>
+                                <p class="mb-1"><strong>Reserve Date:</strong> <%= ob.getOrderDate() %></p>
+                                <p class="mb-1"><strong>Status:</strong> <%= ob.getStatus() %></p>
+                            </div>
+                            <div class="text-center">
+                                <a href="index.jsp" class="btn btn-outline-secondary">Back to Home</a>
+                                <a href="orderDetail.jsp?orderId=<%= ob.getId() %>" class="btn btn-primary">View Order Details</a>
+                            </div>
+
+                             <%   }
+                            %>
                         </div>
                     </div>
                 </div>

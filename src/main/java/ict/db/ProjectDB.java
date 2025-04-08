@@ -459,6 +459,65 @@ public class ProjectDB {
         }
         return ob;
     }
+
+    public boolean checkOrderWithinCutOff(String shopId, String startDate, String endDate) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean haveOrder = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS num FROM shop_fruit_order WHERE ShopID=? AND OrderDate BETWEEN ? AND ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.setString(2, startDate);
+            pStmnt.setString(3, endDate);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                if (rs.getInt("num") > 0) {
+                    haveOrder = true;
+                }
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return haveOrder;
+    }
+
+    public OrderBean getOrderByDate(String shopId, String startDate, String endDate) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderBean ob = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM shop_fruit_order WHERE ShopID=? AND OrderDate BETWEEN ? AND ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.setString(2, startDate);
+            pStmnt.setString(3, endDate);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopID"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setNotes(rs.getString("Notes"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return ob;
+    }
+
     // for shop_fruit_order
 
     // for shop_fruit_order_item

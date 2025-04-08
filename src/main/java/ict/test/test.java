@@ -159,17 +159,17 @@ public class test {
                 // db.insertOrderItem("O0001", "F001", 5);
                 // }
                 // test getOrderById()
-                OrderBean ob = (OrderBean) db.getOrderById("O0001");
-                System.out.println("Order ID: " + ob.getId());
-                System.out.println("Shop ID: " + ob.getShopId());
-                System.out.println("Order Date: " + ob.getOrderDate());
-                if (ob.getNotes() == null || ob.getNotes().isEmpty()) {
-                        System.out.println("Notes: No notes provided.");
-                } else {
-                        System.out.println("Notes: " + ob.getNotes());
-                }
+                // OrderBean ob = (OrderBean) db.getOrderById("O0001");
+                // System.out.println("Order ID: " + ob.getId());
+                // System.out.println("Shop ID: " + ob.getShopId());
+                // System.out.println("Order Date: " + ob.getOrderDate());
+                // if (ob.getNotes() == null || ob.getNotes().isEmpty()) {
+                // System.out.println("Notes: No notes provided.");
+                // } else {
                 // System.out.println("Notes: " + ob.getNotes());
-                System.out.println("Status: " + ob.getStatus());
+                // }
+                // // System.out.println("Notes: " + ob.getNotes());
+                // System.out.println("Status: " + ob.getStatus());
 
                 // test getOrderItemById()
                 // ArrayList<OrderBean> orderItems = db.getOrderItemById("O0001");
@@ -185,5 +185,32 @@ public class test {
                 // System.out.println("Quantity: " + item.getQty());
                 // System.out.println("---------------------");
                 // }
+
+                // LocalDate today = LocalDate.now();
+                // String todayMonth = String.valueOf(today.getMonthValue());
+                // // get today date
+                // String todayDate = String.valueOf(today.getDayOfMonth());
+
+                // System.out.println("Today's date is: " + today);
+                // System.out.println("Today's month is: " + todayMonth);
+                // System.out.println("Today's date is: " + todayDate);
+                // test checkOrderWithinCutOff()
+                // boolean f = db.checkOrderWithinCutOff("S001", "2025-04-01", "2025-04-14");
+                // if (f) {
+                // System.out.println("Order is within cut-off date.");
+                // } else {
+                // System.out.println("Order is not within cut-off date.");
+                // }
+                // test getOrderByDate
+                OrderBean ob = (OrderBean) db.getOrderByDate("S001", "2025-04-01", "2025-04-14");
+                System.out.println("Order ID: " + ob.getId());
+                System.out.println("Shop ID: " + ob.getShopId());
+                System.out.println("Order Date: " + ob.getOrderDate());
+                if (ob.getNotes() == null || ob.getNotes().isEmpty()) {
+                        System.out.println("Notes: No notes provided.");
+                } else {
+                        System.out.println("Notes: " + ob.getNotes());
+                }
+                System.out.println("Status: " + ob.getStatus());
         }
 }
