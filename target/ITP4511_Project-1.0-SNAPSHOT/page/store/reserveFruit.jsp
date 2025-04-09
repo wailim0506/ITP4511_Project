@@ -202,7 +202,7 @@
                                     <button type="button" id="resetFormBtn" class="btn btn-outline-danger me-auto">
                                         <i class="material-icons align-middle me-1 small">refresh</i> Reset
                                     </button>
-                                    <a href="index.jsp" class="btn btn-outline-secondary">Cancel</a>
+                                    <a href="${pageContext.request.contextPath}/page/store/index.jsp" class="btn btn-outline-secondary">Cancel</a>
                                     <button type="submit" class="btn btn-primary">Submit Reservation</button>
                                 </div>
                             </form>
@@ -238,7 +238,7 @@
                                                 <i class="material-icons text-muted me-2 small">info</i>
                                                 <span class="text-muted">Status:</span>
                                             </div>
-                                            <span class="badge <%= ob.getStatus().equals("Pending") ? "bg-warning" : ob.getStatus().equals("Delivered") ? "bg-success" : "bg-primary" %>">
+                                            <span class="badge <%= ob.getStatus().equals("Pending") ? "bg-warning" : ob.getStatus().equals("Processing") ? "bg-success" : "bg-primary" %>">
                                                 <%= ob.getStatus() %>
                                             </span>
                                         </div>

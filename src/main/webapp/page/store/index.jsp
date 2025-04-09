@@ -56,7 +56,7 @@
                             <i class="material-icons card-icon mb-3">bookmark</i>
                             <h5 class="card-title">My Reservations</h5>
                             <p class="card-text text-muted">View and manage current fruit reservations</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">See Reservations</a>
+                            <a href="reserveRecord.jsp" class="btn btn-outline-primary mt-2">See Reservations</a>
                         </div>
                     </div>
                 </div>

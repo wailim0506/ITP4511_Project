@@ -171,6 +171,9 @@ $(document).ready(function () {
     });
 
     function InitializeLocalStorage() {
+        if ($('input[type=number]').length === 0) {
+            return;
+        }
         // Initialize local storage for fruit quantities
         var fruits = {};
 
