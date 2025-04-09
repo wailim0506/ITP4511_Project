@@ -6,8 +6,9 @@
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/ShopBean.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/OrderBean.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/hk/edu/ive/itp4511/itp4511_project/JakartaRestConfiguration.java
-/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/reserveFruitConfirmationPageController.java
-/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/reserveFruitController.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/store/reserveFruitConfirmationPageController.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/store/reserveFruitController.java
+/Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/servlet/store/reserveRecordController.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/hk/edu/ive/itp4511/itp4511_project/resources/JakartaEE10Resource.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/bean/UserBean.java
 /Users/wailim0506/Desktop/ITP4511_Project/src/main/java/ict/db/ProjectDB.java

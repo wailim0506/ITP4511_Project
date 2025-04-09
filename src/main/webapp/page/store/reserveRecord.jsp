@@ -66,7 +66,7 @@
                                             <option value="Pending">Pending</option>
                                             <option value="Processing">Processing</option>
                                             <option value="Delivered">Delivered</option>
-                                            <option value="Completed">Completed</option>
+                                            <option value="Finished">Finished</option>
                                         </select>
                                     </div>
                                 </div>
@@ -113,102 +113,41 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Sample Record 1 -->
-                                            <tr class="reserveRecordItem">
-                                                <td>
-                                                    <span class="fw-medium">O0001</span>
-                                                </td>
-                                                <td>2025-04-01</td>
-                                                <td>2025-04-15</td>
-                                                <td>
-                                                    <span class="badge bg-secondary">8 items</span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-warning text-dark">Pending</span>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex gap-2">
-                                                        <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
-                                                            <i class="material-icons small">visibility</i>
-                                                        </a>
-                                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" title="Cancel Order">
-                                                            <i class="material-icons small">delete</i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            
-                                            <!-- Sample Record 2 -->
-                                            <tr class="reserveRecordItem">
-                                                <td>
-                                                    <span class="fw-medium">O0002</span>
-                                                </td>
-                                                <td>2025-03-15</td>
-                                                <td>2025-03-31</td>
-                                                <td>
-                                                    <span class="badge bg-secondary">12 items</span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-success">Delivered</span>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex gap-2">
-                                                        <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
-                                                            <i class="material-icons small">visibility</i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            
-                                            <!-- Sample Record 3 -->
-                                            <tr class="reserveRecordItem">
-                                                <td>
-                                                    <span class="fw-medium">O0003</span>
-                                                </td>
-                                                <td>2025-03-14</td>
-                                                <td>2025-03-15</td>
-                                                <td>
-                                                    <span class="badge bg-secondary">5 items</span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-primary">Processing</span>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex gap-2">
-                                                        <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
-                                                            <i class="material-icons small">visibility</i>
-                                                        </a>
-                                                        <button class="btn btn-sm btn-outline-warning" data-bs-toggle="tooltip" title="Request Modification">
-                                                            <i class="material-icons small">edit</i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            
-                                            <!-- Sample Record 4 -->
-                                            <tr class="reserveRecordItem">
-                                                <td>
-                                                    <span class="fw-medium">O0004</span>
-                                                </td>
-                                                <td>2025-02-14</td>
-                                                <td>2025-02-28</td>
-                                                <td>
-                                                    <span class="badge bg-secondary">10 items</span>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-secondary">Completed</span>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex gap-2">
-                                                        <a href="#" class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="View Details">
-                                                            <i class="material-icons small">visibility</i>
-                                                        </a>
-                                                        <button class="btn btn-sm btn-outline-info" data-bs-toggle="tooltip" title="Reorder">
-                                                            <i class="material-icons small">refresh</i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <jsp:useBean id="orderList" class="java.util.ArrayList" scope="request"/>
+                                            <jsp:useBean id="orderItemQtyList" class="java.util.ArrayList" scope="request"/>
+                                            <jsp:useBean id="orderCutOffDateList" class="java.util.ArrayList" scope="request"/>
+                                            <%
+                                                HashMap<String,String> statusColorMap = new HashMap<>();
+                                                statusColorMap.put("Pending", "bg-warning text-dark");
+                                                statusColorMap.put("Processing", "bg-primary");
+                                                statusColorMap.put("Delivered", "bg-success");
+                                                statusColorMap.put("Finished", "bg-secondary");
+
+                                                if ((orderList != null && !orderList.isEmpty()) && (orderItemQtyList != null && !orderItemQtyList.isEmpty())) {
+                                                    for (int i = 0; i < orderList.size();i++){
+                                                        OrderBean order = (OrderBean) orderList.get(i);
+                                                        out.println("<tr class='reserveRecordItem'>");
+                                                        out.println("<td><span class='fw-medium'>" + order.getId() + "</span></td>");
+                                                        out.println("<td>" + order.getOrderDate() + "</td>");
+                                                        out.println("<td>" + orderCutOffDateList.get(i) + "</td>");
+                                                        out.println("<td><span class='badge bg-secondary'>" + orderItemQtyList.get(i) + " items</span></td>");
+                                                        out.println("<td><span class=\"badge "+ statusColorMap.get(order.getStatus()) +"\">" + order.getStatus() + "</span></td>");
+                                                        out.println("<td>");
+                                                        out.println("<div class='d-flex gap-2'>");
+                                                        out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='tooltip' title='View Details'>");
+                                                        out.println("<i class='material-icons small'>visibility</i>");
+                                                        out.println("</a>");
+                                                        out.println("<button class='btn btn-sm btn-outline-danger' data-bs-toggle='tooltip' title='Cancel Order'>");
+                                                        out.println("<i class='material-icons small'>delete</i>");
+                                                        out.println("</button>");
+                                                        out.println("</div>");
+                                                        out.println("</td>");
+                                                        out.println("</tr>");
+                                                    }
+                                                } else {
+                                                    out.println("<tr><td colspan='6' class='text-center'>No records found</td></tr>");
+                                                }
+                                            %>
                                         </tbody>
                                     </table>
                                 </div>

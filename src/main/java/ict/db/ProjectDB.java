@@ -7,6 +7,8 @@ package ict.db;
 import java.io.*;
 import java.sql.*;
 import ict.bean.*;
+import jakarta.persistence.criteria.Order;
+
 import java.util.*;
 
 /**
@@ -518,6 +520,37 @@ public class ProjectDB {
         return ob;
     }
 
+    public ArrayList<OrderBean> getAllOrder(String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderBean ob = null;
+        ArrayList<OrderBean> orderList = new ArrayList<OrderBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM shop_fruit_order WHERE ShopID=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopID"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setNotes(rs.getString("Notes"));
+                orderList.add(ob);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
     // for shop_fruit_order
 
     // for shop_fruit_order_item
@@ -574,6 +607,30 @@ public class ProjectDB {
             e.printStackTrace();
         }
         return orderItemList;
+    }
+
+    public int getOrderItemQty(String orderId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int qty = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "Select Count(*) AS qty from shop_fruit_order_item where OrderID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                qty = rs.getInt("qty");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return qty;
     }
     // for shop_fruit_order_item
 }

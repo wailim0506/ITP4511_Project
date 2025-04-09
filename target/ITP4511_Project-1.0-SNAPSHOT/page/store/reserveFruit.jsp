@@ -244,7 +244,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center gap-3 mt-3">
-                                        <a href="index.jsp" class="btn btn-outline-secondary px-4">
+                                        <a href="${pageContext.request.contextPath}/page/store/index.jsp" class="btn btn-outline-secondary px-4">
                                             <i class="material-icons align-middle me-2 small">home</i>Back to Home
                                         </a>
                                         <a href="orderDetail.jsp?orderId=<%= ob.getId() %>" class="btn btn-primary px-4">

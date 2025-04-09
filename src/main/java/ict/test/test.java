@@ -202,15 +202,35 @@ public class test {
                 // System.out.println("Order is not within cut-off date.");
                 // }
                 // test getOrderByDate
-                OrderBean ob = (OrderBean) db.getOrderByDate("S001", "2025-04-01", "2025-04-14");
-                System.out.println("Order ID: " + ob.getId());
-                System.out.println("Shop ID: " + ob.getShopId());
-                System.out.println("Order Date: " + ob.getOrderDate());
-                if (ob.getNotes() == null || ob.getNotes().isEmpty()) {
-                        System.out.println("Notes: No notes provided.");
-                } else {
-                        System.out.println("Notes: " + ob.getNotes());
-                }
-                System.out.println("Status: " + ob.getStatus());
+                // OrderBean ob = (OrderBean) db.getOrderByDate("S001", "2025-04-01",
+                // "2025-04-14");
+                // System.out.println("Order ID: " + ob.getId());
+                // System.out.println("Shop ID: " + ob.getShopId());
+                // System.out.println("Order Date: " + ob.getOrderDate());
+                // if (ob.getNotes() == null || ob.getNotes().isEmpty()) {
+                // System.out.println("Notes: No notes provided.");
+                // } else {
+                // System.out.println("Notes: " + ob.getNotes());
+                // }
+                // System.out.println("Status: " + ob.getStatus());
+                // test getAllOrder()
+                // ArrayList<OrderBean> orderList = db.getAllOrder("S001");
+                // System.out.println("Order List for Shop ID: S001");
+                // System.out.println("Total orders found: " + orderList.size());
+                // for (OrderBean order : orderList) {
+                // System.out.println("Order ID: " + order.getId());
+                // System.out.println("Shop ID: " + order.getShopId());
+                // System.out.println("Order Date: " + order.getOrderDate());
+                // if (order.getNotes() == null || order.getNotes().isEmpty()) {
+                // System.out.println("Notes: No notes provided.");
+                // } else {
+                // System.out.println("Notes: " + order.getNotes());
+                // }
+                // System.out.println("Status: " + order.getStatus());
+                // System.out.println("---------------------");
+                // }
+
+                // test getOrderItemQty()
+                System.out.println(db.getOrderItemQty("O0001"));
         }
 }
