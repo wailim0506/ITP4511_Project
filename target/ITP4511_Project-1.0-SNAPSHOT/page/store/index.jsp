@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="ict.bean.*" %>
+<%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="ict" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -26,7 +27,7 @@
         <link href="${pageContext.request.contextPath}/css/store/index.css" rel="stylesheet">
     </head>
     <body>
-        <%@include file="../../components/store/navBar.jsp" %>
+        <ict:nav userType="shop"/>
         <div class="container py-4">
             <!-- Hero Section -->
             <div class="hero-section text-center shadow-sm">

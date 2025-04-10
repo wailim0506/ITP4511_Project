@@ -5,6 +5,7 @@ ict/bean/FruitsBean.class
 hk/edu/ive/itp4511/itp4511_project/resources/JakartaEE10Resource.class
 ict/bean/CountryRegionBean.class
 ict/servlet/store/reserveFruitController.class
+ict/tag/nav.class
 ict/util/PasswordCrypto.class
 ict/db/ProjectDB.class
 ict/util/PasswordCrypto$CryptoResult.class

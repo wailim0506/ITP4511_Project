@@ -15,7 +15,6 @@ import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 @WebServlet(name = "LoginController", urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
 
@@ -67,7 +66,8 @@ public class LoginController extends HttpServlet {
         String UserIDFromDB = db.getUserID(username);
         byte[] getDecrptionIV = PasswordCrypto.normalizeIv(UserIDFromDB.getBytes("UTF-8"));
         try {
-            if (password.equals(PasswordCrypto.decrypt(passwordFromDB, Base64.getEncoder().encodeToString(getDecrptionIV)))) {
+            if (password.equals(
+                    PasswordCrypto.decrypt(passwordFromDB, Base64.getEncoder().encodeToString(getDecrptionIV)))) {
                 // obtain session from request
                 HttpSession session = request.getSession(true);
                 UserBean bean = db.getUserDetail(username);
@@ -110,7 +110,7 @@ public class LoginController extends HttpServlet {
     }
 
     public void doLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String targetURL = "login.jsp";
+        String targetURL = "index.jsp";
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/" + targetURL);
         rd.forward(request, response);
@@ -124,6 +124,15 @@ public class LoginController extends HttpServlet {
             session.removeAttribute("userInfo");
             // invalidate the session
             session.invalidate();
+
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    cookie.setMaxAge(0);
+                    cookie.setPath("/");
+                    response.addCookie(cookie);
+                }
+            }
         }
         doLogin(request, response);
     }
