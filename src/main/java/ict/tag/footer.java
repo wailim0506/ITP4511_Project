@@ -1,0 +1,106 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/TagHandler.java to edit this template
+ */
+package ict.tag;
+
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.tagext.JspFragment;
+import jakarta.servlet.jsp.tagext.SimpleTagSupport;
+import java.io.IOException;
+import java.util.*;
+
+/**
+ *
+ * @author wailim0506
+ */
+public class footer extends SimpleTagSupport {
+
+    private String userType;
+
+    public void setUserType(String tagType) {
+        this.userType = tagType;
+    }
+
+    @Override
+    public void doTag() throws JspException {
+        JspWriter out = getJspContext().getOut();
+
+        try {
+            if ("shop".equalsIgnoreCase(userType)) {
+                shopFooter(out);
+            } else if ("warehouse".equalsIgnoreCase(userType)) {
+
+            } else {
+
+            }
+
+            JspFragment f = getJspBody();
+            if (f != null) {
+                f.invoke(out);
+            }
+
+        } catch (java.io.IOException ex) {
+            throw new JspException("Error in primeTag tag", ex);
+        }
+    }
+
+    private void shopFooter(JspWriter out) throws IOException {
+
+        out.println(
+                "<div class=\"mt-4 py-3\" style=\"border-top: var(--bs-border-width) solid var(--bs-border-color);\">"
+                        + "    <div class=\"container\">"
+                        + "        <!-- Navigation Links -->"
+                        + "        <nav class=\"nav justify-content-center flex-nowrap\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\""
+                        + "/ITP4511_Project/page/store/index.jsp\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">home</i>"
+                        + "                    <span>Dashboard</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/reserveFruit?action=listAll\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">shopping_cart</i>"
+                        + "                    <span>Reserve</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">bookmark</i>"
+                        + "                    <span>Reservations</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">swap_horiz</i>"
+                        + "                    <span>Borrowed</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">inventory</i>"
+                        + "                    <span>Stock</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">person</i>"
+                        + "                    <span>Profile</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "        </nav>"
+                        + "        <!-- Copyright -->"
+                        + "        <div class=\"text-center text-muted small mt-2\">"
+                        + "            <div class=\"d-flex align-items-center justify-content-center\">"
+                        + "                <i class=\"material-icons small me-1\">bakery_dining</i>"
+                        + "                <span>ACER International Bakery</span>"
+                        + "            </div>"
+                        + "            <p class=\"mb-0 mt-1\">&copy; 2025 ACER. All rights reserved.</p>"
+                        + "        </div>"
+                        + "    </div>"
+                        + "</div>");
+
+    }
+}

@@ -129,7 +129,6 @@ public class LoginController extends HttpServlet {
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     cookie.setMaxAge(0);
-                    cookie.setPath("/");
                     response.addCookie(cookie);
                 }
             }
