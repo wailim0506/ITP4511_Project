@@ -5,19 +5,21 @@
 package ict.servlet.store;
 
 import jakarta.servlet.*;
+
 import java.io.*;
+
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import ict.db.*;
 import ict.bean.*;
+
 import java.util.*;
 import java.time.LocalDate;
 
 /**
- *
  * @author wailim0506
  */
-@WebServlet(name = "reserveFruitServlet", urlPatterns = { "/reserveFruit" })
+@WebServlet(name = "reserveFruitServlet", urlPatterns = {"/reserveFruit"})
 public class reserveFruitController extends HttpServlet {
 
     private ProjectDB db;
@@ -73,11 +75,11 @@ public class reserveFruitController extends HttpServlet {
         String cutOffDateStart;
         String cutOffDateEnd;
         if (Integer.parseInt(todayDate) <= 14) {
-            cutOffDateStart = String.valueOf(today.getYear()) + "-" + todayMonth + "-01";
-            cutOffDateEnd = String.valueOf(today.getYear()) + "-" + todayMonth + "-14";
+            cutOffDateStart = today.getYear() + "-" + todayMonth + "-01";
+            cutOffDateEnd = today.getYear() + "-" + todayMonth + "-14";
         } else {
-            cutOffDateStart = String.valueOf(today.getYear()) + "-" + todayMonth + "-15";
-            cutOffDateEnd = String.valueOf(today.getYear()) + "-" + todayMonth + "-"
+            cutOffDateStart = today.getYear() + "-" + todayMonth + "-15";
+            cutOffDateEnd = today.getYear() + "-" + todayMonth + "-"
                     + lastDateOfMonth.get(todayMonth);
         }
         // check are there order within

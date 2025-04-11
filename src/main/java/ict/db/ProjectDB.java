@@ -8,6 +8,7 @@ import java.io.*;
 import java.sql.*;
 import ict.bean.*;
 import jakarta.persistence.criteria.Order;
+import java.time.LocalDate;
 
 import java.util.*;
 
@@ -550,6 +551,152 @@ public class ProjectDB {
         }
         return orderList;
     }
+
+   public ArrayList<OrderBean> getOrderByDateRange(String shopId, String range) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderBean ob = null;
+        ArrayList<OrderBean> orderList = new ArrayList<>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM shop_fruit_order WHERE ShopID=?";
+            LocalDate today = LocalDate.now();
+            LocalDate startDate = null;
+            LocalDate endDate = null;
+
+            switch (range) {
+                case "currentMonth":
+                    startDate = today.withDayOfMonth(1);
+                    endDate = today.withDayOfMonth(today.lengthOfMonth());
+                    break;
+                case "last90":
+                    startDate = today.minusDays(90);
+                    endDate = today;
+                    break;
+                case "ytd":
+                    startDate = today.withDayOfYear(1);
+                    endDate = today;
+                    break;
+            }
+
+            if (startDate != null && endDate != null) {
+                preQueryStatement += " AND OrderDate BETWEEN ? AND ?";
+            }
+
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            if (startDate != null && endDate != null) {
+                pStmnt.setDate(2, java.sql.Date.valueOf(startDate));
+                pStmnt.setDate(3, java.sql.Date.valueOf(endDate));
+            }
+
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopID"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setNotes(rs.getString("Notes"));
+                orderList.add(ob);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
+    public ArrayList<OrderBean> getOrderByStatus(String shopId, String status) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderBean ob = null;
+        ArrayList<OrderBean> orderList = new ArrayList<OrderBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM shop_fruit_order WHERE ShopID=? AND Status=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.setString(2, status);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopID"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setNotes(rs.getString("Notes"));
+                orderList.add(ob);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
+    public ArrayList<OrderBean> getOrderByStatusAndDateRange(String shopId, String range, String status) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        OrderBean ob = null;
+        ArrayList<OrderBean> orderList = new ArrayList<>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM shop_fruit_order WHERE ShopID=?";
+            LocalDate today = LocalDate.now();
+            LocalDate startDate = null;
+            LocalDate endDate = null;
+
+            switch (range) {
+                case "currentMonth":
+                    startDate = today.withDayOfMonth(1);
+                    endDate = today.withDayOfMonth(today.lengthOfMonth());
+                    break;
+                case "last90":
+                    startDate = today.minusDays(90);
+                    endDate = today;
+                    break;
+                case "ytd":
+                    startDate = today.withDayOfYear(1);
+                    endDate = today;
+                    break;
+            }
+
+            if (startDate != null && endDate != null) {
+                preQueryStatement += " AND OrderDate BETWEEN ? AND ? AND Status=?";
+            }
+
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            if (startDate != null && endDate != null) {
+                pStmnt.setDate(2, java.sql.Date.valueOf(startDate));
+                pStmnt.setDate(3, java.sql.Date.valueOf(endDate));
+            }
+            pStmnt.setString(4, status);
+
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopID"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setNotes(rs.getString("Notes"));
+                orderList.add(ob);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
 
     // for shop_fruit_order
 

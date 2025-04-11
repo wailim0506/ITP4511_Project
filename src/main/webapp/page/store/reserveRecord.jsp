@@ -4,9 +4,11 @@
     Author     : wailim0506
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import ="ict.bean.*, java.util.*" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page import="ict.bean.*, java.util.*" %>
 <%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
+<%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -24,13 +26,14 @@
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+              rel="stylesheet">
 
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
         <link href="${pageContext.request.contextPath}/css/store/reserveRecord.css" rel="stylesheet">
     </head>
     <body>
-        <%@include file="../../components/store/navBar.jsp" %>
+        <nav:nav userType="shop"/>
 
         <div class="container py-4">
             <!-- Header Section -->
@@ -50,36 +53,67 @@
                             <div class="row g-3">
                                 <div class="col-md-4 col-sm-12">
                                     <div class="input-group">
-                                        <span class="input-group-text border-0 bg-transparent">
-                                            <i class="material-icons text-muted">search</i>
-                                        </span>
-                                        <input type="text" class="form-control" id="recordSearch" placeholder="Search by order ID">
+                                                <span class="input-group-text border-0 bg-transparent">
+                                                    <i class="material-icons text-muted">search</i>
+                                                </span>
+                                        <input type="text" class="form-control" id="recordSearch"
+                                               placeholder="Search by order ID">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6">
                                     <div class="input-group">
-                                        <span class="input-group-text border-0 bg-transparent">
-                                            <i class="material-icons text-muted">filter_alt</i>
-                                        </span>
+                                                <span class="input-group-text border-0 bg-transparent">
+                                                    <i class="material-icons text-muted">filter_alt</i>
+                                                </span>
                                         <select class="form-select" id="statusFilter">
-                                            <option value="all" selected>All Status</option>
-                                            <option value="Pending">Pending</option>
-                                            <option value="Processing">Processing</option>
-                                            <option value="Delivered">Delivered</option>
-                                            <option value="Finished">Finished</option>
+                                            <%
+                                                String selectedStatus = (String) request.getAttribute("selectedStatus");
+                                                if (selectedStatus == null) {
+                                                    selectedStatus = "all";
+                                                }
+                                            %>
+                                            <option value="all" <%= "all".equals(selectedStatus) ? "selected" : "" %>>All
+                                                Status
+                                            </option>
+                                            <option value="Pending" <%= "Pending".equals(selectedStatus) ? "selected" : "" %>>
+                                                Pending
+                                            </option>
+                                            <option value="Processing" <%= "Processing".equals(selectedStatus) ? "selected" : "" %>>
+                                                Processing
+                                            </option>
+                                            <option value="Delivered" <%= "Delivered".equals(selectedStatus) ? "selected" : "" %>>
+                                                Delivered
+                                            </option>
+                                            <option value="Finished" <%= "Finished".equals(selectedStatus) ? "selected" : "" %>>
+                                                Finished
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-6">
                                     <div class="input-group">
-                                        <span class="input-group-text border-0 bg-transparent">
-                                            <i class="material-icons text-muted">date_range</i>
-                                        </span>
+                                                <span class="input-group-text border-0 bg-transparent">
+                                                    <i class="material-icons text-muted">date_range</i>
+                                                </span>
                                         <select class="form-select" id="dateRangeFilter">
-                                            <option value="all">All Time</option>
-                                            <option value="currentMonth">Current Month</option>
-                                            <option value="last90">Last 90 Days</option>
-                                            <option value="ytd">Year to Date</option>
+                                            <%
+                                                String selectedDateRange = (String) request.getAttribute("selectedDateRange");
+                                                if (selectedDateRange == null) {
+                                                    selectedDateRange = "all";
+                                                }
+                                            %>
+                                            <option value="all" <%= "all".equals(selectedDateRange) ? "selected" : "" %>>All
+                                                Time
+                                            </option>
+                                            <option value="currentMonth" <%= "currentMonth".equals(selectedDateRange) ? "selected" : "" %>>
+                                                Current Month
+                                            </option>
+                                            <option value="last90" <%= "last90".equals(selectedDateRange) ? "selected" : "" %>>
+                                                Last 90 Days
+                                            </option>
+                                            <option value="ytd" <%= "ytd".equals(selectedDateRange) ? "selected" : "" %>>Year to
+                                                Date
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -97,57 +131,58 @@
                 <div class="col-12">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
-                            <h5 class="mb-3"><i class="material-icons align-middle me-2">receipt_long</i>Reservation History</h5>
-                            
+                            <h5 class="mb-3"><i class="material-icons align-middle me-2">receipt_long</i>Reservation History
+                            </h5>
+
                             <div class="reservationRecordsContainer">
                                 <div class="table-responsive">
                                     <table class="table table-hover align-middle">
                                         <thead>
-                                            <tr class="">
-                                                <th scope="col">Order ID</th>
-                                                <th scope="col">Date Created</th>
-                                                <th scope="col">Cut-off Date</th>
-                                                <th scope="col">Items</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Actions</th>
-                                            </tr>
+                                        <tr class="">
+                                            <th scope="col">Order ID</th>
+                                            <th scope="col">Date Created</th>
+                                            <th scope="col">Cut-off Date</th>
+                                            <th scope="col">Items</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            <jsp:useBean id="orderList" class="java.util.ArrayList" scope="request"/>
-                                            <jsp:useBean id="orderItemQtyList" class="java.util.ArrayList" scope="request"/>
-                                            <jsp:useBean id="orderCutOffDateList" class="java.util.ArrayList" scope="request"/>
-                                            <%
-                                                HashMap<String,String> statusColorMap = new HashMap<>();
-                                                statusColorMap.put("Pending", "bg-warning text-dark");
-                                                statusColorMap.put("Processing", "bg-primary");
-                                                statusColorMap.put("Delivered", "bg-success");
-                                                statusColorMap.put("Finished", "bg-secondary");
+                                        <jsp:useBean id="orderList" class="java.util.ArrayList" scope="request"/>
+                                        <jsp:useBean id="orderItemQtyList" class="java.util.ArrayList" scope="request"/>
+                                        <jsp:useBean id="orderCutOffDateList" class="java.util.ArrayList" scope="request"/>
+                                        <%
+                                            HashMap<String, String> statusColorMap = new HashMap<>();
+                                            statusColorMap.put("Pending", "bg-warning text-dark");
+                                            statusColorMap.put("Processing", "bg-primary");
+                                            statusColorMap.put("Delivered", "bg-success");
+                                            statusColorMap.put("Finished", "bg-secondary");
 
-                                                if ((orderList != null && !orderList.isEmpty()) && (orderItemQtyList != null && !orderItemQtyList.isEmpty())) {
-                                                    for (int i = 0; i < orderList.size();i++){
-                                                        OrderBean order = (OrderBean) orderList.get(i);
-                                                        out.println("<tr class='reserveRecordItem'>");
-                                                        out.println("<td><span class='fw-medium'>" + order.getId() + "</span></td>");
-                                                        out.println("<td>" + order.getOrderDate() + "</td>");
-                                                        out.println("<td>" + orderCutOffDateList.get(i) + "</td>");
-                                                        out.println("<td><span class='badge bg-secondary'>" + orderItemQtyList.get(i) + " items</span></td>");
-                                                        out.println("<td><span class=\"badge "+ statusColorMap.get(order.getStatus()) +"\">" + order.getStatus() + "</span></td>");
-                                                        out.println("<td>");
-                                                        out.println("<div class='d-flex gap-2'>");
-                                                        out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='tooltip' title='View Details'>");
-                                                        out.println("<i class='material-icons small'>visibility</i>");
-                                                        out.println("</a>");
-                                                        out.println("<button class='btn btn-sm btn-outline-danger' data-bs-toggle='tooltip' title='Cancel Order'>");
-                                                        out.println("<i class='material-icons small'>delete</i>");
-                                                        out.println("</button>");
-                                                        out.println("</div>");
-                                                        out.println("</td>");
-                                                        out.println("</tr>");
-                                                    }
-                                                } else {
-                                                    out.println("<tr><td colspan='6' class='text-center'>No records found</td></tr>");
+                                            if ((orderList != null && !orderList.isEmpty()) && (orderItemQtyList != null && !orderItemQtyList.isEmpty())) {
+                                                for (int i = 0; i < orderList.size(); i++) {
+                                                    OrderBean order = (OrderBean) orderList.get(i);
+                                                    out.println("<tr class='reserveRecordItem'>");
+                                                    out.println("<td><span class='fw-medium'>" + order.getId() + "</span></td>");
+                                                    out.println("<td>" + order.getOrderDate() + "</td>");
+                                                    out.println("<td>" + orderCutOffDateList.get(i) + "</td>");
+                                                    out.println("<td><span class='badge bg-secondary'>" + orderItemQtyList.get(i) + " items</span></td>");
+                                                    out.println("<td><span class=\"badge " + statusColorMap.get(order.getStatus()) + "\">" + order.getStatus() + "</span></td>");
+                                                    out.println("<td>");
+                                                    out.println("<div class='d-flex gap-2'>");
+                                                    out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='tooltip' title='View Details'>");
+                                                    out.println("<i class='material-icons small'>visibility</i>");
+                                                    out.println("</a>");
+                                                    out.println("<button class='btn btn-sm btn-outline-danger' data-bs-toggle='tooltip' title='Cancel Order'>");
+                                                    out.println("<i class='material-icons small'>delete</i>");
+                                                    out.println("</button>");
+                                                    out.println("</div>");
+                                                    out.println("</td>");
+                                                    out.println("</tr>");
                                                 }
-                                            %>
+                                            } else {
+                                                out.println("<tr><td colspan='6' class='text-center'>No records found</td></tr>");
+                                            }
+                                        %>
                                         </tbody>
                                     </table>
                                 </div>
@@ -155,7 +190,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Information Panel -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm mt-2">
@@ -164,14 +199,16 @@
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="infoCard p-3 rounded bg-light">
-                                        <h6 class="mb-2"><i class="material-icons align-middle me-2 small">calendar_today</i>Current Reservation Period</h6>
+                                        <h6 class="mb-2"><i class="material-icons align-middle me-2 small">calendar_today</i>Current
+                                            Reservation Period</h6>
                                         <p class="mb-1 small">1st - 14th: Collection on 15th of month</p>
                                         <p class="mb-0 small">15th - End of month: Collection on 1st of next month</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="infoCard p-3 rounded bg-light">
-                                        <h6 class="mb-2"><i class="material-icons align-middle me-2 small">edit_note</i>Modification Rules</h6>
+                                        <h6 class="mb-2"><i class="material-icons align-middle me-2 small">edit_note</i>Modification
+                                            Rules</h6>
                                         <p class="mb-1 small">Modifications allowed on the 13th (for first half period)</p>
                                         <p class="mb-0 small">Or day before month end (for second half period)</p>
                                     </div>
@@ -182,9 +219,10 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Record Details Modal -->
-        <div class="modal fade" id="recordDetailsModal" tabindex="-1" aria-labelledby="recordDetailsModalLabel" aria-hidden="true">
+        <div class="modal fade" id="recordDetailsModal" tabindex="-1" aria-labelledby="recordDetailsModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -217,44 +255,45 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <h6 class="mb-3"><i class="material-icons align-middle me-2 small">shopping_basket</i>Order Items</h6>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="">
-                                    <tr>
-                                        <th>Item</th>
-                                        <th>Origin</th>
-                                        <th>Quantity</th>
-                                        <th>Unit</th>
-                                    </tr>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Origin</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Apple</td>
-                                        <td>Tokyo, Japan</td>
-                                        <td>20</td>
-                                        <td>Piece</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Banana</td>
-                                        <td>Okinawa, Japan</td>
-                                        <td>5</td>
-                                        <td>Bunch</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Orange</td>
-                                        <td>Osaka, Japan</td>
-                                        <td>15</td>
-                                        <td>Piece</td>
-                                    </tr>
+                                <tr>
+                                    <td>Apple</td>
+                                    <td>Tokyo, Japan</td>
+                                    <td>20</td>
+                                    <td>Piece</td>
+                                </tr>
+                                <tr>
+                                    <td>Banana</td>
+                                    <td>Okinawa, Japan</td>
+                                    <td>5</td>
+                                    <td>Bunch</td>
+                                </tr>
+                                <tr>
+                                    <td>Orange</td>
+                                    <td>Osaka, Japan</td>
+                                    <td>15</td>
+                                    <td>Piece</td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div class="notesSection mt-3">
                             <h6 class="mb-2"><i class="material-icons align-middle me-2 small">notes</i>Additional Notes</h6>
-                            <p class="small p-3  rounded">Please ensure the apples are fresh and firm. Prefer greener bananas if possible.</p>
+                            <p class="small p-3  rounded">Please ensure the apples are fresh and firm. Prefer greener bananas if
+                                possible.</p>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -265,7 +304,7 @@
             </div>
         </div>
 
-        <%@include file="../../components/store/footer.jsp" %>
+        <footer:footer userType="shop"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
 

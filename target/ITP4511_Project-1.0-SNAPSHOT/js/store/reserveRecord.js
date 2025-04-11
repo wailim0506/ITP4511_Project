@@ -8,77 +8,59 @@ $(document).ready(function () {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-    // Filter records based on search input
     $("#recordSearch").on("input", function () {
-        filterRecords();
+        filterById();
     });
 
-    // Filter records based on status selection
     $("#statusFilter").on("change", function () {
-        filterRecords();
+        filterByStatusOrDateRange();
     });
 
-    // Filter records based on date range
     $("#dateRangeFilter").on("change", function () {
-        filterRecords();
+        filterByStatusOrDateRange();
     });
 
-    // Reset all filters
     $("#resetFilterBtn").on("click", function () {
-        $("#recordSearch").val("");
-        $("#statusFilter").val("all");
-        $("#dateRangeFilter").val("all");
-        filterRecords();
+        window.location.href = "/ITP4511_Project/reserveRecord?action=listAll"
     });
 
-    // Show record details modal when view button is clicked
     $(".btn-outline-primary").on("click", function (e) {
         e.preventDefault();
         $("#recordDetailsModal").modal("show");
     });
 
-    // Function to filter records based on search input and filters
-    function filterRecords() {
+    function filterById() {
         const searchText = $("#recordSearch").val().toLowerCase();
-        const statusFilter = $("#statusFilter").val();
-        const dateFilter = $("#dateRangeFilter").val();
-
-        let visibleCount = 0;
-        const totalCount = $(".reserveRecordItem").length;
 
         $(".reserveRecordItem").each(function () {
             const orderId = $(this).find("td:first-child span").text().toLowerCase();
-            const dateCreated = $(this).find("td:nth-child(2)").text().toLowerCase();
-            const status = $(this).find("td:nth-child(5) span").text().toLowerCase();
 
-            // Check if record matches search text
-            const matchesSearch = orderId.includes(searchText) || dateCreated.includes(searchText);
+            const matchesSearch = orderId.includes(searchText);
 
-            // Check if record matches status filter
-            const matchesStatus = statusFilter === "all" || status.toLowerCase() === statusFilter.toLowerCase();
-
-            // Check if record matches date filter (simplified for demo)
-            const matchesDate = dateFilter === "all" ||
-                (dateFilter === "current" && dateCreated.includes("2025-04")) ||
-                (dateFilter === "last" && dateCreated.includes("2025-03")) ||
-                (dateFilter === "lastThree" && (
-                    dateCreated.includes("2025-04") ||
-                    dateCreated.includes("2025-03") ||
-                    dateCreated.includes("2025-02")
-                ));
-
-            // Show/hide record based on filters
-            if (matchesSearch && matchesStatus && matchesDate) {
+            if (matchesSearch) {
                 $(this).show();
-                visibleCount++;
             } else {
                 $(this).hide();
             }
         });
+    }
 
-        // Update record count information
-        $("#visibleRecordsCount").text(visibleCount);
-        $("#totalRecordsCount").text(totalCount);
+    function filterByStatusOrDateRange(){
+        var url;
+        var status = $("#statusFilter").val();
+        var dateRange = $("#dateRangeFilter").val();
+
+        if (status === "all" && dateRange === "all") {
+            url = "/ITP4511_Project/reserveRecord?action=listAll";
+        } else if (status === "all" && dateRange !== "all") {
+            url = "/ITP4511_Project/reserveRecord?action=listByDateRange&dateRange=" + dateRange;
+        } else if (status !== "all" && dateRange === "all") {
+            url = "/ITP4511_Project/reserveRecord?action=listByStatus&status=" + status;
+        } else {
+            url = "/ITP4511_Project/reserveRecord?action=listByBoth&status=" + status + "&dateRange=" + dateRange;
+        }
+
+        window.location.href = url;
     }
 });
 

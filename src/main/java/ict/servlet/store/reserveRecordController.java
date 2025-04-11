@@ -4,20 +4,23 @@
  */
 package ict.servlet.store;
 
+import jakarta.persistence.criteria.Order;
 import jakarta.servlet.*;
+
 import java.io.*;
+
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import ict.db.*;
 import ict.bean.*;
+
 import java.util.*;
 import java.time.LocalDate;
 
 /**
- *
  * @author wailim0506
  */
-@WebServlet(name = "reserveRecord", urlPatterns = { "/reserveRecord" })
+@WebServlet(name = "reserveRecord", urlPatterns = {"/reserveRecord"})
 public class reserveRecordController extends HttpServlet {
     private ProjectDB db;
 
@@ -59,39 +62,61 @@ public class reserveRecordController extends HttpServlet {
         lastDateOfMonth.put("12", 31);
 
         String action = request.getParameter("action");
+        ArrayList<OrderBean> orderList = new ArrayList<OrderBean>();
+        ArrayList<Integer> orderItemQtyList = new ArrayList<>();
+        ArrayList<String> orderCutOffDateList = new ArrayList<>();
         if ("listAll".equalsIgnoreCase(action)) {
-            ArrayList<OrderBean> orderList = db.getAllOrder(user.getShopId());
-            ArrayList<Integer> orderItemQtyList = new ArrayList<>();
-            ArrayList<String> orderCutOffDateList = new ArrayList<>();
-            for (int i = 0; i < orderList.size(); i++) {
-                OrderBean ob = orderList.get(i);
-                orderItemQtyList.add(db.getOrderItemQty(ob.getId()));
-            }
-
-            for (int i = 0; i < orderList.size(); i++) {
-                OrderBean ob = orderList.get(i);
-                String orderDate = ob.getOrderDate();
-                String[] split = orderDate.split("-");
-                int orderMonth = Integer.parseInt(split[1]);
-                int orderYear = Integer.parseInt(split[0]);
-                int orderDate2 = Integer.parseInt(split[2]);
-                String cutOffDate;
-
-                if (orderDate2 <= 14) {
-                    cutOffDate = String.valueOf(orderYear) + "-" + String.valueOf(orderMonth) + "-14";
-                } else {
-                    cutOffDate = String.valueOf(orderYear) + "-" + String.valueOf(orderMonth) + "-"
-                            + lastDateOfMonth.get(String.valueOf(orderMonth));
-                }
-                orderCutOffDateList.add(cutOffDate);
-            }
-            request.setAttribute("orderList", orderList);
-            request.setAttribute("orderItemQtyList", orderItemQtyList);
-            request.setAttribute("orderCutOffDateList", orderCutOffDateList);
-
+            orderList = db.getAllOrder(user.getShopId());
+            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+        } else if ("listByDateRange".equalsIgnoreCase(action)) {
+            orderList = db.getOrderByDateRange(user.getShopId(), request.getParameter("dateRange"));
+            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+            request.setAttribute("selectedDateRange", request.getParameter("dateRange"));
+        } else if ("listByStatus".equalsIgnoreCase(action)) {
+            orderList = db.getOrderByStatus(user.getShopId(), request.getParameter("status"));
+            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+            request.setAttribute("selectedStatus", request.getParameter("status"));
+        } else if ("listByBoth".equalsIgnoreCase(action)) {
+            orderList = db.getOrderByStatusAndDateRange(user.getShopId(), request.getParameter("dateRange"), request.getParameter("status"));
+            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+            request.setAttribute("selectedDateRange", request.getParameter("dateRange"));
+            request.setAttribute("selectedStatus", request.getParameter("status"));
+        } else {
             RequestDispatcher rd;
-            rd = getServletContext().getRequestDispatcher("/page/store/reserveRecord.jsp");
+            rd = getServletContext().getRequestDispatcher("/error.jsp");
             rd.forward(request, response);
+        }
+        request.setAttribute("orderList", orderList);
+        request.setAttribute("orderItemQtyList", orderItemQtyList);
+        request.setAttribute("orderCutOffDateList", orderCutOffDateList);
+
+        RequestDispatcher rd;
+        rd = getServletContext().getRequestDispatcher("/page/store/reserveRecord.jsp");
+        rd.forward(request, response);
+    }
+
+    public void twoForLoop(ArrayList<OrderBean> orderList, ArrayList<Integer> orderItemQtyList, ArrayList<String> orderCutOffDateList, HashMap<String, Integer> lastDateOfMonth) {
+        for (int i = 0; i < orderList.size(); i++) {
+            OrderBean ob = orderList.get(i);
+            orderItemQtyList.add(db.getOrderItemQty(ob.getId()));
+        }
+
+        for (int i = 0; i < orderList.size(); i++) {
+            OrderBean ob = orderList.get(i);
+            String orderDate = ob.getOrderDate();
+            String[] split = orderDate.split("-");
+            int orderMonth = Integer.parseInt(split[1]);
+            int orderYear = Integer.parseInt(split[0]);
+            int orderDate2 = Integer.parseInt(split[2]);
+            String cutOffDate;
+
+            if (orderDate2 <= 14) {
+                cutOffDate = orderYear + "-" + orderMonth + "-14";
+            } else {
+                cutOffDate = orderYear + "-" + orderMonth + "-"
+                        + lastDateOfMonth.get(String.valueOf(orderMonth));
+            }
+            orderCutOffDateList.add(cutOffDate);
         }
     }
 

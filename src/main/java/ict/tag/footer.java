@@ -66,7 +66,7 @@ public class footer extends SimpleTagSupport {
                         + "                    <span>Reserve</span>"
                         + "                </div>"
                         + "            </a>"
-                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/reserveRecord?action=listAll\">"
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">bookmark</i>"
                         + "                    <span>Reservations</span>"

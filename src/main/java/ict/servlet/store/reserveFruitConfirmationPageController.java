@@ -6,18 +6,20 @@ package ict.servlet.store;
 
 import jakarta.persistence.criteria.Order;
 import jakarta.servlet.*;
+
 import java.io.*;
+
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import ict.db.*;
 import ict.bean.*;
+
 import java.util.*;
 
 /**
- *
  * @author Wai Lim Fung
  */
-@WebServlet(name = "reserveFruitConfirmationPageController", urlPatterns = { "/rfcp" })
+@WebServlet(name = "reserveFruitConfirmationPageController", urlPatterns = {"/rfcp"})
 public class reserveFruitConfirmationPageController extends HttpServlet {
 
     private ProjectDB db;
