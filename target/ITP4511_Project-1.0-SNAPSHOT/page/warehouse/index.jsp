@@ -8,10 +8,14 @@
 <%@page import="ict.bean.*" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Locale" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>ACER Warehouse Dashboard</title>
         <!-- favicon -->
         <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
@@ -24,17 +28,115 @@
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
-        
+        <link href="${pageContext.request.contextPath}/css/warehouse/index.css" rel="stylesheet">
     </head>
     <body>
+        <%
+            Date currentDate = new Date();
+            SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.ENGLISH);
+            SimpleDateFormat weekdayFormat = new SimpleDateFormat("EEEE", Locale.ENGLISH);
+            SimpleDateFormat dayFormat = new SimpleDateFormat("d", Locale.ENGLISH);
+
+            String month = monthFormat.format(currentDate);
+            String weekday = weekdayFormat.format(currentDate);
+            String day = dayFormat.format(currentDate);
+        %>
         <nav:nav userType="warehouse"/>
-        
-        
-        
-        
-        
+
+
+        <div class="container py-4">
+            <div class="row">
+                <div class="date-box">
+                    <p>
+                        <span class="month"><%= month %></span>
+                        <span class="weekday"><%= weekday %></span>
+                    </p>
+                    <p class="day"><%= day %></p>
+                </div>
+                
+                <div class="statistics-box">
+                    
+                </div>
+            </div>
+
+
+            <!-- Dashboard Cards -->
+            <div class="row g-4 py-4">
+                <!-- Inventory -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">inventory_2</i>
+                            <h5 class="card-title">Inventory</h5>
+                            <p class="card-text text-muted">#</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">#</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">receipt_long</i>
+                            <h5 class="card-title">Order</h5>
+                            <p class="card-text text-muted">#</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">#</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delivery -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">local_shipping</i>
+                            <h5 class="card-title">Delivery</h5>
+                            <p class="card-text text-muted">#</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">#</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Borrow Request -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">send</i>
+                            <h5 class="card-title">Borrow Requests</h5>
+                            <p class="card-text text-muted">Handle borrow requests from other shops</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">Manage Requests</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">account_circle</i>
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text text-muted">View and update profile information</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Staffing -->
+                <div class="col-lg-4 col-md-6 mx-auto">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">manage_accounts</i>
+                            <h5 class="card-title">Staffing</h5>
+                            <p class="card-text text-muted">View users associated with the system</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">View Users</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <footer:footer userType="warehouse"/>
         <i id="darkModeToogle" class="material-icons"
-        style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
+           style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
     </body>
 </html>
