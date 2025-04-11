@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="ict.bean.*" %>
+<%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
+<%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,13 +27,13 @@
         
     </head>
     <body>
-        <%@include file="../../components/warehouse/navBar.jsp" %>
+        <nav:nav userType="warehouse"/>
         
         
         
         
         
-        <%@include file="../../components/warehouse/footer.jsp" %>
+        <footer:footer userType="warehouse"/>
         <i id="darkModeToogle" class="material-icons"
         style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
     </body>
