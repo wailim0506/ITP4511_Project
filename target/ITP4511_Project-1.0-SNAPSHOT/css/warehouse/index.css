@@ -11,19 +11,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     cursor: pointer;
     height: 100%;
 }
+
 .dashboard-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
+
 .card-icon {
     font-size: 48px;
 }
+
 [data-bs-theme="light"] .hero-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
+
 [data-bs-theme="dark"] .hero-section {
     background: linear-gradient(135deg, #212529 0%, #343a40 100%);
 }
+
 .hero-section {
     padding: 3rem 0;
     margin-bottom: 2rem;
@@ -49,12 +54,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .date-box {
+    flex: 1;
     border-radius: 15px;
     padding: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     text-align: center;
     background-color: #ffffff;
-    width: 20%;
     height: 12rem;
     margin-bottom: 2rem;
 }
@@ -75,4 +80,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     font-size: 70px;
     font-weight: bold;
     color: #007bff;
+}
+
+.statistics-box{
+    flex: 4;
+    height: 350px;
+    width: 100%;
+}
+
+.date-statistics-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 150px;
+    align-items: center;
+    width: 100%;
+    padding-left: 100px;
 }

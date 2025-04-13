@@ -618,7 +618,20 @@ CREATE TABLE `shop_fruit_order` (
 
 INSERT INTO `shop_fruit_order` (`ID`, `ShopID`, `OrderDate`, `DeliveryDate`, `Status`, `Notes`) VALUES
 ('O0001', 'S001', '2025-04-07', NULL, 'Pending', 'This is order 1'),
-('O0002', 'S001', '2025-04-07', NULL, 'Pending', '');
+('O0002', 'S001', '2025-04-07', NULL, 'Pending', ''),
+('O0003', 'S001', '2025-04-01', NULL, 'Pending', 'This is order 3'),
+('O0004', 'S001', '2025-04-02', NULL, 'Pending', 'This is order 4'),
+('O0005', 'S001', '2025-04-03', NULL, 'Pending', 'This is order 5'),
+('O0006', 'S001', '2025-04-04', NULL, 'Pending', 'This is order 6'),
+('O0007', 'S001', '2025-04-05', NULL, 'Pending', 'This is order 7'),
+('O0008', 'S001', '2025-04-06', NULL, 'Pending', 'This is order 8'),
+('O0009', 'S001', '2025-04-07', NULL, 'Pending', 'This is order 9'),
+('O0010', 'S001', '2025-04-08', NULL, 'Pending', 'This is order 10'),
+('O0011', 'S001', '2025-04-09', NULL, 'Pending', 'This is order 11'),
+('O0012', 'S001', '2025-04-10', NULL, 'Pending', 'This is order 12'),
+('O0013', 'S001', '2025-04-11', NULL, 'Pending', 'This is order 13'),
+('O0014', 'S001', '2025-04-12', NULL, 'Pending', 'This is order 14'),
+('O0015', 'S001', '2025-04-13', NULL, 'Pending', 'This is order 15');
 
 -- --------------------------------------------------------
 

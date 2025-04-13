@@ -11,6 +11,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,6 +30,8 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
         <link href="${pageContext.request.contextPath}/css/warehouse/index.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="${pageContext.request.contextPath}/js/warehouse/chart.js"></script>
     </head>
     <body>
         <%
@@ -45,7 +48,8 @@
 
 
         <div class="container py-4">
-            <div class="row">
+            <!-- Today & line chart -->
+            <div class="date-statistics-box">
                 <div class="date-box">
                     <p>
                         <span class="month"><%= month %></span>
@@ -55,7 +59,7 @@
                 </div>
                 
                 <div class="statistics-box">
-                    
+                    <canvas id="orderChart"></canvas>
                 </div>
             </div>
 
@@ -98,18 +102,6 @@
                     </div>
                 </div>
 
-                <!-- Borrow Request -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">send</i>
-                            <h5 class="card-title">Borrow Requests</h5>
-                            <p class="card-text text-muted">Handle borrow requests from other shops</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Manage Requests</a>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Profile -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
@@ -133,10 +125,38 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Empty -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">        
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <footer:footer userType="warehouse"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
+        
+        <!-- Order Statistics -->
+        <script>
+            const orderData = [
+                <%
+                    List<OrderBean> orderList = (List<OrderBean>) request.getAttribute("orderList");
+                    if (orderList != null) {
+                        for (int i = 0; i < orderList.size(); i++) {
+                            OrderBean order = orderList.get(i);
+                            out.print("{ date: \"" + order.getOrderDate() + "\", total: " + order.getQty() + " }");
+                            if (i < orderList.size() - 1) {
+                                out.print(",");
+                            }
+                        }
+                    }
+                %>
+            ];
+
+            renderOrderChart(orderData);
+        </script>
     </body>
 </html>

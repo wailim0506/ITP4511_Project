@@ -824,4 +824,36 @@ public class ProjectDB {
         return isSuccess;
     }
     // for shop_fruit_order_item
+
+    public List<OrderBean> getStatistics() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        List<OrderBean> orderList = new ArrayList<>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT DATE(OrderDate) AS OrderDate, COUNT(*) AS total " +
+                                      "FROM shop_fruit_order " +
+                                      "WHERE OrderDate >= NOW() - INTERVAL 7 DAY " +
+                                      "GROUP BY DATE(OrderDate) " +
+                                      "ORDER BY DATE(OrderDate);";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                OrderBean ob = new OrderBean();
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setQty(rs.getInt("total"));
+                orderList.add(ob);
+            }
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (pStmnt != null) pStmnt.close();
+                if (cnnct != null) cnnct.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return orderList;
+    }
 }
