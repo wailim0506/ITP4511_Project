@@ -38,25 +38,63 @@ $(document).ready(function () {
 
         var modal = $(this).closest('.modal');
         modal.find('.modal-footer .submitBtn').toggleClass('d-none');
+        modal.find('.addItem').toggleClass('d-none');
 
         var theadtr = modal.find('thead tr');
         theadtr.find('.actionCol').toggleClass('d-none');
+        $(this).toggleClass('d-none');
+
     });
 
     $('.deleteItemBtn').on('click', function () {
-        var itemId = $(this).data('item-id');
         var row = $(this).closest('tr');
         row.remove(); // Remove the row from the table
+    });
 
-        // Track deleted items
-        var modal = $(this).closest('.modal');
-        var deletedItemsInput = modal.find('input[name="deletedItems"]');
-        if (deletedItemsInput.length === 0) {
-            modal.find('form').append('<input type="hidden" name="deletedItems" value="' + itemId + '">');
-        } else {
-            var currentValue = deletedItemsInput.val();
-            deletedItemsInput.val(currentValue + ',' + itemId);
+
+    // Rebind delete functionality for dynamically added rows
+    $(document).on('click', '.deleteItemBtn', function () {
+        $(this).closest('tr').remove();
+    });
+
+    $('.addNewItemBtn').on('click', function () {
+        const modal = $(this).closest('.modal'); // Scope to the specific modal
+        const selectedFruit = modal.find('.newFruitSelect option:selected');
+        const fruitId = selectedFruit.val();
+        const fruitName = selectedFruit.data('name');
+        const fruitOrigin = selectedFruit.data('origin');
+        const fruitUnit = selectedFruit.data('unit');
+        const fruitQty = modal.find('.newFruitQty').val();
+
+        if (!fruitId || !fruitQty || fruitQty <= 0) {
+            alert('Please select a fruit and enter a valid quantity.');
+            return;
         }
+
+        const newRow = `
+            <tr>
+                <td>${fruitName}</td>
+                <td>${fruitOrigin}</td>
+                <td class='readQty d-none'>${fruitQty}</td>
+                <td class='editQty'>
+                    <input class="form-control w-50 h-25" value="${fruitQty}" name="${fruitId}">
+                </td>
+                <td>${fruitUnit}</td>
+                <td class='editQty'>
+                    <button type="button" class="btn btn-danger btn-sm deleteItemBtn">
+                        <i class="material-icons small">delete</i>
+                    </button>
+                </td>
+            </tr>
+        `;
+        modal.find('tbody.orderItemsTable').append(newRow); // Append the new row to the correct table body
+        modal.find('.newFruitSelect').val(''); // Reset the selection box
+        modal.find('.newFruitQty').val(''); // Reset the quantity input
+    });
+
+    // Rebind delete functionality for dynamically added rows
+    $(document).on('click', '.deleteItemBtn', function () {
+        $(this).closest('tr').remove();
     });
 
     function filterById() {

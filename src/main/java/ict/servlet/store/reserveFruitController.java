@@ -193,8 +193,20 @@ public class reserveFruitController extends HttpServlet {
             ArrayList<String> newOrderItemQty = new ArrayList<String>();
             ArrayList<String> deleteItemID = new ArrayList<String>();
             ArrayList<String> toRemove = new ArrayList<>();
+            ArrayList<String> newItemId = new ArrayList<>();
+            ArrayList<String> newItemQty = new ArrayList<>();
+            ArrayList<String> allId = db.getAllFruitID();
             for (int i = 0; i < orderItemList.size(); i++) {
                 orderItemID.add(orderItemList.get(i).getFruidId());
+                allId.remove(orderItemList.get(i).getFruidId());
+            }
+
+            for (int i = 0; i < allId.size(); i++) {
+                String selected = request.getParameter(allId.get(i));
+                if (selected != null && !selected.equals("0")) {
+                    newItemId.add(allId.get(i));
+                    newItemQty.add(selected);
+                }
             }
 
             for (int i = 0; i < orderItemID.size(); i++) {
@@ -202,7 +214,7 @@ public class reserveFruitController extends HttpServlet {
                 String qty = request.getParameter(fruitId);
                 if (qty == null || qty.trim().isEmpty()) {
                     deleteItemID.add(fruitId);
-                    toRemove.add(fruitId); // Mark for removal
+                    toRemove.add(fruitId);
                 } else {
                     newOrderItemQty.add(qty);
                 }
@@ -211,12 +223,29 @@ public class reserveFruitController extends HttpServlet {
 
             boolean UpdateQtyresult = false;
             boolean deleteItemResult = false;
+            boolean insertItemResult = false;
+            for (int i = 0; i < newItemId.size(); i++) {
+                insertItemResult = db.insertOrderItem(orderId, newItemId.get(i),
+                        Integer.parseInt(newItemQty.get(i)));
+                if (!insertItemResult) {
+                    break;
+                }
+            }
+
+            if (newItemId.size() <= 0) {
+                insertItemResult = true;
+            }
+
             for (int i = 0; i < newOrderItemQty.size(); i++) {
                 UpdateQtyresult = db.updateOrderItemQty(orderId, orderItemID.get(i),
                         Integer.parseInt(newOrderItemQty.get(i)));
                 if (!UpdateQtyresult) {
                     break;
                 }
+            }
+
+            if (newOrderItemQty.size() <= 0) {
+                UpdateQtyresult = true;
             }
 
             for (int i = 0; i < deleteItemID.size(); i++) {
@@ -226,13 +255,17 @@ public class reserveFruitController extends HttpServlet {
                 }
             }
 
-            if (!UpdateQtyresult || !deleteItemResult) {
+            if (deleteItemID.size() <= 0) {
+                deleteItemResult = true;
+            }
+
+            if (!UpdateQtyresult || !deleteItemResult || !insertItemResult) {
                 session.setAttribute("errorMsg", "Please try again.");
                 response.sendRedirect(request.getContextPath() +
                         "/reserveRecord?action=listAll");
                 return;
             } else {
-                session.setAttribute("successMsg", "Order item updated successfully.");
+                session.setAttribute("successMsg", "Order Edited successfully.");
                 response.sendRedirect(request.getContextPath() +
                         "/reserveRecord?action=listAll");
                 return;

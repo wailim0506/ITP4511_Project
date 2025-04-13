@@ -87,6 +87,10 @@ public class reserveRecordController extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/error.jsp");
             rd.forward(request, response);
         }
+
+        ArrayList<FruitsBean> fruitsList = db.getAllFruit();
+        request.setAttribute("fruitsList", fruitsList);
+
         request.setAttribute("orderList", orderList);
         request.setAttribute("orderItemQtyList", orderItemQtyList);
         request.setAttribute("orderCutOffDateList", orderCutOffDateList);

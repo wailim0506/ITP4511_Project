@@ -176,7 +176,7 @@
                                             <th scope="col">Actions</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="orderItemsTable">
                                         <jsp:useBean id="orderList" class="java.util.ArrayList" scope="request"/>
                                         <jsp:useBean id="orderItemQtyList" class="java.util.ArrayList" scope="request"/>
                                         <jsp:useBean id="orderCutOffDateList" class="java.util.ArrayList" scope="request"/>
@@ -261,7 +261,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="recordDetailsModalLabel<%= order.getId() %>">Order Details - <%= order.getId() %></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="window.location.href = '/ITP4511_Project/reserveRecord?action=listAll';"></button>
                         </div>
                         <div class="modal-body">
                             <div class="orderInfoSection mb-4">
@@ -316,18 +316,18 @@
                                             <th class="actionCol d-none">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="orderItemsTable">
                                         <% for (OrderBean item : items) { %>
                                         <tr>
                                             <td><%= item.getFruitName() %></td>
                                             <td><%= item.getCity() %>, <%= item.getCountryRegion() %></td>
                                             <td class='readQty'><%= item.getQty() %></td>
                                             <td class='d-none editQty'>
-                                                <input class="form-control w-25 h-25" value="<%= item.getQty() %>" name="<%=item.getFruidId()%>">
+                                                <input type="number" class="form-control w-50 h-25" value="<%= item.getQty() %>" name="<%=item.getFruidId()%>">
                                             </td>
                                             <td><%= item.getUnit() %></td>
                                             <td class='d-none editQty'>
-                                                <button type="button" class="btn btn-danger btn-sm deleteItemBtn" data-item-id="<%= item.getFruidId() %>">
+                                                <button type="button" class="btn btn-danger btn-sm deleteItemBtn">
                                                     <i class="material-icons small">delete</i>
                                                 </button>
                                             </td>
@@ -335,6 +335,39 @@
                                         <% } %>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="d-none addItem">
+                                <div class="row g-3 align-items-center mb-3">
+                                    <div class="col-md-6">
+                                        <select class="form-select newFruitSelect">
+                                            <option value="" disabled selected>Select a fruit</option>
+                                            <%
+                                            ArrayList<FruitsBean> fruitsList = (ArrayList<FruitsBean>) request.getAttribute("fruitsList");
+                                            ArrayList<OrderBean> items2 = (ArrayList<OrderBean>) orderItemList.get(i);
+                                            HashSet<String> existingFruitIds = new HashSet<>();
+                                            for (OrderBean item : items2) {
+                                                existingFruitIds.add(item.getFruidId());
+                                            }
+                                            if (fruitsList != null && !fruitsList.isEmpty()) {
+                                                for (int u = 0; u < fruitsList.size(); u++) {
+                                                    FruitsBean fruit = fruitsList.get(u);
+                                                    if (!existingFruitIds.contains(fruit.getId())) {
+                                                        out.println("<option value='" + fruit.getId() + "' data-origin='" + fruit.getCity() + ", " + fruit.getCountryRegion() + "' data-unit='" + fruit.getUnit() + "' data-name='" + fruit.getName() + "'>" + fruit.getName() + " - " + fruit.getCity() + ", " + fruit.getCountryRegion() + "</option>");
+                                                    }
+                                                }
+                                            }
+                                            %>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" class="form-control newFruitQty" placeholder="Quantity" min="1">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-success addNewItemBtn">
+                                            <i class="material-icons small">add</i> Add
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                             <div class="notesSection mt-3">
                                 <h6 class="mb-2"><i class="material-icons align-middle me-2 small">notes</i>Additional Notes</h6>
