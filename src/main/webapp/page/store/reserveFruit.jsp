@@ -249,7 +249,7 @@
                                         <a href="${pageContext.request.contextPath}/page/store/index.jsp" class="btn btn-outline-secondary px-4">
                                             <i class="material-icons align-middle me-2 small">home</i>Back to Home
                                         </a>
-                                        <a href="orderDetail.jsp?orderId=<%= ob.getId() %>" class="btn btn-primary px-4">
+                                        <a href="/ITP4511_Project/reserveRecord?action=listAll" class="btn btn-primary px-4">
                                             <i class="material-icons align-middle me-2 small">visibility</i>View Order Details
                                         </a>
                                     </div>
@@ -288,13 +288,13 @@
                                     Reservations will be collected every 14 days automatically (1st-14th, 15th-last day of month)
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
-                                    <i class="material-icons text-muted align-middle me-2 small">update</i>
-                                    Reservations can be modified on the 13th and the day before the last day of month
+                                    <i class="material-icons text-muted align-middle me-2 small">edit</i>
+                                    Reservations can be modified only when the status is "Pending"
                                 </li>
-                                <li class="list-group-item border-0 ps-0 py-2">
+                                <%-- <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">inventory</i>
                                     Quantity is limited to current stock availability
-                                </li>
+                                </li> --%>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">swap_horiz</i>
                                     For immediate fruit requirements, we advise borrowing from other shops within the same city

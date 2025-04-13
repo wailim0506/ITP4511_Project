@@ -1,0 +1,86 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2025年4月13日, 下午5:53:22
+    Author     : Wai Lim Fung
+*/
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.headerSection {
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.fruitSelectionContainer {
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+}
+
+.fruitSelection {
+  padding: 0.5rem;
+}
+
+.fruit-img {
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+}
+
+.icon-container {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fruitItem {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fruitItem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.shopCard {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.shopCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark mode specific styles */
+[data-bs-theme="dark"] .headerSection,
+[data-bs-theme="dark"] .fruitSelectionContainer {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Improved card visibility in dark mode */
+[data-bs-theme="dark"] .card {
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-bs-theme="dark"] .fruitItem {
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-bs-theme="dark"] .fruitItem:hover {
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
