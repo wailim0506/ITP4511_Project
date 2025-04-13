@@ -19,7 +19,7 @@ import java.time.LocalDate;
 /**
  * @author wailim0506
  */
-@WebServlet(name = "reserveFruitServlet", urlPatterns = {"/reserveFruit"})
+@WebServlet(name = "reserveFruitServlet", urlPatterns = { "/reserveFruit" })
 public class reserveFruitController extends HttpServlet {
 
     private ProjectDB db;
@@ -186,6 +186,36 @@ public class reserveFruitController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/rfcp?oid=" + newOrderId);
             }
 
+        } else if ("modifyOrder".equalsIgnoreCase(action)) {
+            String orderId = request.getParameter("oid");
+            ArrayList<OrderBean> orderItemList = db.getOrderItemById(orderId);
+            ArrayList<String> orderItemID = new ArrayList<String>();
+            ArrayList<String> orderItemQty = new ArrayList<String>();
+            for (int i = 0; i < orderItemList.size(); i++) {
+                orderItemID.add(orderItemList.get(i).getFruidId());
+            }
+
+            for (int i = 0; i < orderItemID.size(); i++) {
+                orderItemQty.add(request.getParameter(orderItemID.get(i)));
+            }
+            boolean result = false;
+            for (int i = 0; i < orderItemQty.size(); i++) {
+                result = db.updateOrderItemQty(orderId, orderItemID.get(i),
+                        Integer.parseInt(orderItemQty.get(i)));
+                if (!result) {
+                    break;
+                }
+            }
+
+            if (!result) {
+                session.setAttribute("errorMsg", "Please try again.");
+                response.sendRedirect(request.getContextPath() + "/reserveRecord?action=listAll");
+                return;
+            } else {
+                session.setAttribute("successMsg", "Order item updated successfully.");
+                response.sendRedirect(request.getContextPath() + "/reserveRecord?action=listAll");
+                return;
+            }
         } else {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/error.jsp");

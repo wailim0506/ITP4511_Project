@@ -552,7 +552,7 @@ public class ProjectDB {
         return orderList;
     }
 
-   public ArrayList<OrderBean> getOrderByDateRange(String shopId, String range) {
+    public ArrayList<OrderBean> getOrderByDateRange(String shopId, String range) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         OrderBean ob = null;
@@ -697,7 +697,6 @@ public class ProjectDB {
         return orderList;
     }
 
-
     // for shop_fruit_order
 
     // for shop_fruit_order_item
@@ -778,6 +777,29 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return qty;
+    }
+
+    public boolean updateOrderItemQty(String orderId, String fruitId, int qty) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "Update shop_fruit_order_item SET Qty = ? WHERE OrderID = ? AND FruitID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, qty);
+            pStmnt.setString(2, orderId);
+            pStmnt.setString(3, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
     }
     // for shop_fruit_order_item
 }

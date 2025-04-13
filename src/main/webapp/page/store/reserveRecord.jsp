@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@page import="ict.bean.*, java.util.*" %>
+<%@ page import="java.lang.reflect.Array" %>
+<%@ page import="jakarta.persistence.criteria.Order" %>
 <%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
@@ -34,6 +36,33 @@
     </head>
     <body>
         <nav:nav userType="shop"/>
+        <%
+            try{
+                String errorMsg = (String) session.getAttribute("errorMsg");
+                if(errorMsg != null && !errorMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + errorMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                    session.removeAttribute("errorMsg");
+                }
+            }catch(Exception e){
+            }  
+
+            try{
+                String successMsg = (String) session.getAttribute("successMsg");
+                if(successMsg != null && !successMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + successMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                    session.removeAttribute("successMsg");
+                }
+            }catch(Exception e){
+            }  
+        %>
 
         <div class="container py-4">
             <!-- Header Section -->
@@ -169,7 +198,7 @@
                                                     out.println("<td><span class=\"badge " + statusColorMap.get(order.getStatus()) + "\">" + order.getStatus() + "</span></td>");
                                                     out.println("<td>");
                                                     out.println("<div class='d-flex gap-2'>");
-                                                    out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='tooltip' title='View Details'>");
+                                                    out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#recordDetailsModal" + order.getId() + "' title='View Details'>");
                                                     out.println("<i class='material-icons small'>visibility</i>");
                                                     out.println("</a>");
                                                     out.println("<button class='btn btn-sm btn-outline-danger' data-bs-toggle='tooltip' title='Cancel Order'>");
@@ -220,89 +249,103 @@
             </div>
         </div>
 
-        <!-- Record Details Modal -->
-        <div class="modal fade" id="recordDetailsModal" tabindex="-1" aria-labelledby="recordDetailsModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="recordDetailsModalLabel">Order Details - O0001</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="orderInfoSection mb-4">
-                            <div class="row g-3">
-                                <div class="col-md-4">
-                                    <div class="d-flex align-items-center">
-                                        <i class="material-icons text-muted me-2 small">receipt</i>
-                                        <span class="text-muted">Order ID:</span>
+        <!-- Modal for Order Details -->
+        <jsp:useBean id="orderItemList" class="java.util.ArrayList" scope="request"/>
+        <% 
+            for (int i = 0; i < orderList.size(); i++) { 
+                OrderBean order = (OrderBean) orderList.get(i);
+                ArrayList<OrderBean> items = (ArrayList<OrderBean>) orderItemList.get(i);
+        %>
+        <div class="modal fade" id="recordDetailsModal<%= order.getId() %>" tabindex="-1" aria-labelledby="recordDetailsModalLabel<%= order.getId() %>" aria-hidden="true">
+            <form method="post" action="/ITP4511_Project/reserveFruit">
+                <input type="hidden" name="action" value="modifyOrder">
+                <input type="hidden" name="oid" value="<%= order.getId() %>">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="recordDetailsModalLabel<%= order.getId() %>">Order Details - <%= order.getId() %></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="orderInfoSection mb-4">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <i class="material-icons text-muted me-2 small">receipt</i>
+                                            <span class="text-muted">Order ID:</span>
+                                        </div>
+                                        <p class="fw-medium mb-0"><%= order.getId() %></p>
                                     </div>
-                                    <p class="fw-medium mb-0">O0001</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="d-flex align-items-center">
-                                        <i class="material-icons text-muted me-2 small">calendar_today</i>
-                                        <span class="text-muted">Order Date:</span>
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <i class="material-icons text-muted me-2 small">calendar_today</i>
+                                            <span class="text-muted">Order Date:</span>
+                                        </div>
+                                        <p class="fw-medium mb-0"><%= order.getOrderDate() %></p>
                                     </div>
-                                    <p class="fw-medium mb-0">2025-04-01</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="d-flex align-items-center">
-                                        <i class="material-icons text-muted me-2 small">event</i>
-                                        <span class="text-muted">Collection Date:</span>
+                                    <div class="col-md-4">
+                                        <div class="d-flex align-items-center">
+                                            <i class="material-icons text-muted me-2 small">event</i>
+                                            <span class="text-muted">Cut-off Date:</span>
+                                        </div>
+                                        <p class="fw-medium mb-0"><%= orderCutOffDateList.get(i) %></p>
                                     </div>
-                                    <p class="fw-medium mb-0">2025-04-15</p>
                                 </div>
                             </div>
-                        </div>
 
-                        <h6 class="mb-3"><i class="material-icons align-middle me-2 small">shopping_basket</i>Order Items</h6>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class="">
-                                <tr>
-                                    <th>Item</th>
-                                    <th>Origin</th>
-                                    <th>Quantity</th>
-                                    <th>Unit</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Apple</td>
-                                    <td>Tokyo, Japan</td>
-                                    <td>20</td>
-                                    <td>Piece</td>
-                                </tr>
-                                <tr>
-                                    <td>Banana</td>
-                                    <td>Okinawa, Japan</td>
-                                    <td>5</td>
-                                    <td>Bunch</td>
-                                </tr>
-                                <tr>
-                                    <td>Orange</td>
-                                    <td>Osaka, Japan</td>
-                                    <td>15</td>
-                                    <td>Piece</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-                        <div class="notesSection mt-3">
-                            <h6 class="mb-2"><i class="material-icons align-middle me-2 small">notes</i>Additional Notes</h6>
-                            <p class="small p-3  rounded">Please ensure the apples are fresh and firm. Prefer greener bananas if
-                                possible.</p>
+                            <%
+                                if (order.getStatus().equals("Pending")) {
+                            %>
+                            <div class='mb-3 d-flex flex-row justify-content-between'>
+                                <h6><i class="material-icons align-middle me-2 small">shopping_basket</i>Order Items</h6>
+                                <button type="button" class="btn btn-warning editBtn">Edit Order</button>
+                            </div>
+                            <%
+                                } else {
+                            %>
+                            <h6 class="mb-3"><i class="material-icons align-middle me-2 small">shopping_basket</i>Order Items</h6>
+                            <% }%>
+
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Origin</th>
+                                            <th>Quantity</th>
+                                            <th>Unit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (OrderBean item : items) { %>
+                                        <tr>
+                                            <td><%= item.getFruitName() %></td>
+                                            <td><%= item.getCity() %>, <%= item.getCountryRegion() %></td>
+                                            <td class='readQty'><%= item.getQty() %></td>
+                                            <td class='d-none editQty'><input class="form-control w-25 h-25" value="<%= item.getQty() %>" name="<%=item.getFruidId()%>"></td>
+                                            <td><%= item.getUnit() %></td>
+                                        </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="notesSection mt-3">
+                                <h6 class="mb-2"><i class="material-icons align-middle me-2 small">notes</i>Additional Notes</h6>
+                                <p class="small p-3 rounded"><%= order.getNotes() != null ? order.getNotes() : "No additional notes." %></p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Print Details</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Print Details</button>
+                            <button type="submit" class="btn btn-warning d-none submitBtn">Save Changes</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
+        <% } %>
 
         <footer:footer userType="shop"/>
         <i id="darkModeToogle" class="material-icons"

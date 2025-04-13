@@ -15,12 +15,11 @@ import ict.db.*;
 import ict.bean.*;
 
 import java.util.*;
-import java.time.LocalDate;
 
 /**
  * @author wailim0506
  */
-@WebServlet(name = "reserveRecord", urlPatterns = {"/reserveRecord"})
+@WebServlet(name = "reserveRecord", urlPatterns = { "/reserveRecord" })
 public class reserveRecordController extends HttpServlet {
     private ProjectDB db;
 
@@ -65,20 +64,22 @@ public class reserveRecordController extends HttpServlet {
         ArrayList<OrderBean> orderList = new ArrayList<OrderBean>();
         ArrayList<Integer> orderItemQtyList = new ArrayList<>();
         ArrayList<String> orderCutOffDateList = new ArrayList<>();
+        ArrayList<ArrayList<OrderBean>> orderItemList = new ArrayList<ArrayList<OrderBean>>();
         if ("listAll".equalsIgnoreCase(action)) {
             orderList = db.getAllOrder(user.getShopId());
-            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+            threeForLoop(orderList, orderItemQtyList, orderCutOffDateList, orderItemList, lastDateOfMonth);
         } else if ("listByDateRange".equalsIgnoreCase(action)) {
             orderList = db.getOrderByDateRange(user.getShopId(), request.getParameter("dateRange"));
-            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+            threeForLoop(orderList, orderItemQtyList, orderCutOffDateList, orderItemList, lastDateOfMonth);
             request.setAttribute("selectedDateRange", request.getParameter("dateRange"));
         } else if ("listByStatus".equalsIgnoreCase(action)) {
             orderList = db.getOrderByStatus(user.getShopId(), request.getParameter("status"));
-            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+            threeForLoop(orderList, orderItemQtyList, orderCutOffDateList, orderItemList, lastDateOfMonth);
             request.setAttribute("selectedStatus", request.getParameter("status"));
         } else if ("listByBoth".equalsIgnoreCase(action)) {
-            orderList = db.getOrderByStatusAndDateRange(user.getShopId(), request.getParameter("dateRange"), request.getParameter("status"));
-            twoForLoop(orderList, orderItemQtyList, orderCutOffDateList, lastDateOfMonth);
+            orderList = db.getOrderByStatusAndDateRange(user.getShopId(), request.getParameter("dateRange"),
+                    request.getParameter("status"));
+            threeForLoop(orderList, orderItemQtyList, orderCutOffDateList, orderItemList, lastDateOfMonth);
             request.setAttribute("selectedDateRange", request.getParameter("dateRange"));
             request.setAttribute("selectedStatus", request.getParameter("status"));
         } else {
@@ -89,13 +90,16 @@ public class reserveRecordController extends HttpServlet {
         request.setAttribute("orderList", orderList);
         request.setAttribute("orderItemQtyList", orderItemQtyList);
         request.setAttribute("orderCutOffDateList", orderCutOffDateList);
+        request.setAttribute("orderItemList", orderItemList);
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/store/reserveRecord.jsp");
         rd.forward(request, response);
     }
 
-    public void twoForLoop(ArrayList<OrderBean> orderList, ArrayList<Integer> orderItemQtyList, ArrayList<String> orderCutOffDateList, HashMap<String, Integer> lastDateOfMonth) {
+    public void threeForLoop(ArrayList<OrderBean> orderList, ArrayList<Integer> orderItemQtyList,
+            ArrayList<String> orderCutOffDateList, ArrayList<ArrayList<OrderBean>> orderItemList,
+            HashMap<String, Integer> lastDateOfMonth) {
         for (int i = 0; i < orderList.size(); i++) {
             OrderBean ob = orderList.get(i);
             orderItemQtyList.add(db.getOrderItemQty(ob.getId()));
@@ -118,6 +122,13 @@ public class reserveRecordController extends HttpServlet {
             }
             orderCutOffDateList.add(cutOffDate);
         }
+
+        for (int i = 0; i < orderList.size(); i++) {
+            OrderBean ob = orderList.get(i);
+            orderItemList.add(db.getOrderItemById(ob.getId()));
+        }
+
+        System.out.println(orderItemList.size());
     }
 
     @Override

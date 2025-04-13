@@ -39,7 +39,7 @@
                 if(errorMsg != null && !errorMsg.isEmpty()){
                     out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
                                 "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
-                                "<strong>Error!</strong><span>" + errorMsg + "</span>" +
+                                "<span>" + errorMsg + "</span>" +
                                 "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
                                 "</div></div>");                    
                     session.removeAttribute("errorMsg");

@@ -29,6 +29,18 @@ $(document).ready(function () {
         $("#recordDetailsModal").modal("show");
     });
 
+    $('.editBtn').on('click', function () {
+        var tableRow = $(this).closest('.modal-body').find('tbody tr');
+        tableRow.each(function () {
+            $(this).find('.readQty').toggleClass('d-none');
+            $(this).find('.editQty').toggleClass('d-none');
+        });
+
+
+        var modal = $(this).closest('.modal');
+        modal.find('.modal-footer .submitBtn').toggleClass('d-none');
+    });
+
     function filterById() {
         const searchText = $("#recordSearch").val().toLowerCase();
 
@@ -45,7 +57,7 @@ $(document).ready(function () {
         });
     }
 
-    function filterByStatusOrDateRange(){
+    function filterByStatusOrDateRange() {
         var url;
         var status = $("#statusFilter").val();
         var dateRange = $("#dateRangeFilter").val();
