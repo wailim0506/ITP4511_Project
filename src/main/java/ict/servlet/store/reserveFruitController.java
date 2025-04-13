@@ -190,30 +190,51 @@ public class reserveFruitController extends HttpServlet {
             String orderId = request.getParameter("oid");
             ArrayList<OrderBean> orderItemList = db.getOrderItemById(orderId);
             ArrayList<String> orderItemID = new ArrayList<String>();
-            ArrayList<String> orderItemQty = new ArrayList<String>();
+            ArrayList<String> newOrderItemQty = new ArrayList<String>();
+            ArrayList<String> deleteItemID = new ArrayList<String>();
+            ArrayList<String> toRemove = new ArrayList<>();
             for (int i = 0; i < orderItemList.size(); i++) {
                 orderItemID.add(orderItemList.get(i).getFruidId());
             }
 
             for (int i = 0; i < orderItemID.size(); i++) {
-                orderItemQty.add(request.getParameter(orderItemID.get(i)));
+                String fruitId = orderItemID.get(i);
+                String qty = request.getParameter(fruitId);
+                if (qty == null || qty.trim().isEmpty()) {
+                    deleteItemID.add(fruitId);
+                    toRemove.add(fruitId); // Mark for removal
+                } else {
+                    newOrderItemQty.add(qty);
+                }
             }
-            boolean result = false;
-            for (int i = 0; i < orderItemQty.size(); i++) {
-                result = db.updateOrderItemQty(orderId, orderItemID.get(i),
-                        Integer.parseInt(orderItemQty.get(i)));
-                if (!result) {
+            orderItemID.removeAll(toRemove);
+
+            boolean UpdateQtyresult = false;
+            boolean deleteItemResult = false;
+            for (int i = 0; i < newOrderItemQty.size(); i++) {
+                UpdateQtyresult = db.updateOrderItemQty(orderId, orderItemID.get(i),
+                        Integer.parseInt(newOrderItemQty.get(i)));
+                if (!UpdateQtyresult) {
                     break;
                 }
             }
 
-            if (!result) {
+            for (int i = 0; i < deleteItemID.size(); i++) {
+                deleteItemResult = db.deleteOrderItem(orderId, deleteItemID.get(i));
+                if (!deleteItemResult) {
+                    break;
+                }
+            }
+
+            if (!UpdateQtyresult || !deleteItemResult) {
                 session.setAttribute("errorMsg", "Please try again.");
-                response.sendRedirect(request.getContextPath() + "/reserveRecord?action=listAll");
+                response.sendRedirect(request.getContextPath() +
+                        "/reserveRecord?action=listAll");
                 return;
             } else {
                 session.setAttribute("successMsg", "Order item updated successfully.");
-                response.sendRedirect(request.getContextPath() + "/reserveRecord?action=listAll");
+                response.sendRedirect(request.getContextPath() +
+                        "/reserveRecord?action=listAll");
                 return;
             }
         } else {

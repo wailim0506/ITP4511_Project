@@ -36,9 +36,27 @@ $(document).ready(function () {
             $(this).find('.editQty').toggleClass('d-none');
         });
 
-
         var modal = $(this).closest('.modal');
         modal.find('.modal-footer .submitBtn').toggleClass('d-none');
+
+        var theadtr = modal.find('thead tr');
+        theadtr.find('.actionCol').toggleClass('d-none');
+    });
+
+    $('.deleteItemBtn').on('click', function () {
+        var itemId = $(this).data('item-id');
+        var row = $(this).closest('tr');
+        row.remove(); // Remove the row from the table
+
+        // Track deleted items
+        var modal = $(this).closest('.modal');
+        var deletedItemsInput = modal.find('input[name="deletedItems"]');
+        if (deletedItemsInput.length === 0) {
+            modal.find('form').append('<input type="hidden" name="deletedItems" value="' + itemId + '">');
+        } else {
+            var currentValue = deletedItemsInput.val();
+            deletedItemsInput.val(currentValue + ',' + itemId);
+        }
     });
 
     function filterById() {

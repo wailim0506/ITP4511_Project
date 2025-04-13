@@ -201,9 +201,6 @@
                                                     out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#recordDetailsModal" + order.getId() + "' title='View Details'>");
                                                     out.println("<i class='material-icons small'>visibility</i>");
                                                     out.println("</a>");
-                                                    out.println("<button class='btn btn-sm btn-outline-danger' data-bs-toggle='tooltip' title='Cancel Order'>");
-                                                    out.println("<i class='material-icons small'>delete</i>");
-                                                    out.println("</button>");
                                                     out.println("</div>");
                                                     out.println("</td>");
                                                     out.println("</tr>");
@@ -260,7 +257,7 @@
             <form method="post" action="/ITP4511_Project/reserveFruit">
                 <input type="hidden" name="action" value="modifyOrder">
                 <input type="hidden" name="oid" value="<%= order.getId() %>">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="recordDetailsModalLabel<%= order.getId() %>">Order Details - <%= order.getId() %></h5>
@@ -316,6 +313,7 @@
                                             <th>Origin</th>
                                             <th>Quantity</th>
                                             <th>Unit</th>
+                                            <th class="actionCol d-none">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -324,8 +322,15 @@
                                             <td><%= item.getFruitName() %></td>
                                             <td><%= item.getCity() %>, <%= item.getCountryRegion() %></td>
                                             <td class='readQty'><%= item.getQty() %></td>
-                                            <td class='d-none editQty'><input class="form-control w-25 h-25" value="<%= item.getQty() %>" name="<%=item.getFruidId()%>"></td>
+                                            <td class='d-none editQty'>
+                                                <input class="form-control w-25 h-25" value="<%= item.getQty() %>" name="<%=item.getFruidId()%>">
+                                            </td>
                                             <td><%= item.getUnit() %></td>
+                                            <td class='d-none editQty'>
+                                                <button type="button" class="btn btn-danger btn-sm deleteItemBtn" data-item-id="<%= item.getFruidId() %>">
+                                                    <i class="material-icons small">delete</i>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <% } %>
                                     </tbody>

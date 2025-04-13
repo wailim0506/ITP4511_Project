@@ -127,8 +127,6 @@ public class reserveRecordController extends HttpServlet {
             OrderBean ob = orderList.get(i);
             orderItemList.add(db.getOrderItemById(ob.getId()));
         }
-
-        System.out.println(orderItemList.size());
     }
 
     @Override
