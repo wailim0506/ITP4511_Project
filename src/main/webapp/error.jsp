@@ -6,6 +6,8 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page isErrorPage="true" %>
+<%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
+<%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -39,7 +41,7 @@
         %>
         
         <% if(navType != null){ %>
-            <jsp:include page="navType" />
+            <nav:nav userType="navType"/>
         <% }else{ %>
             <nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);">
                 <div class="container">
@@ -68,7 +70,7 @@
         </div>
                         
         <% if(footerType != null){ %>    
-            <jsp:include page="<%= footerType%>" />
+            <footer:footer userType="footerType"/>
         <% }else{ %>
             <div class="mt-4 py-3" style="border-top: var(--bs-border-width) solid var(--bs-border-color);">
                 <div class="container">
