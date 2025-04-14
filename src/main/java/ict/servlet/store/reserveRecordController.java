@@ -88,9 +88,7 @@ public class reserveRecordController extends HttpServlet {
             rd.forward(request, response);
         }
 
-        ArrayList<FruitsBean> fruitsList = db.getAllFruit();
-        request.setAttribute("fruitsList", fruitsList);
-
+        request.setAttribute("fruitsList", db.getAllFruit()); // for add fruit
         request.setAttribute("orderList", orderList);
         request.setAttribute("orderItemQtyList", orderItemQtyList);
         request.setAttribute("orderCutOffDateList", orderCutOffDateList);

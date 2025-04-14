@@ -6,6 +6,7 @@ ict\servlet\store\reserveRecordController.class
 ict\tag\nav.class
 ict\bean\ShopBean.class
 ict\bean\FruitsBean.class
+ict\servlet\store\borrowFruitController.class
 ict\test\test.class
 ict\util\PasswordCrypto$CryptoResult.class
 ict\tag\footer.class
