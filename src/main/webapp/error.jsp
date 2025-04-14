@@ -29,8 +29,7 @@
     </head>
     <body>
         <%
-            String navType = (String) request.getAttribute("navType");
-            String footerType = (String) request.getAttribute("footerType");
+            String userType = (String) session.getAttribute("userType");
             String errorTitle =  (String) request.getAttribute("errorTitle");
             String errorMsg = (String) request.getAttribute("errorMsg");
             
@@ -40,8 +39,8 @@
                 errorMsg = "";
         %>
         
-        <% if(navType != null){ %>
-            <nav:nav userType="navType"/>
+        <% if(userType != null){ %>
+            <nav:nav userType="<%= userType %>"/>
         <% }else{ %>
             <nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);">
                 <div class="container">
@@ -69,8 +68,8 @@
             </div>
         </div>
                         
-        <% if(footerType != null){ %>    
-            <footer:footer userType="footerType"/>
+        <% if(userType != null){ %>    
+            <footer:footer userType="<%= userType %>"/>
         <% }else{ %>
             <div class="mt-4 py-3" style="border-top: var(--bs-border-width) solid var(--bs-border-color);">
                 <div class="container">
