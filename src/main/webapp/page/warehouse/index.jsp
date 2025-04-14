@@ -72,8 +72,8 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">inventory_2</i>
                             <h5 class="card-title">Inventory</h5>
-                            <p class="card-text text-muted">#</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">#</a>
+                            <p class="card-text text-muted">View and edit inventory</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">Inventory management</a>
                         </div>
                     </div>
                 </div>
@@ -84,8 +84,8 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">receipt_long</i>
                             <h5 class="card-title">Order</h5>
-                            <p class="card-text text-muted">#</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">#</a>
+                            <p class="card-text text-muted">View and change order status</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">Process order</a>
                         </div>
                     </div>
                 </div>
@@ -96,8 +96,8 @@
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">local_shipping</i>
                             <h5 class="card-title">Delivery</h5>
-                            <p class="card-text text-muted">#</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">#</a>
+                            <p class="card-text text-muted">Check the status of goods</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">View delivery</a>
                         </div>
                     </div>
                 </div>
