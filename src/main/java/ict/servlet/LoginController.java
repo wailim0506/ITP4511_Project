@@ -64,6 +64,7 @@ public class LoginController extends HttpServlet {
 
         String passwordFromDB = db.getPassword(username);
         String UserIDFromDB = db.getUserID(username);
+        System.out.println(UserIDFromDB);
         byte[] getDecrptionIV = PasswordCrypto.normalizeIv(UserIDFromDB.getBytes("UTF-8"));
         try {
             if (password.equals(

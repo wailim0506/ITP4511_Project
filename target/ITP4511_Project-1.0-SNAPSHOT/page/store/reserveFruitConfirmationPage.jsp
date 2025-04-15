@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import ="ict.bean.*, java.util.*" %>
 <%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
+<%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
+<%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -30,7 +32,7 @@
         <link href="${pageContext.request.contextPath}/css/store/reserveFruitConfirmationPage.css" rel="stylesheet">
     </head>
     <body>
-        <%@include file="../../components/store/navBar.jsp" %>
+        <nav:nav userType="shop"/>
         <% 
             //get order detail from shop_fruit_order
             OrderBean orderDetail = (OrderBean)request.getAttribute("orderDetail");
@@ -153,7 +155,7 @@
             </div>
         </div>
 
-        <%@include file="../../components/store/footer.jsp" %>
+        <footer:footer userType="shop"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
 

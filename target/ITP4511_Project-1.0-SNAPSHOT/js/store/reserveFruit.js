@@ -268,7 +268,7 @@ $(document).ready(function () {
             collectDay = 15;
         }
         else {
-            collectDay = lastDayOfMonth;
+            collectDay = lastDayOfMonth + 1;
         }
 
         const collectDate = new Date(currentYear, currentMonth, collectDay);

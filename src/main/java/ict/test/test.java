@@ -8,6 +8,7 @@ import ict.db.ProjectDB;
 import java.util.*;
 import ict.bean.*;
 import ict.util.*;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 
 /**
@@ -16,7 +17,7 @@ import java.time.LocalDate;
  */
 public class test {
 
-        public static void main(String[] arg) {
+        public static void main(String[] arg) throws UnsupportedEncodingException, Exception {
                 String url = "jdbc:mysql://localhost:3306/ITP4511_Project_DB";
                 String username = "root";
                 String password = "";
@@ -88,21 +89,28 @@ public class test {
                 // }
                 // } catch (Exception e) {
                 // }
-                // try {
-                // //Encrypt with different IV lengths
-                // PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
-                // "U002");
-                // System.out.println("Encrypted Text 1: " + result1.encryptedText);
-                // System.out.println("IV 1: " + result1.iv);
-                //
-                // // Decrypt
-                // String decrypted1 = PasswordCrypto.decrypt("CpWhvOs//62LN7EVZk60ew==",
-                // "VTAwMwAAAAAAAAAAAAAAAA==");
-                // System.out.println("Decrypted Text 1: " + decrypted1);
-                //
-                // } catch (Exception e) {
-                // e.printStackTrace();
-                // }
+//                byte[] getDecrptionIV = PasswordCrypto.normalizeIv("U004".getBytes("UTF-8"));
+//                if (password.equals(
+//                    PasswordCrypto.decrypt("XZw5jE83h5G9qaALwfg7qg==", Base64.getEncoder().encodeToString(getDecrptionIV)))) {
+//                    System.out.println("true");
+//                }else{
+//                    System.out.println("trued");
+//                }
+                 try {
+                 //Encrypt with different IV lengths
+                 PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
+                 "U009");
+                 System.out.println("Encrypted Text 1: " + result1.encryptedText);
+                 System.out.println("IV 1: " + result1.iv);
+                
+                 // Decrypt
+                 String decrypted1 = PasswordCrypto.decrypt("XZw5jE83h5G9qaALwfg7qg==",
+                 "VTAwNAAAAAAAAAAAAAAAAA==");
+                 System.out.println("Decrypted Text 1: " + decrypted1);
+                
+                 } catch (Exception e) {
+                 e.printStackTrace();
+                 }
                 // ArrayList<CountryRegionBean> list = db.getFruitCountryRegion();
                 // for (int i = 0; i < list.size(); i++) {
                 // CountryRegionBean crb = list.get(i);
@@ -231,6 +239,6 @@ public class test {
                 // }
 
                 // test getOrderItemQty()
-                System.out.println(db.getOrderItemQty("O0001"));
+                //System.out.println(db.getOrderItemQty("O0001"));
         }
 }

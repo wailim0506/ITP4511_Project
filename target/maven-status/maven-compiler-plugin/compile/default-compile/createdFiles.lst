@@ -5,6 +5,7 @@ ict\db\ProjectDB.class
 ict\servlet\store\reserveRecordController.class
 ict\tag\nav.class
 ict\bean\ShopBean.class
+ict\test\passwordTestingTool.class
 ict\bean\FruitsBean.class
 ict\servlet\store\borrowFruitController.class
 ict\test\test.class
