@@ -18,6 +18,7 @@ public class UserBean {
     private String shopCountry;
     private String wareHouseId;
     private String warehouseCountry;
+    private String warehouseType;
 
     public String getUserId() {
         return userId;
@@ -54,6 +55,10 @@ public class UserBean {
     public String getWarehouseCountry() {
         return warehouseCountry;
     }
+    
+    public String getWarehouseType() {
+        return warehouseType;
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -89,5 +94,9 @@ public class UserBean {
 
     public void setWarehouseCountry(String warehouseCountry) {
         this.warehouseCountry = warehouseCountry;
+    }
+    
+    public void setWarehouseType(String warehouseType) {
+        this.warehouseType = warehouseType;
     }
 }

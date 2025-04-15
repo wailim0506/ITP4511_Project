@@ -340,7 +340,8 @@ public class ProjectDB {
                     + "    cr_shop.Name AS ShopCountry,\n"
                     + "    f.ID AS WarehouseID,\n"
                     + "    c.StaffName AS WarehouseStaffName,\n"
-                    + "    cr_warehouse.Name AS WarehouseCountry\n"
+                    + "    cr_warehouse.Name AS WarehouseCountry, \n"
+                    + "    f.Type AS WarehouseType\n"
                     + "FROM user a\n"
                     + "LEFT JOIN shop_staff b ON a.UserID = b.UserID\n"
                     + "LEFT JOIN warehouse_staff c ON a.UserID = c.UserID\n"
@@ -373,6 +374,7 @@ public class ProjectDB {
                     ub.setStaffName(rs.getString("WarehouseStaffName"));
                     ub.setWareHouseId(rs.getString("WarehouseID"));
                     ub.setWarehouseCountry(rs.getString("WarehouseCountry"));
+                    ub.setWarehouseType(rs.getString("WarehouseType"));
                 }
             }
             pStmnt.close();
