@@ -887,7 +887,84 @@ public class ProjectDB {
         }
         return shopStockList;
     }
-    // shop_fruit_stock
+    // for shop_fruit_stock
+
+    // for shop_borrow_request
+    public String getNumberOfBorrow() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS num FROM shop_borrow_request";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                return rs.getString("num");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean createBorrowRequest(String requestId, String fromShopId, String toShopId, String orderDate,
+            String notes) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO shop_borrow_request (ID,RequestBy,RequestTo,RequestDate,Status,Notes) VALUES(?,?,?,?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, requestId);
+            pStmnt.setString(2, fromShopId);
+            pStmnt.setString(3, toShopId);
+            pStmnt.setString(4, orderDate);
+            pStmnt.setString(5, "Pending");
+            pStmnt.setString(6, notes);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    // for shop_borrow_request
+
+    // for shop+borrow_request_item
+
+    public boolean insertBorrowItem(String requestId, String fruitId, int qty) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO shop_borrow_request_item (BorrowRequestID,FruitID,Qty) VALUES(?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, requestId);
+            pStmnt.setString(2, fruitId);
+            pStmnt.setInt(3, qty);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    // for shop+borrow_request_item
 
     public List<OrderBean> getStatistics() {
         Connection cnnct = null;
