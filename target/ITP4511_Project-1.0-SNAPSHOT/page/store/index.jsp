@@ -35,6 +35,7 @@
                 <h1 class="display-5 fw-bold text-primary">Acer International Bakery</h1>
                 <p class="lead mb-4">Shop Management Dashboard</p>
                 <p class="text-muted mb-0">Manage fruit inventory, reservations, and borrowing requests</p>
+                <div id="current-time" class="mt-3 fw-light text-primary"></div>
             </div>
             
             <!-- Dashboard Cards -->
@@ -127,5 +128,7 @@
         <footer:footer userType="shop"/>
         <i id="darkModeToogle" class="material-icons"
         style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
+        
+        <script src="${pageContext.request.contextPath}/js/store/index.js"></script>
     </body>
 </html>

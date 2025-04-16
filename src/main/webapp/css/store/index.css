@@ -39,3 +39,23 @@
 [data-bs-theme="dark"] .dashboard-card {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
+
+/* Clock styles */
+#current-time {
+  font-size: 1.1rem;
+  transition: color 0.3s;
+  font-weight: 700;
+}
+
+[data-bs-theme="light"] #current-time {
+  color: #6c757d;
+}
+
+[data-bs-theme="dark"] #current-time {
+  color: #adb5bd;
+}
+
+#current-time span {
+  /* Removing monospace font to maintain consistency with the date */
+  font-weight: 500;
+}
