@@ -4,26 +4,6 @@
  */
 
 $(document).ready(function () {
-    // Set min date for return date (today + 1 day)
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-
-    // Max date (today + 7 days)
-    const maxDate = new Date(today);
-    maxDate.setDate(maxDate.getDate() + 7);
-
-    // Format dates for HTML date input: YYYY-MM-DD
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
-    $('#returnDate').attr('min', formatDate(tomorrow));
-    $('#returnDate').attr('max', formatDate(maxDate));
-
     // Initialize - hide all fruits
     $('.fruitItem').hide();
     updateFruitCount();
@@ -32,7 +12,10 @@ $(document).ready(function () {
     // Shop selection functionality
     $('#shopFilter').on('change', function () {
         const shopId = $(this).val();
-        const shopName = $(this).find('option:selected').text().split('(')[0].trim();
+        const shopName = $(this).find('option:selected').text().split(',')[0].trim();
+
+        // Reset all quantity input boxes to 0
+        $('input[type=number]').val(0);
 
         // Show fruits only if a shop is selected
         if (shopId) {
@@ -53,16 +36,9 @@ $(document).ready(function () {
             // Hide fruit selection section if no shop is selected
             $('#fruitSelectionSection').addClass('d-none');
         }
-    });
 
-    // Back to shop selection
-    $('#backToShopSelection').on('click', function () {
-        $('#fruitSelectionSection').addClass('d-none');
-        $('#shopSelectionSection').removeClass('d-none');
-
-        // Reset filters
-        $('#fruitSearch').val('');
-        $('#typeFilter').val('all');
+        // Update request summary after resetting the inputs
+        updateRequestSummary();
     });
 
     // Fruit search and filter functionality
@@ -81,19 +57,6 @@ $(document).ready(function () {
         updateRequestSummary();
     });
 
-    // Add to request functionality
-    $('.addToRequestBtn').on('click', function () {
-        const qtyInput = $(this).closest('.d-flex').find('input[type=number]');
-        const currentVal = parseInt(qtyInput.val());
-
-        if (currentVal > 0) {
-            // In a real application, this would add the item to the request
-            updateRequestSummary();
-        } else {
-            alert('Please enter a quantity greater than 0');
-        }
-    });
-
     // Update quantity and request summary when input changes
     $('input[type=number]').on('change', function () {
         updateRequestSummary();
@@ -108,9 +71,8 @@ $(document).ready(function () {
         // Only filter visible shop's fruits
         $(`.fruitItem[data-shop="${shopId}"]`).each(function () {
             let fruitName = $(this).data('fruit-name').toLowerCase();
-            let fruitType = $(this).find('p:contains("Type:")').text().toLowerCase();
-            let availabilityText = $(this).find('span.text-success').text();
-            let availability = parseInt(availabilityText) || availabilityText.length > 0;
+            let fruitType = $(this).data('type').toLowerCase();
+            let availability = parseInt($(this).find('.text-success').text()) || 0;
 
             let matchesSearch = fruitName.includes(searchText);
             let matchesType = type === 'all' || fruitType.includes(type.toLowerCase());
@@ -147,7 +109,7 @@ $(document).ready(function () {
             let qty = parseInt($(this).val()) || 0;
             if (qty > 0) {
                 let fruitName = $(this).closest('.fruitItem').find('h5').text();
-                let unit = $(this).closest('.fruitItem').find('span.text-success').text().split(' ')[1];
+                let unit = $(this).closest('.fruitItem').find('.text-success').text().split(' ')[1];
 
                 summary += `<div class="d-flex justify-content-between mb-2">
                                 <span>${fruitName}</span>

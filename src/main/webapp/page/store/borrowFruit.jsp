@@ -59,12 +59,20 @@
                                             <span class="input-group-text border-0 bg-transparent">
                                                 <i class="material-icons text-muted">store</i>
                                             </span>
-                                            <select class="form-select" id="shopFilter">
-                                                <option value="" selected disabled>-- Select a shop to see available fruits --</option>
-                                                <option value="--" disabled>------------------------------</option>
-                                                <option value="S001">Baker's Heaven (2.3km away)</option>
-                                                <option value="S002">Sweet Delight (3.1km away)</option>
-                                                <option value="S003">Flour Power (5.2km away)</option>
+                                            <jsp:useBean id="shopList" class="java.util.ArrayList" scope="request"/>
+                                            <%
+                                                if (shopList.size() == 0) {
+                                                    throw new Exception();
+                                                }
+                                            %>
+                                            <select class="form-select w-25" id="shopFilter">
+                                                <option value="" selected disabled>Select a shop</option>
+                                                <%
+                                                    for (int i = 0; i < shopList.size();i++){
+                                                        ShopBean sb = (ShopBean)shopList.get(i);
+                                                        out.println("<option value=\"" + sb.getID() + "\">" + sb.getAddress() + ", " + sb.getCity() + "</option>");
+                                                    }
+                                                %>
                                             </select>
                                         </div>
                                         <div class="form-text">Select a shop to view available fruits for borrowing</div>
@@ -101,92 +109,53 @@
                                         </div>
                                     </div>
                                 </div>
+                            
 
                                 <!-- Available Fruits List -->
                                 <div class="fruitSelectionContainer mb-4">
                                     <h5 class="mb-3"><i class="material-icons align-middle me-2 small">inventory_2</i>Available Fruits at <span id="selectedShopName">Shop</span></h5>
                                     <div class="fruitSelection">
                                         <!-- Fruit Items - Each shop's fruits have a data-shop attribute to filter by shop -->
-                                        <!-- Fruit Item - Shop 1 -->
-                                        <div class="fruitItem card mb-3" data-fruit-name="fuji apple" data-shop="S001">
-                                            <div class="card-body">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                        <img src="${pageContext.request.contextPath}/img/apple.jpg" alt="Fuji Apple" class="img-fluid rounded fruit-img">
-                                                    </div>
-                                                    <div class="col-md-5 col-sm-9 mb-3 mb-md-0">
-                                                        <h5 class="mb-1">Fuji Apple</h5>
-                                                        <p class="text-muted mb-0 small">Type: Single Fruit</p>
-                                                        <p class="text-muted mb-0 small">Origin: Aomori, Japan</p>
-                                                        <p class="mb-0 small">Available: <span class="text-success">24 pcs</span></p>
-                                                    </div>
-                                                    <div class="col-md-5 col-sm-12">
-                                                        <div class="d-flex align-items-center">
-                                                            <label class="form-label small me-2">Quantity:</label>
-                                                            <input type="number" class="form-control form-control-sm me-2" 
-                                                                   name="FA001" min="0" max="24" value="0">
-                                                            <button class="btn btn-sm btn-primary addToRequestBtn">
-                                                                <i class="material-icons small">add</i> Request
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Fruit Item - Shop 2 -->
-                                        <div class="fruitItem card mb-3" data-fruit-name="strawberry" data-shop="S002">
-                                            <div class="card-body">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                        <img src="${pageContext.request.contextPath}/img/strawberry.jpg" alt="Strawberry" class="img-fluid rounded fruit-img">
-                                                    </div>
-                                                    <div class="col-md-5 col-sm-9 mb-3 mb-md-0">
-                                                        <h5 class="mb-1">Strawberry</h5>
-                                                        <p class="text-muted mb-0 small">Type: Berry</p>
-                                                        <p class="text-muted mb-0 small">Origin: California, USA</p>
-                                                        <p class="mb-0 small">Available: <span class="text-success">3 kg</span></p>
-                                                    </div>
-                                                    <div class="col-md-5 col-sm-12">
-                                                        <div class="d-flex align-items-center">
-                                                            <label class="form-label small me-2">Quantity:</label>
-                                                            <input type="number" class="form-control form-control-sm me-2" 
-                                                                   name="SB001" min="0" max="3" value="0" step="0.1">
-                                                            <button class="btn btn-sm btn-primary addToRequestBtn">
-                                                                <i class="material-icons small">add</i> Request
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Fruit Item - Shop 3 -->
-                                        <div class="fruitItem card mb-3" data-fruit-name="banana" data-shop="S003">
-                                            <div class="card-body">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-2 col-sm-3 mb-3 mb-md-0">
-                                                        <img src="${pageContext.request.contextPath}/img/banana.jpg" alt="Banana" class="img-fluid rounded fruit-img">
-                                                    </div>
-                                                    <div class="col-md-5 col-sm-9 mb-3 mb-md-0">
-                                                        <h5 class="mb-1">Banana</h5>
-                                                        <p class="text-muted mb-0 small">Type: Tropical Fruit</p>
-                                                        <p class="text-muted mb-0 small">Origin: Philippines</p>
-                                                        <p class="mb-0 small">Available: <span class="text-success">5 bunches</span></p>
-                                                    </div>
-                                                    <div class="col-md-5 col-sm-12">
-                                                        <div class="d-flex align-items-center">
-                                                            <label class="form-label small me-2">Quantity:</label>
-                                                            <input type="number" class="form-control form-control-sm me-2" 
-                                                                   name="BN001" min="0" max="5" value="0">
-                                                            <button class="btn btn-sm btn-primary addToRequestBtn">
-                                                                <i class="material-icons small">add</i> Request
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <%
+                                            ArrayList<ArrayList<ShopFruitStockBean>> shopStockList = (ArrayList<ArrayList<ShopFruitStockBean>>) request.getAttribute("shopStockList");
+                                            if (shopStockList.size() == 0) {
+                                                throw new Exception();
+                                            }
+                                        %>
+
+                                        <%
+                                            for (int i = 0; i < shopList.size(); i++){
+                                                ArrayList<ShopFruitStockBean> stockList = (ArrayList<ShopFruitStockBean>) shopStockList.get(i);
+                                                for (int j = 0; j < stockList.size(); j++) {
+                                                    ShopFruitStockBean fruit = stockList.get(j);
+                                                    String imgPath = "/ITP4511_Project/img/" + fruit.getImgName();
+                                                    String origin = fruit.getCity() + ", " + fruit.getCountryRegion();
+                                                    
+                                                    out.println("<div class=\"fruitItem card mb-3\" data-fruit-name=\"" + fruit.getFruitName().toLowerCase() + "\" data-shop=\"" + fruit.getShopId() + "\" data-type=\"" + fruit.getType() + "\">" +
+"                                                               <div class=\"card-body\">" +
+"                                                                   <div class=\"row align-items-center\">" +
+"                                                                       <div class=\"col-md-2 col-sm-3 mb-3 mb-md-0\">" +
+"                                                                           <img src=\"" + imgPath + "\" alt=\"" + fruit.getFruitName() + "\" class=\"img-fluid rounded fruitImg\">" +
+"                                                                       </div>" +
+"                                                                   <div class=\"col-md-5 col-sm-9 mb-3 mb-md-0\">" +
+"                                                                       <h5 class=\"mb-1\">" + fruit.getFruitName() + "</h5>" +
+"                                                                       <p class=\"text-muted mb-0 small\">Type: " + fruit.getType() + "</p>" +
+"                                                                       <p class=\"text-muted mb-0 small\">Origin: " + origin + "</p>" +
+"                                                                       <p class=\"mb-0 small\">Available: <span class=\"text-success\">" + fruit.getQty() + " " + fruit.getUnit() + "</span></p>" +
+"                                                                   </div>" +
+"                                                                   <div class=\"col-md-5 col-sm-12\">" +
+"                                                                       <div class=\"d-flex align-items-center\">" +
+"                                                                       <label class=\"form-label small me-2\">Quantity:</label>" +
+"                                                                       <input type=\"number\" class=\"form-control form-control-sm me-2\" " +
+"                                                                           name=\"" + fruit.getFruitId() + "\" min=\"0\" max=\"" + fruit.getQty() + "\" value=\"0\">" +
+"                                                                   </div>" +
+"                                                               </div>" +
+"                                                           </div>" +
+"                                                           </div>" +
+"                                                           </div>");
+                                                }
+                                            }
+                                        %>
                                     </div>
                                     <div class="text-center mt-2 fruitResultInfo">
                                         <span class="badge bg-secondary">Showing <span id="visibleFruitCount">0</span> of <span id="totalFruitCount">0</span> fruits</span>

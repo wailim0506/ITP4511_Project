@@ -70,7 +70,7 @@
                             <i class="material-icons card-icon mb-3">swap_horiz</i>
                             <h5 class="card-title">Borrow Fruit</h5>
                             <p class="card-text text-muted">Borrow fruits from other shops</p>
-                            <a href="/ITP4511_Project/borrowFruit?action=selectShop" class="btn btn-outline-primary mt-2">Go to Borrow</a>
+                            <a href="/ITP4511_Project/borrowFruit?action=select" class="btn btn-outline-primary mt-2">Go to Borrow</a>
                         </div>
                     </div>
                 </div>

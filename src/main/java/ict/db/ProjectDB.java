@@ -7,7 +7,6 @@ package ict.db;
 import java.io.*;
 import java.sql.*;
 import ict.bean.*;
-import jakarta.persistence.criteria.Order;
 import java.time.LocalDate;
 
 import java.util.*;
@@ -253,10 +252,10 @@ public class ProjectDB {
         ArrayList<CountryRegionBean> countryRegion = new ArrayList<CountryRegionBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT DISTINCT cr.ID, cr.Name FROM country_region cr " +
-                    "JOIN fruit_city fc ON cr.ID = fc.CountryRegionID " +
-                    "JOIN fruit f ON f.FruitCityID = fc.ID " +
-                    "ORDER BY cr.Name";
+            String preQueryStatement = "SELECT DISTINCT cr.ID, cr.Name FROM country_region cr "
+                    + "JOIN fruit_city fc ON cr.ID = fc.CountryRegionID "
+                    + "JOIN fruit f ON f.FruitCityID = fc.ID "
+                    + "ORDER BY cr.Name";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
@@ -700,7 +699,6 @@ public class ProjectDB {
     }
 
     // for shop_fruit_order
-
     // for shop_fruit_order_item
     public boolean insertOrderItem(String orderId, String fruitId, int qty) {
         Connection cnnct = null;
@@ -827,17 +825,81 @@ public class ProjectDB {
     }
     // for shop_fruit_order_item
 
+    // for shop
+    public ArrayList<ShopBean> getShopInSameCity(String city, String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<ShopBean> shopList = new ArrayList<ShopBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID, x.Address, x.PhoneNumber, y.City,y.CountryRegionID FROM SHOP x, shop_city y where x.City = y.ID and y.City = ? and x.ID != ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, city);
+            pStmnt.setString(2, shopId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ShopBean sb = new ShopBean();
+                sb.setAddress(rs.getString("Address"));
+                sb.setPhoneNumber(rs.getString("PhoneNumber"));
+                sb.setCity(rs.getString("City"));
+                sb.setID(rs.getString("ID"));
+                sb.setCountryRegion(rs.getString("CountryRegionID"));
+                shopList.add(sb);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return shopList;
+
+    }
+    // for shop
+
+    // shop_fruit_stock
+    public ArrayList<ShopFruitStockBean> getShopFruitStock(String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<ShopFruitStockBean> shopStockList = new ArrayList<ShopFruitStockBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM shop_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE ShopID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID ;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ShopFruitStockBean sb = new ShopFruitStockBean();
+                sb.setShopId(rs.getString("ShopID"));
+                sb.setFruitId(rs.getString("FruitID"));
+                sb.setFruitName(rs.getString("Name"));
+                sb.setCity(rs.getString("City"));
+                sb.setCountryRegion(rs.getString("CR"));
+                sb.setImgName(rs.getString("ImgName"));
+                sb.setQty(String.valueOf(rs.getInt("Qty")));
+                sb.setType(rs.getString("type"));
+                sb.setUnit(rs.getString("unit"));
+                shopStockList.add(sb);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return shopStockList;
+    }
+    // shop_fruit_stock
+
     public List<OrderBean> getStatistics() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         List<OrderBean> orderList = new ArrayList<>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT DATE(OrderDate) AS OrderDate, COUNT(*) AS total " +
-                                      "FROM shop_fruit_order " +
-                                      "WHERE OrderDate >= NOW() - INTERVAL 7 DAY " +
-                                      "GROUP BY DATE(OrderDate) " +
-                                      "ORDER BY DATE(OrderDate);";
+            String preQueryStatement = "SELECT DATE(OrderDate) AS OrderDate, COUNT(*) AS total "
+                    + "FROM shop_fruit_order "
+                    + "WHERE OrderDate >= NOW() - INTERVAL 7 DAY "
+                    + "GROUP BY DATE(OrderDate) "
+                    + "ORDER BY DATE(OrderDate);";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
             while (rs.next()) {
@@ -850,8 +912,12 @@ public class ProjectDB {
             ex.printStackTrace();
         } finally {
             try {
-                if (pStmnt != null) pStmnt.close();
-                if (cnnct != null) cnnct.close();
+                if (pStmnt != null) {
+                    pStmnt.close();
+                }
+                if (cnnct != null) {
+                    cnnct.close();
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

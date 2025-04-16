@@ -30,19 +30,10 @@ body {
   padding: 0.5rem;
 }
 
-.fruit-img {
+.fruitImg {
   height: 80px;
   width: 80px;
   object-fit: cover;
-}
-
-.icon-container {
-  position: relative;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .fruitItem {
@@ -50,16 +41,6 @@ body {
 }
 
 .fruitItem:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-.shopCard {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.shopCard:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }

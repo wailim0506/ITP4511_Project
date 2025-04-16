@@ -89,28 +89,29 @@ public class test {
                 // }
                 // } catch (Exception e) {
                 // }
-//                byte[] getDecrptionIV = PasswordCrypto.normalizeIv("U004".getBytes("UTF-8"));
-//                if (password.equals(
-//                    PasswordCrypto.decrypt("XZw5jE83h5G9qaALwfg7qg==", Base64.getEncoder().encodeToString(getDecrptionIV)))) {
-//                    System.out.println("true");
-//                }else{
-//                    System.out.println("trued");
-//                }
-                 try {
-                 //Encrypt with different IV lengths
-                 PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
-                 "U009");
-                 System.out.println("Encrypted Text 1: " + result1.encryptedText);
-                 System.out.println("IV 1: " + result1.iv);
-                
-                 // Decrypt
-                 String decrypted1 = PasswordCrypto.decrypt("XZw5jE83h5G9qaALwfg7qg==",
-                 "VTAwNAAAAAAAAAAAAAAAAA==");
-                 System.out.println("Decrypted Text 1: " + decrypted1);
-                
-                 } catch (Exception e) {
-                 e.printStackTrace();
-                 }
+                // byte[] getDecrptionIV = PasswordCrypto.normalizeIv("U004".getBytes("UTF-8"));
+                // if (password.equals(
+                // PasswordCrypto.decrypt("XZw5jE83h5G9qaALwfg7qg==",
+                // Base64.getEncoder().encodeToString(getDecrptionIV)))) {
+                // System.out.println("true");
+                // }else{
+                // System.out.println("trued");
+                // }
+                // try {
+                // // Encrypt with different IV lengths
+                // PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
+                // "U009");
+                // System.out.println("Encrypted Text 1: " + result1.encryptedText);
+                // System.out.println("IV 1: " + result1.iv);
+
+                // // Decrypt
+                // String decrypted1 = PasswordCrypto.decrypt("XZw5jE83h5G9qaALwfg7qg==",
+                // "VTAwNAAAAAAAAAAAAAAAAA==");
+                // System.out.println("Decrypted Text 1: " + decrypted1);
+
+                // } catch (Exception e) {
+                // e.printStackTrace();
+                // }
                 // ArrayList<CountryRegionBean> list = db.getFruitCountryRegion();
                 // for (int i = 0; i < list.size(); i++) {
                 // CountryRegionBean crb = list.get(i);
@@ -239,6 +240,60 @@ public class test {
                 // }
 
                 // test getOrderItemQty()
-                //System.out.println(db.getOrderItemQty("O0001"));
+                // System.out.println(db.getOrderItemQty("O0001"));
+
+                // // test getShopInSameCity()
+                // ArrayList<ShopBean> shopList = db.getShopInSameCity("New York", "S023");
+                // System.out.println("Shop List in the same city as User 1:");
+                // for (ShopBean shop : shopList) {
+                // System.out.println("Shop ID: " + shop.getID());
+                // System.out.println("Address: " + shop.getAddress());
+                // System.out.println("City: " + shop.getCity());
+                // System.out.println("Phone Number: " + shop.getPhoneNumber());
+                // System.out.println("Country Region: " + shop.getCountryRegion());
+                // System.out.println("---------------------");
+                // }
+
+                // test getShopFruitStock()
+                // ArrayList<ShopFruitStockBean> shopFruitStockList =
+                // db.getShopFruitStock("S123");
+                // System.out.println("Shop Fruit Stock List for Shop ID: S001");
+                // System.out.println("Total items found: " + shopFruitStockList.size());
+                // for (ShopFruitStockBean item : shopFruitStockList) {
+                // System.out.println("Shop ID: " + item.getShopId());
+                // System.out.println("Fruit ID: " + item.getFruitId());
+                // System.out.println("Fruit Name: " + item.getFruitName());
+                // System.out.println("City: " + item.getCity());
+                // System.out.println("Country Region: " + item.getCountryRegion());
+                // System.out.println("Image Name: " + item.getImgName());
+                // System.out.println("Quantity: " + item.getQty());
+                // System.out.println("---------------------");
+                // }
+
+                ArrayList<ShopBean> shopList = db.getShopInSameCity("New York", "S023");
+                ArrayList<ArrayList<ShopFruitStockBean>> shopStockList = new ArrayList<ArrayList<ShopFruitStockBean>>();
+                for (int i = 0; i < shopList.size(); i++) {
+                        ArrayList<ShopFruitStockBean> stockList = db.getShopFruitStock(shopList.get(i).getID());
+                        shopStockList.add(stockList);
+                }
+
+                for (int i = 0; i < shopList.size(); i++) {
+                        System.out.println("Shop ID: " + shopList.get(i).getID());
+                        System.out.println("Address: " + shopList.get(i).getAddress());
+                        System.out.println("City: " + shopList.get(i).getCity());
+                        System.out.println("Phone Number: " + shopList.get(i).getPhoneNumber());
+                        System.out.println("Country Region: " + shopList.get(i).getCountryRegion());
+                        System.out.println("---------------------");
+                        ArrayList<ShopFruitStockBean> stockList = shopStockList.get(i);
+                        for (int j = 0; j < stockList.size(); j++) {
+                                System.out.println("Fruit ID: " + stockList.get(j).getFruitId());
+                                System.out.println("Fruit Name: " + stockList.get(j).getFruitName());
+                                System.out.println("City: " + stockList.get(j).getCity());
+                                System.out.println("Country Region: " + stockList.get(j).getCountryRegion());
+                                System.out.println("Image Name: " + stockList.get(j).getImgName());
+                                System.out.println("Quantity: " + stockList.get(j).getQty());
+                                System.out.println("---------------------");
+                        }
+                }
         }
 }

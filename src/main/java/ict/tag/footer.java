@@ -72,7 +72,7 @@ public class footer extends SimpleTagSupport {
                         + "                    <span>Reserve Record</span>"
                         + "                </div>"
                         + "            </a>"
-                        + "            <a class=\"nav-link text-secondary\" href=\"borrowFruit?action=selectShop\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"borrowFruit?action=select\">"
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">swap_horiz</i>"
                         + "                    <span>Borrow</span>"
