@@ -129,7 +129,7 @@
                                                         <option value="all" selected>All Types</option>
                                                         <option value="--" disabled>------------------------------</option>
                                                         <option value="Single Fruit">Single Fruit</option>
-                                                        <option value="Tropical Fruit">Tropical Fruit</option>
+                                                        <option value="Bunch Fruit">Bunch Fruit</option>
                                                         <option value="Berry">Berry</option>
                                                     </select>
                                                 </div>

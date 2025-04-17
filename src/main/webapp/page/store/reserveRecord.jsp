@@ -235,8 +235,8 @@
                                     <div class="infoCard p-3 rounded bg-light">
                                         <h6 class="mb-2"><i class="material-icons align-middle me-2 small">edit_note</i>Modification
                                             Rules</h6>
-                                        <p class="mb-1 small">Modifications allowed on the 13th (for first half period)</p>
-                                        <p class="mb-0 small">Or day before month end (for second half period)</p>
+                                        <p class="mb-1 small">Modifications only allowed when the status is 'Pending'</p>
+                                        <p class="mb-0 small" style="visibility:hidden">--</p>
                                     </div>
                                 </div>
                             </div>

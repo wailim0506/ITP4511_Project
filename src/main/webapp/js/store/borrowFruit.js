@@ -4,69 +4,47 @@
  */
 
 $(document).ready(function () {
-    // Initialize - hide all fruits
-    $('.fruitItem').hide();
+    // Initialize the page
     updateFruitCount();
-    updateRequestSummary();
+    hideAllFruitSections();
 
-    // Shop selection functionality
-    $('#shopFilter').on('change', function () {
-        const shopId = $(this).val();
-        const shopName = $(this).find('option:selected').text().split(',')[0].trim();
+    // Shop selection handling
+    $("#shopFilter").change(function () {
+        let selectedShopId = $(this).val();
+        $("#selectedShopId").val(selectedShopId);
+        let selectedShopName = $("#shopFilter option:selected").text();
+        $("#selectedShopName").text(selectedShopName);
 
-        // Reset all quantity input boxes to 0
-        $('input[type=number]').val(0);
+        hideAllFruitSections();
+        showSelectedShopFruits(selectedShopId);
+        $("#fruitSelectionSection").removeClass("d-none");
 
-        // Show fruits only if a shop is selected
-        if (shopId) {
-            // Set selected shop in hidden field and display
-            $('#selectedShopId').val(shopId);
-            $('#selectedShopName').text(shopName);
+        $("input[type='number']").val(0);
+        $("#requestSummary").html('<p class="text-muted text-center py-4">No items selected yet</p>');
 
-            // Show fruit selection section
-            $('#fruitSelectionSection').removeClass('d-none');
+        // Update the fruit counts after displaying the filtered items
+        updateFruitCount();
+    });
 
-            // Filter fruits by shop
-            $('.fruitItem').hide();
-            $(`.fruitItem[data-shop="${shopId}"]`).show();
+    // Search and filter controls
+    $("#fruitSearch").on("keyup", filterFruits);
+    $("#typeFilter").on("change", filterFruits);
 
-            // Update fruit count
-            updateFruitCount();
-        } else {
-            // Hide fruit selection section if no shop is selected
-            $('#fruitSelectionSection').addClass('d-none');
-        }
-
-        // Update request summary after resetting the inputs
+    // Quantity input change
+    $("input[type='number']").on("change", function () {
         updateRequestSummary();
     });
 
-    // Fruit search and filter functionality
-    $('#fruitSearch').on('input', function () {
-        filterFruits();
+    // Reset form button
+    $("#resetFormBtn").click(function () {
+        resetForm();
     });
 
-    $('#typeFilter').on('change', function () {
-        filterFruits();
-    });
-
-    // Reset form
-    $('#resetFormBtn').on('click', function () {
-        $('input[type=number]').val(0);
-        $('#borrowingForm')[0].reset();
-        updateRequestSummary();
-    });
-
-    // Update quantity and request summary when input changes
-    $('input[type=number]').on('change', function () {
-        updateRequestSummary();
-    });
-
-    // Filter fruits based on search and filter criteria
+    // Function to filter fruits based on search text and type
     function filterFruits() {
         let searchText = $('#fruitSearch').val().toLowerCase();
         let type = $('#typeFilter').val();
-        let shopId = $('#selectedShopId').val();
+        let shopId = $('#shopFilter').val();
 
         // Only filter visible shop's fruits
         $(`.fruitItem[data-shop="${shopId}"]`).each(function () {
@@ -88,44 +66,64 @@ $(document).ready(function () {
         updateFruitCount();
     }
 
-    // Update the visible fruit count
-    function updateFruitCount() {
-        let shopId = $('#selectedShopId').val();
-        if (!shopId) return;
-
-        let totalFruits = $(`.fruitItem[data-shop="${shopId}"]`).length;
-        let visibleFruits = $(`.fruitItem[data-shop="${shopId}"]:visible`).length;
-
-        $('#visibleFruitCount').text(visibleFruits);
-        $('#totalFruitCount').text(totalFruits);
+    // Helper Functions
+    function hideAllFruitSections() {
+        $(".fruitItem").hide();
     }
 
-    // Update the request summary in the sidebar
+    function showSelectedShopFruits(shopId) {
+        $(`.fruitItem[data-shop="${shopId}"]`).show();
+    }
+
+    function updateFruitCount() {
+        let totalFruits = $(".fruitItem[data-shop='" + $("#shopFilter").val() + "']").length;
+        let visibleFruits = $(".fruitItem[data-shop='" + $("#shopFilter").val() + "']:visible").length;
+
+        $("#totalFruitCount").text(totalFruits);
+        $("#visibleFruitCount").text(visibleFruits);
+    }
+
     function updateRequestSummary() {
-        let summary = '';
+        let summary = "";
         let totalItems = 0;
 
-        $('input[type=number]').each(function () {
-            let qty = parseInt($(this).val()) || 0;
+        $("input[type='number']").each(function () {
+            let qty = parseInt($(this).val());
             if (qty > 0) {
-                let fruitName = $(this).closest('.fruitItem').find('h5').text();
-                let unit = $(this).closest('.fruitItem').find('.text-success').text().split(' ')[1];
+                let itemInfo = $(this).closest(".fruitItem");
+                let fruitName = itemInfo.find("h5").text();
+                let unit = itemInfo.find(".text-success").text().split(" ")[1];
 
                 summary += `<div class="d-flex justify-content-between mb-2">
-                                <span>${fruitName}</span>
-                                <span>${qty} ${unit}</span>
+                                <span>${fruitName} (${qty} ${unit})</span>
+                                <span>${qty}</span>
                             </div>`;
                 totalItems += qty;
             }
         });
 
-        if (summary === '') {
-            $('#requestSummary').html('<p class="text-muted text-center py-4">No items selected yet</p>');
+        if (totalItems > 0) {
+            $("#requestSummary").html(summary);
         } else {
-            $('#requestSummary').html(summary);
+            $("#requestSummary").html('<p class="text-muted text-center py-4">No items selected yet</p>');
         }
 
-        $('#totalItems').text(totalItems);
+        $("#totalItems").text(totalItems);
+    }
+
+    function resetForm() {
+        // Reset all quantity inputs to 0
+        $("input[type='number']").val(0);
+
+        // Reset the search and filter
+        $("#fruitSearch").val("");
+        $("#typeFilter").val("all");
+
+        // Reset the summary
+        updateRequestSummary();
+
+        // Show all fruits for the selected shop
+        filterFruits();
     }
 });
 
