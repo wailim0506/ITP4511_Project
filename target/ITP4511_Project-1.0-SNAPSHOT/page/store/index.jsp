@@ -8,6 +8,7 @@
 <%@page import="ict.bean.*" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
+<%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -34,8 +35,24 @@
             <div class="hero-section text-center shadow-sm">
                 <h1 class="display-5 fw-bold text-primary">Acer International Bakery</h1>
                 <p class="lead mb-4">Shop Management Dashboard</p>
-                <p class="text-muted mb-0">Manage fruit inventory, reservations, and borrowing requests</p>
-                <div id="current-time" class="mt-3 fw-light text-primary"></div>
+                
+                <!-- Shop Information - Simplified Design -->
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <i class="material-icons text-primary me-2" style="font-size: 1.2rem;">store</i>
+                    <%
+                        String shop = (String)request.getAttribute("shop");
+                        String shopCity = (String)request.getAttribute("shopCity");
+                        String shopCountry = (String)request.getAttribute("shopCountry");
+                        String staffName = (String)request.getAttribute("staffname");
+                        if (shop == null || shopCity == null || shopCountry == null || staffName == null) {
+                            throw new Exception();
+                        }
+                    %>
+                    <span class="fw-medium">Shop: <%=shop%>, <%=shopCity%>, <%=shopCountry%> </span>
+                    <span class="mx-2 text-muted">|</span>
+                    <span class="text-muted mx-2">Staff: <%=staffName %></span>
+                </div>
+                <div id="current-time" class="mt-2 fw-light text-primary"></div>
             </div>
             
             <!-- Dashboard Cards -->
