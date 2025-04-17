@@ -75,10 +75,6 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("userInfo", bean);
                 if (bean.getShopId() != null) {
                     session.setAttribute("userType", "shop");
-                    request.setAttribute("shop", bean.getShopAddress());
-                    request.setAttribute("shopCity", bean.getShopCity());
-                    request.setAttribute("shopCountry", bean.getShopCountry());
-                    request.setAttribute("staffname", bean.getStaffName());
                     targetURL = "page/store/index.jsp"; // Change to shop homepage path
                 } else if (bean.getWareHouseId() != null) {
                     session.setAttribute("userType", "warehouse");

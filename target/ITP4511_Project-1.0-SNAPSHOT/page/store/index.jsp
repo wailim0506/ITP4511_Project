@@ -40,10 +40,11 @@
                 <div class="d-flex align-items-center justify-content-center mb-3">
                     <i class="material-icons text-primary me-2" style="font-size: 1.2rem;">store</i>
                     <%
-                        String shop = (String)request.getAttribute("shop");
-                        String shopCity = (String)request.getAttribute("shopCity");
-                        String shopCountry = (String)request.getAttribute("shopCountry");
-                        String staffName = (String)request.getAttribute("staffname");
+                        UserBean bean = (UserBean)session.getAttribute("userInfo");
+                        String shop = (String)bean.getShopAddress();
+                        String shopCity = (String)bean.getShopCity();
+                        String shopCountry = (String)bean.getShopCountry();
+                        String staffName = (String)bean.getStaffName();
                         if (shop == null || shopCity == null || shopCountry == null || staffName == null) {
                             throw new Exception();
                         }

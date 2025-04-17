@@ -72,7 +72,7 @@ public class nav extends SimpleTagSupport {
                         + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/reserveRecord?action=listAll\"><i class=\"material-icons small align-middle me-1\">bookmark</i> Reserve Record</a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
-                        + "                    <a class=\"nav-link\" href=\"borrowFruit?action=select\"><i class=\"material-icons small align-middle me-1\">swap_horiz</i> Borrow</a>"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/borrowFruit?action=select\"><i class=\"material-icons small align-middle me-1\">swap_horiz</i> Borrow</a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
                         + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">history</i> Borrow Record</a>"
