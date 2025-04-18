@@ -32,7 +32,14 @@
         <link href="${pageContext.request.contextPath}/css/store/reserveFruit.css" rel="stylesheet">
     </head>
     <body>
-        <nav:nav userType="shop"/>
+        <%
+            UserBean bean = (UserBean)session.getAttribute("userInfo");
+            String staffName = (String)bean.getStaffName();
+            if (staffName == null) {
+                throw new Exception();
+            }
+        %>
+        <nav:nav userType="shop" staffName="<%=staffName%>"/>
         <%
             try{
                 String errorMsg = (String) session.getAttribute("errorMsg");

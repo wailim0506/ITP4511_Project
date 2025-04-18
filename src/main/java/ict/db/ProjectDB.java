@@ -938,6 +938,195 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+
+    public ArrayList<BorrowBean> getAllBorrow(String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        BorrowBean bb = null;
+        ArrayList<BorrowBean> orderList = new ArrayList<BorrowBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.*,y.Address,z.City,y.PhoneNumber FROM shop_borrow_request x, shop y ,shop_city z WHERE RequestBy =? and x.RequestTo = y.ID and y.City = z.ID";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                bb = new BorrowBean();
+                bb.setId(rs.getString("ID"));
+                bb.setRequestByShopId(rs.getString("RequestBy"));
+                bb.setRequestToShopId(rs.getString("RequestTo"));
+                bb.setRequestToShopAddress(rs.getString("Address") + ", " + rs.getString("City"));
+                bb.setRequestDate(rs.getString("RequestDate"));
+                bb.setStatus(rs.getString("Status"));
+                bb.setNotes(rs.getString("Notes"));
+                bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
+                orderList.add(bb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
+    public ArrayList<BorrowBean> getBorrowByDateRange(String shopId, String range) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        BorrowBean bb = null;
+        ArrayList<BorrowBean> orderList = new ArrayList<>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.*,y.Address,z.City,y.PhoneNumber FROM shop_borrow_request x, shop y ,shop_city z WHERE RequestBy=? and x.RequestTo = y.ID and y.City = z.ID";
+            LocalDate today = LocalDate.now();
+            LocalDate startDate = null;
+            LocalDate endDate = null;
+
+            switch (range) {
+                case "currentMonth":
+                    startDate = today.withDayOfMonth(1);
+                    endDate = today.withDayOfMonth(today.lengthOfMonth());
+                    break;
+                case "last90":
+                    startDate = today.minusDays(90);
+                    endDate = today;
+                    break;
+                case "ytd":
+                    startDate = today.withDayOfYear(1);
+                    endDate = today;
+                    break;
+            }
+
+            if (startDate != null && endDate != null) {
+                preQueryStatement += " AND RequestDate BETWEEN ? AND ?";
+            }
+
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            if (startDate != null && endDate != null) {
+                pStmnt.setDate(2, java.sql.Date.valueOf(startDate));
+                pStmnt.setDate(3, java.sql.Date.valueOf(endDate));
+            }
+
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                bb = new BorrowBean();
+                bb.setId(rs.getString("ID"));
+                bb.setRequestByShopId(rs.getString("RequestBy"));
+                bb.setRequestToShopId(rs.getString("RequestTo"));
+                bb.setRequestToShopAddress(rs.getString("Address") + ", " + rs.getString("City"));
+                bb.setRequestDate(rs.getString("RequestDate"));
+                bb.setStatus(rs.getString("Status"));
+                bb.setNotes(rs.getString("Notes"));
+                bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
+                orderList.add(bb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
+    public ArrayList<BorrowBean> getBorrowByStatus(String shopId, String status) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        BorrowBean bb = null;
+        ArrayList<BorrowBean> orderList = new ArrayList<BorrowBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.*,y.Address,z.City,y.PhoneNumber FROM shop_borrow_request x, shop y ,shop_city z WHERE RequestBy=? and x.RequestTo = y.ID and y.City = z.ID AND Status=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.setString(2, status);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                bb = new BorrowBean();
+                bb.setId(rs.getString("ID"));
+                bb.setRequestByShopId(rs.getString("RequestBy"));
+                bb.setRequestToShopId(rs.getString("RequestTo"));
+                bb.setRequestToShopAddress(rs.getString("Address") + ", " + rs.getString("City"));
+                bb.setRequestDate(rs.getString("RequestDate"));
+                bb.setStatus(rs.getString("Status"));
+                bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
+                bb.setNotes(rs.getString("Notes"));
+                orderList.add(bb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
+    public ArrayList<BorrowBean> getBorrowByStatusAndDateRange(String shopId, String range, String status) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        BorrowBean bb = null;
+        ArrayList<BorrowBean> orderList = new ArrayList<>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.*,y.Address,z.City,y.PhoneNumber FROM shop_borrow_request x, shop y ,shop_city z WHERE RequestBy=? and x.RequestTo = y.ID and y.City = z.ID";
+            LocalDate today = LocalDate.now();
+            LocalDate startDate = null;
+            LocalDate endDate = null;
+
+            switch (range) {
+                case "currentMonth":
+                    startDate = today.withDayOfMonth(1);
+                    endDate = today.withDayOfMonth(today.lengthOfMonth());
+                    break;
+                case "last90":
+                    startDate = today.minusDays(90);
+                    endDate = today;
+                    break;
+                case "ytd":
+                    startDate = today.withDayOfYear(1);
+                    endDate = today;
+                    break;
+            }
+
+            if (startDate != null && endDate != null) {
+                preQueryStatement += " AND RequestDate BETWEEN ? AND ? AND Status=?";
+            }
+
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            if (startDate != null && endDate != null) {
+                pStmnt.setDate(2, java.sql.Date.valueOf(startDate));
+                pStmnt.setDate(3, java.sql.Date.valueOf(endDate));
+            }
+            pStmnt.setString(4, status);
+
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                bb = new BorrowBean();
+                bb.setId(rs.getString("ID"));
+                bb.setRequestByShopId(rs.getString("RequestBy"));
+                bb.setRequestToShopId(rs.getString("RequestTo"));
+                bb.setRequestToShopAddress(rs.getString("Address") + ", " + rs.getString("City"));
+                bb.setRequestDate(rs.getString("RequestDate"));
+                bb.setStatus(rs.getString("Status"));
+                bb.setNotes(rs.getString("Notes"));
+                bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
+                orderList.add(bb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
     // for shop_borrow_request
 
     // for shop+borrow_request_item
@@ -963,6 +1152,62 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return isSuccess;
+    }
+
+    public int getBorrowItemQty(String borrowId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int qty = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "Select Count(*) AS qty from shop_borrow_request_item where BorrowRequestID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, borrowId);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                qty = rs.getInt("qty");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return qty;
+    }
+
+    public ArrayList<BorrowBean> getBorrowItemById(String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        BorrowBean bb = null;
+        ArrayList<BorrowBean> orderItemList = new ArrayList<BorrowBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT y.ID,y.Name,y.unit,z.City,a.Name AS CountryRegion,x.Qty FROM shop_borrow_request_item x, fruit y, fruit_city z, country_region a WHERE x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = a.ID and x.BorrowRequestID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                bb = new BorrowBean();
+                bb.setFruidId(rs.getString("ID"));
+                bb.setFruitName(rs.getString("Name"));
+                bb.setUnit(rs.getString("unit"));
+                bb.setCity(rs.getString("City"));
+                bb.setCountryRegion(rs.getString("CountryRegion"));
+                bb.setQty(rs.getInt("Qty"));
+                orderItemList.add(bb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return orderItemList;
     }
     // for shop+borrow_request_item
 

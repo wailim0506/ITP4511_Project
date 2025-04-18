@@ -32,7 +32,14 @@
         <link href="${pageContext.request.contextPath}/css/store/borrowFruit.css" rel="stylesheet">
     </head>
     <body>
-        <nav:nav userType="shop"/>
+        <%
+            UserBean bean = (UserBean)session.getAttribute("userInfo");
+            String staffName = (String)bean.getStaffName();
+            if (staffName == null) {
+                throw new Exception();
+            }
+        %>
+        <nav:nav userType="shop" staffName="<%=staffName%>"/>
         <%
             try{
                 String errorMsg = (String) session.getAttribute("errorMsg");
@@ -233,11 +240,19 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item border-0 ps-0 py-2">
                                         <i class="material-icons text-muted align-middle me-2 small">home_work</i>
-                                        Only shops in the same city can be choose to borrow
+                                        Only shops in the same city can be chosen to borrow from
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0 py-2">
+                                        <i class="material-icons text-muted align-middle me-2 small">inventory</i>
+                                        Check stock levels first before creating a borrowing request
                                     </li>
                                     <li class="list-group-item border-0 ps-0 py-2">
                                         <i class="material-icons text-muted align-middle me-2 small">verified</i>
                                         Verify the quality and quantity upon receipt
+                                    </li>
+                                    <li class="list-group-item border-0 ps-0 py-2">
+                                        <i class="material-icons text-muted align-middle me-2 small">edit_off</i>
+                                        No modifications allowed once submitted - create a new borrow request if changes needed
                                     </li>
                                     <li class="list-group-item border-0 ps-0 py-2">
                                         <i class="material-icons text-muted align-middle me-2 small">shopping_cart</i>

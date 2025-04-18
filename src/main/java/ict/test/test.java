@@ -270,30 +270,50 @@ public class test {
                 // System.out.println("---------------------");
                 // }
 
-                ArrayList<ShopBean> shopList = db.getShopInSameCity("New York", "S023");
-                ArrayList<ArrayList<ShopFruitStockBean>> shopStockList = new ArrayList<ArrayList<ShopFruitStockBean>>();
-                for (int i = 0; i < shopList.size(); i++) {
-                        ArrayList<ShopFruitStockBean> stockList = db.getShopFruitStock(shopList.get(i).getID());
-                        shopStockList.add(stockList);
-                }
+                // ArrayList<ShopBean> shopList = db.getShopInSameCity("New York", "S023");
+                // ArrayList<ArrayList<ShopFruitStockBean>> shopStockList = new
+                // ArrayList<ArrayList<ShopFruitStockBean>>();
+                // for (int i = 0; i < shopList.size(); i++) {
+                // ArrayList<ShopFruitStockBean> stockList =
+                // db.getShopFruitStock(shopList.get(i).getID());
+                // shopStockList.add(stockList);
+                // }
 
-                for (int i = 0; i < shopList.size(); i++) {
-                        System.out.println("Shop ID: " + shopList.get(i).getID());
-                        System.out.println("Address: " + shopList.get(i).getAddress());
-                        System.out.println("City: " + shopList.get(i).getCity());
-                        System.out.println("Phone Number: " + shopList.get(i).getPhoneNumber());
-                        System.out.println("Country Region: " + shopList.get(i).getCountryRegion());
-                        System.out.println("---------------------");
-                        ArrayList<ShopFruitStockBean> stockList = shopStockList.get(i);
-                        for (int j = 0; j < stockList.size(); j++) {
-                                System.out.println("Fruit ID: " + stockList.get(j).getFruitId());
-                                System.out.println("Fruit Name: " + stockList.get(j).getFruitName());
-                                System.out.println("City: " + stockList.get(j).getCity());
-                                System.out.println("Country Region: " + stockList.get(j).getCountryRegion());
-                                System.out.println("Image Name: " + stockList.get(j).getImgName());
-                                System.out.println("Quantity: " + stockList.get(j).getQty());
-                                System.out.println("---------------------");
+                // for (int i = 0; i < shopList.size(); i++) {
+                // System.out.println("Shop ID: " + shopList.get(i).getID());
+                // System.out.println("Address: " + shopList.get(i).getAddress());
+                // System.out.println("City: " + shopList.get(i).getCity());
+                // System.out.println("Phone Number: " + shopList.get(i).getPhoneNumber());
+                // System.out.println("Country Region: " + shopList.get(i).getCountryRegion());
+                // System.out.println("---------------------");
+                // ArrayList<ShopFruitStockBean> stockList = shopStockList.get(i);
+                // for (int j = 0; j < stockList.size(); j++) {
+                // System.out.println("Fruit ID: " + stockList.get(j).getFruitId());
+                // System.out.println("Fruit Name: " + stockList.get(j).getFruitName());
+                // System.out.println("City: " + stockList.get(j).getCity());
+                // System.out.println("Country Region: " + stockList.get(j).getCountryRegion());
+                // System.out.println("Image Name: " + stockList.get(j).getImgName());
+                // System.out.println("Quantity: " + stockList.get(j).getQty());
+                // System.out.println("---------------------");
+                // }
+                // }
+
+                // test getAllBorrow()
+                ArrayList<BorrowBean> borrowList = db.getBorrowByStatusAndDateRange("S023", "ytd", "Processing");
+                System.out.println("Borrow List for Shop ID: S023");
+                System.out.println("Total borrow found: " + borrowList.size());
+                for (BorrowBean borrow : borrowList) {
+                        System.out.println("Borrow ID: " + borrow.getId());
+                        System.out.println("Shop ID: " + borrow.getRequestByShopId());
+                        System.out.println("Borrow Date: " + borrow.getRequestDate());
+                        System.out.println("Borrow From: " + borrow.getRequestToShopAddress());
+                        if (borrow.getNotes() == null || borrow.getNotes().isEmpty()) {
+                                System.out.println("Notes: No notes provided.");
+                        } else {
+                                System.out.println("Notes: " + borrow.getNotes());
                         }
+                        System.out.println("Status: " + borrow.getStatus());
+                        System.out.println("---------------------");
                 }
         }
 }

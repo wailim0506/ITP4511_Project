@@ -1,0 +1,110 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2025年4月9日, 下午12:40:23
+    Author     : wailim0506
+*/
+
+/* Header section styling */
+.headerSection {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 10px;
+  padding: 2rem 1.5rem;
+}
+
+/* Card styling */
+.card {
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Reservation records container */
+.reservationRecordsContainer {
+  position: relative;
+}
+
+/* Table styling */
+.table th {
+  font-weight: 600;
+  color: var(--bs-gray-700);
+}
+
+.reserveRecordItem {
+  transition: all 0.2s ease;
+}
+
+.reserveRecordItem:hover {
+  background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+/* Info card styling */
+.infoCard {
+  transition: all 0.2s ease;
+  border-left: 3px solid var(--bs-primary);
+}
+
+.infoCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Modal styling */
+.modal-content {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Timeline in modal */
+.statusTimeline {
+  position: relative;
+}
+
+.timelineIcon {
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+}
+
+.statusTimeline .d-flex:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  width: 2px;
+  top: 18px;
+  bottom: 0;
+  background-color: var(--bs-gray-300);
+  height: 20px;
+}
+
+/* Dark mode adjustments */
+[data-bs-theme="dark"] .infoCard {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+[data-bs-theme="dark"] .reserveRecordItem:hover {
+  background-color: rgba(var(--bs-primary-rgb), 0.15);
+}
+
+[data-bs-theme="dark"] .card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-bs-theme="dark"] .table th {
+  color: aliceblue;
+}
+
+[data-bs-theme="dark"] .headerSection {
+  background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+}
+
+[data-bs-theme="dark"] .notesSection {
+  background-color: #212529;
+  color: #f8f9fa;
+}
