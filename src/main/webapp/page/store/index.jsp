@@ -29,7 +29,14 @@
         <link href="${pageContext.request.contextPath}/css/store/index.css" rel="stylesheet">
     </head>
     <body>
-        <nav:nav userType="shop"/>
+        <%
+            UserBean bean = (UserBean)session.getAttribute("userInfo");
+            String staffName = (String)bean.getStaffName();
+            if (staffName == null) {
+                throw new Exception();
+            }
+        %>
+        <nav:nav userType="shop" staffName="<%=staffName%>"/>
         <div class="container py-4">
             <!-- Hero Section -->
             <div class="hero-section text-center shadow-sm">
@@ -40,11 +47,11 @@
                 <div class="d-flex align-items-center justify-content-center mb-3">
                     <i class="material-icons text-primary me-2" style="font-size: 1.2rem;">store</i>
                     <%
-                        UserBean bean = (UserBean)session.getAttribute("userInfo");
+                        bean = (UserBean)session.getAttribute("userInfo");
                         String shop = (String)bean.getShopAddress();
                         String shopCity = (String)bean.getShopCity();
                         String shopCountry = (String)bean.getShopCountry();
-                        String staffName = (String)bean.getStaffName();
+                        staffName = (String)bean.getStaffName();
                         if (shop == null || shopCity == null || shopCountry == null || staffName == null) {
                             throw new Exception();
                         }
@@ -94,6 +101,18 @@
                     </div>
                 </div>
                 
+                <!-- Borrow Record -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">history</i>
+                            <h5 class="card-title">Borrow Records</h5>
+                            <p class="card-text text-muted">View and manage your fruit borrowing history</p>
+                            <a href="/ITP4511_Project/borrowRecord?action=listAll" class="btn btn-outline-primary mt-2">View Records</a>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Borrow Request -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
@@ -131,7 +150,7 @@
                 </div>
                 
                 <!-- User List -->
-                <div class="col-lg-4 col-md-6 mx-auto">
+                <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">people</i>

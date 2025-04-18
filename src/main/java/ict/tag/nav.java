@@ -17,10 +17,14 @@ import java.util.*;
  */
 public class nav extends SimpleTagSupport {
 
-    private String userType;
+    private String userType, staffName;
 
     public void setUserType(String tagType) {
         this.userType = tagType;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 
     @Override
@@ -29,7 +33,7 @@ public class nav extends SimpleTagSupport {
 
         try {
             if ("shop".equalsIgnoreCase(userType)) {
-                shopNav(out);
+                shopNav(out, staffName);
             } else if ("warehouse".equalsIgnoreCase(userType)) {
                 warehouseNav(out);
             } else {
@@ -46,7 +50,7 @@ public class nav extends SimpleTagSupport {
         }
     }
 
-    private void shopNav(JspWriter out) throws IOException {
+    private void shopNav(JspWriter out, String staffName) throws IOException {
 
         out.println(
                 "<nav class=\"navbar navbar-expand-lg sticky-top shadow-sm\" style=\"border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);\">"
@@ -75,7 +79,7 @@ public class nav extends SimpleTagSupport {
                         + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/borrowFruit?action=select\"><i class=\"material-icons small align-middle me-1\">swap_horiz</i> Borrow</a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
-                        + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">history</i> Borrow Record</a>"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/borrowRecord?action=listAll\"><i class=\"material-icons small align-middle me-1\">history</i> Borrow Record</a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
                         + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">send</i> Borrow Request</a>"
@@ -89,7 +93,7 @@ public class nav extends SimpleTagSupport {
                         + "                    <a class=\"btn btn-outline-secondary dropdown-toggle d-flex align-items-center\" href=\"#\" role=\"button\" "
                         + "                       id=\"userDropdown\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">"
                         + "                        <i class=\"material-icons me-2\">account_circle</i>"
-                        + "                        <span>User Name</span>"
+                        + "                        <span>" + staffName + "</span>"
                         + "                    </a>"
                         + "                    <ul class=\"dropdown-menu dropdown-menu-end shadow\" aria-labelledby=\"userDropdown\">"
                         + "                        <li><a class=\"dropdown-item\" href=\"#\"><i class=\"material-icons small me-2\">person</i>Profile</a></li>"
