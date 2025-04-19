@@ -84,7 +84,7 @@ public class footer extends SimpleTagSupport {
                         + "                    <span>Borrow Record</span>"
                         + "                </div>"
                         + "            </a>"
-                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/borrowRequest\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/borrowRequest?action=all\">"
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">send</i>"
                         + "                    <span>Borrow Request</span>"

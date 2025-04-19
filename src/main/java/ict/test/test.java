@@ -299,7 +299,29 @@ public class test {
                 // }
 
                 // test getAllBorrow()
-                ArrayList<BorrowBean> borrowList = db.getBorrowByStatusAndDateRange("S023", "ytd", "Processing");
+                // ArrayList<BorrowBean> borrowList = db.getBorrowByStatusAndDateRange("S023",
+                // "ytd", "Processing");
+                // System.out.println("Borrow List for Shop ID: S023");
+                // System.out.println("Total borrow found: " + borrowList.size());
+                // for (BorrowBean borrow : borrowList) {
+                // System.out.println("Borrow ID: " + borrow.getId());
+                // System.out.println("Shop ID: " + borrow.getRequestByShopId());
+                // System.out.println("Borrow Date: " + borrow.getRequestDate());
+                // System.out.println("Borrow From: " + borrow.getRequestToShopAddress());
+                // if (borrow.getNotes() == null || borrow.getNotes().isEmpty()) {
+                // System.out.println("Notes: No notes provided.");
+                // } else {
+                // System.out.println("Notes: " + borrow.getNotes());
+                // }
+                // System.out.println("Status: " + borrow.getStatus());
+                // System.out.println("---------------------");
+                // }
+
+                // test getPendingStatistics()
+                // String d = db.getPendingStatistics("S024");
+                // System.out.println("Pending Statistics: " + d);
+                // test getBorrowByStatusForHandleRequest()
+                ArrayList<BorrowBean> borrowList = db.getBorrowByStatusForHandleRequest("S023", "Pending");
                 System.out.println("Borrow List for Shop ID: S023");
                 System.out.println("Total borrow found: " + borrowList.size());
                 for (BorrowBean borrow : borrowList) {

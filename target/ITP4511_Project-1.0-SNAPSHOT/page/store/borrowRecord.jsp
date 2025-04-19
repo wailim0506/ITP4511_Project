@@ -114,14 +114,11 @@
                                             <option value="Pending" <%= "Pending".equals(selectedStatus) ? "selected" : "" %>>
                                                 Pending
                                             </option>
-                                            <option value="Processing" <%= "Processing".equals(selectedStatus) ? "selected" : "" %>>
-                                                Processing
+                                            <option value="Approved" <%= "Approved".equals(selectedStatus) ? "selected" : "" %>>
+                                                Approved
                                             </option>
-                                            <option value="Delivered" <%= "Delivered".equals(selectedStatus) ? "selected" : "" %>>
-                                                Delivered
-                                            </option>
-                                            <option value="Finished" <%= "Finished".equals(selectedStatus) ? "selected" : "" %>>
-                                                Finished
+                                            <option value="Rejected" <%= "Rejected".equals(selectedStatus) ? "selected" : "" %>>
+                                                Rejected
                                             </option>
                                         </select>
                                     </div>
@@ -189,9 +186,8 @@
                                         <%
                                             HashMap<String, String> statusColorMap = new HashMap<>();
                                             statusColorMap.put("Pending", "bg-warning text-dark");
-                                            statusColorMap.put("Processing", "bg-primary");
-                                            statusColorMap.put("Delivered", "bg-success");
-                                            statusColorMap.put("Finished", "bg-secondary");
+                                            statusColorMap.put("Approved", "bg-success");
+                                            statusColorMap.put("Rejected", "bg-danger");
 
                                             if ((orderList != null && !orderList.isEmpty()) && (orderItemQtyList != null && !orderItemQtyList.isEmpty())) {
                                                 for (int i = 0; i < orderList.size(); i++) {

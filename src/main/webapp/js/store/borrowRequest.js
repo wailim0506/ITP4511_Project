@@ -4,6 +4,7 @@
  */
 
 $(document).ready(function () {
+
     // Handle request search filtering
     $("#requestSearch").on("keyup", function () {
         let searchText = $(this).val().toLowerCase();
@@ -63,50 +64,65 @@ $(document).ready(function () {
 
         // This is just for UI demo purposes
         // In a real implementation, you would compare actual dates
-        if (selectedDate === "2025-04-19") {
-            $(".requestItem:contains('April 19')").show();
-            $(".requestItem:not(:contains('April 19'))").hide();
+        // Get the selected date and convert to Date object
+        const selectedDateObj = selectedDate ? new Date(selectedDate) : null;
 
-            $("tbody tr:contains('Apr 19')").show();
-            $("tbody tr:not(:contains('Apr 19'))").hide();
-        } else if (selectedDate === "2025-04-18") {
-            $(".requestItem:contains('April 18')").show();
-            $(".requestItem:not(:contains('April 18'))").hide();
-
-            $("tbody tr:contains('Apr 18')").show();
-            $("tbody tr:not(:contains('Apr 18'))").hide();
-        } else {
-            $(".requestItem").hide();
-            $("tbody tr").hide();
+        if (!selectedDateObj) {
+            $(".requestItem").show();
+            $("tbody tr").show();
+            return;
         }
+
+        // Format selected date to YYYY-MM-DD for comparison
+        const formattedSelectedDate = selectedDateObj.toISOString().split('T')[0];
+
+        // Filter pending requests section
+        $(".requestItem").each(function () {
+            const requestDate = $(this).data('request-date');
+            if (requestDate === formattedSelectedDate) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+
+        // Filter history table
+        $("tbody tr").each(function () {
+            const rowDate = $(this).data('request-date');
+            if (rowDate === formattedSelectedDate) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
     });
 
     // Pass request ID to modals
-    $('#requestDetailsModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget);
-        let requestId = button.data('request-id');
-        let modal = $(this);
+    // $('#requestDetailsModal').on('show.bs.modal', function (event) {
+    //     let button = $(event.relatedTarget);
+    //     let requestId = button.data('request-id');
+    //     let modal = $(this);
 
-        modal.find('.modal-title').text('Request Details: #' + requestId);
+    //     modal.find('.modal-title').text('Request Details: #' + requestId);
 
-        // In a real implementation, you would fetch and display the specific request details here
-    });
+    //     // In a real implementation, you would fetch and display the specific request details here
+    // });
 
-    $('#approveModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget);
-        let requestId = button.data('request-id');
-        let modal = $(this);
+    // $('#approveModal').on('show.bs.modal', function (event) {
+    //     let button = $(event.relatedTarget);
+    //     let requestId = button.data('request-id');
+    //     let modal = $(this);
 
-        modal.find('.modal-title').text('Approve Request #' + requestId);
-    });
+    //     modal.find('.modal-title').text('Approve Request #' + requestId);
+    // });
 
-    $('#rejectModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget);
-        let requestId = button.data('request-id');
-        let modal = $(this);
+    // $('#rejectModal').on('show.bs.modal', function (event) {
+    //     let button = $(event.relatedTarget);
+    //     let requestId = button.data('request-id');
+    //     let modal = $(this);
 
-        modal.find('.modal-title').text('Reject Request #' + requestId);
-    });
+    //     modal.find('.modal-title').text('Reject Request #' + requestId);
+    // });
 });
 
 

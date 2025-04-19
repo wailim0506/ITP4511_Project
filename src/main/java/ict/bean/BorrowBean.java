@@ -9,9 +9,11 @@ package ict.bean;
  * @author Wai Lim Fung
  */
 public class BorrowBean {
-    private String id, requestByShopId, requestToShopId, requestToShopAddress, requestToShopPhone, requestDate,
+    private String id, requestByShopId, requestByShopAddress, requestByShopPhone, requestToShopId, requestToShopAddress,
+            requestToShopPhone, requestDate,
             deliveryDate, status, notes;
     private String fruidId, fruitName, city, countryRegion, imgName, type, unit;
+    private String rejectReasonSelect, rejectReason;
     private int qty;
 
     public BorrowBean() {
@@ -31,6 +33,22 @@ public class BorrowBean {
 
     public void setRequestByShopId(String requestByShopId) {
         this.requestByShopId = requestByShopId;
+    }
+
+    public String getRequestByShopAddress() {
+        return requestByShopAddress;
+    }
+
+    public void setRequestByShopAddress(String requestByShopAddress) {
+        this.requestByShopAddress = requestByShopAddress;
+    }
+
+    public String getRequestByShopPhone() {
+        return requestByShopPhone;
+    }
+
+    public void setRequestByShopPhone(String requestByShopPhone) {
+        this.requestByShopPhone = requestByShopPhone;
     }
 
     public String getRequestToShopId() {
@@ -151,5 +169,21 @@ public class BorrowBean {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public String getRejectReasonSelect() {
+        return rejectReasonSelect;
+    }
+
+    public void setRejectReasonSelect(String rejectReasonSelect) {
+        this.rejectReasonSelect = rejectReasonSelect;
+    }
+
+    public String getRejectReason() {
+        return rejectReason;
+    }
+
+    public void setRejectReason(String rejectReason) {
+        this.rejectReason = rejectReason;
     }
 }

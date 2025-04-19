@@ -201,7 +201,7 @@
                                         <div class="mb-3">
                                             <label for="notes" class="form-label">Additional Notes</label>
                                             <textarea class="form-control" id="notes" name="notes" rows="2" 
-                                                      placeholder="Any specific requirements or comments"></textarea>
+                                                      placeholder="Any specific requirements or comments" required></textarea>
                                         </div>
                                         <div class="d-flex justify-content-end gap-2 mt-4">
                                             <button type="button" id="resetFormBtn" class="btn btn-outline-danger me-auto">

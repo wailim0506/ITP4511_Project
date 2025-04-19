@@ -9,6 +9,7 @@
 <%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
+
 <!DOCTYPE html>
 <html id="html" lang="en" data-bs-theme="light">
     <head>
@@ -32,24 +33,47 @@
         <link href="${pageContext.request.contextPath}/css/store/borrowRequest.css" rel="stylesheet">
     </head>
     <body>
-        <%-- Hardcoded for design purposes - would normally come from session --%>
-        <% String staffName = "John Doe"; %>
+        <%
+            UserBean bean = (UserBean)session.getAttribute("userInfo");
+            String staffName = (String)bean.getStaffName();
+            if (staffName == null) {
+                throw new Exception();
+            }
+        %>
         <nav:nav userType="shop" staffName="<%=staffName%>"/>
+        <%
+            // try{
+            //     String errorMsg = (String) session.getAttribute("errorMsg");
+            //     if(errorMsg != null && !errorMsg.isEmpty()){
+            //         out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+            //                     "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+            //                     "<span>" + errorMsg + "</span>" +
+            //                     "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);\"></button>" +
+            //                     "</div></div>");                    
+            //         session.removeAttribute("errorMsg");
+            //     }
+            // }catch(Exception e){
+            // }  
 
-        <%-- Mock alert messages for design purposes --%>
-        <div class='alertDiv d-none' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>
-            <div class="alert alert-success alert-dismissible fade show" style='width: 80%; text-align: center; position: relative;'>
-                <span>Request successfully processed!</span>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>
-            </div>
-        </div>
+            // try{
+            //     String successMsg = (String) session.getAttribute("successMsg");
+            //     if(successMsg != null && !successMsg.isEmpty()){
+            //         out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+            //                     "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+            //                     "<span>" + successMsg + "</span>" +
+            //                     "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);\"></button>" +
+            //                     "</div></div>");                    
+            //         session.removeAttribute("successMsg");
+            //     }
+            // }catch(Exception e){
+            // }  
+        %>
 
         <div class="container py-4">
             <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Incoming Borrow Requests</h2>
                 <p class="lead">Review and respond to fruit borrow requests from other shops</p>
-                <p class="text-muted small mb-0">Help other shops in your city by sharing your fruit inventory</p>
             </div>
 
             <!-- Main Content -->
@@ -75,7 +99,7 @@
                                             <i class="material-icons text-muted">sort</i>
                                         </span>
                                         <select class="form-select" id="statusFilter">
-                                            <option value="all" selected>All Statuses</option>
+                                            <option value="all" selected>All Status</option>
                                             <option value="pending">Pending</option>
                                             <option value="approved">Approved</option>
                                             <option value="rejected">Rejected</option>
@@ -87,149 +111,90 @@
                                         <span class="input-group-text border-0 bg-transparent">
                                             <i class="material-icons text-muted">date_range</i>
                                         </span>
-                                        <input type="date" class="form-control" id="dateFilter">
+                                        <input type="date" class="form-control" id="dateFilter" 
+                                               pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" 
+                                               placeholder="YYYY-MM-DD" lang="en">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <jsp:useBean id="pendingBorrowRequestList" class="java.util.ArrayList" scope="request" />
+                    <jsp:useBean id="pendingBorrowRequestItemList" class="java.util.ArrayList" scope="request" />
                     <!-- Pending Requests -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h5 class="mb-0"><i class="material-icons align-middle me-2">pending_actions</i>Pending Requests</h5>
-                                <span class="badge bg-warning">3 Pending</span>
+                                <span class="badge bg-warning"><%=pendingBorrowRequestList.size()%> Pending</span>
                             </div>
 
-                            <!-- Request Item 1 -->
-                            <div class="requestItem card mb-3">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold mb-2">Request #B001</h6>
-                                            <p class="mb-1"><i class="material-icons align-middle me-2 small">store</i> Sweet Bakery (Central)</p>
-                                            <p class="mb-1"><i class="material-icons align-middle me-2 small">event</i> April 18, 2025</p>
-                                            <p class="mb-0 text-muted small"><i class="material-icons align-middle me-2 small">note</i> Urgent need for weekend special cake production</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="fruitRequestList">
-                                                <p class="mb-2 fw-medium">Requested Items:</p>
-                                                <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item border-0 ps-0 py-1">
-                                                        <span class="fw-medium">Strawberry (USA)</span> - 2 kg
-                                                    </li>
-                                                    <li class="list-group-item border-0 ps-0 py-1">
-                                                        <span class="fw-medium">Blueberry (USA)</span> - 500 g
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="d-flex justify-content-between align-items-center actionButtons">
-                                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal" data-request-id="B001">
-                                            <i class="material-icons align-middle me-1 small">visibility</i> View Details
-                                        </button>
-                                        <div>
-                                            <button class="btn btn-sm btn-danger me-2" data-bs-toggle="modal" data-bs-target="#rejectModal" data-request-id="B001">
-                                                <i class="material-icons align-middle me-1 small">close</i> Reject
-                                            </button>
-                                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#approveModal" data-request-id="B001">
-                                                <i class="material-icons align-middle me-1 small">check</i> Approve
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Request Item 2 -->
-                            <div class="requestItem card mb-3">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold mb-2">Request #B002</h6>
-                                            <p class="mb-1"><i class="material-icons align-middle me-2 small">store</i> Happy Baker (Central)</p>
-                                            <p class="mb-1"><i class="material-icons align-middle me-2 small">event</i> April 19, 2025</p>
-                                            <p class="mb-0 text-muted small"><i class="material-icons align-middle me-2 small">note</i> Need for special order tomorrow</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="fruitRequestList">
-                                                <p class="mb-2 fw-medium">Requested Items:</p>
-                                                <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item border-0 ps-0 py-1">
-                                                        <span class="fw-medium">Mango (Japan)</span> - 5 pieces
-                                                    </li>
-                                                    <li class="list-group-item border-0 ps-0 py-1">
-                                                        <span class="fw-medium">Kiwi (Japan)</span> - 10 pieces
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="d-flex justify-content-between align-items-center actionButtons">
-                                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal" data-request-id="B002">
-                                            <i class="material-icons align-middle me-1 small">visibility</i> View Details
-                                        </button>
-                                        <div>
-                                            <button class="btn btn-sm btn-danger me-2" data-bs-toggle="modal" data-bs-target="#rejectModal" data-request-id="B002">
-                                                <i class="material-icons align-middle me-1 small">close</i> Reject
-                                            </button>
-                                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#approveModal" data-request-id="B002">
-                                                <i class="material-icons align-middle me-1 small">check</i> Approve
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Request Item 3 -->
-                            <div class="requestItem card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h6 class="fw-bold mb-2">Request #B003</h6>
-                                            <p class="mb-1"><i class="material-icons align-middle me-2 small">store</i> Sunflower Bakery (Central)</p>
-                                            <p class="mb-1"><i class="material-icons align-middle me-2 small">event</i> April 19, 2025</p>
-                                            <p class="mb-0 text-muted small"><i class="material-icons align-middle me-2 small">note</i> Preparing for weekend promotion</p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="fruitRequestList">
-                                                <p class="mb-2 fw-medium">Requested Items:</p>
-                                                <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item border-0 ps-0 py-1">
-                                                        <span class="fw-medium">Apple (Hong Kong)</span> - 20 pieces
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="d-flex justify-content-between align-items-center actionButtons">
-                                        <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal" data-request-id="B003">
-                                            <i class="material-icons align-middle me-1 small">visibility</i> View Details
-                                        </button>
-                                        <div>
-                                            <button class="btn btn-sm btn-danger me-2" data-bs-toggle="modal" data-bs-target="#rejectModal" data-request-id="B003">
-                                                <i class="material-icons align-middle me-1 small">close</i> Reject
-                                            </button>
-                                            <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#approveModal" data-request-id="B003">
-                                                <i class="material-icons align-middle me-1 small">check</i> Approve
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <%
+                                for (int i = 0; i < pendingBorrowRequestList.size(); i++) {
+                                    BorrowBean borrowBean = (BorrowBean) pendingBorrowRequestList.get(i);
+                                    String requestId = borrowBean.getId();
+                                    String shopName = borrowBean.getRequestByShopAddress();
+                                    String date = borrowBean.getRequestDate();
+                                    String note = borrowBean.getNotes();
+                                    out.println("<div class=\"requestItem card mb-3\" data-request-date=\"" + date + "\">");
+                                        out.println("<div class=\"card-body\">");
+                                            out.println("<div class=\"row\">");
+                                                out.println("<div class=\"col-md-6\">");
+                                                    out.println("<h6 class=\"fw-bold mb-2\">Request #" + requestId + "</h6>");
+                                                    out.println("<p class=\"mb-1\"><i class=\"material-icons align-middle me-2 small\">store</i> " + shopName + "</p>");
+                                                    out.println("<p class=\"mb-1\"><i class=\"material-icons align-middle me-2 small\">event</i> " + date + "</p>");
+                                                    out.println("<p class=\"mb-0 text-muted small\"><i class=\"material-icons align-middle me-2 small\">note</i> " + note + "</p>");
+                                                out.println("</div>");
+                                                out.println("<div class=\"col-md-6\">");
+                                                    out.println("<div class=\"fruitRequestList\">");
+                                                        out.println("<p class=\"mb-2 fw-medium\">Requested Items:</p>");
+                                                            out.println("<ul class=\"list-group list-group-flush\">");
+                                                                ArrayList<BorrowBean> pendingBorrowRequestItemListById = (ArrayList<BorrowBean>) pendingBorrowRequestItemList.get(i);
+                                                                for (int j = 0; j < pendingBorrowRequestItemListById.size(); j++) {
+                                                                    BorrowBean borrowItem = (BorrowBean) pendingBorrowRequestItemListById.get(j);
+                                                                    String fruitName = borrowItem.getFruitName();
+                                                                    String origin = borrowItem.getCity() + ", " + borrowItem.getCountryRegion();
+                                                                    int quantity = borrowItem.getQty();
+                                                                    String unit = borrowItem.getUnit();
+                                                                    out.println("<li class=\"list-group-item border-0 ps-0 py-1\">");
+                                                                    out.println("<span class=\"fw-medium\">" + fruitName + " (" + origin + ")</span> - " + quantity + " " + unit);
+                                                                    out.println("</li>");
+                                                                }
+                                                                out.println("</ul>");
+                                                     out.println("</div>");
+                                                out.println("</div>");
+                                            out.println("</div>");
+                                            out.println("<hr>");
+                                            out.println("<div class=\"d-flex justify-content-between align-items-center actionButtons\">");
+                                                out.println("<button class=\"btn btn-sm btn-outline-secondary\" data-bs-toggle=\"modal\" data-bs-target=\"#requestDetailsModal" + requestId + "\" data-request-id=\"" + requestId + "\">");
+                                                out.println("<i class=\"material-icons align-middle me-1 small\">visibility</i> View Details");
+                                                out.println("</button>");
+                                                out.println("<div>");
+                                                    out.println("<button class=\"btn btn-sm btn-danger me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#rejectModal" + requestId +"\" data-request-id=\"" + requestId + "\">");
+                                                        out.println("<i class=\"material-icons align-middle me-1 small\">close</i> Reject");
+                                                    out.println("</button>");
+                                                    out.println("<button class=\"btn btn-sm btn-success\" data-bs-toggle=\"modal\" data-bs-target=\"#approveModal" + requestId +"\" data-request-id=\"" + requestId + "\">");
+                                                        out.println("<i class=\"material-icons align-middle me-1 small\">check</i> Approve");
+                                                    out.println("</button>");
+                                                out.println("</div>");
+                                            out.println("</div>");
+                                        out.println("</div>");
+                                    out.println("</div>");
+                                }
+                            %>
                         </div>
                     </div>
 
+                    <jsp:useBean id="approvedBorrowRequestList" class="java.util.ArrayList" scope="request" />
+                    <jsp:useBean id="approvedBorrowRequestItemList" class="java.util.ArrayList" scope="request" />
+                    <jsp:useBean id="rejectedBorrowRequestList" class="java.util.ArrayList" scope="request" />
+                    <jsp:useBean id="rejectedBorrowRequestItemList" class="java.util.ArrayList" scope="request" />
                     <!-- Recent Request History -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h5 class="mb-0"><i class="material-icons align-middle me-2">history</i>Recent Request History</h5>
-                                <a href="#" class="text-decoration-none small">View All</a>
                             </div>
 
                             <div class="table-responsive">
@@ -238,45 +203,50 @@
                                         <tr>
                                             <th>Request ID</th>
                                             <th>Shop Name</th>
-                                            <th>Date</th>
+                                            <th>Request Date</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>B000</td>
-                                            <td>Sweet Bakery</td>
-                                            <td>Apr 15, 2025</td>
-                                            <td><span class="badge bg-success">Approved</span></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal" data-request-id="B000">
-                                                    <i class="material-icons align-middle small">visibility</i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>B999</td>
-                                            <td>Happy Baker</td>
-                                            <td>Apr 14, 2025</td>
-                                            <td><span class="badge bg-danger">Rejected</span></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal" data-request-id="B999">
-                                                    <i class="material-icons align-middle small">visibility</i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>B998</td>
-                                            <td>Sunflower Bakery</td>
-                                            <td>Apr 12, 2025</td>
-                                            <td><span class="badge bg-success">Approved</span></td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#requestDetailsModal" data-request-id="B998">
-                                                    <i class="material-icons align-middle small">visibility</i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        <%
+                                            for (int i = 0; i < approvedBorrowRequestList.size(); i++) {
+                                                BorrowBean borrowBean = (BorrowBean) approvedBorrowRequestList.get(i);
+                                                String requestId = borrowBean.getId();
+                                                String shopName = borrowBean.getRequestByShopAddress();
+                                                String date = borrowBean.getRequestDate();
+                                                String status = "Approved";
+                                                out.println("<tr data-request-date=\"" + date + "\">");
+                                                    out.println("<td>" + requestId + "</td>");
+                                                    out.println("<td>" + shopName + "</td>");
+                                                    out.println("<td>" + date + "</td>");
+                                                    out.println("<td><span class=\"badge bg-success\">" + status + "</span></td>");
+                                                    out.println("<td>");
+                                                        out.println("<button class=\"btn btn-sm btn-outline-secondary\" data-bs-toggle=\"modal\" data-bs-target=\"#requestDetailsModal" + requestId + "\" data-request-id=\"" + requestId + "\">");
+                                                            out.println("<i class=\"material-icons align-middle small\">visibility</i>");
+                                                        out.println("</button>");
+                                                    out.println("</td>");
+                                                out.println("</tr>");
+                                            }
+                                            for (int i = 0; i < rejectedBorrowRequestList.size(); i++) {
+                                                BorrowBean borrowBean = (BorrowBean) rejectedBorrowRequestList.get(i);
+                                                String requestId = borrowBean.getId();
+                                                String shopName = borrowBean.getRequestByShopAddress();
+                                                String date = borrowBean.getRequestDate();
+                                                String status = "Rejected";
+                                                out.println("<tr data-request-date=\"" + date + "\">");
+                                                    out.println("<td>" + requestId + "</td>");
+                                                    out.println("<td>" + shopName + "</td>");
+                                                    out.println("<td>" + date + "</td>");
+                                                    out.println("<td><span class=\"badge bg-danger\">" + status + "</span></td>");
+                                                    out.println("<td>");
+                                                        out.println("<button class=\"btn btn-sm btn-outline-secondary\" data-bs-toggle=\"modal\" data-bs-target=\"#requestDetailsModal" + requestId + "\" data-request-id=\"" + requestId + "\">");
+                                                            out.println("<i class=\"material-icons align-middle small\">visibility</i>");
+                                                        out.println("</button>");
+                                                    out.println("</td>");
+                                                out.println("</tr>");
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                             </div>
@@ -287,25 +257,33 @@
                 <!-- Sidebar -->
                 <div class="col-lg-4">
                     <!-- Request Statistics -->
+                    <%
+                        String pendingNumIn30Day = (String)request.getAttribute("pendingNumIn30Day");
+                        String approvedNumIn30Day = (String)request.getAttribute("approvedNumIn30Day");
+                        String rejectedNumIn30Day = (String)request.getAttribute("rejectedNumIn30Day");
+                        if (pendingNumIn30Day == null || approvedNumIn30Day == null || rejectedNumIn30Day == null) {
+                            throw new Exception();
+                        }
+                    %>
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">bar_chart</i>Request Statistics</h5>
                             <div class="row g-3">
                                 <div class="col-4">
                                     <div class="statCard text-center p-3 rounded bg-primary bg-opacity-10">
-                                        <h3 class="fw-bold text-primary mb-0">3</h3>
+                                        <h3 class="fw-bold text-primary mb-0"><%=pendingNumIn30Day%></h3>
                                         <p class="small mb-0">Pending</p>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="statCard text-center p-3 rounded bg-success bg-opacity-10">
-                                        <h3 class="fw-bold text-success mb-0">8</h3>
+                                        <h3 class="fw-bold text-success mb-0"><%=approvedNumIn30Day%></h3>
                                         <p class="small mb-0">Approved</p>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="statCard text-center p-3 rounded bg-danger bg-opacity-10">
-                                        <h3 class="fw-bold text-danger mb-0">2</h3>
+                                        <h3 class="fw-bold text-danger mb-0"><%=rejectedNumIn30Day%></h3>
                                         <p class="small mb-0">Rejected</p>
                                     </div>
                                 </div>
@@ -329,31 +307,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Apple</td>
-                                            <td>Hong Kong</td>
-                                            <td>45 pieces</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Strawberry</td>
-                                            <td>USA</td>
-                                            <td>5 kg</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Blueberry</td>
-                                            <td>USA</td>
-                                            <td>2 kg</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mango</td>
-                                            <td>Japan</td>
-                                            <td>15 pieces</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Kiwi</td>
-                                            <td>Japan</td>
-                                            <td>22 pieces</td>
-                                        </tr>
+                                        <jsp:useBean id="stockList" class="java.util.ArrayList" scope="request" />
+                                        <%
+                                            for (int i = 0; i < stockList.size(); i++) {
+                                                ShopFruitStockBean stock = (ShopFruitStockBean) stockList.get(i);
+                                                out.println("<tr>");
+                                                out.println("<td>" + stock.getFruitName() + "</td>");
+                                                out.println("<td>" + stock.getCity() + ", " + stock.getCountryRegion() + "</td>");
+                                                out.println("<td>" + stock.getQty() + " " + stock.getUnit() + "</td>");
+                                                out.println("</tr>");
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                             </div>
@@ -374,11 +338,11 @@
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">schedule</i>
-                                    Respond to requests within 24 hours
+                                    Respond to requests as soon as possible
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">priority_high</i>
-                                    If rejecting, provide a clear reason
+                                    If rejecting, provide a reason
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">swap_horiz</i>
@@ -393,142 +357,320 @@
 
         <!-- Modals -->
         <!-- Request Details Modal -->
-        <div class="modal fade" id="requestDetailsModal" tabindex="-1" aria-labelledby="requestDetailsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="requestDetailsModalLabel">Request Details: #B001</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mb-4">
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-2">Request Information</h6>
-                                <p class="mb-1"><strong>Request ID:</strong> B001</p>
-                                <p class="mb-1"><strong>Date:</strong> April 18, 2025</p>
-                                <p class="mb-1"><strong>Status:</strong> <span class="badge bg-warning">Pending</span></p>
-                            </div>
-                            <div class="col-md-6">
-                                <h6 class="text-muted mb-2">Shop Information</h6>
-                                <p class="mb-1"><strong>Shop:</strong> Sweet Bakery</p>
-                                <p class="mb-1"><strong>Location:</strong> Central, Tokyo</p>
-                                <p class="mb-1"><strong>Contact:</strong> shop-central@acer.com</p>
-                            </div>
-                        </div>
-                        <h6 class="text-muted mb-3">Requested Items</h6>
-                        <div class="table-responsive mb-4">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Fruit</th>
-                                        <th>Origin</th>
-                                        <th>Quantity</th>
-                                        <th>Your Current Stock</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Strawberry</td>
-                                        <td>USA</td>
-                                        <td>2 kg</td>
-                                        <td>5 kg</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Blueberry</td>
-                                        <td>USA</td>
-                                        <td>500 g</td>
-                                        <td>2 kg</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="mb-3">
-                            <h6 class="text-muted mb-2">Request Notes</h6>
-                            <p>Urgent need for weekend special cake production. Would be greatly appreciated if we could receive these fruits by tomorrow afternoon.</p>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#rejectModal" data-bs-dismiss="modal">
-                            <i class="material-icons align-middle me-1 small">close</i> Reject
-                        </button>
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#approveModal" data-bs-dismiss="modal">
-                            <i class="material-icons align-middle me-1 small">check</i> Approve
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%
+            for (int i = 0; i < pendingBorrowRequestList.size(); i++) {
+                BorrowBean borrowBean = (BorrowBean) pendingBorrowRequestList.get(i);
+                String requestId = borrowBean.getId();
+                String shopName = borrowBean.getRequestByShopAddress();
+                String date = borrowBean.getRequestDate();
+                String note = borrowBean.getNotes();
+                out.println("<div class=\"modal fade\" id=\"requestDetailsModal" + requestId + "\" tabindex=\"-1\" aria-labelledby=\"requestDetailsModalLabel\" aria-hidden=\"true\">");
+                    out.println("<div class=\"modal-dialog modal-lg\">");
+                        out.println("<div class=\"modal-content\">");
+                            out.println("<div class=\"modal-header\">");
+                                out.println("<h5 class=\"modal-title\" id=\"requestDetailsModalLabel\">Request Details: #" + requestId + "</h5>");
+                                out.println("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-body\">");
+                                out.println("<div class=\"row mb-4\">");
+                                    out.println("<div class=\"col-md-6\">");
+                                        out.println("<h6 class=\"text-muted mb-2\">Request Information</h6>");
+                                        out.println("<p class=\"mb-1\"><strong>Request ID:</strong> " + requestId + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Date:</strong> " + date + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Status:</strong> <span class=\"badge bg-warning\">Pending</span></p>");
+                                    out.println("</div>");
+                                    out.println("<div class=\"col-md-6\">");
+                                        out.println("<h6 class=\"text-muted mb-2\">Shop Information</h6>");
+                                        out.println("<p class=\"mb-1\"><strong>Shop:</strong> " + shopName + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Contact:</strong>" + borrowBean.getRequestByShopPhone() + "</p>");
+                                    out.println("</div>");
+                                out.println("</div>");
+                                out.println("<h6 class=\"text-muted mb-3\">Requested Items</h6>");
+                                out.println("<div class=\"table-responsive mb-4\">");
+                                    out.println("<table class=\"table\">");
+                                        out.println("<thead>");
+                                            out.println("<tr>");
+                                                out.println("<th>Fruit</th>");
+                                                out.println("<th>Origin</th>");
+                                                out.println("<th>Quantity</th>");
+                                            out.println("</tr>");
+                                        out.println("</thead>");
+                                        out.println("<tbody>");
+                                            ArrayList<BorrowBean> pendingBorrowRequestItemListById = (ArrayList<BorrowBean>) pendingBorrowRequestItemList.get(i);
+                                            for (int j = 0; j < pendingBorrowRequestItemListById.size(); j++) {
+                                                BorrowBean borrowItem = (BorrowBean) pendingBorrowRequestItemListById.get(j);
+                                                String fruitName = borrowItem.getFruitName();
+                                                String origin = borrowItem.getCity() + ", " + borrowItem.getCountryRegion();
+                                                int quantity = borrowItem.getQty();
+                                                String unit = borrowItem.getUnit();
+                                                int currentStock = 5; 
+                                                out.println("<tr>");
+                                                    out.println("<td>" + fruitName + "</td>");
+                                                    out.println("<td>" + origin + "</td>");
+                                                    out.println("<td>" + quantity + " " + unit +"</td>");
+                                                out.println("</tr>");
+                                            }
+                                        out.println("</tbody>");
+                                    out.println("</table>");
+                                out.println("</div>");
+                                out.println("<div class=\"mb-3\">");
+                                    out.println("<h6 class=\"text-muted mb-2\">Request Notes</h6>");
+                                    out.println("<p>" + note + "</p>");
+                                out.println("</div>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-footer\">");
+                                out.println("<button type=\"button\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Close</button>");
+                                out.println("<button type=\"button\" class=\"btn btn-danger me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#rejectModal" + requestId +"\" data-bs-dismiss=\"modal\">");
+                                    out.println("<i class=\"material-icons align-middle me-1 small\">close</i> Reject");
+                                out.println("</button>");
+                                out.println("<button type=\"button\" class=\"btn btn-success\" data-bs-toggle=\"modal\" data-bs-target=\"#approveModal" + requestId + "\" data-bs-dismiss=\"modal\">");
+                                    out.println("<i class=\"material-icons align-middle me-1 small\">check</i> Approve");
+                                out.println("</button>");
+                            out.println("</div>");
+                        out.println("</div>");
+                    out.println("</div>");
+                out.println("</div>");
+            }
+
+            for (int i = 0; i < approvedBorrowRequestList.size(); i++) {
+                BorrowBean borrowBean = (BorrowBean) approvedBorrowRequestList.get(i);
+                String requestId = borrowBean.getId();
+                String shopName = borrowBean.getRequestByShopAddress();
+                String date = borrowBean.getRequestDate();
+                String note = borrowBean.getNotes();
+                out.println("<div class=\"modal fade\" id=\"requestDetailsModal" + requestId + "\" tabindex=\"-1\" aria-labelledby=\"requestDetailsModalLabel\" aria-hidden=\"true\">");
+                    out.println("<div class=\"modal-dialog modal-lg\">");
+                        out.println("<div class=\"modal-content\">");
+                            out.println("<div class=\"modal-header\">");
+                                out.println("<h5 class=\"modal-title\" id=\"requestDetailsModalLabel\">Request Details: #" + requestId + "</h5>");
+                                out.println("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-body\">");
+                                out.println("<div class=\"row mb-4\">");
+                                    out.println("<div class=\"col-md-6\">");
+                                        out.println("<h6 class=\"text-muted mb-2\">Request Information</h6>");
+                                        out.println("<p class=\"mb-1\"><strong>Request ID:</strong> " + requestId + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Date:</strong> " + date + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Status:</strong> <span class=\"badge bg-success\">Approved</span></p>");
+                                    out.println("</div>");
+                                    out.println("<div class=\"col-md-6\">");
+                                        out.println("<h6 class=\"text-muted mb-2\">Shop Information</h6>");
+                                        out.println("<p class=\"mb-1\"><strong>Shop:</strong> " + shopName + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Contact:</strong>" + borrowBean.getRequestByShopPhone() + "</p>");
+                                    out.println("</div>");
+                                out.println("</div>");
+                                out.println("<h6 class=\"text-muted mb-3\">Requested Items</h6>");
+                                out.println("<div class=\"table-responsive mb-4\">");
+                                    out.println("<table class=\"table\">");
+                                        out.println("<thead>");
+                                            out.println("<tr>");
+                                                out.println("<th>Fruit</th>");
+                                                out.println("<th>Origin</th>");
+                                                out.println("<th>Quantity</th>");
+                                            out.println("</tr>");
+                                        out.println("</thead>");
+                                        out.println("<tbody>");
+                                            ArrayList<BorrowBean> approvedBorrowRequestItemListById = (ArrayList<BorrowBean>) approvedBorrowRequestItemList.get(i);
+                                            for (int j = 0; j < approvedBorrowRequestItemListById.size(); j++) {
+                                                BorrowBean borrowItem = (BorrowBean) approvedBorrowRequestItemListById.get(j);
+                                                String fruitName = borrowItem.getFruitName();
+                                                String origin = borrowItem.getCity() + ", " + borrowItem.getCountryRegion();
+                                                int quantity = borrowItem.getQty();
+                                                String unit = borrowItem.getUnit();
+                                                int currentStock = 5; 
+                                                out.println("<tr>");
+                                                    out.println("<td>" + fruitName + "</td>");
+                                                    out.println("<td>" + origin + "</td>");
+                                                    out.println("<td>" + quantity + " " + unit +"</td>");
+                                                out.println("</tr>");
+                                            }
+                                        out.println("</tbody>");
+                                    out.println("</table>");
+                                out.println("</div>");
+                                out.println("<div class=\"mb-3\">");
+                                    out.println("<h6 class=\"text-muted mb-2\">Request Notes</h6>");
+                                    out.println("<p>" + note + "</p>");
+                                out.println("</div>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-footer\">");
+                                out.println("<button type=\"button\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Close</button>");
+                                out.println("<button type=\"button\" class=\"btn btn-danger me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#rejectModal" + requestId +"\" data-bs-dismiss=\"modal\">");
+                                    out.println("<i class=\"material-icons align-middle me-1 small\">close</i> Reject");
+                                out.println("</button>");
+                                out.println("<button type=\"button\" class=\"btn btn-success\" data-bs-toggle=\"modal\" data-bs-target=\"#approveModal" + requestId + "\" data-bs-dismiss=\"modal\">");
+                                    out.println("<i class=\"material-icons align-middle me-1 small\">check</i> Approve");
+                                out.println("</button>");
+                            out.println("</div>");
+                        out.println("</div>");
+                    out.println("</div>");
+                out.println("</div>");
+            }
+
+            for (int i = 0; i < rejectedBorrowRequestList.size(); i++) {
+                BorrowBean borrowBean = (BorrowBean) rejectedBorrowRequestList.get(i);
+                String requestId = borrowBean.getId();
+                String shopName = borrowBean.getRequestByShopAddress();
+                String date = borrowBean.getRequestDate();
+                String note = borrowBean.getNotes();
+                String rejectReasonSelect = borrowBean.getRejectReasonSelect();
+                String rejectionReason = borrowBean.getRejectReason();
+                out.println("<div class=\"modal fade\" id=\"requestDetailsModal" + requestId + "\" tabindex=\"-1\" aria-labelledby=\"requestDetailsModalLabel\" aria-hidden=\"true\">");
+                    out.println("<div class=\"modal-dialog modal-lg\">");
+                        out.println("<div class=\"modal-content\">");
+                            out.println("<div class=\"modal-header\">");
+                                out.println("<h5 class=\"modal-title\" id=\"requestDetailsModalLabel\">Request Details: #" + requestId + "</h5>");
+                                out.println("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-body\">");
+                                out.println("<div class=\"row mb-4\">");
+                                    out.println("<div class=\"col-md-6\">");
+                                        out.println("<h6 class=\"text-muted mb-2\">Request Information</h6>");
+                                        out.println("<p class=\"mb-1\"><strong>Request ID:</strong> " + requestId + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Date:</strong> " + date + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Status:</strong> <span class=\"badge bg-danger\">Rejected</span></p>");
+                                    out.println("</div>");
+                                    out.println("<div class=\"col-md-6\">");
+                                        out.println("<h6 class=\"text-muted mb-2\">Shop Information</h6>");
+                                        out.println("<p class=\"mb-1\"><strong>Shop:</strong> " + shopName + "</p>");
+                                        out.println("<p class=\"mb-1\"><strong>Contact:</strong> " + borrowBean.getRequestByShopPhone() + "</p>");
+                                    out.println("</div>");
+                                out.println("</div>");
+                                out.println("<h6 class=\"text-muted mb-3\">Requested Items</h6>");
+                                out.println("<div class=\"table-responsive mb-4\">");
+                                    out.println("<table class=\"table\">");
+                                        out.println("<thead>");
+                                            out.println("<tr>");
+                                                out.println("<th>Fruit</th>");
+                                                out.println("<th>Origin</th>");
+                                                out.println("<th>Quantity</th>");
+                                            out.println("</tr>");
+                                        out.println("</thead>");
+                                        out.println("<tbody>");
+                                            ArrayList<BorrowBean> rejectedBorrowRequestItemListById = (ArrayList<BorrowBean>) rejectedBorrowRequestItemList.get(i);
+                                            for (int j = 0; j < rejectedBorrowRequestItemListById.size(); j++) {
+                                                BorrowBean borrowItem = (BorrowBean) rejectedBorrowRequestItemListById.get(j);
+                                                String fruitName = borrowItem.getFruitName();
+                                                String origin = borrowItem.getCity() + ", " + borrowItem.getCountryRegion();
+                                                int quantity = borrowItem.getQty();
+                                                String unit = borrowItem.getUnit();
+                                                out.println("<tr>");
+                                                    out.println("<td>" + fruitName + "</td>");
+                                                    out.println("<td>" + origin + "</td>");
+                                                    out.println("<td>" + quantity + " " + unit +"</td>");
+                                                out.println("</tr>");
+                                            }
+                                        out.println("</tbody>");
+                                    out.println("</table>");
+                                out.println("</div>");
+                                out.println("<div class=\"mb-3\">");
+                                    out.println("<h6 class=\"text-muted mb-2\">Request Notes</h6>");
+                                    out.println("<p>" + note + "</p>");
+                                out.println("</div>");
+                                out.println("<div class=\"mb-3\">");
+                                    out.println("<h6 class=\"text-muted mb-2 text-danger\">Reject Reason </h6>");
+                                    out.println("<p>" + rejectReasonSelect + "</p>");
+                                out.println("</div>");
+                                out.println("<div class=\"mb-3\">");
+                                    out.println("<h6 class=\"text-muted mb-2 text-danger\">Reject Detail</h6>");
+                                    if (rejectionReason == null || rejectionReason.isEmpty()) {
+                                        out.println("<p class=\"text-muted\">No detail provided</p>");
+                                    } else {
+                                        out.println("<p>" + rejectionReason + "</p>");
+                                    }
+                                out.println("</div>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-footer\">");
+                                out.println("<button type=\"button\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Close</button>");
+                            out.println("</div>");
+                        out.println("</div>");
+                    out.println("</div>");
+                out.println("</div>");
+            }
+        %>
 
         <!-- Approve Modal -->
-        <div class="modal fade" id="approveModal" tabindex="-1" aria-labelledby="approveModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="approveModalLabel">Approve Request #B001</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>You're about to approve this fruit borrow request. The items will be marked as reserved for pickup.</p>
-                        
-                        <div class="alert alert-info mb-3">
-                            <i class="material-icons align-middle me-2">info</i>
-                            Approving will reduce your available stock accordingly
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="pickupInstructions" class="form-label">Pickup Instructions (Optional)</label>
-                            <textarea class="form-control" id="pickupInstructions" rows="2" placeholder="Add instructions for pickup..."></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">
-                            <i class="material-icons align-middle me-1 small">check</i> Confirm Approval
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%
+            for (int i = 0; i < pendingBorrowRequestList.size(); i++) {
+                BorrowBean borrowBean = (BorrowBean) pendingBorrowRequestList.get(i);
+                String requestId = borrowBean.getId();
+                out.println("<div class=\"modal fade\" id=\"approveModal" + requestId + "\" tabindex=\"-1\" aria-labelledby=\"approveModalLabel\" aria-hidden=\"true\">");
+                    out.println("<div class=\"modal-dialog\">");
+                        out.println("<div class=\"modal-content\">");
+                            out.println("<div class=\"modal-header\">");
+                                out.println("<h5 class=\"modal-title\" id=\"approveModalLabel\">Approve Request #" + requestId + "</h5>");
+                                out.println("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-body\">");
+                                out.println("<p>You're about to approve this fruit borrow request.</p>");
+                                out.println("<div class=\"alert alert-info mb-3\">");
+                                    out.println("<i class=\"material-icons align-middle me-2\">info</i>");
+                                    out.println("Stock will be deducted automatically.");
+                                out.println("</div>");
+                            out.println("</div>");
+                            out.println("<div class=\"modal-footer\">");
+                                out.println("<form method=\'post\' action=\"/ITP4511_Project/borrowRequest\">");
+                                    out.println("<input type=\"hidden\" name=\"action\" value=\"approve\">");
+                                    out.println("<input type=\"hidden\" name=\"requestId\" value=\"" + requestId + "\">");
+                                    out.println("<button type=\"button\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Cancel</button>");
+                                    out.println("<button type=\"submit\" class=\"btn btn-success\" data-bs-dismiss=\"modal\">");
+                                        out.println("<i class=\"material-icons align-middle me-1 small\">check</i> Confirm Approval");
+                                    out.println("</button>");
+                                out.println("</form>");
+                            out.println("</div>");
+                        out.println("</div>");
+                    out.println("</div>");
+                out.println("</div>");
+            }
+        %>
+
         
         <!-- Reject Modal -->
-        <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="rejectModalLabel">Reject Request #B001</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>You're about to reject this fruit borrow request.</p>
-                        
-                        <div class="alert alert-warning mb-3">
-                            <i class="material-icons align-middle me-2">warning</i>
-                            Please provide a reason for rejection to help the requesting shop
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="rejectionReason" class="form-label">Reason for Rejection <span class="text-danger">*</span></label>
-                            <select class="form-select mb-2" id="rejectionReasonSelect">
-                                <option value="" selected disabled>Select a reason</option>
-                                <option value="insufficientStock">Insufficient stock available</option>
-                                <option value="scheduledReservation">Items already reserved for another shop</option>
-                                <option value="qualityIssue">Quality issues with current stock</option>
-                                <option value="other">Other (please specify)</option>
-                            </select>
-                            <textarea class="form-control" id="rejectionReason" rows="2" placeholder="Provide details about the rejection reason..."></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                            <i class="material-icons align-middle me-1 small">close</i> Confirm Rejection
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <%
+            for (int i = 0; i < pendingBorrowRequestList.size(); i++) {
+                BorrowBean borrowBean = (BorrowBean) pendingBorrowRequestList.get(i);
+                String requestId = borrowBean.getId();
+                out.println("<div class=\"modal fade\" id=\"rejectModal" + requestId + "\" tabindex=\"-1\" aria-labelledby=\"rejectModalLabel\" aria-hidden=\"true\">");
+                    out.println("<form method=\'post\' action=\"/ITP4511_Project/borrowRequest\">");
+                        out.println("<div class=\"modal-dialog\">");
+                            out.println("<div class=\"modal-content\">");
+                                out.println("<div class=\"modal-header\">");
+                                    out.println("<h5 class=\"modal-title\" id=\"rejectModalLabel\">Reject Request #" + requestId + "</h5>");
+                                    out.println("<input type=\"hidden\" name=\"action\" value=\"reject\">");
+                                    out.println("<input type=\"hidden\" name=\"requestId\" value=\"" + requestId + "\">");
+                                    out.println("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>");
+                                out.println("</div>");
+                                out.println("<div class=\"modal-body\">");
+                                    out.println("<p>You're about to reject this fruit borrow request.</p>");
 
+                                    out.println("<div class=\"alert alert-warning mb-3\">");
+                                        out.println("<i class=\"material-icons align-middle me-2\">warning</i>");
+                                        out.println("Please provide a reason for rejection");
+                                    out.println("</div>");
+
+                                    out.println("<div class=\"mb-3\">");
+                                        out.println("<label for=\"rejectionReason\" class=\"form-label\">Reason for Rejection <span class=\"text-danger\">*</span></label>");
+                                        out.println("<select class=\"form-select mb-2\" id=\"rejectReasonSelect\" required name=\"rejectReasonSelect\">");
+                                            out.println("<option value=\"\"  disabled>Select a reason</option>");
+                                            out.println("<option value=\"Insufficient stock available\">Insufficient stock available</option>");
+                                            out.println("<option value=\"Items already reserved for another shop\">Items already reserved for another shop</option>");
+                                            out.println("<option value=\"Quality issues with current stock\">Quality issues with current stock</option>");
+                                            out.println("<option value=\"Other (please specify)\">Other (please specify)</option>");
+                                        out.println("</select>");
+                                        out.println("<textarea class=\"form-control\" name=\"rejectReason\" id=\"rejectReason\" rows=\"2\" placeholder=\"Provide details about the rejection reason...\"></textarea>");
+                                    out.println("</div>");
+                                out.println("</div>");
+                                out.println("<div class=\"modal-footer\">");
+                                    out.println("<button type=\"button\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Cancel</button>");
+                                    out.println("<button type=\"submit\" class=\"btn btn-danger\" data-bs-dismiss=\"modal\">");
+                                        out.println("<i class=\"material-icons align-middle me-1 small\">close</i> Confirm Rejection");
+                                    out.println("</button>");
+                                out.println("</div>");
+                            out.println("</div>");
+                        out.println("</div>");
+                    out.println("</form>");
+                out.println("</div>");
+            }
+        %>
         <footer:footer userType="shop"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>

@@ -1127,9 +1127,195 @@ public class ProjectDB {
         return orderList;
     }
 
+    public ArrayList<BorrowBean> getBorrowByStatusForHandleRequest(String shopId, String status) { // requestToShopId
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        BorrowBean bb = null;
+        ArrayList<BorrowBean> orderList = new ArrayList<BorrowBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.*,y.Address,z.City,y.PhoneNumber FROM shop_borrow_request x, shop y ,shop_city z WHERE RequestTo=? and x.RequestBy = y.ID and y.City = z.ID AND Status=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.setString(2, status);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                bb = new BorrowBean();
+                bb.setId(rs.getString("ID"));
+                bb.setRequestByShopId(rs.getString("RequestBy"));
+                bb.setRequestToShopId(rs.getString("RequestTo"));
+                bb.setRequestByShopAddress(rs.getString("Address") + ", " + rs.getString("City"));
+                bb.setRequestDate(rs.getString("RequestDate"));
+                bb.setStatus(rs.getString("Status"));
+                bb.setRequestByShopPhone(rs.getString("PhoneNumber"));
+                bb.setNotes(rs.getString("Notes"));
+                bb.setRejectReason(rs.getString("RejectDetail"));
+                bb.setRejectReasonSelect(rs.getString("RejectReason"));
+                orderList.add(bb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return orderList;
+    }
+
+    public String getPendingStatistics(String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String num = null;
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(30);
+        LocalDate endDate = today;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS num FROM shop_borrow_request WHERE Status = 'Pending' AND RequestDate BETWEEN ? AND ? AND RequestTo = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setDate(1, java.sql.Date.valueOf(startDate));
+            pStmnt.setDate(2, java.sql.Date.valueOf(endDate));
+            pStmnt.setString(3, shopId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                num = rs.getString("num");
+            }
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (pStmnt != null) {
+                    pStmnt.close();
+                }
+                if (cnnct != null) {
+                    cnnct.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return num;
+    }
+
+    public String getApprovedStatistics(String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String num = null;
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(30);
+        LocalDate endDate = today;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS num FROM shop_borrow_request WHERE Status = 'Approved' AND RequestDate BETWEEN ? AND ? AND RequestTo = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setDate(1, java.sql.Date.valueOf(startDate));
+            pStmnt.setDate(2, java.sql.Date.valueOf(endDate));
+            pStmnt.setString(3, shopId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                num = rs.getString("num");
+            }
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (pStmnt != null) {
+                    pStmnt.close();
+                }
+                if (cnnct != null) {
+                    cnnct.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return num;
+    }
+
+    public String getRejectedStatistics(String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String num = null;
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.minusDays(30);
+        LocalDate endDate = today;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS num FROM shop_borrow_request WHERE Status = 'Rejected' AND RequestDate BETWEEN ? AND ? AND RequestTo = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setDate(1, java.sql.Date.valueOf(startDate));
+            pStmnt.setDate(2, java.sql.Date.valueOf(endDate));
+            pStmnt.setString(3, shopId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                num = rs.getString("num");
+            }
+        } catch (SQLException | IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (pStmnt != null) {
+                    pStmnt.close();
+                }
+                if (cnnct != null) {
+                    cnnct.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return num;
+    }
+
+    public boolean updateBorrowRequestStatus(String requestId, String status, String rejectReason,
+            String rejectDetail) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "";
+            if (status.equalsIgnoreCase("Approved")) {
+                preQueryStatement = "UPDATE shop_borrow_request SET Status=? WHERE ID=?;";
+            } else if (status.equalsIgnoreCase("Rejected")) {
+                if (rejectDetail == null || rejectDetail.isEmpty()) {
+                    preQueryStatement = "UPDATE shop_borrow_request SET Status=?, RejectReason=?, RejectDetail=NULL WHERE ID=?;";
+                } else {
+                    preQueryStatement = "UPDATE shop_borrow_request SET Status=?, RejectReason=?, RejectDetail=? WHERE ID=?;";
+                }
+            }
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, status);
+
+            if (status.equalsIgnoreCase("Approved")) {
+                pStmnt.setString(2, requestId);
+            } else if (status.equalsIgnoreCase("Rejected")) {
+                pStmnt.setString(2, rejectReason);
+                if (rejectDetail == null || rejectDetail.isEmpty()) {
+                    pStmnt.setString(3, requestId);
+                } else {
+                    pStmnt.setString(3, rejectDetail);
+                    pStmnt.setString(4, requestId);
+                }
+            }
+
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
     // for shop_borrow_request
 
-    // for shop+borrow_request_item
+    // for shop_borrow_request_item
 
     public boolean insertBorrowItem(String requestId, String fruitId, int qty) {
         Connection cnnct = null;
@@ -1209,7 +1395,7 @@ public class ProjectDB {
         }
         return orderItemList;
     }
-    // for shop+borrow_request_item
+    // for shop_borrow_request_item
 
     public List<OrderBean> getStatistics() {
         Connection cnnct = null;
