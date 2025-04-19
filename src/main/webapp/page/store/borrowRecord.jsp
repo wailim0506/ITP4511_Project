@@ -286,7 +286,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="d-flex align-items-center">
-                                            <i class="material-icons text-muted me-2 small">event</i>
+                                            <i class="material-icons text-muted me-2 small">store</i>
                                             <span class="text-muted">Borrow From:</span>
                                         </div>
                                         <p class="fw-medium mb-0"><%=order.getRequestToShopAddress()%></p>

@@ -120,7 +120,7 @@
                             <i class="material-icons card-icon mb-3">send</i>
                             <h5 class="card-title">Borrow Requests</h5>
                             <p class="card-text text-muted">Handle borrow requests from other shops</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Manage Requests</a>
+                            <a href="/ITP4511_Project/borrowRequest" class="btn btn-outline-primary mt-2">Manage Requests</a>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ ict\bean\ShopFruitStockBean.class
 ict\db\ProjectDB.class
 ict\servlet\store\reserveRecordController.class
 ict\servlet\store\borrowFruitController.class
+ict\servlet\store\borrowRequestController.class
 ict\servlet\LoginController.class
 ict\servlet\store\borrowRecordController.class
 ict\bean\CountryRegionBean.class
