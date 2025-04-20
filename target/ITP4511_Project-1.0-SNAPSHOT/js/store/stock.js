@@ -19,11 +19,7 @@ $(document).ready(function () {
     // Cancel Edit
     $("#cancelEditBtn").on("click", function () {
         exitEditMode(true);
-    });
-
-    // Save Changes
-    $("#saveChangesBtn").on("click", function () {
-        saveChanges();
+        $(this).addClass("d-none");
     });
 
     // Increment button click handler
@@ -57,6 +53,7 @@ $(document).ready(function () {
         $("#editModeToggle").addClass("d-none");
         $("#actionButtons").css("display", "flex !important").show();
         $("#modifiedItemsRow").removeClass("d-none");
+        $("#cancelEditBtn").removeClass("d-none");
 
         // Reset modified count
         updateModifiedCount();
@@ -83,33 +80,6 @@ $(document).ready(function () {
         $("#editModeToggle").removeClass("d-none");
         $("#actionButtons").hide();
         $("#modifiedItemsRow").addClass("d-none");
-    }
-
-    // Function to save changes
-    function saveChanges() {
-        const modifiedCount = $('.modifiedValue').length;
-
-        if (modifiedCount > 0) {
-            // Create hidden inputs for the form
-            $("#stockForm").empty().append('<input type="hidden" name="action" value="update">');
-
-            $(".stockInput").each(function () {
-                const name = $(this).attr("name");
-                const value = $(this).val();
-
-                // Only include modified values
-                if (value !== $(this).data("original").toString()) {
-                    $("#stockForm").append(`<input type="hidden" name="${name}" value="${value}">`);
-                }
-            });
-
-            if (confirm('Are you sure you want to save these inventory changes?')) {
-                $("#stockForm").submit();
-            }
-        } else {
-            alert('No changes have been made to the inventory.');
-            exitEditMode(true);
-        }
     }
 
     // Function to filter fruits based on search text and type
@@ -178,6 +148,57 @@ $(document).ready(function () {
         });
 
         updateModifiedCount();
+    }
+
+    $("#countryFilter").on("change", function () {
+        filterFruits();
+    });
+
+    // Reset filters button
+    $("#resetFilters").on("click", function () {
+        $("#fruitSearch").val("");
+        $("#typeFilter").val("all");
+        $("#countryFilter").val("all");
+        filterFruits();
+    });
+
+    function filterFruits() {
+        var searchTerm = $("#fruitSearch").val().toLowerCase();
+        var typeFilter = $("#typeFilter").val();
+        var countryFilter = $("#countryFilter").val();
+
+        var visibleCount = 0;
+        var totalCount = 0;
+
+        $(".fruitItem").each(function () {
+            totalCount++;
+
+            var fruitName = $(this).data("fruit-name").toLowerCase();
+            var fruitType = $(this).data("type").toLowerCase();
+            var fruitCountry = $(this).find("small.text-muted").text().split(", ")[1] || "";
+
+            var matchesSearch = fruitName.indexOf(searchTerm) > -1;
+            var matchesType = typeFilter === "all" || fruitType === typeFilter.toLowerCase();
+            var matchesCountry = countryFilter === "all" || fruitCountry.indexOf(countryFilter) > -1;
+
+            if (matchesSearch && matchesType && matchesCountry) {
+                $(this).show();
+                visibleCount++;
+            } else {
+                $(this).hide();
+            }
+        });
+
+        // Update counter
+        $("#visibleFruitCount").text(visibleCount);
+        $("#totalFruitCount").text(totalCount);
+
+        // Show/hide counter info
+        if (visibleCount < totalCount) {
+            $(".fruitResultInfo").removeClass("d-none");
+        } else {
+            $(".fruitResultInfo").addClass("d-none");
+        }
     }
 });
 

@@ -72,7 +72,6 @@
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Borrow Fruits</h2>
                 <p class="lead">Borrow fruits from other shops in your city for immediate needs</p>
-                <p class="text-muted small mb-0">Quick and efficient local fruit sharing system</p>
             </div>
             <form id="borrowingForm" action="/ITP4511_Project/borrowFruit" method="post">
                 <input type="hidden" name="action" value="borrow">

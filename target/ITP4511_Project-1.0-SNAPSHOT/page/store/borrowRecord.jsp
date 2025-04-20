@@ -76,7 +76,6 @@
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Borrow Records</h2>
                 <p class="lead">View and manage your fruit borrowing history</p>
-                <p class="text-muted small mb-0">Track all your past and upcoming fruit borrowings for planning</p>
             </div>
 
             <!-- Main Content -->
@@ -329,6 +328,23 @@
                                 <h6 class="mb-2"><i class="material-icons align-middle me-2 small">notes</i>Additional Notes</h6>
                                 <p class="small p-3 rounded"><%= order.getNotes() != null ? order.getNotes() : "No additional notes." %></p>
                             </div>
+                            
+                            <% if ("Rejected".equals(order.getStatus())) { %>
+                            <div class="rejectionSection mt-3 border-top pt-3">
+                                <div class="mb-3">
+                                    <h6 class="mb-2"><i class="material-icons align-middle me-2 small">cancel</i>Reject Reason</h6>
+                                    <p class="small p-3 rounded "><%= order.getRejectReasonSelect() != null ? order.getRejectReasonSelect() : "No reason specified" %></p>
+                                </div>
+                                <div class="mb-3">
+                                    <h6 class="mb-2 "><i class="material-icons align-middle me-2 small">description</i>Reject Detail</h6>
+                                    <% if (order.getRejectReason() == null || order.getRejectReason().isEmpty()) { %>
+                                        <p class="small p-3 rounded">No detail provided</p>
+                                    <% } else { %>
+                                        <p class="small p-3 rounded "><%= order.getRejectReason() %></p>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <% } %>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>

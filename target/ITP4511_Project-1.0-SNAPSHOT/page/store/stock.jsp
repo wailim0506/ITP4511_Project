@@ -69,9 +69,8 @@
         <div class="container py-4">
             <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
-                <h2 class="display-6 fw-bold text-primary">Inventory Management</h2>
-                <p class="lead">Manage your shop's fruit inventory levels</p>
-                <p class="text-muted small mb-0">Add or deduct stock quantities to maintain accurate inventory records</p>
+                <h2 class="display-6 fw-bold text-primary">Stock Management</h2>
+                <p class="lead">Manage your shop's fruit Stock levels</p>
             </div>
 
             <!-- Main Content -->
@@ -79,234 +78,146 @@
                 <!-- Stock Management Section -->
                 <div class="col-lg-9">
                     <div class="card border-0 shadow-sm mb-4">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <h4 class="mb-0"><i class="material-icons align-middle me-2">inventory</i>Current Inventory</h4>
-                                <button id="editModeToggle" type="button" class="btn btn-outline-primary">
-                                    <i class="material-icons align-middle me-1 small">edit</i> Edit Inventory
-                                </button>
-                            </div>
+                        <form method="post" action="/ITP4511_Project/stock" id="stockForm">
+                            <input type="hidden" name="action" value="update">
+                            <input type="hidden" name="shopId" value="<%=bean.getShopId()%>">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h4 class="mb-0"><i class="material-icons align-middle me-2">inventory</i>Current Stock</h4>
+                                    <button id="editModeToggle" type="button" class="btn btn-outline-primary">
+                                        <i class="material-icons align-middle me-1 small">edit</i> Edit Stock
+                                    </button>
+                                </div>
 
-                            <!-- Search and Filter Bar -->
-                            <div class="mb-4">
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="input-group">
-                                            <span class="input-group-text border-0 bg-transparent">
-                                                <i class="material-icons text-muted">search</i>
-                                            </span>
-                                            <input type="text" class="form-control" id="fruitSearch" placeholder="Search fruits...">
+                                <!-- Search and Filter Bar -->
+                                <div class="mb-4">
+                                    <div class="row g-3 mb-3">
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text border-0 bg-transparent">
+                                                    <i class="material-icons text-muted">search</i>
+                                                </span>
+                                                <input type="text" class="form-control" id="fruitSearch" placeholder="Search fruits...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text border-0 bg-transparent">
+                                                    <i class="material-icons text-muted">category</i>
+                                                </span>
+                                                <jsp:useBean id="fruitTypeList" class="java.util.ArrayList" scope="request"/>
+                                                <select class="form-select" id="typeFilter">
+                                                    <option value="all" selected>All Types</option>
+                                                    <option value="--" disabled>------------------------------</option>
+                                                    <%
+                                                        for (int i = 0; i < fruitTypeList.size(); i++) {
+                                                            String type = (String) fruitTypeList.get(i);
+                                                            out.println("<option value=\""+type+"\">"+type+"</option>");
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="input-group">
+                                                <span class="input-group-text border-0 bg-transparent">
+                                                    <i class="material-icons text-muted">public</i>
+                                                </span>
+                                                <jsp:useBean id="countryRegionList" class="java.util.ArrayList" scope="request"/>
+                                                <select class="form-select" id="countryFilter">
+                                                    <option value="all" selected>All Countries/Regions</option>
+                                                    <option value="--" disabled>------------------------------</option>
+                                                    <%
+                                                        for (int i = 0; i < countryRegionList.size(); i++) {
+                                                            CountryRegionBean cb = (CountryRegionBean) countryRegionList.get(i);
+                                                            out.println("<option value=\""+cb.getName()+"\">"+cb.getName()+"</option>");
+                                                        }
+                                                    %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-sm-12">
+                                            <button type="button" id="resetFilters" class="btn btn-outline-secondary w-100">
+                                                <i class="material-icons align-middle me-1 small">refresh</i> Reset
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-12">
-                                        <div class="input-group">
-                                            <span class="input-group-text border-0 bg-transparent">
-                                                <i class="material-icons text-muted">category</i>
-                                            </span>
-                                            <select class="form-select" id="typeFilter">
-                                                <option value="all" selected>All Types</option>
-                                                <option value="--" disabled>------------------------------</option>
-                                                <option value="Single Fruit">Single Fruit</option>
-                                                <option value="Bunch Fruit">Bunch Fruit</option>
-                                                <option value="Berry">Berry</option>
-                                            </select>
-                                        </div>
+                                </div>
+
+                                <!-- Stock Table -->
+                                <div class="stockTableContainer mb-4">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead class="table">
+                                                <tr>
+                                                    <th style="width: 40%">Fruit</th>
+                                                    <th style="width: 20%">Type</th>
+                                                    <th style="width: 15%">Unit</th>
+                                                    <th style="width: 25%">Current Stock</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <jsp:useBean id="fruitsStockList" class="java.util.ArrayList" scope="request"/>
+                                                <%
+                                                    for (int i = 0; i < fruitsStockList.size(); i++) {
+                                                        ShopFruitStockBean sb = (ShopFruitStockBean) fruitsStockList.get(i);
+                                                        String fruitName = sb.getFruitName();
+                                                        String type = sb.getType();
+                                                        String unit = sb.getUnit();
+                                                        String qty = sb.getQty();
+                                                        String img = sb.getImgName();
+                                                        String city = sb.getCity();
+                                                        String countryRegion = sb.getCountryRegion();
+                                                        String fruitId = sb.getFruitId();
+
+                                                        out.println("<tr class=\"fruitItem\" data-fruit-name=\""+fruitName+"\" data-type=\""+type+"\">");
+                                                            out.println("<td>");
+                                                                out.println("<div class=\"d-flex align-items-center\">");
+                                                                        out.println("<img src=\""+request.getContextPath()+"/img/"+img+"\" alt=\""+fruitName+"\" class=\"me-3 rounded fruitImg\">");out.println("<div>");
+                                                                        out.println("<h6 class=\"mb-0\">"+fruitName+"</h6>");
+                                                                        out.println("<small class=\"text-muted\">"+city+", "+countryRegion+"</small>");
+                                                                    out.println("</div>");
+                                                                out.println("</div>");
+                                                            out.println("</td>");
+                                                            out.println("<td>"+type+"</td>");
+                                                            out.println("<td>"+unit+"</td>");
+                                                            out.println("<td>");
+                                                                out.println("<div class=\"stockReadMode\">");
+                                                                    out.println("<span class=\"stockValue ms-4\">"+qty+"</span>");
+                                                                out.println("</div>");
+                                                                out.println("<div class=\"stockEditMode d-none\">");
+                                                                    out.println("<div class=\"input-group stockControl\">");
+                                                                        out.println("<button type=\"button\" class=\"btn btn-outline-danger btn-sm decrementBtn\">");
+                                                                            out.println("<i class=\"material-icons small\">remove</i>");
+                                                                        out.println("</button>");
+                                                                        out.println("<input type=\"number\" class=\"form-control form-control-sm text-center stockInput\" value=\""+qty+"\" min=\"0\" name=\""+fruitId+"\" data-original=\""+qty+"\">");
+                                                                        out.println("<button type=\"button\" class=\"btn btn-outline-success btn-sm incrementBtn\">");
+                                                                            out.println("<i class=\"material-icons small\">add</i>");
+                                                                        out.println("</button>");
+                                                                    out.println("</div>");
+                                                                out.println("</div>");
+                                                            out.println("</td>");
+                                                        out.println("</tr>");
+                                                    }
+                                                %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center mt-2 fruitResultInfo d-none">
+                                        <span class="badge bg-secondary">Showing <span id="visibleFruitCount">0</span> of <span id="totalFruitCount">0</span> fruits</span>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Stock Table -->
-                            <div class="stockTableContainer mb-4">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead class="table">
-                                            <tr>
-                                                <th style="width: 40%">Fruit</th>
-                                                <th style="width: 20%">Type</th>
-                                                <th style="width: 15%">Unit</th>
-                                                <th style="width: 25%">Current Stock</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Hardcoded inventory items for demo -->
-                                            <tr class="fruitItem" data-fruit-name="apple" data-type="single fruit">
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="${pageContext.request.contextPath}/img/apple.jpg" alt="Apple" class="me-3 rounded fruitImg">
-                                                        <div>
-                                                            <h6 class="mb-0">Apple</h6>
-                                                            <small class="text-muted">Washington, USA</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Single Fruit</td>
-                                                <td>kg</td>
-                                                <td>
-                                                    <!-- Read mode display -->
-                                                    <div class="stockReadMode">
-                                                        <span class="stockValue">25</span> <span class="stockUnit">kg</span>
-                                                    </div>
-                                                    <!-- Edit mode display (initially hidden) -->
-                                                    <div class="stockEditMode d-none">
-                                                        <div class="input-group stockControl">
-                                                            <button type="button" class="btn btn-outline-danger btn-sm decrementBtn">
-                                                                <i class="material-icons small">remove</i>
-                                                            </button>
-                                                            <input type="number" class="form-control form-control-sm text-center stockInput" 
-                                                                   value="25" min="0" name="F001" data-original="25">
-                                                            <button type="button" class="btn btn-outline-success btn-sm incrementBtn">
-                                                                <i class="material-icons small">add</i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="fruitItem" data-fruit-name="banana" data-type="bunch fruit">
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="${pageContext.request.contextPath}/img/banana.jpg" alt="Banana" class="me-3 rounded fruitImg">
-                                                        <div>
-                                                            <h6 class="mb-0">Banana</h6>
-                                                            <small class="text-muted">Chiba, Japan</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Bunch Fruit</td>
-                                                <td>bunch</td>
-                                                <td>
-                                                    <!-- Read mode display -->
-                                                    <div class="stockReadMode">
-                                                        <span class="stockValue">18</span> <span class="stockUnit">bunch</span>
-                                                    </div>
-                                                    <!-- Edit mode display (initially hidden) -->
-                                                    <div class="stockEditMode d-none">
-                                                        <div class="input-group stockControl">
-                                                            <button type="button" class="btn btn-outline-danger btn-sm decrementBtn">
-                                                                <i class="material-icons small">remove</i>
-                                                            </button>
-                                                            <input type="number" class="form-control form-control-sm text-center stockInput" 
-                                                                   value="18" min="0" name="F002" data-original="18">
-                                                            <button type="button" class="btn btn-outline-success btn-sm incrementBtn">
-                                                                <i class="material-icons small">add</i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="fruitItem" data-fruit-name="strawberry" data-type="berry">
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="${pageContext.request.contextPath}/img/strawberry.jpg" alt="Strawberry" class="me-3 rounded fruitImg">
-                                                        <div>
-                                                            <h6 class="mb-0">Strawberry</h6>
-                                                            <small class="text-muted">California, USA</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Berry</td>
-                                                <td>box</td>
-                                                <td>
-                                                    <!-- Read mode display -->
-                                                    <div class="stockReadMode">
-                                                        <span class="stockValue">12</span> <span class="stockUnit">box</span>
-                                                    </div>
-                                                    <!-- Edit mode display (initially hidden) -->
-                                                    <div class="stockEditMode d-none">
-                                                        <div class="input-group stockControl">
-                                                            <button type="button" class="btn btn-outline-danger btn-sm decrementBtn">
-                                                                <i class="material-icons small">remove</i>
-                                                            </button>
-                                                            <input type="number" class="form-control form-control-sm text-center stockInput" 
-                                                                   value="12" min="0" name="F003" data-original="12">
-                                                            <button type="button" class="btn btn-outline-success btn-sm incrementBtn">
-                                                                <i class="material-icons small">add</i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="fruitItem" data-fruit-name="orange" data-type="single fruit">
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="${pageContext.request.contextPath}/img/orange.jpg" alt="Orange" class="me-3 rounded fruitImg">
-                                                        <div>
-                                                            <h6 class="mb-0">Orange</h6>
-                                                            <small class="text-muted">Valencia, Spain</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Single Fruit</td>
-                                                <td>kg</td>
-                                                <td>
-                                                    <!-- Read mode display -->
-                                                    <div class="stockReadMode">
-                                                        <span class="stockValue">30</span> <span class="stockUnit">kg</span>
-                                                    </div>
-                                                    <!-- Edit mode display (initially hidden) -->
-                                                    <div class="stockEditMode d-none">
-                                                        <div class="input-group stockControl">
-                                                            <button type="button" class="btn btn-outline-danger btn-sm decrementBtn">
-                                                                <i class="material-icons small">remove</i>
-                                                            </button>
-                                                            <input type="number" class="form-control form-control-sm text-center stockInput" 
-                                                                   value="30" min="0" name="F004" data-original="30">
-                                                            <button type="button" class="btn btn-outline-success btn-sm incrementBtn">
-                                                                <i class="material-icons small">add</i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="fruitItem" data-fruit-name="blueberry" data-type="berry">
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <img src="${pageContext.request.contextPath}/img/blueberry.jpg" alt="Blueberry" class="me-3 rounded fruitImg">
-                                                        <div>
-                                                            <h6 class="mb-0">Blueberry</h6>
-                                                            <small class="text-muted">Maine, USA</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>Berry</td>
-                                                <td>box</td>
-                                                <td>
-                                                    <!-- Read mode display -->
-                                                    <div class="stockReadMode">
-                                                        <span class="stockValue">8</span> <span class="stockUnit">box</span>
-                                                    </div>
-                                                    <!-- Edit mode display (initially hidden) -->
-                                                    <div class="stockEditMode d-none">
-                                                        <div class="input-group stockControl">
-                                                            <button type="button" class="btn btn-outline-danger btn-sm decrementBtn">
-                                                                <i class="material-icons small">remove</i>
-                                                            </button>
-                                                            <input type="number" class="form-control form-control-sm text-center stockInput" 
-                                                                   value="8" min="0" name="F005" data-original="8">
-                                                            <button type="button" class="btn btn-outline-success btn-sm incrementBtn">
-                                                                <i class="material-icons small">add</i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="text-center mt-2 fruitResultInfo d-none">
-                                    <span class="badge bg-secondary">Showing <span id="visibleFruitCount">0</span> of <span id="totalFruitCount">0</span> fruits</span>
+                                <div class="d-flex justify-content-end gap-2 mt-4" id="actionButtons" style="display: none !important;">
+                                    <button type="button" id="cancelEditBtn" class="btn btn-outline-secondary me-auto">
+                                        <i class="material-icons align-middle me-1 small">close</i> Cancel
+                                    </button>
+                                    <button type="submit" id="saveChangesBtn" class="btn btn-primary">
+                                        <i class="material-icons align-middle me-1 small">save</i> Save Changes
+                                    </button>
                                 </div>
                             </div>
-
-                            <!-- Action Buttons (Initially Hidden) -->
-                            <div class="d-flex justify-content-end gap-2 mt-4" id="actionButtons" style="display: none !important;">
-                                <button type="button" id="cancelEditBtn" class="btn btn-outline-secondary me-auto">
-                                    <i class="material-icons align-middle me-1 small">close</i> Cancel
-                                </button>
-                                <button type="button" id="saveChangesBtn" class="btn btn-primary">
-                                    <i class="material-icons align-middle me-1 small">save</i> Save Changes
-                                </button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
@@ -315,7 +226,7 @@
                     <!-- Inventory Summary -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
-                            <h5 class="mb-3"><i class="material-icons align-middle me-2">summarize</i>Inventory Summary</h5>
+                            <h5 class="mb-3"><i class="material-icons align-middle me-2">summarize</i>Stock Summary</h5>
                             <div id="inventorySummary">
                                 <div class="d-flex justify-content-between mb-2 border-bottom pb-2">
                                     <span>Total Items:</span>
@@ -336,7 +247,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">edit</i>
-                                    Click the Edit button to modify inventory
+                                    Click the Edit button to modify stock
                                 </li>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">add_circle</i>

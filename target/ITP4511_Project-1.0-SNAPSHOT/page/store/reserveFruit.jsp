@@ -59,7 +59,6 @@
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Reserve Fruits</h2>
                 <p class="lead">Reserve fruits for your bakery needs in the next 14 days</p>
-                <p class="text-muted small mb-0">Your reservation helps us plan for efficient fruit deliveries</p>
             </div>
             <!-- Main Content -->
             <div class="row g-4">

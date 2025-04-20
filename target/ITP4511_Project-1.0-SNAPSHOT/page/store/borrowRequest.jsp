@@ -324,7 +324,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <button class="btn btn-sm btn-outline-primary w-100 mt-2">
+                            <button class="btn btn-sm btn-outline-primary w-100 mt-2" onclick="location.href='/ITP4511_Project/borrowRequest?action=all'">
                                 <i class="material-icons align-middle me-1 small">refresh</i>Update Stock
                             </button>
                         </div>

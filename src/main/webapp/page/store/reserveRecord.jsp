@@ -76,7 +76,6 @@
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Reservation Records</h2>
                 <p class="lead">View and manage your fruit reservation history</p>
-                <p class="text-muted small mb-0">Track all your past and upcoming fruit reservations for planning</p>
             </div>
 
             <!-- Main Content -->

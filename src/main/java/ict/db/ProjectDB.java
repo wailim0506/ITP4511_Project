@@ -887,6 +887,29 @@ public class ProjectDB {
         }
         return shopStockList;
     }
+
+    public boolean updateShopFruitStock(String shopId, String fruitId, int qty) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_stock SET Qty = ? WHERE ShopID = ? AND FruitID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, qty);
+            pStmnt.setString(2, shopId);
+            pStmnt.setString(3, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
     // for shop_fruit_stock
 
     // for shop_borrow_request
@@ -961,6 +984,8 @@ public class ProjectDB {
                 bb.setStatus(rs.getString("Status"));
                 bb.setNotes(rs.getString("Notes"));
                 bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
+                bb.setRejectReason(rs.getString("RejectDetail"));
+                bb.setRejectReasonSelect(rs.getString("RejectReason"));
                 orderList.add(bb);
             }
             pStmnt.close();
@@ -1022,6 +1047,8 @@ public class ProjectDB {
                 bb.setStatus(rs.getString("Status"));
                 bb.setNotes(rs.getString("Notes"));
                 bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
+                bb.setRejectReason(rs.getString("RejectDetail"));
+                bb.setRejectReasonSelect(rs.getString("RejectReason"));
                 orderList.add(bb);
             }
             pStmnt.close();
@@ -1055,6 +1082,8 @@ public class ProjectDB {
                 bb.setStatus(rs.getString("Status"));
                 bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
                 bb.setNotes(rs.getString("Notes"));
+                bb.setRejectReason(rs.getString("RejectDetail"));
+                bb.setRejectReasonSelect(rs.getString("RejectReason"));
                 orderList.add(bb);
             }
             pStmnt.close();
@@ -1117,6 +1146,8 @@ public class ProjectDB {
                 bb.setStatus(rs.getString("Status"));
                 bb.setNotes(rs.getString("Notes"));
                 bb.setRequestToShopPhone(rs.getString("PhoneNumber"));
+                bb.setRejectReason(rs.getString("RejectDetail"));
+                bb.setRejectReasonSelect(rs.getString("RejectReason"));
                 orderList.add(bb);
             }
             pStmnt.close();

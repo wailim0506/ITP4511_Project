@@ -132,19 +132,7 @@
                             <i class="material-icons card-icon mb-3">inventory</i>
                             <h5 class="card-title">Stock Management</h5>
                             <p class="card-text text-muted">Check and manage shop's fruit inventory</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View Inventory</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Profile -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">account_circle</i>
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text text-muted">View and update profile information</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
+                            <a href="/ITP4511_Project/stock?action=list" class="btn btn-outline-primary mt-2">View Inventory</a>
                         </div>
                     </div>
                 </div>
@@ -160,6 +148,31 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Shop List -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">storefront</i>
+                            <h5 class="card-title">Shop List</h5>
+                            <p class="card-text text-muted">View all shops in the company network</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">View Shops</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">account_circle</i>
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text text-muted">View and update profile information</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <footer:footer userType="shop"/>

@@ -90,7 +90,7 @@ public class footer extends SimpleTagSupport {
                         + "                    <span>Borrow Request</span>"
                         + "                </div>"
                         + "            </a>"
-                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/stock?action=list\">"
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">inventory</i>"
                         + "                    <span>Stock</span>"

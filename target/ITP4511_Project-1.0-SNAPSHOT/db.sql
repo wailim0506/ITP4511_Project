@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 03:11 PM
+-- Generation Time: Apr 20, 2025 at 12:37 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -522,13 +522,13 @@ CREATE TABLE `shop_borrow_request` (
 
 INSERT INTO `shop_borrow_request` (`ID`, `RequestBy`, `RequestTo`, `RequestDate`, `DeliveryDate`, `Status`, `Notes`, `RejectReason`, `RejectDetail`) VALUES
 ('B001', 'S102', 'S023', '2025-04-16', NULL, 'Approved', 'Need for special order tomorrow', 'Insufficient stock available', NULL),
-('B002', 'S023', 'S102', '2025-01-01', NULL, 'Rejected', 'Need for special order tomorrow', '', ''),
+('B002', 'S023', 'S102', '2025-01-01', NULL, 'Rejected', 'Need for special order tomorrow', 'Insufficient stock available', ''),
 ('B003', 'S023', 'S024', '2025-04-16', NULL, 'Pending', 'Preparing for weekend promotion', '', ''),
 ('B004', 'S023', 'S102', '2025-04-16', NULL, 'Approved', 'Need for special order tomorrow', '', ''),
 ('B005', 'S023', 'S024', '2025-04-17', NULL, 'Approved', 'Preparing for weekend promotion', '', ''),
 ('B006', 'S023', 'S024', '2025-03-05', NULL, 'Approved', 'Preparing for weekend promotion', '', ''),
 ('B007', 'S023', 'S102', '2025-02-05', NULL, 'Approved', 'Need for special order tomorrow', '', ''),
-('B008', 'S102', 'S023', '2025-04-19', NULL, 'Rejected', 'Preparing for weekend promotion', 'Items already reserved for another shop', 'Hi');
+('B008', 'S102', 'S023', '2025-04-19', NULL, 'Rejected', 'Preparing for weekend promotion', 'Insufficient stock available', NULL);
 
 -- --------------------------------------------------------
 
@@ -735,7 +735,9 @@ INSERT INTO `shop_fruit_order_item` (`OrderID`, `FruitID`, `Qty`, `Status`) VALU
 ('O0013', 'F001', 1, 'pending'),
 ('O0014', 'F001', 1, 'pending'),
 ('O0015', 'F001', 1, 'pending'),
+('O0016', 'F001', 1, NULL),
 ('O0016', 'F002', 1, 'pending'),
+('O0016', 'F007', 2, NULL),
 ('O0017', 'F002', 1, 'pending'),
 ('O0018', 'F003', 1, 'pending');
 
@@ -932,14 +934,14 @@ INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
 ('S022', 'F006', 145),
 ('S022', 'F007', 154),
 ('S022', 'F008', 156),
-('S023', 'F001', 99),
-('S023', 'F002', 5),
-('S023', 'F003', 127),
-('S023', 'F004', 19),
-('S023', 'F005', 106),
+('S023', 'F001', 100),
+('S023', 'F002', 8),
+('S023', 'F003', 129),
+('S023', 'F004', 22),
+('S023', 'F005', 108),
 ('S023', 'F006', 147),
 ('S023', 'F007', 190),
-('S023', 'F008', 154),
+('S023', 'F008', 159),
 ('S024', 'F001', 75),
 ('S024', 'F002', 126),
 ('S024', 'F003', 3),
