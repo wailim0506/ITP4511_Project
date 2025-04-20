@@ -61,11 +61,12 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String targetURL = "index.jsp";
-
-        String passwordFromDB = db.getPassword(username);
-        String UserIDFromDB = db.getUserID(username);
-        byte[] getDecrptionIV = PasswordCrypto.normalizeIv(UserIDFromDB.getBytes("UTF-8"));
+        
         try {
+            String passwordFromDB = db.getPassword(username);
+            String UserIDFromDB = db.getUserID(username);
+            byte[] getDecrptionIV = PasswordCrypto.normalizeIv(UserIDFromDB.getBytes("UTF-8"));
+        
             if (password.equals(
                     PasswordCrypto.decrypt(passwordFromDB, Base64.getEncoder().encodeToString(getDecrptionIV)))) {
                 // obtain session from request
