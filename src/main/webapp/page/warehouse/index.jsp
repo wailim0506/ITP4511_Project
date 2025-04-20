@@ -35,7 +35,7 @@
     </head>
     <body>
         <%
-            UserBean type = (UserBean)session.getAttribute("userInfo");
+            UserBean ub = (UserBean)session.getAttribute("userInfo");
             
             Date currentDate = new Date();
             SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.ENGLISH);
@@ -46,7 +46,7 @@
             String weekday = weekdayFormat.format(currentDate);
             String day = dayFormat.format(currentDate);
         %>
-        <nav:nav userType="warehouse"/>
+        <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
 
         <div class="container py-4">
             <!-- Today & line chart -->
