@@ -15,7 +15,7 @@
     </attribute>
     <attribute>
       <name>staffName</name>
-      <required>false</required>
+      <required>true</required>
       <type>java.lang.String</type>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
