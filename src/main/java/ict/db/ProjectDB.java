@@ -1451,18 +1451,36 @@ public class ProjectDB {
     
     
     
+    public boolean updateStaffName(String staffName, String UserID, String type) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            if(type.equals("warehouse")){
+                String preQueryStatement = "UPDATE warehouse_staff SET staffname = ? WHERE UserID = ?";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, staffName);
+                pStmnt.setString(2, UserID);
+            }else if(type.equals("shop")){
+                String preQueryStatement = "UPDATE shop_staff SET staffname = ? WHERE UserID = ?";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, staffName);
+                pStmnt.setString(2, UserID);
+            }
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-  
     // ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse -------
     public List<OrderBean> getStatistics(String v1, int warehouseType) {
         Connection cnnct = null;

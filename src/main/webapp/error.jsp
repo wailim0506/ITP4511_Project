@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page isErrorPage="true" %>
+<%@page import="ict.bean.*" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <!DOCTYPE html>
@@ -32,6 +33,7 @@
             String userType = (String) session.getAttribute("userType");
             String errorTitle =  (String) request.getAttribute("errorTitle");
             String errorMsg = (String) request.getAttribute("errorMsg");
+            UserBean ub = (UserBean)session.getAttribute("userInfo");
             
             if (errorTitle == null)
                 errorTitle = "Oops! We can't find that page.";
@@ -40,7 +42,7 @@
         %>
         
         <% if(userType != null){ %>
-            <nav:nav userType="<%= userType %>"/>
+            <nav:nav userType="<%= userType %>" staffName="<%=ub.getStaffName()%>"/>
         <% }else{ %>
             <nav class="navbar navbar-expand-lg sticky-top shadow-sm" style="border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);">
                 <div class="container">

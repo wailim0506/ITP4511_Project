@@ -37,33 +37,34 @@
             UserBean ub = (UserBean) session.getAttribute("userInfo");
         %>
         <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
-
         <div class="profile-container">
             <div class="profile-container-info">
                 <h1 class="profile-container-title">Profile</h1>
                 <div class="profile-container-data">
                     <div class="profile-container-info-box">
-                        <form>
+                        <form action="/ITP4511_Project/ProfileController" method="GET">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" >
+                                <input type="text" max="50" class="form-control" id="floatingInput" value="<%=ub.getStaffName()%>" name="staffName" required>
                                 <label for="floatingInput">Staff Name</label>
                             </div>
+                            <input type="hidden" name="action" value="updateStaffName">
                             <button class="btn btn-primary btn-sm" type="submit">Change Staff Name</button>
                         </form>
                         <br/>
-                        <form>
+                        <form action="/ITP4511_Project/ProfileController" method="GET">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" >
+                                <input type="password" class="form-control" id="floatingInput" required>
                                 <label for="floatingInput">Old Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" >
+                                <input type="password" class="form-control" id="floatingInput" required>
                                 <label for="floatingInput">New Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" >
+                                <input type="password" class="form-control" id="floatingInput" required>
                                 <label for="floatingInput">Confirm Password</label>
                             </div>
+                            <input type="hidden" name="action" value="changePassword">
                             <button class="btn btn-primary btn-sm" type="submit">Change Password</button>
                         </form>
                     </div>
