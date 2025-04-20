@@ -341,7 +341,10 @@ public class ProjectDB {
                     + "    c.StaffName AS WarehouseStaffName,\n"
                     + "    cr_warehouse.Name AS WarehouseCountry, \n"
                     + "    f.Type AS WarehouseType, \n"
-                    + "    f.SourceCity AS SourceCity\n"
+                    + "    f.SourceCity AS SourceCity,\n"
+                    + "    fc.City AS SourceCityFullName,\n"
+                    + "    f.PhoneNumber AS warehousePhone,\n"
+                    + "    d.PhoneNumber AS shopPhone\n"
                     + "FROM user a\n"
                     + "LEFT JOIN shop_staff b ON a.UserID = b.UserID\n"
                     + "LEFT JOIN warehouse_staff c ON a.UserID = c.UserID\n"
@@ -350,6 +353,7 @@ public class ProjectDB {
                     + "LEFT JOIN country_region cr_shop ON sc.CountryRegionID = cr_shop.ID\n"
                     + "LEFT JOIN warehouse f ON c.WarehouseID = f.ID\n"
                     + "LEFT JOIN country_region cr_warehouse ON f.CountryRegionID = cr_warehouse.ID\n"
+                    + "LEFT JOIN fruit_city fc ON f.SourceCity = fc.ID\n"
                     + "WHERE a.UserName = ? ORDER BY a.UserID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
@@ -366,6 +370,7 @@ public class ProjectDB {
                     ub.setShopAddress(rs.getString("ShopAddress"));
                     ub.setShopCity(rs.getString("ShopCity"));
                     ub.setShopCountry(rs.getString("ShopCountry"));
+                    ub.setPhone(rs.getString("shopPhone"));
                 } // if is warehouse user
                 else if (rs.getString("WarehouseID") != null) {
                     ub = new UserBean();
@@ -376,6 +381,8 @@ public class ProjectDB {
                     ub.setWarehouseCountry(rs.getString("WarehouseCountry"));
                     ub.setWarehouseType(rs.getString("WarehouseType"));
                     ub.setWarehouseSourceCity(rs.getString("SourceCity"));
+                    ub.setWarehouseSourceCityFullName(rs.getString("SourceCityFullName"));
+                    ub.setPhone(rs.getString("warehousePhone"));
                 }
             }
             pStmnt.close();

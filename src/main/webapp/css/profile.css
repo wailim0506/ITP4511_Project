@@ -1,0 +1,55 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2025年4月20日, 下午8:37:18
+    Author     : HwH
+*/
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    margin-top: 10px; 
+    min-height: 800px;
+}
+
+.profile-container-title {
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.profile-container-info {
+    width:1000px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-container-data {
+    width:1000px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 50px;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.profile-container-info-box {
+    flex: 1 1 50%;
+    padding: 50px;
+}
+
+.profile-img{
+    width: 40%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 100%;
+    margin-bottom: 30px;
+    margin-left: 65px;
+}
+
+.profile-container-info-box p {
+    font-size: 20px;
+    padding: 0;
+}

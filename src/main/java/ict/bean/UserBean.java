@@ -20,6 +20,8 @@ public class UserBean {
     private String warehouseCountry;
     private String warehouseType;
     private String warehouseSourceCity;
+    private String warehouseSourceCityFullName;
+    private String phone;
 
     public String getUserId() {
         return userId;
@@ -64,6 +66,14 @@ public class UserBean {
     public String getWarehouseSourceCity(){
         return this.warehouseSourceCity;
     }
+    
+    public String getWarehouseSourceCityFullName(){
+        return this.warehouseSourceCityFullName;
+    }
+    
+    public String getPhone(){
+        return this.phone;
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -107,5 +117,13 @@ public class UserBean {
     
     public void setWarehouseSourceCity(String warehouseSourceCity) {
         this.warehouseSourceCity = warehouseSourceCity;
+    }
+    
+    public void setWarehouseSourceCityFullName(String warehouseSourceCityFullName) {
+        this.warehouseSourceCityFullName = warehouseSourceCityFullName;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

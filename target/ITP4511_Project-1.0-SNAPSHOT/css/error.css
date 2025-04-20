@@ -12,7 +12,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     flex-direction: column;
     height: 800px;
     width: 100%;
-    display: flex;
     justify-content: center;
     align-items: center; 
 }
