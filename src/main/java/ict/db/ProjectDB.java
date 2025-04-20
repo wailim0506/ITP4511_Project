@@ -1430,6 +1430,33 @@ public class ProjectDB {
     }
     // for shop_borrow_request_item
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    // ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse -------
     public List<OrderBean> getStatistics(String v1, int warehouseType) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
