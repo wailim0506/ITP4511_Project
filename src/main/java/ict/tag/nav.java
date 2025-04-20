@@ -145,7 +145,7 @@ public class nav extends SimpleTagSupport {
                         + "                    <a class=\"btn btn-outline-secondary dropdown-toggle d-flex align-items-center\" href=\"#\" role=\"button\" "
                         + "                       id=\"userDropdown\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">"
                         + "                        <i class=\"material-icons me-2\">account_circle</i>"
-                        + "                        <span>User Name</span>"
+                        + "                        <span>" + staffName + "</span>"
                         + "                    </a>"
                         + "                    <ul class=\"dropdown-menu dropdown-menu-end shadow\" aria-labelledby=\"userDropdown\">"
                         + "                        <li><a class=\"dropdown-item\" href=\"#\"><i class=\"material-icons small me-2\">person</i>Profile</a></li>"
