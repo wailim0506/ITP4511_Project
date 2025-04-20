@@ -78,7 +78,9 @@ public class LoginController extends HttpServlet {
                     targetURL = "page/store/index.jsp"; // Change to shop homepage path
                 } else if (bean.getWareHouseId() != null) {
                     session.setAttribute("userType", "warehouse");
-                    request.setAttribute("orderList", db.getStatistics(bean.getWarehouseCountry())); // For order line chart
+                    int type = (bean.getWarehouseType().equals("Central"))? 0:1;
+                    String v1 = (type == 0)? bean.getWarehouseCountry():bean.getWarehouseSourceCity();
+                    request.setAttribute("orderList", db.getStatistics(v1, type)); // For order line chart
                     targetURL = "page/warehouse/index.jsp"; // Change to warehouse homepage path
                 } else {
                     // Handle other user types if needed
