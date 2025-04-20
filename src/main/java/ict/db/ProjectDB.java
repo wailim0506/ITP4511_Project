@@ -1428,18 +1428,23 @@ public class ProjectDB {
     }
     // for shop_borrow_request_item
 
-    public List<OrderBean> getStatistics() {
+    public List<OrderBean> getStatistics(String CountryRegionID) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         List<OrderBean> orderList = new ArrayList<>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT DATE(OrderDate) AS OrderDate, COUNT(*) AS total "
-                    + "FROM shop_fruit_order "
-                    + "WHERE OrderDate >= NOW() - INTERVAL 7 DAY "
-                    + "GROUP BY DATE(OrderDate) "
-                    + "ORDER BY DATE(OrderDate);";
+            String preQueryStatement = "SELECT DATE(sfo.OrderDate) AS OrderDate, COUNT(*) AS total\n" +
+                                            "FROM shop_fruit_order sfo\n" +
+                                            "JOIN shop s ON sfo.ShopID = s.ID\n" +
+                                            "JOIN shop_city sc ON s.City = sc.ID\n" +
+                                            "JOIN country_region crid ON crid.ID = sc.CountryRegionID\n" +
+                                            "WHERE sfo.OrderDate >= NOW() - INTERVAL 7 DAY\n" +
+                                            "AND crid.name = ?\n" +
+                                            "GROUP BY DATE(sfo.OrderDate)\n" +
+                                            "ORDER BY DATE(sfo.OrderDate);";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, CountryRegionID);
             ResultSet rs = pStmnt.executeQuery();
             while (rs.next()) {
                 OrderBean ob = new OrderBean();
