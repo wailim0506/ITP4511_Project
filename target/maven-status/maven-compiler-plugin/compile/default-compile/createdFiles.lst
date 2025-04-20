@@ -9,6 +9,7 @@ ict\servlet\store\borrowRecordController.class
 ict\bean\CountryRegionBean.class
 ict\servlet\store\reserveFruitConfirmationPageController.class
 ict\bean\UserBean.class
+ict\servlet\store\stockController.class
 ict\bean\WarehouseBean.class
 hk\edu\ive\itp4511\itp4511_project\resources\JakartaEE10Resource.class
 ict\tag\nav.class

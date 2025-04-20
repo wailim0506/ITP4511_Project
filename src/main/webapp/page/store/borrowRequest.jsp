@@ -42,31 +42,34 @@
         %>
         <nav:nav userType="shop" staffName="<%=staffName%>"/>
         <%
-            // try{
-            //     String errorMsg = (String) session.getAttribute("errorMsg");
-            //     if(errorMsg != null && !errorMsg.isEmpty()){
-            //         out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
-            //                     "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
-            //                     "<span>" + errorMsg + "</span>" +
-            //                     "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);\"></button>" +
-            //                     "</div></div>");                    
-            //         session.removeAttribute("errorMsg");
-            //     }
-            // }catch(Exception e){
-            // }  
+            try{
+                String errorMsg = (String) session.getAttribute("errorMsg");
+                if(errorMsg != null && !errorMsg.isEmpty()){
+                    // out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                    //             "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                    //             "<span>" + errorMsg + "</span>" +
+                    //             "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);\"></button>" +
+                    //             "</div></div>");                    
+                    out.println("<script>alert('" + errorMsg + "');</script>");
+                    session.removeAttribute("errorMsg");
+                }
+            }catch(Exception e){
+            }  
 
-            // try{
-            //     String successMsg = (String) session.getAttribute("successMsg");
-            //     if(successMsg != null && !successMsg.isEmpty()){
-            //         out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
-            //                     "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
-            //                     "<span>" + successMsg + "</span>" +
-            //                     "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);\"></button>" +
-            //                     "</div></div>");                    
-            //         session.removeAttribute("successMsg");
-            //     }
-            // }catch(Exception e){
-            // }  
+            try{
+                String successMsg = (String) session.getAttribute("successMsg");
+                if(successMsg != null && !successMsg.isEmpty()){
+                    // out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                    //             "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                    //             "<span>" + successMsg + "</span>" +
+                    //             "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);\"></button>" +
+                    //             "</div></div>");        
+                    out.println("<script>alert('" + successMsg + "');</script>");
+            
+                    session.removeAttribute("successMsg");
+                }
+            }catch(Exception e){
+            }  
         %>
 
         <div class="container py-4">
@@ -494,12 +497,6 @@
                             out.println("</div>");
                             out.println("<div class=\"modal-footer\">");
                                 out.println("<button type=\"button\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Close</button>");
-                                out.println("<button type=\"button\" class=\"btn btn-danger me-2\" data-bs-toggle=\"modal\" data-bs-target=\"#rejectModal" + requestId +"\" data-bs-dismiss=\"modal\">");
-                                    out.println("<i class=\"material-icons align-middle me-1 small\">close</i> Reject");
-                                out.println("</button>");
-                                out.println("<button type=\"button\" class=\"btn btn-success\" data-bs-toggle=\"modal\" data-bs-target=\"#approveModal" + requestId + "\" data-bs-dismiss=\"modal\">");
-                                    out.println("<i class=\"material-icons align-middle me-1 small\">check</i> Approve");
-                                out.println("</button>");
                             out.println("</div>");
                         out.println("</div>");
                     out.println("</div>");

@@ -77,7 +77,7 @@ $(document).ready(function () {
                 <td>${fruitOrigin}</td>
                 <td class='readQty d-none'>${fruitQty}</td>
                 <td class='editQty'>
-                    <input class="form-control w-50 h-25" value="${fruitQty}" name="${fruitId}">
+                    <input class="form-control w-50 h-25" value="${fruitQty}" name="${fruitId}" min="0" type="number" required>
                 </td>
                 <td>${fruitUnit}</td>
                 <td class='editQty'>

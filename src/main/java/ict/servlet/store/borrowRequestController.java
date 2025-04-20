@@ -100,17 +100,17 @@ public class borrowRequestController extends HttpServlet {
         } else if ("approve".equalsIgnoreCase(action)) {
             String requestId = request.getParameter("requestId");
             if (requestId == null || requestId.isEmpty()) {
-                session.setAttribute("errorMsg", "Invalid borrow request ID.");
+                session.setAttribute("errorMsg", "Invalid borrow request ID. Please try again.");
                 response.sendRedirect(request.getContextPath() +
                         "/borrowRequest?action=all");
                 return;
             } else {
                 if (db.updateBorrowRequestStatus(requestId, "Approved", "", "")) {
-                    session.setAttribute("successMsg", "Borrow Request Approved.");
+                    session.setAttribute("successMsg", "Borrow Request (ID: " + requestId + ") Approved.");
                     response.sendRedirect(request.getContextPath() +
                             "/borrowRequest?action=all");
                 } else {
-                    session.setAttribute("errorMsg", "Failed to approve borrow request.");
+                    session.setAttribute("errorMsg", "Failed to approve borrow request. Please try again.");
                     response.sendRedirect(request.getContextPath() +
                             "/borrowRequest?action=all");
                 }
@@ -121,17 +121,17 @@ public class borrowRequestController extends HttpServlet {
             String reasonText = request.getParameter("rejectReason");
 
             if (requestId == null || requestId.isEmpty()) {
-                session.setAttribute("errorMsg", "Invalid borrow request ID.");
+                session.setAttribute("errorMsg", "Invalid borrow request ID. Please try again.");
                 response.sendRedirect(request.getContextPath() +
                         "/borrowRequest?action=all");
                 return;
             } else {
                 if (db.updateBorrowRequestStatus(requestId, "Rejected", reasonSelect, reasonText)) {
-                    session.setAttribute("successMsg", "Borrow Request Rejected.");
+                    session.setAttribute("successMsg", "Borrow Request (ID: " + requestId + ") Rejected.");
                     response.sendRedirect(request.getContextPath() +
                             "/borrowRequest?action=all");
                 } else {
-                    session.setAttribute("errorMsg", "Failed to reject borrow request.");
+                    session.setAttribute("errorMsg", "Failed to reject borrow request. Please try again.");
                     response.sendRedirect(request.getContextPath() +
                             "/borrowRequest?action=all");
                 }

@@ -330,7 +330,7 @@
                                             <td><%= item.getCity() %>, <%= item.getCountryRegion() %></td>
                                             <td class='readQty'><%= item.getQty() %></td>
                                             <td class='d-none editQty'>
-                                                <input type="number" class="form-control w-50 h-25" value="<%= item.getQty() %>" name="<%=item.getFruidId()%>">
+                                                <input type="number" class="form-control w-50 h-25" value="<%= item.getQty() %>" min="1" name="<%=item.getFruidId()%>">
                                             </td>
                                             <td><%= item.getUnit() %></td>
                                             <td class='d-none editQty'>

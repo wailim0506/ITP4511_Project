@@ -1,0 +1,103 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2025年4月20日, 下午3:13:25
+    Author     : Wai Lim Fung
+*/
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.headerSection {
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+html[data-bs-theme="dark"] .headerSection {
+  background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+}
+
+.stockTableContainer {
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+}
+
+.fruitImg {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+}
+
+.fruitItem {
+  transition: all 0.2s;
+}
+
+.fruitItem:hover {
+  background-color: var(--bs-tertiary-bg);
+}
+
+.stockControl {
+  max-width: 150px;
+}
+
+.stockInput {
+  max-width: 60px;
+
+  text-align: center;
+  font-weight: 500;
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+}
+
+.stockInput:focus {
+  box-shadow: none;
+  border-color: #0d6efd;
+}
+
+.modifiedValue {
+  background-color: var(--bs-primary-bg-subtle);
+  color: var(--bs-body-color);
+}
+
+.stockValue {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.stockUnit {
+  color: var(--bs-body-color);
+}
+
+/* Table header dark mode fix */
+html[data-bs-theme="dark"] .table-light {
+  /* --bs-table-bg: var(--bs-dark-bg-subtle);
+  --bs-table-color: var(--bs-body-color);
+  color: var(--bs-body-color); */
+}
+
+/* Dark mode specific overrides */
+html[data-bs-theme="dark"] .stockReadMode,
+html[data-bs-theme="dark"] .stockEditMode {
+  color: var(--bs-body-color);
+}
+
+/* Remove spinner buttons from number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
