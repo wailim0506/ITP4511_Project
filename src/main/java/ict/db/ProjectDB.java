@@ -1484,50 +1484,10 @@ public class ProjectDB {
     }
     // for shop_borrow_request_item
 
-<<<<<<< Updated upstream
-=======
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    //For update password
-    public boolean updatePassword(String UserID, String encrypedPass) {
-        Connection cnnct = null;
-        PreparedStatement pStmnt = null;
-        boolean isSuccess = false;
-        
-        try {
-            cnnct = getConnection();
-            String preQueryStatement = "UPDATE user SET Password = ? WHERE UserID = ?";
-            pStmnt = cnnct.prepareStatement(preQueryStatement);
-            pStmnt.setString(1, encrypedPass);
-            pStmnt.setString(2, UserID);
-            
-            int rowCount = pStmnt.executeUpdate();
-            if (rowCount >= 1) {
-                isSuccess = true;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return isSuccess;
-    }
-    
-    
-    //For update staff name
->>>>>>> Stashed changes
     public boolean updateStaffName(String staffName, String UserID, String type) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
-        
         try {
             cnnct = getConnection();
             if (type.equals("warehouse")) {
@@ -1541,7 +1501,6 @@ public class ProjectDB {
                 pStmnt.setString(1, staffName);
                 pStmnt.setString(2, UserID);
             }
-            
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
