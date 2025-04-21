@@ -22,6 +22,10 @@
         <script src="./js/index.js"></script>
     </head>
     <body>
+        <%
+            String errorMsg = (String) request.getAttribute("errorMsg");
+            String errorMsgCollapse = (errorMsg!=null)?"":"collapse";
+        %>
         <div class="login-container">
             <!-- Logo Header -->
             <div class="login-header">
@@ -70,6 +74,10 @@
                         <button type="submit" class="btn login-btn w-100 text-white">Sign In</button>
                     </form>
                 </div>
+            </div>
+            
+            <div class="alert alert-danger <%=errorMsgCollapse%>" role="alert">
+                    <%=errorMsg%>
             </div>
             
             <div class="login-footer">
