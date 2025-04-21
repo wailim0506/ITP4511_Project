@@ -57,7 +57,7 @@
                             <button class="btn btn-primary btn-sm" type="submit">Change Staff Name</button>
                         </form>
                         <br/>
-                        <form action="/ITP4511_Project/ProfileController" method="GET">
+                        <form action="/ITP4511_Project/ProfileController" method="GET" onsubmit="return confirmPasswordChange();">
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control" id="floatingInput" name="oPass" required>
                                 <label for="floatingInput">Old Password</label>
@@ -95,4 +95,9 @@
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
     </body>
+    <script>
+        function confirmPasswordChange() {
+            return confirm("Are you sure to change your password? This operation will logout your account.");
+        }
+    </script>
 </html>
