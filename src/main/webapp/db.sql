@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 20, 2025 at 12:37 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- 主机： 127.0.0.1
+-- 生成日期： 2025-04-21 19:28:41
+-- 服务器版本： 10.4.32-MariaDB
+-- PHP 版本： 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `itp4511_project_db`
+-- 数据库： `itp4511_project_db`
 --
 CREATE DATABASE IF NOT EXISTS `itp4511_project_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `itp4511_project_db`;
@@ -26,7 +26,7 @@ USE `itp4511_project_db`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `country_region`
+-- 表的结构 `country_region`
 --
 
 CREATE TABLE `country_region` (
@@ -35,7 +35,7 @@ CREATE TABLE `country_region` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `country_region`
+-- 转存表中的数据 `country_region`
 --
 
 INSERT INTO `country_region` (`ID`, `Name`) VALUES
@@ -258,7 +258,7 @@ INSERT INTO `country_region` (`ID`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fruit`
+-- 表的结构 `fruit`
 --
 
 CREATE TABLE `fruit` (
@@ -271,7 +271,7 @@ CREATE TABLE `fruit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `fruit`
+-- 转存表中的数据 `fruit`
 --
 
 INSERT INTO `fruit` (`ID`, `Name`, `type`, `unit`, `ImgName`, `FruitCityID`) VALUES
@@ -287,7 +287,7 @@ INSERT INTO `fruit` (`ID`, `Name`, `type`, `unit`, `ImgName`, `FruitCityID`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fruit_city`
+-- 表的结构 `fruit_city`
 --
 
 CREATE TABLE `fruit_city` (
@@ -297,7 +297,7 @@ CREATE TABLE `fruit_city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `fruit_city`
+-- 转存表中的数据 `fruit_city`
 --
 
 INSERT INTO `fruit_city` (`ID`, `City`, `CountryRegionID`) VALUES
@@ -310,7 +310,7 @@ INSERT INTO `fruit_city` (`ID`, `City`, `CountryRegionID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop`
+-- 表的结构 `shop`
 --
 
 CREATE TABLE `shop` (
@@ -321,7 +321,7 @@ CREATE TABLE `shop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shop`
+-- 转存表中的数据 `shop`
 --
 
 INSERT INTO `shop` (`ID`, `Address`, `City`, `PhoneNumber`) VALUES
@@ -501,7 +501,7 @@ INSERT INTO `shop` (`ID`, `Address`, `City`, `PhoneNumber`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_borrow_request`
+-- 表的结构 `shop_borrow_request`
 --
 
 CREATE TABLE `shop_borrow_request` (
@@ -511,29 +511,13 @@ CREATE TABLE `shop_borrow_request` (
   `RequestDate` date NOT NULL,
   `DeliveryDate` date DEFAULT NULL,
   `Status` varchar(15) NOT NULL,
-  `Notes` varchar(200) DEFAULT NULL,
-  `RejectReason` varchar(200) DEFAULT NULL,
-  `RejectDetail` varchar(1000) DEFAULT NULL
+  `Notes` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `shop_borrow_request`
---
-
-INSERT INTO `shop_borrow_request` (`ID`, `RequestBy`, `RequestTo`, `RequestDate`, `DeliveryDate`, `Status`, `Notes`, `RejectReason`, `RejectDetail`) VALUES
-('B001', 'S102', 'S023', '2025-04-16', NULL, 'Approved', 'Need for special order tomorrow', 'Insufficient stock available', NULL),
-('B002', 'S023', 'S102', '2025-01-01', NULL, 'Rejected', 'Need for special order tomorrow', 'Insufficient stock available', ''),
-('B003', 'S023', 'S024', '2025-04-16', NULL, 'Pending', 'Preparing for weekend promotion', '', ''),
-('B004', 'S023', 'S102', '2025-04-16', NULL, 'Approved', 'Need for special order tomorrow', '', ''),
-('B005', 'S023', 'S024', '2025-04-17', NULL, 'Approved', 'Preparing for weekend promotion', '', ''),
-('B006', 'S023', 'S024', '2025-03-05', NULL, 'Approved', 'Preparing for weekend promotion', '', ''),
-('B007', 'S023', 'S102', '2025-02-05', NULL, 'Approved', 'Need for special order tomorrow', '', ''),
-('B008', 'S102', 'S023', '2025-04-19', NULL, 'Rejected', 'Preparing for weekend promotion', 'Insufficient stock available', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_borrow_request_item`
+-- 表的结构 `shop_borrow_request_item`
 --
 
 CREATE TABLE `shop_borrow_request_item` (
@@ -542,31 +526,10 @@ CREATE TABLE `shop_borrow_request_item` (
   `Qty` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `shop_borrow_request_item`
---
-
-INSERT INTO `shop_borrow_request_item` (`BorrowRequestID`, `FruitID`, `Qty`) VALUES
-('B001', 'F001', 2),
-('B001', 'F002', 3),
-('B002', 'F001', 2),
-('B002', 'F003', 2),
-('B003', 'F008', 12),
-('B004', 'F001', 2),
-('B005', 'F002', 1),
-('B006', 'F002', 2),
-('B006', 'F006', 2),
-('B006', 'F007', 2),
-('B007', 'F002', 2),
-('B007', 'F003', 1),
-('B007', 'F007', 4),
-('B007', 'F008', 15),
-('B008', 'F008', 1);
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_city`
+-- 表的结构 `shop_city`
 --
 
 CREATE TABLE `shop_city` (
@@ -576,7 +539,7 @@ CREATE TABLE `shop_city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shop_city`
+-- 转存表中的数据 `shop_city`
 --
 
 INSERT INTO `shop_city` (`ID`, `City`, `CountryRegionID`) VALUES
@@ -642,7 +605,7 @@ INSERT INTO `shop_city` (`ID`, `City`, `CountryRegionID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_fruit_order`
+-- 表的结构 `shop_fruit_order`
 --
 
 CREATE TABLE `shop_fruit_order` (
@@ -655,7 +618,7 @@ CREATE TABLE `shop_fruit_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shop_fruit_order`
+-- 转存表中的数据 `shop_fruit_order`
 --
 
 INSERT INTO `shop_fruit_order` (`ID`, `ShopID`, `OrderDate`, `DeliveryDate`, `Status`, `Notes`) VALUES
@@ -681,7 +644,7 @@ INSERT INTO `shop_fruit_order` (`ID`, `ShopID`, `OrderDate`, `DeliveryDate`, `St
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_fruit_order_item`
+-- 表的结构 `shop_fruit_order_item`
 --
 
 CREATE TABLE `shop_fruit_order_item` (
@@ -692,7 +655,7 @@ CREATE TABLE `shop_fruit_order_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shop_fruit_order_item`
+-- 转存表中的数据 `shop_fruit_order_item`
 --
 
 INSERT INTO `shop_fruit_order_item` (`OrderID`, `FruitID`, `Qty`, `Status`) VALUES
@@ -735,16 +698,14 @@ INSERT INTO `shop_fruit_order_item` (`OrderID`, `FruitID`, `Qty`, `Status`) VALU
 ('O0013', 'F001', 1, 'pending'),
 ('O0014', 'F001', 1, 'pending'),
 ('O0015', 'F001', 1, 'pending'),
-('O0016', 'F001', 1, NULL),
 ('O0016', 'F002', 1, 'pending'),
-('O0016', 'F007', 2, NULL),
 ('O0017', 'F002', 1, 'pending'),
 ('O0018', 'F003', 1, 'pending');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_fruit_stock`
+-- 表的结构 `shop_fruit_stock`
 --
 
 CREATE TABLE `shop_fruit_stock` (
@@ -754,7 +715,7 @@ CREATE TABLE `shop_fruit_stock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shop_fruit_stock`
+-- 转存表中的数据 `shop_fruit_stock`
 --
 
 INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
@@ -934,14 +895,14 @@ INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
 ('S022', 'F006', 145),
 ('S022', 'F007', 154),
 ('S022', 'F008', 156),
-('S023', 'F001', 100),
-('S023', 'F002', 8),
-('S023', 'F003', 129),
-('S023', 'F004', 22),
-('S023', 'F005', 108),
+('S023', 'F001', 99),
+('S023', 'F002', 5),
+('S023', 'F003', 127),
+('S023', 'F004', 19),
+('S023', 'F005', 106),
 ('S023', 'F006', 147),
 ('S023', 'F007', 190),
-('S023', 'F008', 159),
+('S023', 'F008', 154),
 ('S024', 'F001', 75),
 ('S024', 'F002', 126),
 ('S024', 'F003', 3),
@@ -2138,29 +2099,30 @@ INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_staff`
+-- 表的结构 `shop_staff`
 --
 
 CREATE TABLE `shop_staff` (
   `ID` char(3) NOT NULL,
   `StaffName` varchar(50) NOT NULL,
   `ShopID` char(4) NOT NULL,
-  `UserID` char(5) NOT NULL
+  `UserID` char(5) NOT NULL,
+  `Role` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `shop_staff`
+-- 转存表中的数据 `shop_staff`
 --
 
-INSERT INTO `shop_staff` (`ID`, `StaffName`, `ShopID`, `UserID`) VALUES
-('001', 'Alvin', 'S023', 'U001'),
-('002', 'Carlos', 'S024', 'U010'),
-('003', 'Johnson', 'S102', 'U011');
+INSERT INTO `shop_staff` (`ID`, `StaffName`, `ShopID`, `UserID`, `Role`) VALUES
+('001', 'Alvin', 'S023', 'U001', 'Staff'),
+('002', 'Carlos', 'S024', 'U010', 'Staff'),
+('003', 'Johnson', 'S102', 'U011', 'Staff');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- 表的结构 `user`
 --
 
 CREATE TABLE `user` (
@@ -2170,7 +2132,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`UserID`, `UserName`, `Password`) VALUES
@@ -2189,7 +2151,7 @@ INSERT INTO `user` (`UserID`, `UserName`, `Password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `warehouse`
+-- 表的结构 `warehouse`
 --
 
 CREATE TABLE `warehouse` (
@@ -2201,7 +2163,7 @@ CREATE TABLE `warehouse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `warehouse`
+-- 转存表中的数据 `warehouse`
 --
 
 INSERT INTO `warehouse` (`ID`, `CountryRegionID`, `Type`, `SourceCity`, `PhoneNumber`) VALUES
@@ -2217,7 +2179,7 @@ INSERT INTO `warehouse` (`ID`, `CountryRegionID`, `Type`, `SourceCity`, `PhoneNu
 -- --------------------------------------------------------
 
 --
--- Table structure for table `warehouse_fruit_stock`
+-- 表的结构 `warehouse_fruit_stock`
 --
 
 CREATE TABLE `warehouse_fruit_stock` (
@@ -2227,7 +2189,7 @@ CREATE TABLE `warehouse_fruit_stock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `warehouse_fruit_stock`
+-- 转存表中的数据 `warehouse_fruit_stock`
 --
 
 INSERT INTO `warehouse_fruit_stock` (`WarehouseID`, `FruitID`, `Qty`) VALUES
@@ -2259,63 +2221,64 @@ INSERT INTO `warehouse_fruit_stock` (`WarehouseID`, `FruitID`, `Qty`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `warehouse_staff`
+-- 表的结构 `warehouse_staff`
 --
 
 CREATE TABLE `warehouse_staff` (
   `ID` char(3) NOT NULL,
   `StaffName` varchar(50) NOT NULL,
   `WarehouseID` char(4) NOT NULL,
-  `UserID` char(5) NOT NULL
+  `UserID` char(5) NOT NULL,
+  `Role` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `warehouse_staff`
+-- 转存表中的数据 `warehouse_staff`
 --
 
-INSERT INTO `warehouse_staff` (`ID`, `StaffName`, `WarehouseID`, `UserID`) VALUES
-('001', 'Peter', 'W001', 'U002'),
-('002', 'Tom', 'W002', 'U003'),
-('003', 'Ming', 'W003', 'U004'),
-('004', 'David ', 'W004', 'U005'),
-('005', 'Jones', 'W005', 'U006'),
-('006', 'Mary', 'W006', 'U007'),
-('007', 'Alex', 'W007', 'U008'),
-('008', 'Sam', 'W008', 'U009');
+INSERT INTO `warehouse_staff` (`ID`, `StaffName`, `WarehouseID`, `UserID`, `Role`) VALUES
+('001', 'Peter', 'W001', 'U002', 'Staff'),
+('002', 'Tom', 'W002', 'U003', 'Staff'),
+('003', 'Ming', 'W003', 'U004', 'Staff'),
+('004', 'David ', 'W004', 'U005', 'Staff'),
+('005', 'Jones', 'W005', 'U006', 'Staff'),
+('006', 'Marry', 'W006', 'U007', 'Staff'),
+('007', 'Alex', 'W007', 'U008', 'Staff'),
+('008', 'Sam', 'W008', 'U009', 'Staff');
 
 --
--- Indexes for dumped tables
+-- 转储表的索引
 --
 
 --
--- Indexes for table `country_region`
+-- 表的索引 `country_region`
 --
 ALTER TABLE `country_region`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexes for table `fruit`
+-- 表的索引 `fruit`
 --
 ALTER TABLE `fruit`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FruitCityID_fk` (`FruitCityID`);
 
 --
--- Indexes for table `fruit_city`
+-- 表的索引 `fruit_city`
 --
 ALTER TABLE `fruit_city`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `country_region_fk` (`CountryRegionID`);
 
 --
--- Indexes for table `shop`
+-- 表的索引 `shop`
 --
 ALTER TABLE `shop`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `city_fk` (`City`);
 
 --
--- Indexes for table `shop_borrow_request`
+-- 表的索引 `shop_borrow_request`
 --
 ALTER TABLE `shop_borrow_request`
   ADD PRIMARY KEY (`ID`),
@@ -2323,42 +2286,42 @@ ALTER TABLE `shop_borrow_request`
   ADD KEY `to_fk` (`RequestTo`);
 
 --
--- Indexes for table `shop_borrow_request_item`
+-- 表的索引 `shop_borrow_request_item`
 --
 ALTER TABLE `shop_borrow_request_item`
   ADD PRIMARY KEY (`BorrowRequestID`,`FruitID`),
   ADD KEY `fruit_fk` (`FruitID`);
 
 --
--- Indexes for table `shop_city`
+-- 表的索引 `shop_city`
 --
 ALTER TABLE `shop_city`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_shop_city_country_region` (`CountryRegionID`);
 
 --
--- Indexes for table `shop_fruit_order`
+-- 表的索引 `shop_fruit_order`
 --
 ALTER TABLE `shop_fruit_order`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ShopID_fk2` (`ShopID`);
 
 --
--- Indexes for table `shop_fruit_order_item`
+-- 表的索引 `shop_fruit_order_item`
 --
 ALTER TABLE `shop_fruit_order_item`
   ADD PRIMARY KEY (`OrderID`,`FruitID`),
   ADD KEY `FruitID_fk2` (`FruitID`);
 
 --
--- Indexes for table `shop_fruit_stock`
+-- 表的索引 `shop_fruit_stock`
 --
 ALTER TABLE `shop_fruit_stock`
   ADD PRIMARY KEY (`ShopID`,`FruitID`),
   ADD KEY `FruitID_fk` (`FruitID`);
 
 --
--- Indexes for table `shop_staff`
+-- 表的索引 `shop_staff`
 --
 ALTER TABLE `shop_staff`
   ADD PRIMARY KEY (`ID`),
@@ -2366,13 +2329,13 @@ ALTER TABLE `shop_staff`
   ADD KEY `UserID` (`UserID`);
 
 --
--- Indexes for table `user`
+-- 表的索引 `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`UserID`);
 
 --
--- Indexes for table `warehouse`
+-- 表的索引 `warehouse`
 --
 ALTER TABLE `warehouse`
   ADD PRIMARY KEY (`ID`),
@@ -2380,14 +2343,14 @@ ALTER TABLE `warehouse`
   ADD KEY `SourceCity_fk` (`SourceCity`);
 
 --
--- Indexes for table `warehouse_fruit_stock`
+-- 表的索引 `warehouse_fruit_stock`
 --
 ALTER TABLE `warehouse_fruit_stock`
   ADD PRIMARY KEY (`WarehouseID`,`FruitID`),
   ADD KEY `FruitID` (`FruitID`);
 
 --
--- Indexes for table `warehouse_staff`
+-- 表的索引 `warehouse_staff`
 --
 ALTER TABLE `warehouse_staff`
   ADD PRIMARY KEY (`ID`),
@@ -2395,29 +2358,29 @@ ALTER TABLE `warehouse_staff`
   ADD KEY `UserID` (`UserID`);
 
 --
--- Constraints for dumped tables
+-- 限制导出的表
 --
 
 --
--- Constraints for table `fruit`
+-- 限制表 `fruit`
 --
 ALTER TABLE `fruit`
   ADD CONSTRAINT `FruitCityID_fk` FOREIGN KEY (`FruitCityID`) REFERENCES `fruit_city` (`ID`);
 
 --
--- Constraints for table `fruit_city`
+-- 限制表 `fruit_city`
 --
 ALTER TABLE `fruit_city`
   ADD CONSTRAINT `country_region_fk` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
 
 --
--- Constraints for table `shop`
+-- 限制表 `shop`
 --
 ALTER TABLE `shop`
   ADD CONSTRAINT `city_fk` FOREIGN KEY (`City`) REFERENCES `shop_city` (`ID`);
 
 --
--- Constraints for table `shop_borrow_request`
+-- 限制表 `shop_borrow_request`
 --
 ALTER TABLE `shop_borrow_request`
   ADD CONSTRAINT `by_fk` FOREIGN KEY (`RequestBy`) REFERENCES `shop` (`ID`),
@@ -2425,61 +2388,61 @@ ALTER TABLE `shop_borrow_request`
   ADD CONSTRAINT `to_fk` FOREIGN KEY (`RequestTo`) REFERENCES `shop` (`ID`);
 
 --
--- Constraints for table `shop_borrow_request_item`
+-- 限制表 `shop_borrow_request_item`
 --
 ALTER TABLE `shop_borrow_request_item`
   ADD CONSTRAINT `fruit_fk` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`),
   ADD CONSTRAINT `id_fk` FOREIGN KEY (`BorrowRequestID`) REFERENCES `shop_borrow_request` (`ID`);
 
 --
--- Constraints for table `shop_city`
+-- 限制表 `shop_city`
 --
 ALTER TABLE `shop_city`
   ADD CONSTRAINT `FK_shop_city_country_region` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
 
 --
--- Constraints for table `shop_fruit_order`
+-- 限制表 `shop_fruit_order`
 --
 ALTER TABLE `shop_fruit_order`
   ADD CONSTRAINT `ShopID_fk2` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`);
 
 --
--- Constraints for table `shop_fruit_order_item`
+-- 限制表 `shop_fruit_order_item`
 --
 ALTER TABLE `shop_fruit_order_item`
   ADD CONSTRAINT `FruitID_fk2` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`),
   ADD CONSTRAINT `OrderID_fk2` FOREIGN KEY (`OrderID`) REFERENCES `shop_fruit_order` (`ID`);
 
 --
--- Constraints for table `shop_fruit_stock`
+-- 限制表 `shop_fruit_stock`
 --
 ALTER TABLE `shop_fruit_stock`
   ADD CONSTRAINT `FruitID_fk` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`),
   ADD CONSTRAINT `ShopID_fk` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`);
 
 --
--- Constraints for table `shop_staff`
+-- 限制表 `shop_staff`
 --
 ALTER TABLE `shop_staff`
   ADD CONSTRAINT `shop_staff_ibfk_1` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`),
   ADD CONSTRAINT `shop_staff_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
 
 --
--- Constraints for table `warehouse`
+-- 限制表 `warehouse`
 --
 ALTER TABLE `warehouse`
   ADD CONSTRAINT `SourceCity_fk` FOREIGN KEY (`SourceCity`) REFERENCES `fruit_city` (`ID`),
   ADD CONSTRAINT `c_fk` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
 
 --
--- Constraints for table `warehouse_fruit_stock`
+-- 限制表 `warehouse_fruit_stock`
 --
 ALTER TABLE `warehouse_fruit_stock`
   ADD CONSTRAINT `warehouse_fruit_stock_ibfk_1` FOREIGN KEY (`WarehouseID`) REFERENCES `warehouse` (`ID`),
   ADD CONSTRAINT `warehouse_fruit_stock_ibfk_2` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`);
 
 --
--- Constraints for table `warehouse_staff`
+-- 限制表 `warehouse_staff`
 --
 ALTER TABLE `warehouse_staff`
   ADD CONSTRAINT `warehouse_staff_ibfk_1` FOREIGN KEY (`WarehouseID`) REFERENCES `warehouse` (`ID`),
