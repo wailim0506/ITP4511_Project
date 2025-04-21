@@ -35,8 +35,14 @@
         <%
             String userType = (String) session.getAttribute("userType");
             UserBean ub = (UserBean) session.getAttribute("userInfo");
+            
+            String msg = (String) request.getAttribute("msg");
+            String msgCollapse = (msg!=null)?"":"collapse";
+            String errorMsg = (String) request.getAttribute("errorMsg");
+            String errorMsgCollapse = (errorMsg!=null)?"":"collapse";
         %>
         <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
+        
         <div class="profile-container">
             <div class="profile-container-info">
                 <h1 class="profile-container-title">Profile</h1>
@@ -53,26 +59,32 @@
                         <br/>
                         <form action="/ITP4511_Project/ProfileController" method="GET">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingInput" required>
+                                <input type="password" class="form-control" id="floatingInput" name="oPass" required>
                                 <label for="floatingInput">Old Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingInput" required>
+                                <input type="password" class="form-control" id="floatingInput" name="nPass" required>
                                 <label for="floatingInput">New Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingInput" required>
+                                <input type="password" class="form-control" id="floatingInput" name="cPass" required>
                                 <label for="floatingInput">Confirm Password</label>
                             </div>
                             <input type="hidden" name="action" value="changePassword">
                             <button class="btn btn-primary btn-sm" type="submit">Change Password</button>
                         </form>
                     </div>
-
                     <div class="profile-container-info-box">
                         <img src="${pageContext.request.contextPath}/img/Staff.png" class="profile-img">
                         <profile:profile userBean="<%=ub%>" />
                     </div>
+                </div>
+                <div class="alert alert-success <%=msgCollapse%>" role="alert">
+                    <%=msg%>
+                </div>
+                
+                <div class="alert alert-danger <%=errorMsgCollapse%>" role="alert">
+                    <%=errorMsg%>
                 </div>
             </div>
         </div>
