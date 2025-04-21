@@ -103,18 +103,6 @@
                     </div>
                 </div>
 
-                <!-- Profile -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">account_circle</i>
-                            <h5 class="card-title">Profile</h5>
-                            <p class="card-text text-muted">View and update profile information</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Staffing -->
                 <div class="col-lg-4 col-md-6 mx-auto">
                     <div class="card dashboard-card border-0 shadow-sm">
@@ -123,6 +111,18 @@
                             <h5 class="card-title">Staffing</h5>
                             <p class="card-text text-muted">View users associated with the system</p>
                             <a href="#" class="btn btn-outline-primary mt-2">View Users</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profile -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">account_circle</i>
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text text-muted">View and update profile information</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
                         </div>
                     </div>
                 </div>
