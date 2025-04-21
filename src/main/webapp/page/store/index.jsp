@@ -156,7 +156,7 @@
                             <i class="material-icons card-icon mb-3">storefront</i>
                             <h5 class="card-title">Shop List</h5>
                             <p class="card-text text-muted">View all shops in the company network</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View Shops</a>
+                            <a href="/ITP4511_Project/shopList" class="btn btn-outline-primary mt-2">View Shops</a>
                         </div>
                     </div>
                 </div>

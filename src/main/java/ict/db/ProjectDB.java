@@ -861,9 +861,56 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return shopList;
+    }
 
+    public ArrayList<ShopBean> getAllShop() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<ShopBean> shopList = new ArrayList<ShopBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID, x.Address, x.PhoneNumber, y.City,z.name FROM SHOP x, shop_city y,country_region z where x.City = y.ID and y.CountryRegionID = z.ID order by z.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ShopBean sb = new ShopBean();
+                sb.setAddress(rs.getString("Address"));
+                sb.setPhoneNumber(rs.getString("PhoneNumber"));
+                sb.setCity(rs.getString("City"));
+                sb.setID(rs.getString("ID"));
+                sb.setCountryRegion(rs.getString("name"));
+                shopList.add(sb);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return shopList;
     }
     // for shop
+
+    // for shop_city
+    public ArrayList<String> getAllShopCity() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> cityList = new ArrayList<String>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT City FROM shop_city";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                cityList.add(rs.getString("City"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return cityList;
+    }
+    // for shop_city
 
     // shop_fruit_stock
     public ArrayList<ShopFruitStockBean> getShopFruitStock(String shopId) {
@@ -1437,32 +1484,18 @@ public class ProjectDB {
     }
     // for shop_borrow_request_item
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public boolean updateStaffName(String staffName, String UserID, String type) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            if(type.equals("warehouse")){
+            if (type.equals("warehouse")) {
                 String preQueryStatement = "UPDATE warehouse_staff SET staffname = ? WHERE UserID = ?";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, staffName);
                 pStmnt.setString(2, UserID);
-            }else if(type.equals("shop")){
+            } else if (type.equals("shop")) {
                 String preQueryStatement = "UPDATE shop_staff SET staffname = ? WHERE UserID = ?";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, staffName);
@@ -1479,36 +1512,37 @@ public class ProjectDB {
         }
         return isSuccess;
     }
-    
-    
-    // ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse -------
+
+    // ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse
+    // ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse
+    // ------- Warehouse ------- Warehouse -------
     public List<OrderBean> getStatistics(String v1, int warehouseType) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         List<OrderBean> orderList = new ArrayList<>();
         try {
             cnnct = getConnection();
-            if(warehouseType == 0){
+            if (warehouseType == 0) {
                 String preQueryStatement = "SELECT DATE(sfo.OrderDate) AS OrderDate, COUNT(*) AS total\n" +
-                                                "FROM shop_fruit_order sfo\n" +
-                                                "JOIN shop s ON sfo.ShopID = s.ID\n" +
-                                                "JOIN shop_city sc ON s.City = sc.ID\n" +
-                                                "JOIN country_region crid ON crid.ID = sc.CountryRegionID\n" +
-                                                "WHERE sfo.OrderDate >= NOW() - INTERVAL 7 DAY\n" +
-                                                "AND crid.name = ?\n" +
-                                                "GROUP BY DATE(sfo.OrderDate)\n" +
-                                                "ORDER BY DATE(sfo.OrderDate);";
+                        "FROM shop_fruit_order sfo\n" +
+                        "JOIN shop s ON sfo.ShopID = s.ID\n" +
+                        "JOIN shop_city sc ON s.City = sc.ID\n" +
+                        "JOIN country_region crid ON crid.ID = sc.CountryRegionID\n" +
+                        "WHERE sfo.OrderDate >= NOW() - INTERVAL 7 DAY\n" +
+                        "AND crid.name = ?\n" +
+                        "GROUP BY DATE(sfo.OrderDate)\n" +
+                        "ORDER BY DATE(sfo.OrderDate);";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, v1);
-            }else{
+            } else {
                 String preQueryStatement = "SELECT DATE(sfo.OrderDate) AS OrderDate, COUNT(*) AS total\n" +
-                                                "FROM shop_fruit_order sfo\n" +
-                                                "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
-                                                "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
-                                                "WHERE sfo.OrderDate >= NOW() - INTERVAL 7 DAY\n" +
-                                                "AND f.FruitCityID = ?\n" +
-                                                "GROUP BY DATE(sfo.OrderDate)\n" +
-                                                "ORDER BY DATE(sfo.OrderDate);";
+                        "FROM shop_fruit_order sfo\n" +
+                        "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
+                        "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                        "WHERE sfo.OrderDate >= NOW() - INTERVAL 7 DAY\n" +
+                        "AND f.FruitCityID = ?\n" +
+                        "GROUP BY DATE(sfo.OrderDate)\n" +
+                        "ORDER BY DATE(sfo.OrderDate);";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, v1);
             }

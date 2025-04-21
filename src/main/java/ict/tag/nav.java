@@ -55,7 +55,7 @@ public class nav extends SimpleTagSupport {
         out.println(
                 "<nav class=\"navbar navbar-expand-lg sticky-top shadow-sm\" style=\"border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);\">"
                         + "    <div class=\"container\">"
-                        + "        <a class=\"navbar-brand d-flex align-items-center\" href=\"#\">"
+                        + "        <a class=\"navbar-brand d-flex align-items-center\" href=\"/ITP4511_Project/page/store/index.jsp\">"
                         + "            <i class=\"material-icons text-primary me-2\">bakery_dining</i>"
                         + "            <span class=\"fw-bold\">ACER</span>"
                         + "        </a>"

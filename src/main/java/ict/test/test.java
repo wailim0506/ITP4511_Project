@@ -321,21 +321,42 @@ public class test {
                 // String d = db.getPendingStatistics("S024");
                 // System.out.println("Pending Statistics: " + d);
                 // test getBorrowByStatusForHandleRequest()
-                ArrayList<BorrowBean> borrowList = db.getBorrowByStatusForHandleRequest("S023", "Pending");
-                System.out.println("Borrow List for Shop ID: S023");
-                System.out.println("Total borrow found: " + borrowList.size());
-                for (BorrowBean borrow : borrowList) {
-                        System.out.println("Borrow ID: " + borrow.getId());
-                        System.out.println("Shop ID: " + borrow.getRequestByShopId());
-                        System.out.println("Borrow Date: " + borrow.getRequestDate());
-                        System.out.println("Borrow From: " + borrow.getRequestToShopAddress());
-                        if (borrow.getNotes() == null || borrow.getNotes().isEmpty()) {
-                                System.out.println("Notes: No notes provided.");
-                        } else {
-                                System.out.println("Notes: " + borrow.getNotes());
-                        }
-                        System.out.println("Status: " + borrow.getStatus());
-                        System.out.println("---------------------");
+                // ArrayList<BorrowBean> borrowList =
+                // db.getBorrowByStatusForHandleRequest("S023", "Pending");
+                // System.out.println("Borrow List for Shop ID: S023");
+                // System.out.println("Total borrow found: " + borrowList.size());
+                // for (BorrowBean borrow : borrowList) {
+                // System.out.println("Borrow ID: " + borrow.getId());
+                // System.out.println("Shop ID: " + borrow.getRequestByShopId());
+                // System.out.println("Borrow Date: " + borrow.getRequestDate());
+                // System.out.println("Borrow From: " + borrow.getRequestToShopAddress());
+                // if (borrow.getNotes() == null || borrow.getNotes().isEmpty()) {
+                // System.out.println("Notes: No notes provided.");
+                // } else {
+                // System.out.println("Notes: " + borrow.getNotes());
+                // }
+                // System.out.println("Status: " + borrow.getStatus());
+                // System.out.println("---------------------");
+                // }
+                // test getAllShop()
+                // ArrayList<ShopBean> shopList = db.getAllShop();
+                // System.out.println("Shop List:");
+                // System.out.println("Total shops found: " + shopList.size());
+                // for (ShopBean shop : shopList) {
+                // System.out.println("Shop ID: " + shop.getID());
+                // System.out.println("Address: " + shop.getAddress());
+                // System.out.println("City: " + shop.getCity());
+                // System.out.println("Phone Number: " + shop.getPhoneNumber());
+                // System.out.println("Country Region: " + shop.getCountryRegion());
+                // System.out.println("---------------------");
+                // }
+
+                // test getAllShopCity()
+                ArrayList<String> shopCityList = db.getAllShopCity();
+                System.out.println("Shop City List:");
+                System.out.println("Total cities found: " + shopCityList.size());
+                for (String city : shopCityList) {
+                        System.out.println("City: " + city);
                 }
         }
 }
