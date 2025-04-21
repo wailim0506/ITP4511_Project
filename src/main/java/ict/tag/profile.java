@@ -56,14 +56,14 @@ public class profile extends SimpleTagSupport{
     private void warehouse() throws IOException {
         out.println("<p><b>Account Type:</b> Warehouse (" + type + ")</p>\n" +
 "                        <p><b>User Name:</b> " + userBean.getUserName() + "</p>\n" +
-"                        <p><b>Phone:</b> " + userBean.getPhone() + "</p>\n" +
+"                        <p><b>Warehouse Phone:</b> " + userBean.getPhone() + "</p>\n" +
 "                        <p><b>" + loc + "</p>" );
     }
     
     private void shop() throws IOException {
         out.println("<p><b>Account Type:</b> Shop</p>\n" +
 "                        <p><b>User Name:</b> " + userBean.getUserName() + "</p>\n" +
-"                        <p><b>Phone:</b> " + userBean.getPhone() + "</p>\n" +
+"                        <p><b>Shop Phone:</b> " + userBean.getPhone() + "</p>\n" +
 "                        <p><b>Address:</b> " + userBean.getShopAddress() + "</p>\n" +
 "                        <p><b>City:</b> " + userBean.getShopCity() + ", " + userBean.getShopCountry() + "</p>");
     }
