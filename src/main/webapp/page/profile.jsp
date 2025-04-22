@@ -60,15 +60,15 @@
                         <br/>
                         <form action="/ITP4511_Project/ProfileController" method="GET" onsubmit="return confirmPasswordChange();">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingInput" name="oPass" required>
+                                <input type="password" class="form-control" id="floatingInput" name="oPass" minlength="8" maxlength="20" required>
                                 <label for="floatingInput">Old Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingInput" name="nPass" required>
+                                <input type="password" class="form-control" id="floatingInput" name="nPass" minlength="8" maxlength="20" required>
                                 <label for="floatingInput">New Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingInput" name="cPass" required>
+                                <input type="password" class="form-control" id="floatingInput" name="cPass" minlength="8" maxlength="20" required>
                                 <label for="floatingInput">Confirm Password</label>
                             </div>
                             <input type="hidden" name="action" value="changePassword">
