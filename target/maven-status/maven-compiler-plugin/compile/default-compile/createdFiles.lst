@@ -20,6 +20,7 @@ ict\bean\ShopBean.class
 ict\test\passwordTestingTool.class
 ict\servlet\warehouse\inventoryController.class
 ict\bean\FruitsBean.class
+ict\bean\StockBean.class
 ict\test\test.class
 ict\util\PasswordCrypto$CryptoResult.class
 ict\tag\footer.class
