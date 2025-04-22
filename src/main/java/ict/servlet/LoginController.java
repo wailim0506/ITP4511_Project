@@ -95,7 +95,7 @@ public class LoginController extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
             targetURL = "index.jsp";
-            request.setAttribute("errorMsg", "System error: " + ex.getMessage());
+            request.setAttribute("errorMsg", "Invalid username or password");
         }
 
         RequestDispatcher rd;

@@ -354,7 +354,7 @@ public class ProjectDB {
                     + "LEFT JOIN warehouse f ON c.WarehouseID = f.ID\n"
                     + "LEFT JOIN country_region cr_warehouse ON f.CountryRegionID = cr_warehouse.ID\n"
                     + "LEFT JOIN fruit_city fc ON f.SourceCity = fc.ID\n"
-                    + "WHERE a.UserName = ? ORDER BY a.UserID;";
+                    + "WHERE a.UserName = ? AND a.Status = 'enable' ORDER BY a.UserID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, username);
             pStmnt.executeQuery();
@@ -1495,7 +1495,10 @@ public class ProjectDB {
         try {
             cnnct = getConnection();
             if(type.equals("warehouse")){
-                String preQueryStatement = "SELECT UserID, StaffName, Role, WarehouseID FROM `warehouse_staff`;";
+                String preQueryStatement = "SELECT ws.UserID, ws.StaffName, ws.Role, ws.WarehouseID \n" +
+                                                "FROM warehouse_staff ws\n" +
+                                                "JOIN user u ON ws.UserID = u.UserID \n" +
+                                                "WHERE u.Status = 'enable';";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 ResultSet rs = pStmnt.executeQuery();
                 while (rs.next()) {
@@ -1507,7 +1510,10 @@ public class ProjectDB {
                     userList.add(ub);
             }
             }else if(type.equals("shop")){
-                String preQueryStatement = "SELECT UserID, StaffName, Role, ShopID FROM `shop_staff`;";
+                String preQueryStatement = "SELECT ss.UserID, ss.StaffName, ss.Role, ss.ShopID \n" +
+                                                "FROM shop_staff ss\n" +
+                                                "JOIN user u ON ss.UserID = u.UserID \n" +
+                                                "WHERE u.Status = 'enable';";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 ResultSet rs = pStmnt.executeQuery();
                 while (rs.next()) {
@@ -1519,11 +1525,15 @@ public class ProjectDB {
                     userList.add(ub);
                 }
             }else if(type.equals("manager")){
-                String preQueryStatement = "SELECT UserID, StaffName, Role, WarehouseID AS PlaceID\n" +
-                                                "FROM warehouse_staff\n" +
+                String preQueryStatement = "SELECT ws.UserID, ws.StaffName, ws.Role, ws.WarehouseID AS PlaceID\n" +
+                                                "FROM warehouse_staff ws\n" +
+                                                "JOIN user u ON ws.UserID = u.UserID \n" +
+                                                "WHERE u.Status = 'enable'\n" +
                                                 "UNION ALL\n" +
-                                                "SELECT UserID, StaffName, Role, ShopID AS PlaceID\n" +
-                                                "FROM shop_staff;";
+                                                "SELECT ss.UserID, ss.StaffName, ss.Role, ss.ShopID AS PlaceID\n" +
+                                                "FROM shop_staff ss\n" +
+                                                "JOIN user u ON ss.UserID = u.UserID \n" +
+                                                "WHERE u.Status = 'enable';";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 ResultSet rs = pStmnt.executeQuery();
                 while (rs.next()) {

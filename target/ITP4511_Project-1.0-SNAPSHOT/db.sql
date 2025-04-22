@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： 127.0.0.1
--- 生成日期： 2025-04-21 19:28:41
+-- 生成日期： 2025-04-22 19:47:27
 -- 服务器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -895,7 +895,7 @@ INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
 ('S022', 'F006', 145),
 ('S022', 'F007', 154),
 ('S022', 'F008', 156),
-('S023', 'F001', 99),
+('S023', 'F001', 104),
 ('S023', 'F002', 5),
 ('S023', 'F003', 127),
 ('S023', 'F004', 19),
@@ -2128,25 +2128,26 @@ INSERT INTO `shop_staff` (`ID`, `StaffName`, `ShopID`, `UserID`, `Role`) VALUES
 CREATE TABLE `user` (
   `UserID` char(5) NOT NULL,
   `UserName` varchar(50) NOT NULL,
-  `Password` varchar(100) NOT NULL
+  `Password` varchar(100) NOT NULL,
+  `Status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- 转存表中的数据 `user`
 --
 
-INSERT INTO `user` (`UserID`, `UserName`, `Password`) VALUES
-('U001', 'User 1', '7VMRVdnaqD2rjKgdc4PSkA=='),
-('U002', 'User 2', 'Aw7uB0qKuHrV1v5jqHtPhw=='),
-('U003', 'User 3', 'CpWhvOs//62LN7EVZk60ew=='),
-('U004', 'User 4', 'XZw5jE83h5G9qaALwfg7qg=='),
-('U005', 'User 5', 'Kxe2hjTmkGQdlyRJCpToYw=='),
-('U006', 'User 6', 'nnaikMZ4ngdpnSKBrJq+Zg=='),
-('U007', 'User 7', '2b39YxIR0RaYpEWg53Jeiw=='),
-('U008', 'User 8', 'k1bnoNLP5mlRh66Oo5VAnA=='),
-('U009', 'User 9', 'RebUbDA5nlNAPwGQo/UDXA=='),
-('U010', 'User 10', 'spOSY/FVyHoezdUEiQcpfA=='),
-('U011', 'User 11', 'STCVmUCH5jT5TpaD+5vUHA==');
+INSERT INTO `user` (`UserID`, `UserName`, `Password`, `Status`) VALUES
+('U001', 'User 1', '7VMRVdnaqD2rjKgdc4PSkA==', 'enable'),
+('U002', 'User 2', 'Aw7uB0qKuHrV1v5jqHtPhw==', 'enable'),
+('U003', 'User 3', 'CpWhvOs//62LN7EVZk60ew==', 'enable'),
+('U004', 'User 4', 'XZw5jE83h5G9qaALwfg7qg==', 'enable'),
+('U005', 'User 5', 'Kxe2hjTmkGQdlyRJCpToYw==', 'enable'),
+('U006', 'User 6', 'nnaikMZ4ngdpnSKBrJq+Zg==', 'enable'),
+('U007', 'User 7', '2b39YxIR0RaYpEWg53Jeiw==', 'enable'),
+('U008', 'User 8', 'k1bnoNLP5mlRh66Oo5VAnA==', 'enable'),
+('U009', 'User 9', 'RebUbDA5nlNAPwGQo/UDXA==', 'enable'),
+('U010', 'User 10', 'spOSY/FVyHoezdUEiQcpfA==', 'enable'),
+('U011', 'User 11', 'STCVmUCH5jT5TpaD+5vUHA==', 'enable');
 
 -- --------------------------------------------------------
 
