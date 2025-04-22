@@ -52,7 +52,7 @@
                         <form action="/ITP4511_Project/ProfileController" method="GET">
                             <div class="form-floating mb-3">
                                 <input type="text" max="50" class="form-control" id="floatingInput" value="<%=ub.getStaffName()%>" name="staffName" required>
-                                <label for="floatingInput">Staff Name</label>
+                                <label for="floatingInput">Username</label>
                             </div>
                             <input type="hidden" name="action" value="updateStaffName">
                             <button class="btn btn-primary btn-sm" type="submit">Change Staff Name</button>
