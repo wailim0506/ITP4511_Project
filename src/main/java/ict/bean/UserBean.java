@@ -22,6 +22,8 @@ public class UserBean {
     private String warehouseSourceCity;
     private String warehouseSourceCityFullName;
     private String phone;
+    private String role;
+    private String placeId;
 
     public String getUserId() {
         return userId;
@@ -74,6 +76,14 @@ public class UserBean {
     public String getPhone(){
         return this.phone;
     }
+    
+    public String getRole(){
+        return this.role;
+    }
+    
+    public String getPlaceId(){
+        return this.placeId;
+    }
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -125,5 +135,13 @@ public class UserBean {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
 }

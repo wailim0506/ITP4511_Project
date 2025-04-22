@@ -1484,6 +1484,68 @@ public class ProjectDB {
     }
     // for shop_borrow_request_item
 
+    
+    
+    // ------- UserList ------- UserList ------- UserList ------- UserList
+    //Get user list by type
+    public ArrayList<UserBean> getAllUser(String type) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<UserBean> userList = new ArrayList<UserBean>();
+        try {
+            cnnct = getConnection();
+            if(type.equals("warehouse")){
+                String preQueryStatement = "SELECT UserID, StaffName, Role, WarehouseID FROM `warehouse_staff`;";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                ResultSet rs = pStmnt.executeQuery();
+                while (rs.next()) {
+                    UserBean ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setStaffName(rs.getString("StaffName"));
+                    ub.setRole(rs.getString("Role"));
+                    ub.setPlaceId(rs.getString("WarehouseID"));
+                    userList.add(ub);
+            }
+            }else if(type.equals("shop")){
+                String preQueryStatement = "SELECT UserID, StaffName, Role, ShopID FROM `shop_staff`;";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                ResultSet rs = pStmnt.executeQuery();
+                while (rs.next()) {
+                    UserBean ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setStaffName(rs.getString("StaffName"));
+                    ub.setRole(rs.getString("Role"));
+                    ub.setPlaceId(rs.getString("ShopID"));
+                    userList.add(ub);
+                }
+            }else if(type.equals("manager")){
+                String preQueryStatement = "SELECT UserID, StaffName, Role, WarehouseID AS PlaceID\n" +
+                                                "FROM warehouse_staff\n" +
+                                                "UNION ALL\n" +
+                                                "SELECT UserID, StaffName, Role, ShopID AS PlaceID\n" +
+                                                "FROM shop_staff;";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                ResultSet rs = pStmnt.executeQuery();
+                while (rs.next()) {
+                    UserBean ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setStaffName(rs.getString("StaffName"));
+                    ub.setRole(rs.getString("Role"));
+                    ub.setPlaceId(rs.getString("PlaceID"));
+                    userList.add(ub);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return userList;
+    }
+    
+    
+    
+    // ------- Profile ------- Profile ------- Profile ------- Profile
     //For update password
     public boolean updatePassword(String UserID, String encrypedPass) {
         Connection cnnct = null;
@@ -1541,6 +1603,8 @@ public class ProjectDB {
         return isSuccess;
     }
 
+    
+    
     // ------- Warehouse ------- Warehouse ------- Warehouse ------- Warehouse
     public List<OrderBean> getStatistics(String v1, int warehouseType) {
         Connection cnnct = null;
