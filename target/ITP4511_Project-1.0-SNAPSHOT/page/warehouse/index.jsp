@@ -75,7 +75,7 @@
                             <i class="material-icons card-icon mb-3">inventory_2</i>
                             <h5 class="card-title">Inventory</h5>
                             <p class="card-text text-muted">View and edit inventory</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Inventory management</a>
+                            <a href="/ITP4511_Project/inventory?action=list" class="btn btn-outline-primary mt-2">Inventory management</a>
                         </div>
                     </div>
                 </div>

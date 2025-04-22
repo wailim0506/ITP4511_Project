@@ -128,7 +128,7 @@ public class footer extends SimpleTagSupport {
                         + "                    <span>Dashboard</span>"
                         + "                </div>"
                         + "            </a>"
-                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/inventory?action=list\">"
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">inventory_2</i>"
                         + "                    <span>Inventory</span>"
