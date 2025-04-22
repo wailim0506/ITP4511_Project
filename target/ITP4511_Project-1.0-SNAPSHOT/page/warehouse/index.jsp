@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="ict.bean.*" %>
+<%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -103,14 +104,26 @@
                     </div>
                 </div>
 
-                <!-- Staffing -->
-                <div class="col-lg-4 col-md-6 mx-auto">
+                <!-- User List -->
+                <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">manage_accounts</i>
-                            <h5 class="card-title">Staffing</h5>
+                            <i class="material-icons card-icon mb-3">people</i>
+                            <h5 class="card-title">User List</h5>
                             <p class="card-text text-muted">View users associated with the system</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View Users</a>
+                            <a href="/ITP4511_Project/userList" class="btn btn-outline-primary mt-2">View Users</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Warehouse List -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">home</i>
+                            <h5 class="card-title">Warehouse List</h5>
+                            <p class="card-text text-muted">View all warehouses in the company network</p>
+                            <a href="/ITP4511_Project/shopList" class="btn btn-outline-primary mt-2">View warehouses</a>
                         </div>
                     </div>
                 </div>
@@ -127,6 +140,26 @@
                     </div>
                 </div>
 
+                <!-- Staffing -->
+                <div class="col-lg-4 col-md-6 mx-auto">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">manage_accounts</i>
+                            <h5 class="card-title">Staffing</h5>
+                            <p class="card-text text-muted">View users associated with the system</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">View Users</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Empty -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">        
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Empty -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
