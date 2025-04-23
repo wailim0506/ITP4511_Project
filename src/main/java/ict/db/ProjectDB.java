@@ -1681,10 +1681,11 @@ public class ProjectDB {
                 String preQueryStatement = "SELECT sfo.ID, sfo.ShopId, sfo.OrderDate, sfo.Status, COUNT(sfoi.FruitID) AS ItemCount\n" +
                                                 "FROM shop_fruit_order sfo\n" +
                                                 "JOIN shop s ON s.ID = sfo.ShopId\n" +
+                                                "JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID\n" +
                                                 "JOIN shop_city sc ON s.City = sc.ID\n" +
                                                 "JOIN warehouse w ON sc.CountryRegionID = w.CountryRegionID\n" +
-                                                "WHERE w.ID = ?\n"+
-                                                "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
+                                                "WHERE w.ID = ?\n" +
+                                                "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfo.Status;";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, warehouseId);
                 ResultSet rs = pStmnt.executeQuery();
@@ -1738,10 +1739,11 @@ public class ProjectDB {
                 String preQueryStatement = "SELECT sfo.ID, sfo.ShopId, sfo.OrderDate, sfo.Status, COUNT(sfoi.FruitID) AS ItemCount\n" +
                                                 "FROM shop_fruit_order sfo\n" +
                                                 "JOIN shop s ON s.ID = sfo.ShopId\n" +
+                                                "JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID\n" +
                                                 "JOIN shop_city sc ON s.City = sc.ID\n" +
                                                 "JOIN warehouse w ON sc.CountryRegionID = w.CountryRegionID\n" +
-                                                "WHERE w.ID = ? AND sfo.Status = 'Processing'\n"+
-                                                "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
+                                                "WHERE w.ID = ? AND sfo.Status != 'Pending'\n" +
+                                                "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfo.Status;";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, warehouseId);
                 ResultSet rs = pStmnt.executeQuery();
@@ -1761,7 +1763,7 @@ public class ProjectDB {
                                                 "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
                                                 "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
                                                 "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
-                                                "WHERE w.ID = ?  AND sfoi.Status = 'Processing'\n"+
+                                                "WHERE w.ID = ? AND sfoi.Status != 'Pending'\n"+
                                                 "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, warehouseId);

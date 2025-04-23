@@ -28,6 +28,7 @@
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
+        <script src="${pageContext.request.contextPath}/js/warehouse/filter.js" defer></script>
         <link href="${pageContext.request.contextPath}/css/warehouse/delivery.css" rel="stylesheet">
     </head>
     <body>
@@ -44,19 +45,55 @@
                     <h3>Total Order</h3>
                     <p><jsp:getProperty name="StatusBean" property="total"/></p>
                 </div>
-                <div class="status-data">
+                <div class="status-data statusBule">
                     <h3>Processing</h3>
                     <p><jsp:getProperty name="StatusBean" property="processing"/></p>
                 </div>
-                <div class="status-data">
+                <div class="status-data statusYellow">
                     <h3>Delivered</h3>
                     <p><jsp:getProperty name="StatusBean" property="delivered"/></p>
                 </div>
-                <div class="status-data">
+                <div class="status-data statusGreen">
                     <h3>Finished</h3>
                     <p><jsp:getProperty name="StatusBean" property="finished"/></p>
                 </div>
             </div>     
+                
+             <!-- Order filter -->
+            <div class="filter">
+                <div class="filter-title">
+                    <i class="material-icons align-middle me-2">filter_list</i><h4>Filter Orders</h4>
+                </div>
+                <div class="filter-condition">
+                    <div class="filterbox-search">
+                        <i class="material-icons text-muted iconfont">search</i>
+                        <input type="text" id="orderIdFilter" onkeyup="filterTable()" placeholder="Search by orderID">
+                    </div>
+                    <div class="filterbox">
+                        <i class="material-icons text-muted iconfont">filter_alt</i>
+                        <select id="statusFilter" onchange="filterTable()">
+                            <option value="">All Status</option>
+                            <option value="Pending">Processing</option>
+                            <option value="Processing">Delivered</option>
+                            <option value="Finished">Finished</option>
+                        </select>
+                    </div>
+                    <div class="filterbox">
+                        <i class="material-icons text-muted iconfont">date_range</i>
+                        <select id="dateFilter" onchange="filterTable()">
+                            <option value="">All</option>
+                            <option value="currentMonth">Current Month</option>
+                            <option value="last90Days">Last 90 Days</option>
+                            <option value="yearToDate">Year to Date</option>
+                        </select>
+                    </div>
+                    <div class="filterbox-reset">
+                        <button class="btn btn-outline-secondary w-100" onclick="resetFilters()" >
+                                    <i class="material-icons align-middle small">refresh</i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
         
         <!-- Order list and order detail -->
             <div class="order">

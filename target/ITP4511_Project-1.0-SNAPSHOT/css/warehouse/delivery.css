@@ -3,11 +3,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
-    Created on : 2025年4月23日, 下午3:45:02
+    Created on : 2025年4月23日, 下午3:45:25
     Author     : HwH
 */
 body {
-  font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 .status {
@@ -26,6 +26,23 @@ body {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
+.status-data:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.statusYellow{
+    background-color: rgb(250, 250, 51);
+}
+
+.statusGreen {
+    background-color: rgb(159, 226, 191);
+}
+
+.statusBule {
+    background-color: rgb(240, 255, 255);
+}
+
 .status-data h3 {
     font-size: 23px;
     color: gray;
@@ -36,10 +53,64 @@ body {
     font-weight: bold;
 }
 
+.filter {
+    display: flex;
+    width: 100%;
+    height: 120px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    margin-top: 25px;
+    border-radius: 5px;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.filter-condition {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    justify-content: center;
+}
+
+.filter-title {
+    display: flex;
+    flex-direction: row;
+}
+
+.filterbox-search {
+    display: flex;
+    align-items: center;
+    flex: 1 1 40%;
+}
+
+.filterbox-search input {
+    width: 80%;
+    height: 38px;
+}
+
+.filterbox {
+    display: flex;
+    align-items: center;
+    flex: 1 1 30%;
+}
+
+.filterbox select {
+    width: 80%;
+    height: 38px;
+}
+
+.filterbox-reset{
+    flex: 1 1 15%;
+}
+
+.iconfont{
+    font-size: 25px;
+    margin-right: 10px;
+}
+
 .order {
     display: flex;
     flex-direction: row;
-    padding-top: 2rem;
+    padding-top: 1rem;
     gap: 20px;
     min-height: 700px;
 }
@@ -47,6 +118,8 @@ body {
 .order-list {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     flex: 1 1 65%;
+    padding-bottom:20px;
+    border-radius: 5px;
 }
 
 .order-list-title {
@@ -64,11 +137,20 @@ body {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     flex: 1 1 35%;
     max-height: 750px;
+    border-radius: 5px;
 }
 
 .order-table{
     width: 95%;
     margin-left: 20px;
+}
+
+.order-table thead tr th {
+    font-size: 18px;
+}
+
+.order-table thead tr {
+    border-bottom: 1px solid gray;
 }
 
 .order-table tbody tr:hover {
