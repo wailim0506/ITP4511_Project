@@ -8,7 +8,7 @@ package ict.bean;
  *
  * @author HwH
  */
-public class StockBean {
+public class StatusBean {
     String totalFruits, lowStock, outOfStock;
     
     public void setTotalFruits(String totalFruits) {
