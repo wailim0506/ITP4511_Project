@@ -4,6 +4,7 @@
  */
 package ict.bean;
 
+import ict.bean.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ public class OrderBean implements Serializable {
     private String id, shopId, orderDate, deliveryDate, status, notes;
     private String fruidId, fruitName, city, countryRegion, imgName, type, unit;
     private int qty;
+    private ArrayList<FruitsBean> fb;
 
     public OrderBean() {
     }
@@ -126,8 +128,16 @@ public class OrderBean implements Serializable {
     public String getUnit() {
         return unit;
     }
+    
+    public ArrayList<FruitsBean> getFruitsBean(){
+        return fb;
+    }
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+    
+    public void setFruitsBean(ArrayList<FruitsBean> fb){
+        this.fb = fb;
     }
 }

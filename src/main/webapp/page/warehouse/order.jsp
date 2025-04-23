@@ -134,7 +134,11 @@
                                 <td><%= order.getShopId() %></td>
                                 <td><%= order.getUnit() %></td>
                                 <td><%= order.getStatus() %></td>
-                                <td><button type="button" class="btn btn-outline-info"><i class="material-icons small">visibility</i></button></td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-info" 
+                                            onclick="window.location.href='${pageContext.request.contextPath}/Order?action=view&orderID=<%=order.getId()%>'">
+                                    <i class="material-icons small">visibility</i></button>
+                                </td>
                             </tr>
                             <%
                                     }
@@ -146,7 +150,14 @@
 
                 <!-- Order detail -->
                 <div class="order-detail">
-
+                    <div class="order-list-title">
+                        <i class="material-icons card-icon">info</i>
+                        <h4>User Guide</h4>
+                    </div>
+                    <p class="info">
+                        Click View to view the detail of the order and further operation.
+                    </p>
+                    
                 </div>
             </div>
 

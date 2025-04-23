@@ -140,6 +140,11 @@ body {
     border-radius: 5px;
 }
 
+.info{
+    font-size: 20px;
+    margin-left: 15px;
+}
+
 .order-table{
     width: 95%;
     margin-left: 20px;

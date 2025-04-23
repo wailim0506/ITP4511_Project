@@ -52,7 +52,13 @@ public class OrderController extends HttpServlet {
         
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
-            ArrayList<OrderBean> orders = db.getWarehouseOrder(user.getWareHouseId(), user.getWarehouseType());
+            ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
+            if(user.getWarehouseType().equals("Source")){
+                orders = db.getWarehouseOrderSource(user.getWareHouseId());
+            }else{
+                orders = db.getWarehouseOrderCentral(user.getWareHouseId());
+            }
+            
             request.setAttribute("orderList", orders);
             
             int total = 0, pending = 0, processing = 0, finished = 0;
@@ -75,6 +81,49 @@ public class OrderController extends HttpServlet {
             sb.setFinished(Integer.toString(finished));
             request.setAttribute("StatusBean", sb);
         
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/order.jsp");
+            rd.forward(request, response);
+        }else if("view".equalsIgnoreCase(action)){
+            ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
+            if(user.getWarehouseType().equals("Source")){
+                orders = db.getWarehouseOrderSource(user.getWareHouseId());
+            }else{
+                orders = db.getWarehouseOrderCentral(user.getWareHouseId());
+            }
+            
+            request.setAttribute("orderList", orders);
+            
+            int total = 0, pending = 0, processing = 0, finished = 0;
+            
+            for (OrderBean order : orders) {
+                if(order.getStatus().equals("Pending")){
+                    pending++;
+                }else if(order.getStatus().equals("Finished")){
+                    finished++;
+                }else if(order.getStatus().equals("Processing")){
+                    processing++;
+                }
+                total++;
+            }
+        
+            StatusBean sb = new StatusBean();
+            sb.setTotal(Integer.toString(total));
+            sb.setPending(Integer.toString(pending));
+            sb.setProcessing(Integer.toString(processing));
+            sb.setFinished(Integer.toString(finished));
+            request.setAttribute("StatusBean", sb);
+            
+            
+            String orderID = request.getParameter("orderID");
+            OrderBean order = new OrderBean();
+            if(user.getWarehouseType().equals("Source")){
+                
+            }else{
+                order = db.getOrderByIdCental(orderID);
+            }
+            
+            request.setAttribute("order", order);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/order.jsp");
             rd.forward(request, response);
