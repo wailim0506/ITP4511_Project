@@ -37,6 +37,7 @@
         <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
         <jsp:useBean id="StatusBean" class="ict.bean.StatusBean" scope="request"/>
         
+        <!-- Status Bar -->
         <div class="container">
             <div class="status">
                 <div class="status-data">
@@ -55,15 +56,63 @@
                     <h3>Finished</h3>
                     <p><jsp:getProperty name="StatusBean" property="finished"/></p>
                 </div>
+            </div>     
+        
+        <!-- Order list and order detail -->
+            <div class="order">
+                <!-- Order list -->
+                <div class="order-list">
+                    <div class="order-list-title">
+                        <i class="material-icons card-icon">receipt_long</i>
+                        <h4>Order List</h4>
+                    </div>
+                    
+                    <table class="order-table">
+                        <thead>
+                            <tr>
+                                <th>OrderID</th>
+                                <th>OrderDate</th>
+                                <th>ShopID</th>
+                                <th>Items</th>
+                                <th>Status</th>
+                                <th>View</th>
+                            </tr>
+                        </thead>
+                        <jsp:useBean id="orderList" class="java.util.ArrayList" scope="request"/>
+                        <tbody>
+                        <%
+                            if (orderList.isEmpty()) {
+                        %>
+                            <tr>
+                                <td colspan="6" class="text-center">No order found.</td>
+                            </tr>
+                        <%
+                            } else {
+                                for (Object obj : orderList) {
+                                    OrderBean order = (OrderBean) obj;
+                        %>
+                                    <tr>
+                                        <td><%= order.getId() %></td>
+                                        <td><%= order.getOrderDate() %></td>
+                                        <td><%= order.getShopId() %></td>
+                                        <td><%= order.getUnit() %></td>
+                                        <td><%= order.getStatus() %></td>
+                                        <td><button type="button" class="btn btn-outline-info"><i class="material-icons small">visibility</i></button></td>
+                                    </tr>
+                        <%
+                                }
+                            }
+                        %>
+                    </tbody>
+                    </table>
+                </div>
+                        
+                <!-- Order detail -->
+                <div class="order-detail">
+
+                </div>
             </div>
-
-
-                
         </div>
-        
-        
-        
-        
         <footer:footer userType="warehouse"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>

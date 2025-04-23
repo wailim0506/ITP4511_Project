@@ -53,7 +53,7 @@ public class OrderController extends HttpServlet {
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
             ArrayList<OrderBean> orders = db.getWarehouseOrder(user.getWareHouseId(), user.getWarehouseType());
-            request.setAttribute("order", orders);
+            request.setAttribute("orderList", orders);
             
             int total = 0, pending = 0, processing = 0, finished = 0;
             

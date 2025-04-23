@@ -52,8 +52,8 @@ public class DeliveryController extends HttpServlet {
         
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
-            ArrayList<OrderBean> orders = db.getWarehouseOrder(user.getWareHouseId(), user.getWarehouseType());
-            request.setAttribute("order", orders);
+            ArrayList<OrderBean> orders = db.getWarehouseDeliver(user.getWareHouseId(), user.getWarehouseType());
+            request.setAttribute("orderList", orders);
             
             int total = 0, processing = 0, finished = 0, delivered = 0;
             

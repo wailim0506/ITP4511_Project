@@ -30,9 +30,9 @@
         <!-- Google Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
-        <link href="${pageContext.request.contextPath}/css/warehouse/index.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="${pageContext.request.contextPath}/js/warehouse/chart.js"></script>
+        <link href="${pageContext.request.contextPath}/css/warehouse/index.css" rel="stylesheet">
     </head>
     <body>
         <%

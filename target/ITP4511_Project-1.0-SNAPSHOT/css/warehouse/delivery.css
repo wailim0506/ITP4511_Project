@@ -15,7 +15,7 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center; 
-    margin-top: 10px; 
+    margin-top: 25px; 
     gap: 50px;
 }
 
@@ -34,4 +34,48 @@ body {
 .status-data p {
     font-size: 28px;
     font-weight: bold;
+}
+
+.order {
+    display: flex;
+    flex-direction: row;
+    padding-top: 2rem;
+    gap: 20px;
+    min-height: 700px;
+}
+
+.order-list {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    flex: 1 1 65%;
+}
+
+.order-list-title {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.order-list-title i {
+    font-size: 30px;
+    padding-right: 10px;
+}
+
+.order-detail {
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    flex: 1 1 35%;
+    max-height: 750px;
+}
+
+.order-table{
+    width: 95%;
+    margin-left: 20px;
+}
+
+.order-table tbody tr:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.order-table tbody tr {
+    border-bottom: 1px solid gray;
+    height: 60px;
 }
