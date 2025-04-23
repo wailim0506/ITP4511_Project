@@ -6,6 +6,7 @@ package ict.servlet.warehouse;
 
 import ict.bean.*;
 import ict.db.ProjectDB;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,17 +36,48 @@ public class DeliveryController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeliveryController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeliveryController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession(false);
+        UserBean user = (UserBean) session.getAttribute("userInfo");
+        
+        if (session == null) {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+        }
+        
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            return;
+        }
+        
+        String action = request.getParameter("action");
+        if ("list".equalsIgnoreCase(action)) {
+            ArrayList<OrderBean> orders = db.getWarehouseOrder(user.getWareHouseId(), user.getWarehouseType());
+            request.setAttribute("order", orders);
+            
+            int total = 0, processing = 0, finished = 0, delivered = 0;
+            
+            for (OrderBean order : orders) {
+                if(order.getStatus().equals("Processing")){
+                    processing++;
+                }else if(order.getStatus().equals("Finished")){
+                    finished++;
+                }else if(order.getStatus().equals("Delivered")){
+                    delivered++;
+                }
+                total++;
+            }
+        
+            StatusBean sb = new StatusBean();
+            sb.setTotal(Integer.toString(total));
+            sb.setProcessing(Integer.toString(processing));
+            sb.setFinished(Integer.toString(finished));
+            sb.setDelivered(Integer.toString(delivered));
+            request.setAttribute("StatusBean", sb);
+        
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/delivery.jsp");
+            rd.forward(request, response);
         }
     }
 

@@ -36,7 +36,7 @@ public class OrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
         UserBean user = (UserBean) session.getAttribute("userInfo");
         

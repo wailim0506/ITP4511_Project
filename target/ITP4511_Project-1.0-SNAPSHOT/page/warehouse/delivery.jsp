@@ -41,19 +41,19 @@
             <div class="status">
                 <div class="status-data">
                     <h3>Total Order</h3>
-                    <p></p>
+                    <p><jsp:getProperty name="StatusBean" property="total"/></p>
                 </div>
                 <div class="status-data">
                     <h3>Processing</h3>
-                    <p></p>
+                    <p><jsp:getProperty name="StatusBean" property="processing"/></p>
                 </div>
                 <div class="status-data">
                     <h3>Delivered</h3>
-                    <p></p>
+                    <p><jsp:getProperty name="StatusBean" property="delivered"/></p>
                 </div>
                 <div class="status-data">
                     <h3>Finished</h3>
-                    <p></p>
+                    <p><jsp:getProperty name="StatusBean" property="finished"/></p>
                 </div>
             </div>
 
