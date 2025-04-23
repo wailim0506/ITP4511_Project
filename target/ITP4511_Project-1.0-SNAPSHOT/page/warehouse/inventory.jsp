@@ -35,27 +35,30 @@
             UserBean ub = (UserBean)session.getAttribute("userInfo");
         %>
         <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
-        <jsp:useBean id="StockBean" class="ict.bean.StockBean" scope="request"/>
-        
+        <jsp:useBean id="StatusBean" class="ict.bean.StatusBean" scope="request"/>
+
         <div class="container">
             <div class="status">
                 <div class="status-data">
                     <h3>Total Fruits</h3>
-                    <p><jsp:getProperty name="StockBean" property="totalFruits"/></p>
+                    <p><jsp:getProperty name="StatusBean" property="totalFruits"/></p>
                 </div>
                 <div class="status-data">
                     <h3>Low Stock Fruits</h3>
-                    <p><jsp:getProperty name="StockBean" property="lowStock"/></p>
+                    <p><jsp:getProperty name="StatusBean" property="lowStock"/></p>
                 </div>
                 <div class="status-data">
                     <h3>Out of Stock Fruits</h3>
-                    <p><jsp:getProperty name="StockBean" property="outOfStock"/></p>
+                    <p><jsp:getProperty name="StatusBean" property="outOfStock"/></p>
                 </div>
             </div>
+
+
+            <div class="stockList">
+            
+            </div>
+                
         </div>
-        
-        
-        
         <footer:footer userType="warehouse"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>

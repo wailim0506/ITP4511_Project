@@ -5,7 +5,6 @@
 package ict.servlet.warehouse;
 
 import ict.bean.*;
-import ict.bean.WarehouseFruitStockBean;
 import ict.db.ProjectDB;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -66,14 +65,12 @@ public class inventoryController extends HttpServlet {
                 }
                 totalFruit++;
             }
-            
-            System.out.print(user.getWareHouseId());
         
-            StockBean sb = new StockBean();
+            StatusBean sb = new StatusBean();
             sb.setLowStock(Integer.toString(lowStock));
             sb.setTotalFruits(Integer.toString(totalFruit));
             sb.setOutOfStock(Integer.toString(outOfStock));
-            request.setAttribute("StockBean", sb);
+            request.setAttribute("StatusBean", sb);
         
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/inventory.jsp");
