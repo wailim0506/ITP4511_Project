@@ -153,13 +153,27 @@
                                 } else {
                                     for (Object obj : orderList) {
                                         OrderBean order = (OrderBean) obj;
+                                        String status = order.getStatus();
+                                        String statusStyle = "";
+
+                                        if ("pending".equalsIgnoreCase(status)) {
+                                            statusStyle = "background-color: rgb(240, 255, 255); color: black;";
+                                        } else if ("processing".equalsIgnoreCase(status)) {
+                                            statusStyle = "background-color: rgb(250, 250, 51); color: black;";
+                                        } else if ("finished".equalsIgnoreCase(status)) {
+                                            statusStyle = "background-color: rgb(159, 226, 191); color: black;";
+                                        }
                             %>
                             <tr>
                                 <td><%= order.getId() %></td>
                                 <td><%= order.getOrderDate() %></td>
                                 <td><%= order.getShopId() %></td>
                                 <td><%= order.getUnit() %></td>
-                                <td><%= order.getStatus() %></td>
+                                <td>
+                                    <span class="order-status" style=" <%= statusStyle %>">
+                                        <%= order.getStatus() %>
+                                    </span>
+                                </td>
                                 <td>
                                     <button type="button" class="btn btn-outline-info" 
                                             onclick="window.location.href='${pageContext.request.contextPath}/Order?action=view&orderID=<%=order.getId()%>'">
