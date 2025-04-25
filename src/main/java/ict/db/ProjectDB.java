@@ -1777,7 +1777,32 @@ public class ProjectDB {
             String preQueryStatement = "UPDATE shop_fruit_order SET Status = 'Processing' WHERE ID = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, orderId);
-
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean updateWarehouseStock(String orderId, String warehouseId){
+        boolean isSuccess = false;
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+         try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE warehouse_fruit_stock AS w\n" +
+                                            "JOIN shop_fruit_order_item AS oi ON w.FruitID = oi.FruitID\n" +
+                                            "JOIN shop_fruit_order AS o ON oi.OrderID = o.ID\n" +
+                                            "SET w.Qty = w.Qty - oi.Qty\n" +
+                                            "WHERE o.ID = ? AND w.WarehouseID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            pStmnt.setString(2, warehouseId);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -1977,4 +2002,5 @@ public class ProjectDB {
         }
         return shopStockList;
     }
+    
 }

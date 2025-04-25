@@ -110,7 +110,7 @@ public class OrderController extends HttpServlet {
             int noOfItemHaveStock = db.checkStockCentral(user.getWareHouseId(), orderID);
 
             if (noOfItem == noOfItemHaveStock) {
-                if(db.processOrderCentral(orderID)){
+                if(db.updateWarehouseStock(orderID, user.getWareHouseId()) && db.processOrderCentral(orderID) ){
                     request.setAttribute("successMsg", "Order: " + orderID + " status have change to Processing!");
                 }else{
                     request.setAttribute("errorMsg", "Fail to process order: " + orderID + ".");
@@ -124,6 +124,12 @@ public class OrderController extends HttpServlet {
                 orders = db.getWarehouseOrderSource(user.getWareHouseId());
             } else {
                 orders = db.getWarehouseOrderCentral(user.getWareHouseId());
+            }
+            
+            if (user.getWarehouseType().equals("Source")) {
+
+            } else {
+                order = db.getOrderByIdCental(orderID);
             }
 
             request.setAttribute("orderList", orders);
