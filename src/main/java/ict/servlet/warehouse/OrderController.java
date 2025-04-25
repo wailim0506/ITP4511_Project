@@ -25,109 +25,115 @@ import java.util.ArrayList;
 public class OrderController extends HttpServlet {
 
     private ProjectDB db;
-    
+
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new ProjectDB(dbUrl, dbUser, dbPassword);
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
         UserBean user = (UserBean) session.getAttribute("userInfo");
-        
+
         if (session == null) {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         }
-        
+
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         }
-        
+
+        ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
+        if (user.getWarehouseType().equals("Source")) {
+            orders = db.getWarehouseOrderSource(user.getWareHouseId());
+        } else {
+            orders = db.getWarehouseOrderCentral(user.getWareHouseId());
+        }
+
+        request.setAttribute("orderList", orders);
+
+        int total = 0, pending = 0, processing = 0, finished = 0;
+
+        for (OrderBean order : orders) {
+            if (order.getStatus().equals("Pending")) {
+                pending++;
+            } else if (order.getStatus().equals("Finished")) {
+                finished++;
+            } else if (order.getStatus().equals("Processing")) {
+                processing++;
+            }
+            total++;
+        }
+
+        StatusBean sb = new StatusBean();
+        sb.setTotal(Integer.toString(total));
+        sb.setPending(Integer.toString(pending));
+        sb.setProcessing(Integer.toString(processing));
+        sb.setFinished(Integer.toString(finished));
+        request.setAttribute("StatusBean", sb);
+
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
-            ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
-            if(user.getWarehouseType().equals("Source")){
-                orders = db.getWarehouseOrderSource(user.getWareHouseId());
-            }else{
-                orders = db.getWarehouseOrderCentral(user.getWareHouseId());
-            }
-            
-            request.setAttribute("orderList", orders);
-            
-            int total = 0, pending = 0, processing = 0, finished = 0;
-            
-            for (OrderBean order : orders) {
-                if(order.getStatus().equals("Pending")){
-                    pending++;
-                }else if(order.getStatus().equals("Finished")){
-                    finished++;
-                }else if(order.getStatus().equals("Processing")){
-                    processing++;
-                }
-                total++;
-            }
-        
-            StatusBean sb = new StatusBean();
-            sb.setTotal(Integer.toString(total));
-            sb.setPending(Integer.toString(pending));
-            sb.setProcessing(Integer.toString(processing));
-            sb.setFinished(Integer.toString(finished));
-            request.setAttribute("StatusBean", sb);
-        
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/order.jsp");
             rd.forward(request, response);
-        }else if("view".equalsIgnoreCase(action)){
-            ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
-            if(user.getWarehouseType().equals("Source")){
-                orders = db.getWarehouseOrderSource(user.getWareHouseId());
-            }else{
-                orders = db.getWarehouseOrderCentral(user.getWareHouseId());
-            }
-            
-            request.setAttribute("orderList", orders);
-            
-            int total = 0, pending = 0, processing = 0, finished = 0;
-            
-            for (OrderBean order : orders) {
-                if(order.getStatus().equals("Pending")){
-                    pending++;
-                }else if(order.getStatus().equals("Finished")){
-                    finished++;
-                }else if(order.getStatus().equals("Processing")){
-                    processing++;
-                }
-                total++;
-            }
-        
-            StatusBean sb = new StatusBean();
-            sb.setTotal(Integer.toString(total));
-            sb.setPending(Integer.toString(pending));
-            sb.setProcessing(Integer.toString(processing));
-            sb.setFinished(Integer.toString(finished));
-            request.setAttribute("StatusBean", sb);
-            
-            
+        } else if ("view".equalsIgnoreCase(action)) {
             String orderID = request.getParameter("orderID");
             OrderBean order = new OrderBean();
-            if(user.getWarehouseType().equals("Source")){
-                
-            }else{
+            if (user.getWarehouseType().equals("Source")) {
+
+            } else {
                 order = db.getOrderByIdCental(orderID);
             }
-            
+
             request.setAttribute("order", order);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/order.jsp");
             rd.forward(request, response);
+        } else if ("process".equalsIgnoreCase(action)) {
+            String orderID = request.getParameter("orderID");
+            OrderBean order = new OrderBean();
+            if (user.getWarehouseType().equals("Source")) {
+
+            } else {
+                order = db.getOrderByIdCental(orderID);
+            }
+
+            int noOfItem = db.getNoOfItemInOrder(orderID);
+            int noOfItemHaveStock = db.checkStockCentral(user.getWareHouseId(), orderID);
+
+            if (noOfItem == noOfItemHaveStock) {
+                if(db.processOrderCentral(orderID)){
+                    request.setAttribute("successMsg", "Order: " + orderID + " status have change to Processing!");
+                }else{
+                    request.setAttribute("errorMsg", "Fail to process order: " + orderID + ".");
+                }
+            } else {
+                request.setAttribute("errorMsg", "Not have enought stock to process the order: " + orderID + ". Please restock!");
+            }
+            
+            orders = new ArrayList<OrderBean>();
+            if (user.getWarehouseType().equals("Source")) {
+                orders = db.getWarehouseOrderSource(user.getWareHouseId());
+            } else {
+                orders = db.getWarehouseOrderCentral(user.getWareHouseId());
+            }
+
+            request.setAttribute("orderList", orders);
+            request.setAttribute("order", order);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/order.jsp");
+            rd.forward(request, response);
+
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

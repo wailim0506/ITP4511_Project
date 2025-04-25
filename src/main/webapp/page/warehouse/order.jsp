@@ -9,6 +9,7 @@
 
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
+<%@ taglib uri="/WEB-INF/tlds/order.tld" prefix="order" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,6 +37,31 @@
             UserBean ub = (UserBean)session.getAttribute("userInfo");
         %>
         <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
+        <%
+            try{
+                String errorMsg = (String) request.getAttribute("errorMsg");
+                if(errorMsg != null && !errorMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + errorMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                }
+            }catch(Exception e){
+            }  
+
+            try{
+                String successMsg = (String) request.getAttribute("successMsg");
+                if(successMsg != null && !successMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + successMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                }
+            }catch(Exception e){
+            } 
+        %>
         <jsp:useBean id="StatusBean" class="ict.bean.StatusBean" scope="request"/>
 
         <!-- Status Bar -->
@@ -150,14 +176,24 @@
 
                 <!-- Order detail -->
                 <div class="order-detail">
-                    <div class="order-list-title">
-                        <i class="material-icons card-icon">info</i>
-                        <h4>User Guide</h4>
-                    </div>
-                    <p class="info">
-                        Click View to view the detail of the order and further operation.
-                    </p>
-                    
+                    <%
+                        OrderBean orderBean = (OrderBean) request.getAttribute("order");
+                        if (orderBean != null) {
+                    %>
+                        <order:order orderBean="<%=orderBean%>" userBean="<%=ub%>" />
+                    <%
+                        } else {
+                    %>
+                        <div class="order-list-title">
+                            <i class="material-icons card-icon">info</i>
+                            <h4>User Guide</h4>
+                        </div>
+                        <p class="info">
+                            Click View to view the detail of the order and further operation.
+                        </p>
+                    <%
+                        }
+                    %>
                 </div>
             </div>
 

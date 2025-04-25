@@ -2,6 +2,7 @@ ict\servlet\store\reserveFruitController.class
 ict\bean\ShopFruitStockBean.class
 ict\db\ProjectDB.class
 ict\servlet\store\reserveRecordController.class
+ict\tag\order.class
 ict\servlet\ProfileController.class
 ict\servlet\store\borrowFruitController.class
 ict\servlet\store\borrowRequestController.class
