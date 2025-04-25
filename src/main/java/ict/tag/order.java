@@ -61,7 +61,7 @@ public class order extends SimpleTagSupport{
             .append("<p><b>City: </b>").append(orderBean.getCity()).append("</p>")
             .append("</div>")
             .append("<p><b>Order Date: </b>").append(orderBean.getOrderDate()).append("</p>")
-            .append("<p><b>Notes: </b>").append(orderBean.getNotes()).append("</p>")
+            .append("<p class=\"order-note\"><b>Notes: </b>").append(orderBean.getNotes()).append("</p>")
             .append("</div><hr>")
             .append("<h4 class=\"orderInfo-fruit-title\">Fruits in this Order:</h4>")
             .append("<table class=\"orderInfo-table\"><thead><tr>")

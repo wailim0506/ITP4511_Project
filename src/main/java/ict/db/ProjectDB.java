@@ -1946,4 +1946,35 @@ public class ProjectDB {
         }
         return warehouseStockList;
     }
+    
+    public ArrayList<ShopFruitStockBean> getWarehouseStock(String warehouseId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<ShopFruitStockBean> shopStockList = new ArrayList<ShopFruitStockBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM warehouse_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE WarehouseID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                ShopFruitStockBean sb = new ShopFruitStockBean();
+                sb.setShopId(rs.getString("WarehouseID"));
+                sb.setFruitId(rs.getString("FruitID"));
+                sb.setFruitName(rs.getString("Name"));
+                sb.setCity(rs.getString("City"));
+                sb.setCountryRegion(rs.getString("CR"));
+                sb.setImgName(rs.getString("ImgName"));
+                sb.setQty(String.valueOf(rs.getInt("Qty")));
+                sb.setType(rs.getString("type"));
+                sb.setUnit(rs.getString("unit"));
+                shopStockList.add(sb);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return shopStockList;
+    }
 }

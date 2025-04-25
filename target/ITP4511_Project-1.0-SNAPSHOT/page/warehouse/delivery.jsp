@@ -73,8 +73,8 @@
                         <i class="material-icons text-muted iconfont">filter_alt</i>
                         <select id="statusFilter" onchange="filterTable()">
                             <option value="">All Status</option>
-                            <option value="Pending">Processing</option>
-                            <option value="Processing">Delivered</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Delivered">Delivered</option>
                             <option value="Finished">Finished</option>
                         </select>
                     </div>

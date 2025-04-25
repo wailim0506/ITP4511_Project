@@ -25,60 +25,68 @@ import java.util.*;
 public class inventoryController extends HttpServlet {
 
     private ProjectDB db;
-    
+
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
         String dbPassword = this.getServletContext().getInitParameter("dbPassword");
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new ProjectDB(dbUrl, dbUser, dbPassword);
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession(false);
         UserBean user = (UserBean) session.getAttribute("userInfo");
-        
+
         if (session == null) {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         }
-        
+
         if (user == null) {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         }
+
+        ArrayList<WarehouseFruitStockBean> warehouseStockList = db.getWarehouseFruitStock(user.getWareHouseId());
+        request.setAttribute("warehouseStockList", warehouseStockList);
+
+        int lowStock = 0, totalFruit = 0, outOfStock = 0;
+
+        for (WarehouseFruitStockBean fruit : warehouseStockList) {
+            if (Integer.parseInt(fruit.getQty()) <= 10) {
+                lowStock++;
+            }
+            if (Integer.parseInt(fruit.getQty()) <= 0) {
+                outOfStock++;
+            }
+            totalFruit++;
+        }
+
+        StatusBean sb = new StatusBean();
+        sb.setLowStock(Integer.toString(lowStock));
+        sb.setTotalFruits(Integer.toString(totalFruit));
+        sb.setOutOfStock(Integer.toString(outOfStock));
+        request.setAttribute("StatusBean", sb);
         
+        ArrayList<CountryRegionBean> countryRegionList = db.getFruitCountryRegion();
+        request.setAttribute("countryRegionList", countryRegionList);
+        ArrayList<String> fruitTypeList = db.getFruitType();
+        request.setAttribute("fruitTypeList", fruitTypeList);
+
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
-            ArrayList<WarehouseFruitStockBean> warehouseStockList = db.getWarehouseFruitStock(user.getWareHouseId());
-            request.setAttribute("warehouseStockList", warehouseStockList);
-            
-            int lowStock = 0, totalFruit = 0, outOfStock = 0;
-            
-            for (WarehouseFruitStockBean fruit : warehouseStockList) {
-                if(Integer.parseInt(fruit.getQty()) <= 10){
-                    lowStock++;
-                }if(Integer.parseInt(fruit.getQty()) <= 0){
-                    outOfStock++;
-                }
-                totalFruit++;
-            }
-        
-            StatusBean sb = new StatusBean();
-            sb.setLowStock(Integer.toString(lowStock));
-            sb.setTotalFruits(Integer.toString(totalFruit));
-            sb.setOutOfStock(Integer.toString(outOfStock));
-            request.setAttribute("StatusBean", sb);
-        
+            ArrayList<ShopFruitStockBean> fruitsStockList = db.getWarehouseStock(user.getWareHouseId());
+            request.setAttribute("fruitsStockList", fruitsStockList);
+
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/inventory.jsp");
             rd.forward(request, response);
         }
-        
-    }
 
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
