@@ -207,9 +207,20 @@
                                                     out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#recordDetailsModal" + order.getId() + "' title='View Details'>");
                                                     out.println("<i class='material-icons small'>visibility</i>");
                                                     out.println("</a>");
+                                                    
+                                                    // Add "Mark as Complete" button for Delivered orders
+                                                    if (order.getStatus().equals("Delivered")) {
+                                                        out.println("<form method='post' action='/ITP4511_Project/reserveFruit'>");
+                                                        out.println("<input type='hidden' name='action' value='markAsFinish'>");
+                                                        out.println("<input type='hidden' name='id' value='" + order.getId() + "'>");
+                                                        out.println("<button type='submit' class='btn btn-sm btn-outline-success' title='Mark as Finsished'>");
+                                                        out.println("<i class='material-icons small'>check_circle</i>");
+                                                        out.println("</button>");
+                                                        out.println("</form>");
+                                                    }
+                                                    
                                                     out.println("</div>");
                                                     out.println("</td>");
-                                                    out.println("</tr>");
                                                 }
                                             } else {
                                                 out.println("<tr><td colspan='6' class='text-center'>No records found</td></tr>");

@@ -219,11 +219,17 @@
                                                 String shopName = borrowBean.getRequestByShopAddress();
                                                 String date = borrowBean.getRequestDate();
                                                 String status = "Approved";
+                                                String completed = borrowBean.getCompleted();
                                                 out.println("<tr data-request-date=\"" + date + "\">");
                                                     out.println("<td>" + requestId + "</td>");
                                                     out.println("<td>" + shopName + "</td>");
                                                     out.println("<td>" + date + "</td>");
-                                                    out.println("<td><span class=\"badge bg-success\">" + status + "</span></td>");
+                                                    if (completed.equals("Y")){
+                                                        out.println("<td><span class=\"badge bg-success\">" + status + "</span><span class=\"badge bg-info ms-2\">" + "Completed" + "</span></td>");
+
+                                                    }else{
+                                                        out.println("<td><span class=\"badge bg-success\">" + status + "</span></td>");
+                                                    }
                                                     out.println("<td>");
                                                         out.println("<button class=\"btn btn-sm btn-outline-secondary\" data-bs-toggle=\"modal\" data-bs-target=\"#requestDetailsModal" + requestId + "\" data-request-id=\"" + requestId + "\">");
                                                             out.println("<i class=\"material-icons align-middle small\">visibility</i>");

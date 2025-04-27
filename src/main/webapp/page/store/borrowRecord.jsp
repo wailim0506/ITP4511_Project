@@ -191,20 +191,37 @@
                                             if ((orderList != null && !orderList.isEmpty()) && (orderItemQtyList != null && !orderItemQtyList.isEmpty())) {
                                                 for (int i = 0; i < orderList.size(); i++) {
                                                     BorrowBean order = (BorrowBean) orderList.get(i);
+                                                    String completed = order.getCompleted();
                                                     out.println("<tr class='reserveRecordItem'>");
                                                     out.println("<td><span class='fw-medium'>" + order.getId() + "</span></td>");
                                                     out.println("<td>" + order.getRequestDate() + "</td>");
                                                     out.println("<td>" + order.getRequestToShopAddress() + "</td>");
                                                     out.println("<td><span class='badge bg-secondary'>" + orderItemQtyList.get(i) + " items</span></td>");
-                                                    out.println("<td><span class=\"badge " + statusColorMap.get(order.getStatus()) + "\">" + order.getStatus() + "</span></td>");
+                                                    if (order.getStatus().equals("Approved")){
+                                                        if (completed.equals("Y")){
+                                                            out.println("<td><span class=\"badge " + statusColorMap.get(order.getStatus()) + "\">" + order.getStatus() + "</span><span class=\"badge bg-info ms-2\">Completed</span></td>");
+                                                        }else{
+                                                            out.println("<td><span class=\"badge " + statusColorMap.get(order.getStatus()) + "\">" + order.getStatus() + "</span></td>");
+                                                        }
+                                                    }else{
+                                                        out.println("<td><span class=\"badge " + statusColorMap.get(order.getStatus()) + "\">" + order.getStatus() + "</span></td>");
+                                                    }
                                                     out.println("<td>");
                                                     out.println("<div class='d-flex gap-2'>");
                                                     out.println("<a href='#' class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#recordDetailsModal" + order.getId() + "' title='View Details'>");
                                                     out.println("<i class='material-icons small'>visibility</i>");
                                                     out.println("</a>");
+                                                    if (order.getStatus().equals("Approved") && completed.equals("N")) {
+                                                        out.println("<form method='post' action='/ITP4511_Project/borrowFruit'>");
+                                                        out.println("<input type='hidden' name='action' value='markAsCompleted'>");
+                                                        out.println("<input type='hidden' name='id' value='" + order.getId() + "'>");
+                                                        out.println("<button type='submit' class='btn btn-sm btn-outline-success' title='Mark as Completed'>");
+                                                        out.println("<i class='material-icons small'>check_circle</i>");
+                                                        out.println("</button>");
+                                                        out.println("</form>");
+                                                    }
                                                     out.println("</div>");
                                                     out.println("</td>");
-                                                    out.println("</tr>");
                                                 }
                                             } else {
                                                 out.println("<tr><td colspan='6' class='text-center'>No records found</td></tr>");

@@ -11,7 +11,7 @@ package ict.bean;
 public class BorrowBean {
     private String id, requestByShopId, requestByShopAddress, requestByShopPhone, requestToShopId, requestToShopAddress,
             requestToShopPhone, requestDate,
-            deliveryDate, status, notes;
+            deliveryDate, status, notes, completed;
     private String fruidId, fruitName, city, countryRegion, imgName, type, unit;
     private String rejectReasonSelect, rejectReason;
     private int qty;
@@ -105,6 +105,14 @@ public class BorrowBean {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(String completed) {
+        this.completed = completed;
     }
 
     public String getFruidId() {
