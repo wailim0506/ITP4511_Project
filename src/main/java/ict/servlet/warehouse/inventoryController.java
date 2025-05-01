@@ -85,8 +85,35 @@ public class inventoryController extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/page/warehouse/inventory.jsp");
             rd.forward(request, response);
         } else if ("update".equalsIgnoreCase(action)) {
-
-        
+            String warehouseId = user.getWareHouseId();
+            ArrayList<String> fruitIdList = db.getAllFruitID();
+            ArrayList<String> fruitQtyToStoreInDb = new ArrayList<String>();
+            for (int i = 0; i < fruitIdList.size(); i++) {
+                String fruitId = fruitIdList.get(i);
+                String fruitQty = request.getParameter(fruitId);
+                if (fruitQty != null && !fruitQty.isEmpty()) {
+                    fruitQtyToStoreInDb.add(fruitQty);
+                } else {
+                    fruitQtyToStoreInDb.add("0");
+                }
+            }
+            
+            for (int i = 0; i < fruitQtyToStoreInDb.size(); i++) {
+                String fruitId = fruitIdList.get(i);
+                String fruitQty = fruitQtyToStoreInDb.get(i);
+                if (db.updateWarehouseFruitStock(warehouseId, fruitId, Integer.parseInt(fruitQty))) {
+                    continue;
+                } else {
+                    session.setAttribute("errorMsg", "Update failed! Please try again.");
+                    response.sendRedirect(request.getContextPath() +
+                            "/inventory?action=list");
+                    return;
+                }
+            }
+            
+            session.setAttribute("successMsg", "Stock Level Updated successfully!");
+            response.sendRedirect(request.getContextPath() +
+                    "/inventory?action=list");
         
         }else{
             RequestDispatcher rd;

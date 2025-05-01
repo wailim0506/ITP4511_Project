@@ -2007,5 +2007,28 @@ public class ProjectDB {
         }
         return shopStockList;
     }
+    
+    public boolean updateWarehouseFruitStock(String warehouseId, String fruitId, int qty) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE warehouse_fruit_stock SET Qty = ? WHERE WarehouseID = ? AND FruitID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setInt(1, qty);
+            pStmnt.setString(2, warehouseId);
+            pStmnt.setString(3, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 
 }

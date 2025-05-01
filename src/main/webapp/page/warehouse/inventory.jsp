@@ -38,25 +38,27 @@
         <jsp:useBean id="StatusBean" class="ict.bean.StatusBean" scope="request"/>
         <%
             try{
-                String errorMsg = (String) request.getAttribute("errorMsg");
+                String errorMsg = (String) session.getAttribute("errorMsg");
                 if(errorMsg != null && !errorMsg.isEmpty()){
                     out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
                                 "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
                                 "<span>" + errorMsg + "</span>" +
                                 "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
                                 "</div></div>");                    
+                    session.removeAttribute("errorMsg");
                 }
             }catch(Exception e){
             }  
 
             try{
-                String successMsg = (String) request.getAttribute("successMsg");
+                String successMsg = (String) session.getAttribute("successMsg");
                 if(successMsg != null && !successMsg.isEmpty()){
                     out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
                                 "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
                                 "<span>" + successMsg + "</span>" +
                                 "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
                                 "</div></div>");                    
+                    session.removeAttribute("successMsg");
                 }
             }catch(Exception e){
             }  
@@ -84,7 +86,7 @@
                 <!-- Stock Management Section -->
                 <div class="col-lg-9">
                     <div class="card border-0 shadow-sm mb-4">
-                        <form method="post" action="/ITP4511_Project/inventory" id="stockForm"> <-------------------------------------------------------------------------------------------------------------------------------->
+                        <form method="post" action="/ITP4511_Project/inventory" id="stockForm">
                             <input type="hidden" name="action" value="update">
                             <input type="hidden" name="shopId" value="<%=ub.getWareHouseId()%>">
                             <div class="card-body p-4">
