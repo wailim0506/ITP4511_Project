@@ -12,7 +12,7 @@ function filterTable() {
     for (let i = 0; i < rows.length; i++) {
         const cells = rows[i].getElementsByTagName("td");
         const orderId = cells[0].textContent.toLowerCase();
-        const status = cells[4].textContent;
+        const status = cells[4].querySelector('.order-status').textContent.trim();
         const orderDate = new Date(cells[1].textContent);
 
         const now = new Date();

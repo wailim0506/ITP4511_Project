@@ -82,6 +82,8 @@ public class order extends SimpleTagSupport{
         
         if ("Pending".equals(orderBean.getStatus())) {
             html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-success\" onclick=\"window.location.href='/ITP4511_Project/Order?action=process&orderID=" + orderBean.getId() + "'\">Accept Order</button></div>");
+        }else if ("Processing".equals(orderBean.getStatus())) {
+            html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-success\" onclick=\"window.location.href='/ITP4511_Project/Order?action=delivered&orderID=" + orderBean.getId() + "'\">Delivered</button></div>");
         }
         
         return html.toString();

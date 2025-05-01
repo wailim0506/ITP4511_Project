@@ -84,7 +84,7 @@
                 <!-- Stock Management Section -->
                 <div class="col-lg-9">
                     <div class="card border-0 shadow-sm mb-4">
-                        <form method="post" action="/ITP4511_Project/stock" id="stockForm">
+                        <form method="post" action="/ITP4511_Project/inventory" id="stockForm"> <-------------------------------------------------------------------------------------------------------------------------------->
                             <input type="hidden" name="action" value="update">
                             <input type="hidden" name="shopId" value="<%=ub.getWareHouseId()%>">
                             <div class="card-body p-4">
@@ -272,12 +272,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Hidden Form for Submission -->
-            <form id="stockForm" action="/ITP4511_Project/updateStock" method="post" style="display:none;">
-                <input type="hidden" name="action" value="update">
-                <!-- Hidden inputs will be dynamically added here before submission -->
-            </form>
         </div>
                 
         </div>

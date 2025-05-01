@@ -1943,7 +1943,8 @@ public class ProjectDB {
         }
         return total;
     }
-
+    
+    //For static bar
     public ArrayList<WarehouseFruitStockBean> getWarehouseFruitStock(String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -1974,7 +1975,8 @@ public class ProjectDB {
         }
         return warehouseStockList;
     }
-
+    
+    //For the stock list
     public ArrayList<ShopFruitStockBean> getWarehouseStock(String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;

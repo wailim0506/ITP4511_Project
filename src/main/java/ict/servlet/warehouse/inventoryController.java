@@ -56,7 +56,7 @@ public class inventoryController extends HttpServlet {
         int lowStock = 0, totalFruit = 0, outOfStock = 0;
 
         for (WarehouseFruitStockBean fruit : warehouseStockList) {
-            if (Integer.parseInt(fruit.getQty()) <= 10) {
+            if (Integer.parseInt(fruit.getQty()) <= 10 && Integer.parseInt(fruit.getQty()) > 0) {
                 lowStock++;
             }
             if (Integer.parseInt(fruit.getQty()) <= 0) {
@@ -84,8 +84,15 @@ public class inventoryController extends HttpServlet {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/inventory.jsp");
             rd.forward(request, response);
-        }
+        } else if ("update".equalsIgnoreCase(action)) {
 
+        
+        
+        }else{
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/error.jsp");
+            rd.forward(request, response);
+        }
     }
 
     @Override

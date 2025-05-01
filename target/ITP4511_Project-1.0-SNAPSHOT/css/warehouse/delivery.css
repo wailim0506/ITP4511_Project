@@ -136,8 +136,13 @@ body {
 .order-detail {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
     flex: 1 1 35%;
-    max-height: 750px;
+    max-height: 800px;
     border-radius: 5px;
+}
+
+.info{
+    font-size: 20px;
+    margin-left: 15px;
 }
 
 .order-table{
@@ -160,4 +165,67 @@ body {
 .order-table tbody tr {
     border-bottom: 1px solid gray;
     height: 60px;
+}
+
+
+.orderInfo-fruit-title {
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+.orderInfo-table {
+    width: 95%;
+    margin-left: 10px;
+}
+
+.orderInfo-table thead tr th {
+    font-size: 18px;
+}
+
+.orderInfo-table thead tr {
+    border-bottom: 1px solid gray;
+}
+
+.orderInfo-table tbody tr:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.orderInfo-table tbody tr {
+    border-bottom: 1px solid gray;
+    height: 40px;
+}
+
+.orderInfo-orderDetail{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.orderInfo-orderDetail-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.orderInfo-orderDetail-row p {
+    flex: 1 1 50%;
+}
+
+.orderInfo-orderDetail p {
+    font-size: 18px;
+}
+
+.titleTop {
+    padding-top: 10px;
+}
+
+.orderInfo-btn {
+    display: flex;
+    flex-direction: row-reverse;
+    padding-top: 50px;
+    padding-right: 10px;
+}
+
+.order-note{
+    max-width: 400px; 
+    word-wrap: break-word;
 }

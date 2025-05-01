@@ -40,12 +40,7 @@ public class OrderController extends HttpServlet {
         HttpSession session = request.getSession(false);
         UserBean user = (UserBean) session.getAttribute("userInfo");
 
-        if (session == null) {
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-            return;
-        }
-
-        if (user == null) {
+        if (session == null || user == null) {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         }
