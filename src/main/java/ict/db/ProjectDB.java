@@ -2062,5 +2062,75 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+    
+    public ArrayList<WarehouseBean> getAllWarehouse() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<WarehouseBean> warehouseList = new ArrayList<WarehouseBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID, x.PhoneNumber, z.name AS CountryRegionName, x.Type, fc.City\n" +
+                                "FROM warehouse x\n" +
+                                "LEFT JOIN country_region z ON x.CountryRegionID = z.ID\n" +
+                                "LEFT JOIN fruit_city fc ON fc.ID = x.SourceCity\n" +
+                                "ORDER BY x.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                WarehouseBean wb = new WarehouseBean();
+                wb.setId(rs.getString("ID"));
+                wb.setPhoneNumber(rs.getString("PhoneNumber"));
+                wb.setType(rs.getString("Type"));
+                wb.setCity(rs.getString("City"));
+                wb.setCountryRegion(rs.getString("CountryRegionName"));
+                warehouseList.add(wb);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return warehouseList;
+    }
+    
+    public ArrayList<String> getAllWarehouseCity() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> cityList = new ArrayList<String>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT DISTINCT fc.City FROM warehouse x, fruit_city fc WHERE x.SourceCity = fc.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                cityList.add(rs.getString("City"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return cityList;
+    }
+    
+    public ArrayList<String> getAllWarehouseCountry() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> countryList = new ArrayList<String>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT DISTINCT cr.name AS Country FROM warehouse w, country_region cr WHERE w.CountryRegionID = cr.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                countryList.add(rs.getString("Country"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return countryList;
+    }
 
 }

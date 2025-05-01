@@ -123,7 +123,7 @@
                             <i class="material-icons card-icon mb-3">home</i>
                             <h5 class="card-title">Warehouse List</h5>
                             <p class="card-text text-muted">View all warehouses in the company network</p>
-                            <a href="/ITP4511_Project/shopList" class="btn btn-outline-primary mt-2">View warehouses</a>
+                            <a href="/ITP4511_Project/WarehouseList" class="btn btn-outline-primary mt-2">View warehouses</a>
                         </div>
                     </div>
                 </div>

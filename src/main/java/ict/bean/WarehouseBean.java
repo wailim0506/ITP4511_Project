@@ -9,7 +9,15 @@ package ict.bean;
  * @author HwH
  */
 public class WarehouseBean {
-    private String id, countryRegion, type, phoneNumber;
+    private String id, countryRegion, type, phoneNumber, city;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public WarehouseBean() {
     }
