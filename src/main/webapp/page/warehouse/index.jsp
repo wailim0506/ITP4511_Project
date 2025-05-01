@@ -10,9 +10,7 @@
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.util.Locale" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -87,7 +85,7 @@
                             <i class="material-icons card-icon mb-3">receipt_long</i>
                             <h5 class="card-title">Order</h5>
                             <p class="card-text text-muted">View and change order status</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Process order</a>
+                            <a href="/ITP4511_Project/Order?action=list" class="btn btn-outline-primary mt-2">Process order</a>
                         </div>
                     </div>
                 </div>
@@ -99,19 +97,7 @@
                             <i class="material-icons card-icon mb-3">local_shipping</i>
                             <h5 class="card-title">Delivery</h5>
                             <p class="card-text text-muted">Check the status of goods</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View delivery</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- User List -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">people</i>
-                            <h5 class="card-title">User List</h5>
-                            <p class="card-text text-muted">View users associated with the system</p>
-                            <a href="/ITP4511_Project/userList" class="btn btn-outline-primary mt-2">View Users</a>
+                            <a href="/ITP4511_Project/Delivery?action=list" class="btn btn-outline-primary mt-2">View delivery</a>
                         </div>
                     </div>
                 </div>
@@ -128,6 +114,48 @@
                     </div>
                 </div>
                 
+                <%if(ub.getWarehouseType().equals("Central")){%>
+                <!-- Stock from warehouse -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">move_to_inbox</i>
+                            <h5 class="card-title">Restock</h5>
+                            <p class="card-text text-muted">Order from source warehouse</p>
+                            <a href="#" class="btn btn-outline-primary mt-2">Restock</a>
+                        </div>
+                    </div>
+                </div>
+                <%} else {%>
+                <!-- Empty -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">        
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+
+                <!-- Empty -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">        
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User List -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">people</i>
+                            <h5 class="card-title">User List</h5>
+                            <p class="card-text text-muted">View users associated with the system</p>
+                            <a href="/ITP4511_Project/userList" class="btn btn-outline-primary mt-2">View Users</a>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Profile -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
@@ -135,23 +163,11 @@
                             <i class="material-icons card-icon mb-3">account_circle</i>
                             <h5 class="card-title">Profile</h5>
                             <p class="card-text text-muted">View and update profile information</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
+                            <a href="/ITP4511_Project/page/profile.jsp" class="btn btn-outline-primary mt-2">Go to Profile</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Staffing -->
-                <div class="col-lg-4 col-md-6 mx-auto">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">manage_accounts</i>
-                            <h5 class="card-title">Staffing</h5>
-                            <p class="card-text text-muted">View users associated with the system</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View Users</a>
-                        </div>
-                    </div>
-                </div>
-                
+               
                 <!-- Empty -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
