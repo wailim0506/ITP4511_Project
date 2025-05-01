@@ -9,6 +9,7 @@
 
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
+<%@ taglib uri="/WEB-INF/tlds/order.tld" prefix="order" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,6 +37,31 @@
             UserBean ub = (UserBean)session.getAttribute("userInfo");
         %>
         <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
+        <%
+            try{
+                String errorMsg = (String) request.getAttribute("errorMsg");
+                if(errorMsg != null && !errorMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + errorMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                }
+            }catch(Exception e){
+            }  
+
+            try{
+                String successMsg = (String) request.getAttribute("successMsg");
+                if(successMsg != null && !successMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + successMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                }
+            }catch(Exception e){
+            } 
+        %>
         <jsp:useBean id="StatusBean" class="ict.bean.StatusBean" scope="request"/>
         
         <!-- Status Bar -->
@@ -124,16 +150,30 @@
                                 <td colspan="6" class="text-center">No order found.</td>
                             </tr>
                         <%
-                            } else {
-                                for (Object obj : orderList) {
-                                    OrderBean order = (OrderBean) obj;
-                        %>
+                                } else {
+                                    for (Object obj : orderList) {
+                                        OrderBean order = (OrderBean) obj;
+                                        String status = order.getStatus();
+                                        String statusStyle = "";
+
+                                        if ("processing".equalsIgnoreCase(status)) {
+                                            statusStyle = "background-color: rgb(240, 255, 255); color: black;";
+                                        } else if ("delivered".equalsIgnoreCase(status)) {
+                                            statusStyle = "background-color: rgb(250, 250, 51); color: black;";
+                                        } else if ("finished".equalsIgnoreCase(status)) {
+                                            statusStyle = "background-color: rgb(159, 226, 191); color: black;";
+                                        }
+                            %>
                                     <tr>
                                         <td><%= order.getId() %></td>
                                         <td><%= order.getOrderDate() %></td>
                                         <td><%= order.getShopId() %></td>
                                         <td><%= order.getUnit() %></td>
-                                        <td><%= order.getStatus() %></td>
+                                        <td>
+                                            <span class="order-status" style=" <%= statusStyle %>">
+                                                <%= order.getStatus() %>
+                                            </span>
+                                        </td>
                                         <td>
                                             <button type="button" class="btn btn-outline-info" 
                                             onclick="window.location.href='${pageContext.request.contextPath}/Delivery?action=view&orderID=<%=order.getId()%>'">
@@ -154,7 +194,7 @@
                         OrderBean orderBean = (OrderBean) request.getAttribute("order");
                         if (orderBean != null) {
                     %>
-                        <order:order orderBean="<%=orderBean%>" userBean="<%=ub%>" />
+                        <order:order orderBean="<%=orderBean%>" userBean="<%=ub%>" page="delivery" />
                     <%
                         } else {
                     %>

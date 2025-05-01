@@ -1683,7 +1683,7 @@ public class ProjectDB {
                     "JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID\n" +
                     "JOIN shop_city sc ON s.City = sc.ID\n" +
                     "JOIN warehouse w ON sc.CountryRegionID = w.CountryRegionID\n" +
-                    "WHERE w.ID = ?\n" +
+                    "WHERE w.ID = ? AND sfo.Status != 'delivered'\n" +
                     "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfo.Status ORDER BY sfo.ID DESC;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
@@ -1789,6 +1789,27 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+    
+    public boolean deliveredOrderCentral(String orderId){
+    boolean isSuccess = false;
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_order SET Status = 'Delivered' WHERE ID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 
     public boolean updateWarehouseStock(String orderId, String warehouseId) {
         boolean isSuccess = false;
@@ -1816,13 +1837,12 @@ public class ProjectDB {
         return isSuccess;
     }
 
-    public ArrayList<OrderBean> getWarehouseDeliver(String warehouseId, String warehouseType) {
+    public ArrayList<OrderBean> getWarehouseDeliverCentral(String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<OrderBean> order = new ArrayList<OrderBean>();
         try {
             cnnct = getConnection();
-            if (warehouseType.equals("Central")) {
                 String preQueryStatement = "SELECT sfo.ID, sfo.ShopId, sfo.OrderDate, sfo.Status, COUNT(sfoi.FruitID) AS ItemCount\n"
                         +
                         "FROM shop_fruit_order sfo\n" +
@@ -1831,7 +1851,7 @@ public class ProjectDB {
                         "JOIN shop_city sc ON s.City = sc.ID\n" +
                         "JOIN warehouse w ON sc.CountryRegionID = w.CountryRegionID\n" +
                         "WHERE w.ID = ? AND sfo.Status != 'Pending'\n" +
-                        "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfo.Status;";
+                        "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfo.Status ORDER BY sfo.ID DESC;";
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, warehouseId);
                 ResultSet rs = pStmnt.executeQuery();
@@ -1844,7 +1864,20 @@ public class ProjectDB {
                     ob.setUnit(rs.getString("ItemCount"));
                     order.add(ob);
                 }
-            } else {
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return order;
+    }
+    
+    public ArrayList<OrderBean> getWarehouseDeliverSource(String warehouseId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<OrderBean> order = new ArrayList<OrderBean>();
+        try {
+            cnnct = getConnection();
                 String preQueryStatement = "SELECT sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status, COUNT(sfoi.FruitID) AS ItemCount\n"
                         +
                         "FROM shop_fruit_order sfo\n" +
@@ -1866,7 +1899,6 @@ public class ProjectDB {
                     ob.setUnit(rs.getString("ItemCount"));
                     order.add(ob);
                 }
-            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {

@@ -95,11 +95,6 @@ public class OrderController extends HttpServlet {
         } else if ("process".equalsIgnoreCase(action)) {
             String orderID = request.getParameter("orderID");
             OrderBean order = new OrderBean();
-            if (user.getWarehouseType().equals("Source")) {
-
-            } else {
-                order = db.getOrderByIdCental(orderID);
-            }
 
             int noOfItem = db.getNoOfItemInOrder(orderID);
             int noOfItemHaveStock = db.checkStockCentral(user.getWareHouseId(), orderID);
@@ -126,6 +121,27 @@ public class OrderController extends HttpServlet {
             } else {
                 order = db.getOrderByIdCental(orderID);
             }
+            
+            total = 0;
+            pending = 0;
+            processing = 0;
+            finished = 0;
+            for (OrderBean od : orders) {
+                if (od.getStatus().equals("Pending")) {
+                    pending++;
+                } else if (od.getStatus().equals("Finished")) {
+                    finished++;
+                } else if (od.getStatus().equals("Processing")) {
+                    processing++;
+                }
+                total++;
+            }
+
+            sb.setTotal(Integer.toString(total));
+            sb.setPending(Integer.toString(pending));
+            sb.setProcessing(Integer.toString(processing));
+            sb.setFinished(Integer.toString(finished));
+            request.setAttribute("StatusBean", sb);
 
             request.setAttribute("orderList", orders);
             request.setAttribute("order", order);

@@ -50,34 +50,103 @@ public class DeliveryController extends HttpServlet {
             return;
         }
         
+        ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
+        if (user.getWarehouseType().equals("Source")) {
+            orders = db.getWarehouseDeliverSource(user.getWareHouseId());
+        } else {
+            orders = db.getWarehouseDeliverCentral(user.getWareHouseId());
+        }
+        
+        request.setAttribute("orderList", orders);
+            
+        int total = 0, processing = 0, finished = 0, delivered = 0;
+            
+        for (OrderBean order : orders) {
+            if(order.getStatus().equals("Processing")){
+                processing++;
+            }else if(order.getStatus().equals("Finished")){
+                finished++;
+            }else if(order.getStatus().equals("Delivered")){
+                delivered++;
+            }
+             total++;
+        }
+        
+        StatusBean sb = new StatusBean();
+        sb.setTotal(Integer.toString(total));
+        sb.setProcessing(Integer.toString(processing));
+        sb.setFinished(Integer.toString(finished));
+        sb.setDelivered(Integer.toString(delivered));
+        request.setAttribute("StatusBean", sb);
+        
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
-            ArrayList<OrderBean> orders = db.getWarehouseDeliver(user.getWareHouseId(), user.getWarehouseType());
-            request.setAttribute("orderList", orders);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/delivery.jsp");
+            rd.forward(request, response);
+        } else if ("view".equalsIgnoreCase(action)) {
+            String orderID = request.getParameter("orderID");
+            OrderBean order = new OrderBean();
+            if (user.getWarehouseType().equals("Source")) {
+
+            } else {
+                order = db.getOrderByIdCental(orderID);
+            }
+
+            request.setAttribute("order", order);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/delivery.jsp");
+            rd.forward(request, response);
+        } else if ("delivered".equalsIgnoreCase(action)) {
+            String orderID = request.getParameter("orderID");
+            OrderBean order = new OrderBean();
+
+            if(db.deliveredOrderCentral(orderID)){
+                request.setAttribute("successMsg", "Order: " + orderID + " status have change to Delivered!");
+            } else {
+                request.setAttribute("errorMsg", "Something went wrong to deliver the order: " + orderID + ".");
+            }
             
-            int total = 0, processing = 0, finished = 0, delivered = 0;
+            orders = new ArrayList<OrderBean>();
+            if (user.getWarehouseType().equals("Source")) {
+                orders = db.getWarehouseDeliverSource(user.getWareHouseId());
+            } else {
+                orders = db.getWarehouseDeliverCentral(user.getWareHouseId());
+            }
             
-            for (OrderBean order : orders) {
-                if(order.getStatus().equals("Processing")){
+            if (user.getWarehouseType().equals("Source")) {
+
+            } else {
+                order = db.getOrderByIdCental(orderID);
+            }
+            
+            total = 0;
+            processing = 0;
+            finished = 0;
+            delivered = 0;
+             for (OrderBean od : orders) {
+                if(od.getStatus().equals("Processing")){
                     processing++;
-                }else if(order.getStatus().equals("Finished")){
+                }else if(od.getStatus().equals("Finished")){
                     finished++;
-                }else if(order.getStatus().equals("Delivered")){
+                }else if(od.getStatus().equals("Delivered")){
                     delivered++;
                 }
-                total++;
+                 total++;
             }
-        
-            StatusBean sb = new StatusBean();
+
             sb.setTotal(Integer.toString(total));
             sb.setProcessing(Integer.toString(processing));
             sb.setFinished(Integer.toString(finished));
             sb.setDelivered(Integer.toString(delivered));
             request.setAttribute("StatusBean", sb);
-        
+
+            request.setAttribute("orderList", orders);
+            request.setAttribute("order", order);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/delivery.jsp");
             rd.forward(request, response);
+
         }
     }
 

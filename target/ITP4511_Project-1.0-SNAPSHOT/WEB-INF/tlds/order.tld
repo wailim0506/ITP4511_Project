@@ -19,5 +19,11 @@
       <type>ict.bean.UserBean</type>
       <rtexprvalue>true</rtexprvalue>
     </attribute>
+    <attribute>
+      <name>page</name>
+      <required>true</required>
+      <type>java.lang.String</type>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
 </taglib>

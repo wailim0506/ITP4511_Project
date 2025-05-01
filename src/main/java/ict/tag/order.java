@@ -20,6 +20,7 @@ import ict.bean.*;
 public class order extends SimpleTagSupport{
     private OrderBean orderBean;
     private UserBean userBean;
+    private String page;
     private JspWriter out;
     
     public void setOrderBean(OrderBean orderBean) {
@@ -30,6 +31,14 @@ public class order extends SimpleTagSupport{
     
     public void setUserBean(UserBean userBean) {
         this.userBean = userBean;
+    }
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
     }
     
     public UserBean getUserBean() { return this.userBean; }
@@ -80,10 +89,10 @@ public class order extends SimpleTagSupport{
 
         html.append("</tbody></table>");
         
-        if ("Pending".equals(orderBean.getStatus())) {
-            html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-success\" onclick=\"window.location.href='/ITP4511_Project/Order?action=process&orderID=" + orderBean.getId() + "'\">Accept Order</button></div>");
-        }else if ("Processing".equals(orderBean.getStatus())) {
-            html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-success\" onclick=\"window.location.href='/ITP4511_Project/Order?action=delivered&orderID=" + orderBean.getId() + "'\">Delivered</button></div>");
+        if ("Pending".equals(orderBean.getStatus()) && page.equals("order")) {
+            html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-warning\" onclick=\"window.location.href='/ITP4511_Project/Order?action=process&orderID=" + orderBean.getId() + "'\">Accept Order</button></div>");
+        }else if ("Processing".equals(orderBean.getStatus()) && page.equals("delivery")) {
+            html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-warning\" onclick=\"window.location.href='/ITP4511_Project/Delivery?action=delivered&orderID=" + orderBean.getId() + "'\">Delivered</button></div>");
         }
         
         return html.toString();

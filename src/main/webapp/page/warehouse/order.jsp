@@ -194,7 +194,7 @@
                         OrderBean orderBean = (OrderBean) request.getAttribute("order");
                         if (orderBean != null) {
                     %>
-                        <order:order orderBean="<%=orderBean%>" userBean="<%=ub%>" />
+                        <order:order orderBean="<%=orderBean%>" userBean="<%=ub%>" page="order" />
                     <%
                         } else {
                     %>
