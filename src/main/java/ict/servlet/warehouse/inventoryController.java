@@ -86,7 +86,7 @@ public class inventoryController extends HttpServlet {
             rd.forward(request, response);
         } else if ("update".equalsIgnoreCase(action)) {
             String warehouseId = user.getWareHouseId();
-            ArrayList<String> fruitIdList = db.getAllFruitID();
+            ArrayList<String> fruitIdList = db.getAllFruitIDWarehouse(user.getWareHouseId());
             ArrayList<String> fruitQtyToStoreInDb = new ArrayList<String>();
             for (int i = 0; i < fruitIdList.size(); i++) {
                 String fruitId = fruitIdList.get(i);
@@ -98,12 +98,16 @@ public class inventoryController extends HttpServlet {
                 }
             }
             
+            System.out.println(fruitQtyToStoreInDb.size());
+            
             for (int i = 0; i < fruitQtyToStoreInDb.size(); i++) {
                 String fruitId = fruitIdList.get(i);
                 String fruitQty = fruitQtyToStoreInDb.get(i);
                 if (db.updateWarehouseFruitStock(warehouseId, fruitId, Integer.parseInt(fruitQty))) {
+                    System.out.println("s");
                     continue;
                 } else {
+                    System.out.println("f");
                     session.setAttribute("errorMsg", "Update failed! Please try again.");
                     response.sendRedirect(request.getContextPath() +
                             "/inventory?action=list");

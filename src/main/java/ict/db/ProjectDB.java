@@ -91,6 +91,33 @@ public class ProjectDB {
         }
         return fruitIdList;
     }
+    
+    public ArrayList<String> getAllFruitIDWarehouse(String warehouseId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> fruitIdList = new ArrayList<String>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT wfs.FruitID AS ID\n" +
+                                            "FROM warehouse_fruit_stock wfs\n" +
+                                            "JOIN warehouse w ON w.ID = wfs.WarehouseID\n" +
+                                            "WHERE w.ID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fruitIdList.add(rs.getString("ID"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fruitIdList;
+    }
 
     public ArrayList<FruitsBean> getFruitsByCountryRegion(String id) {
         Connection cnnct = null;
