@@ -25,6 +25,7 @@ ict\servlet\warehouse\inventoryController.class
 ict\bean\FruitsBean.class
 ict\servlet\warehouse\OrderController.class
 ict\test\test.class
+ict\servlet\warehouse\RestockController.class
 ict\util\PasswordCrypto$CryptoResult.class
 ict\servlet\warehouse\WarehouseListController.class
 ict\tag\footer.class

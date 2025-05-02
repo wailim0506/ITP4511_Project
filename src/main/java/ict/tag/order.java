@@ -48,14 +48,13 @@ public class order extends SimpleTagSupport{
         out = getJspContext().getOut();
 
         try {
-            out.print(printOrderCental());
+            out.print(printOrder());
         } catch (java.io.IOException ex) {
             throw new JspException("Error in primeTag tag", ex);
         }
     }
     
-
-    private String printOrderCental() {
+    private String printOrder() {
         StringBuilder html = new StringBuilder();
         html.append("<h4 class=\"orderInfo-fruit-title titleTop\">")
             .append("<i class=\"material-icons card-icon\">receipt_long</i>")

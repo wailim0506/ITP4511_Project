@@ -210,8 +210,6 @@
                     %>
                 </div>
             </div>
-
-
         </div>
 
         <footer:footer userType="warehouse"/>

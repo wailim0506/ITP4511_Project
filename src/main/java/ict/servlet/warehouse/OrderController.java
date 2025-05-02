@@ -83,7 +83,7 @@ public class OrderController extends HttpServlet {
             String orderID = request.getParameter("orderID");
             OrderBean order = new OrderBean();
             if (user.getWarehouseType().equals("Source")) {
-
+                order = db.getOrderByIdSource(user.getWareHouseId(), orderID);
             } else {
                 order = db.getOrderByIdCental(orderID);
             }
@@ -96,17 +96,32 @@ public class OrderController extends HttpServlet {
             String orderID = request.getParameter("orderID");
             OrderBean order = new OrderBean();
 
-            int noOfItem = db.getNoOfItemInOrder(orderID);
-            int noOfItemHaveStock = db.checkStockCentral(user.getWareHouseId(), orderID);
+            if (user.getWarehouseType().equals("Central")) {
+                int noOfItem = db.getNoOfItemInOrder(orderID);
+                int noOfItemHaveStock = db.checkStockCentral(user.getWareHouseId(), orderID);
 
-            if (noOfItem == noOfItemHaveStock) {
-                if(db.updateWarehouseStock(orderID, user.getWareHouseId()) && db.processOrderCentral(orderID) ){
-                    request.setAttribute("successMsg", "Order: " + orderID + " status have change to Processing!");
-                }else{
-                    request.setAttribute("errorMsg", "Fail to process order: " + orderID + ".");
+                if (noOfItem == noOfItemHaveStock) {
+                    if(db.updateWarehouseStock(orderID, user.getWareHouseId()) && db.processOrderCentral(orderID) ){
+                        request.setAttribute("successMsg", "Order: " + orderID + " status have change to Processing!");
+                    }else{
+                        request.setAttribute("errorMsg", "Fail to process order: " + orderID + ".");
+                    }
+                } else {
+                    request.setAttribute("errorMsg", "Not have enought stock to process the order: " + orderID + ". Please restock!");
                 }
-            } else {
-                request.setAttribute("errorMsg", "Not have enought stock to process the order: " + orderID + ". Please restock!");
+            } else if (user.getWarehouseType().equals("Source")) {
+                int noOfItem = db.getNoOfItemInOrderSource(orderID, user.getWareHouseId());
+                int noOfItemHaveStock = db.checkStockCentral(user.getWareHouseId(), orderID);
+                
+                if (noOfItem == noOfItemHaveStock) {
+                    if(db.updateWarehouseStock(orderID, user.getWareHouseId()) && db.processOrderSource(orderID, user.getWareHouseId())){
+                        request.setAttribute("successMsg", "Order: " + orderID + " status have change to Processing!");
+                    }else{
+                        request.setAttribute("errorMsg", "Fail to process order: " + orderID + ".");
+                    }
+                } else {
+                    request.setAttribute("errorMsg", "Not have enought stock to process the order: " + orderID + ". Please restock!");
+                }
             }
             
             orders = new ArrayList<OrderBean>();
@@ -117,7 +132,7 @@ public class OrderController extends HttpServlet {
             }
             
             if (user.getWarehouseType().equals("Source")) {
-
+                order = db.getOrderByIdSource(user.getWareHouseId(), orderID);
             } else {
                 order = db.getOrderByIdCental(orderID);
             }

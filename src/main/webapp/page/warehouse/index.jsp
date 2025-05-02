@@ -122,7 +122,7 @@
                             <i class="material-icons card-icon mb-3">move_to_inbox</i>
                             <h5 class="card-title">Restock</h5>
                             <p class="card-text text-muted">Order from source warehouse</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Restock</a>
+                            <a href="/ITP4511_Project/Restock?action=list" class="btn btn-outline-primary mt-2">Restock</a>
                         </div>
                     </div>
                 </div>
