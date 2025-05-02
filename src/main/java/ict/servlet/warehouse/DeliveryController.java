@@ -88,7 +88,7 @@ public class DeliveryController extends HttpServlet {
             String orderID = request.getParameter("orderID");
             OrderBean order = new OrderBean();
             if (user.getWarehouseType().equals("Source")) {
-
+                order = db.getOrderByIdSource(user.getWareHouseId(), orderID);
             } else {
                 order = db.getOrderByIdCental(orderID);
             }
@@ -101,7 +101,9 @@ public class DeliveryController extends HttpServlet {
             String orderID = request.getParameter("orderID");
             OrderBean order = new OrderBean();
 
-            if(db.deliveredOrderCentral(orderID)){
+            
+            if((user.getWarehouseType().equals("Central"))
+                    ? db.deliveredOrderCentral(orderID):db.deliveredOrderSource(orderID, user.getWareHouseId())){
                 request.setAttribute("successMsg", "Order: " + orderID + " status have change to Delivered!");
             } else {
                 request.setAttribute("errorMsg", "Something went wrong to deliver the order: " + orderID + ".");
@@ -115,7 +117,7 @@ public class DeliveryController extends HttpServlet {
             }
             
             if (user.getWarehouseType().equals("Source")) {
-
+                order = db.getOrderByIdSource(user.getWareHouseId(), orderID);
             } else {
                 order = db.getOrderByIdCental(orderID);
             }

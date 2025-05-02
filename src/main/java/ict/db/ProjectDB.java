@@ -1843,7 +1843,7 @@ public class ProjectDB {
     }
     
     public boolean deliveredOrderCentral(String orderId){
-    boolean isSuccess = false;
+        boolean isSuccess = false;
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
@@ -1851,6 +1851,32 @@ public class ProjectDB {
             String preQueryStatement = "UPDATE shop_fruit_order SET Status = 'Delivered', DeliveryDate = CURRENT_DATE WHERE ID = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, orderId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean deliveredOrderSource(String orderId, String warehouseId){
+        boolean isSuccess = false;
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_order_item sfoi\n" +
+                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "JOIN warehouse w ON f.FruitCityID = w.SourceCity\n" +
+                                            "SET Status = 'Delivered'\n" +
+                                            "WHERE sfoi.OrderID = ? AND w.ID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            pStmnt.setString(2, warehouseId);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
