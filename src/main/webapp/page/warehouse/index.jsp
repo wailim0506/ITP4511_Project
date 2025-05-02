@@ -176,13 +176,6 @@
                     </div>
                 </div>
                 
-                <!-- Empty -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">        
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <footer:footer userType="warehouse"/>
