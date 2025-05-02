@@ -16,7 +16,7 @@
      <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Order - ACER</title>
+        <title>Restock - ACER</title>
         <!-- favicon -->
         <link rel="icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.ico" type="image/x-icon">
@@ -136,7 +136,7 @@
                             <tr>
                                 <th>OrderID</th>
                                 <th>OrderDate</th>
-                                <th>ShopID</th>
+                                <th>WarehouseID</th>
                                 <th>Items</th>
                                 <th>Status</th>
                                 <th>View</th>
@@ -177,7 +177,7 @@
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-outline-info" 
-                                            onclick="window.location.href='${pageContext.request.contextPath}/Order?action=view&orderID=<%=order.getId()%>'">
+                                            onclick="window.location.href='${pageContext.request.contextPath}/Restock?action=view&orderID=<%=order.getId()%>&wID=<%=order.getShopId()%>'">
                                     <i class="material-icons small">visibility</i></button>
                                 </td>
                             </tr>
@@ -195,7 +195,7 @@
                         OrderBean orderBean = (OrderBean) request.getAttribute("order");
                         if (orderBean != null) {
                     %>
-                        <order:order orderBean="<%=orderBean%>" userBean="<%=ub%>" page="order" />
+                        <order:order orderBean="<%=orderBean%>" userBean="<%=ub%>" page="restock" />
                     <%
                         } else {
                     %>

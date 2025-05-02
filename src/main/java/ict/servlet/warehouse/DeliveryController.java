@@ -104,7 +104,7 @@ public class DeliveryController extends HttpServlet {
             
             if((user.getWarehouseType().equals("Central"))
                     ? db.deliveredOrderCentral(orderID):db.deliveredOrderSource(orderID, user.getWareHouseId())){
-                request.setAttribute("successMsg", "Order: " + orderID + " status have change to Delivered!");
+                request.setAttribute("successMsg", "Order: " + orderID + " status has changed to Delivered!");
             } else {
                 request.setAttribute("errorMsg", "Something went wrong to deliver the order: " + orderID + ".");
             }

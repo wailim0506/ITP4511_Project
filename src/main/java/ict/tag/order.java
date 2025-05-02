@@ -92,6 +92,8 @@ public class order extends SimpleTagSupport{
             html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-warning\" onclick=\"window.location.href='/ITP4511_Project/Order?action=process&orderID=" + orderBean.getId() + "'\">Accept Order</button></div>");
         }else if ("Processing".equals(orderBean.getStatus()) && page.equals("delivery")) {
             html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-warning\" onclick=\"window.location.href='/ITP4511_Project/Delivery?action=delivered&orderID=" + orderBean.getId() + "'\">Delivered</button></div>");
+        }else if ("Delivered".equals(orderBean.getStatus()) && page.equals("restock")) {
+            html.append("<div class=\"orderInfo-btn \"><button class=\"btn btn-warning\" onclick=\"window.location.href='/ITP4511_Project/Restock?action=finished&orderID=" + orderBean.getId() + "&wID=" + orderBean.getWarehouseId() + "'\">Finish and Restock</button></div>");
         }
         
         return html.toString();

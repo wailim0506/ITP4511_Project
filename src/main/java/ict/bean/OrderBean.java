@@ -13,10 +13,18 @@ import java.util.ArrayList;
  * @author HwH
  */
 public class OrderBean implements Serializable {
-    private String id, shopId, orderDate, deliveryDate, status, notes;
+    private String id, shopId, orderDate, deliveryDate, status, notes, warehouseId;
     private String fruidId, fruitName, city, countryRegion, imgName, type, unit;
     private int qty;
     private ArrayList<FruitsBean> fb;
+
+    public String getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(String warehouseId) {
+        this.warehouseId = warehouseId;
+    }
 
     public OrderBean() {
     }

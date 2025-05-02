@@ -48,12 +48,7 @@ public class RestockController extends HttpServlet {
         }
         
         ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
-        if (user.getWarehouseType().equals("Source")) {
-            orders = db.getWarehouseOrderSource(user.getWareHouseId());
-        } else {
-            orders = db.getWarehouseOrderCentral(user.getWareHouseId());
-        }
-        
+        orders = db.getOrderFromSource(user.getWarehouseCountry());
         request.setAttribute("orderList", orders);
 
         int total = 0, pending = 0, processing = 0, finished = 0;
@@ -78,6 +73,57 @@ public class RestockController extends HttpServlet {
 
         String action = request.getParameter("action");
         if ("list".equalsIgnoreCase(action)) {
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/restock.jsp");
+            rd.forward(request, response);
+        } else if ("view".equalsIgnoreCase(action)) {
+            String orderID = request.getParameter("orderID");
+            String wareHouseId = request.getParameter("wID");
+            OrderBean order = new OrderBean();
+            order = db.getOrderByIdRestock(wareHouseId, orderID, user.getWarehouseCountry());
+            
+            request.setAttribute("order", order);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/restock.jsp");
+            rd.forward(request, response);
+        } else if ("finished".equalsIgnoreCase(action)) {
+            String orderID = request.getParameter("orderID");
+            String wareHouseId = request.getParameter("wID");
+            OrderBean order = new OrderBean();
+            
+            if(db.upadateOrderFromSource(wareHouseId, orderID) && db.upadateStockFromSource(user.getWareHouseId(), orderID, wareHouseId)){
+                request.setAttribute("successMsg", "Order: " + orderID + "from warehouse: " + wareHouseId + " status has changed to Finished and stock has added!");
+            } else {
+                request.setAttribute("errorMsg", "Something went wrong to finish the order: " + orderID + ".");
+            }
+            
+            order = db.getOrderByIdRestock(wareHouseId, orderID, user.getWarehouseCountry());
+            orders = db.getOrderFromSource(user.getWarehouseCountry());
+            
+            total = 0;
+            pending = 0;
+            processing = 0;
+            finished = 0;
+
+            for (OrderBean od : orders) {
+                if (od.getStatus().equals("Pending")) {
+                    pending++;
+                } else if (od.getStatus().equals("Finished")) {
+                    finished++;
+                } else if (od.getStatus().equals("Processing")) {
+                    processing++;
+                }
+                total++;
+            }
+
+            sb.setTotal(Integer.toString(total));
+            sb.setPending(Integer.toString(pending));
+            sb.setProcessing(Integer.toString(processing));
+            sb.setFinished(Integer.toString(finished));
+            
+            request.setAttribute("StatusBean", sb);
+            request.setAttribute("orderList", orders);
+            request.setAttribute("order", order);
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/warehouse/restock.jsp");
             rd.forward(request, response);
