@@ -15,6 +15,7 @@ ict\servlet\store\reserveFruitConfirmationPageController.class
 ict\servlet\userListController.class
 ict\bean\UserBean.class
 ict\servlet\store\stockController.class
+ict\bean\TotalQtyBean.class
 ict\bean\WarehouseBean.class
 ict\servlet\store\shopListController.class
 hk\edu\ive\itp4511\itp4511_project\resources\JakartaEE10Resource.class

@@ -84,7 +84,71 @@
                     <p><jsp:getProperty name="StatusBean" property="finished"/></p>
                 </div>
             </div>
-
+            
+            <%if(ub.getWarehouseType().equals("Source")){%>
+            <div class="country">
+                <div class="country-data">
+                    <div class="country-data-btn">
+                        <h3>Hong Kong</h3>
+                        <button type="button" class="btn btn-success" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=HK'">Accept All</button>
+                    </div>
+                    <jsp:useBean id="TotalQtyHK" class="java.util.ArrayList" scope="request"/>
+                    <%
+                        if (TotalQtyHK.isEmpty()) {
+                    %>
+                        <p>Currently, there are no orders.</p> 
+                    <%}else{ for (Object obj : TotalQtyHK) {
+                            TotalQtyBean tqb = (TotalQtyBean) obj;
+                    %>
+                    <div class="country-data-qty">
+                        <p><%=tqb.getFruit()%></p>
+                        <p><%=tqb.getTotal()%></p>
+                        <p><%=tqb.getUnit()%></p>
+                    </div>
+                    <%}}%>
+                </div>
+                <div class="country-data">
+                    <div class="country-data-btn">
+                        <h3>Japan</h3>
+                        <button type="button" class="btn btn-success" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=JP'">Accept All</button>
+                    </div>
+                    <jsp:useBean id="TotalQtyJP" class="java.util.ArrayList" scope="request"/>
+                    <%
+                        if (TotalQtyJP.isEmpty()) {
+                    %>
+                        <p>Currently, there are no orders.</p> 
+                    <%}else{ for (Object obj : TotalQtyJP) {
+                            TotalQtyBean tqb = (TotalQtyBean) obj;
+                    %>
+                    <div class="country-data-qty">
+                        <p><%=tqb.getFruit()%></p>
+                        <p><%=tqb.getTotal()%></p>
+                        <p><%=tqb.getUnit()%></p>
+                    </div>
+                    <%}}%>
+                </div>
+                <div class="country-data">
+                    <div class="country-data-btn">
+                        <h3>United States</h3> 
+                        <button type="button" class="btn btn-success" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=US'">Accept All</button>
+                    </div>
+                    <jsp:useBean id="TotalQtyUS" class="java.util.ArrayList" scope="request"/>
+                    <%
+                        if (TotalQtyUS.isEmpty()) {
+                    %>
+                        <p>Currently, there are no orders.</p> 
+                    <%}else{ for (Object obj : TotalQtyUS) {
+                            TotalQtyBean tqb = (TotalQtyBean) obj;
+                    %>
+                    <div class="country-data-qty">
+                        <p><%=tqb.getFruit()%></p>
+                        <p><%=tqb.getTotal()%></p>
+                        <p><%=tqb.getUnit()%></p>
+                    </div>
+                    <%}}%>
+                </div>
+            </div>
+            <%}%>
             <!-- Order filter -->
             <div class="filter">
                 <div class="filter-title">

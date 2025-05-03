@@ -2470,6 +2470,72 @@ public class ProjectDB {
         return isSuccess;
     }
 
+    
+    public boolean processOrderAcceptAll(String warehouseId, String country) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_order_item sfoi\n" +
+                                            "JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "JOIN shop_city sc ON s.City = sc.ID\n" +
+                                            "SET sfoi.Status = 'Processing'\n" +
+                                            "WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = 'Pending';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            pStmnt.setString(2, country);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean upadateOrderAcceptAll(String warehouseId, String country) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE warehouse_fruit_stock wfs\n" +
+                                            "INNER JOIN (\n" +
+                                            "    SELECT f.ID AS fruitID, SUM(sfoi.Qty) AS Total, f.unit\n" +
+                                            "    FROM shop_fruit_order_item sfoi\n" +
+                                            "    JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "    JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "    JOIN shop_city sc ON sc.ID = s.City\n" +
+                                            "    JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "    JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                                            "    WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = 'Pending'\n" +
+                                            "    GROUP BY f.ID, f.unit\n" +
+                                            ") AS s ON s.fruitID = wfs.FruitID\n" +
+                                            "SET wfs.Qty = wfs.Qty - s.Total\n" +
+                                            "WHERE wfs.WarehouseID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            pStmnt.setString(2, country);
+            pStmnt.setString(3, warehouseId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
     public boolean upadateStockFromSource(String centralId, String orderId, String sourceId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2497,6 +2563,105 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return isSuccess;
+    }
+    
+    public ArrayList<TotalQtyBean> getTotalQtyByCountry(String warehouseId, String country, String status) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<TotalQtyBean> tqbList = new ArrayList<TotalQtyBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT f.Name, SUM(sfoi.Qty) AS Total, f.unit\n" +
+                                            "FROM shop_fruit_order_item sfoi\n" +
+                                            "JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "JOIN shop_city sc ON sc.ID = s.City\n" +
+                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                                            "WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = ? \n" +
+                                            "GROUP BY f.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            pStmnt.setString(2, country);
+            pStmnt.setString(3, status);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                TotalQtyBean tqb = new TotalQtyBean();
+                tqb.setFruit(rs.getString("Name"));
+                tqb.setTotal(rs.getString("Total"));
+                tqb.setUnit(rs.getString("unit"));
+                tqbList.add(tqb);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return tqbList;  
+    }
+    
+    public int checkStockAcceptAll(String warehouseId, String country) {
+        int itemCount = 0;
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT f.Name, SUM(sfoi.Qty) AS Total, wfs.Qty\n" +
+                                            "FROM shop_fruit_order_item sfoi\n" +
+                                            "JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "JOIN shop_city sc ON sc.ID = s.City\n" +
+                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                                            "JOIN warehouse_fruit_stock wfs ON wfs.WarehouseID = w.ID\n" +
+                                            "WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = 'Pending'\n" +
+                                            "GROUP BY f.ID\n" +
+                                            "HAVING wfs.Qty > Total;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            pStmnt.setString(2, country);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                itemCount++;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return itemCount;
+    }
+    
+    public int checkStockAcceptAllGetTotalItem(String warehouseId, String country) {
+        int itemCount = 0;
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT f.Name, SUM(sfoi.Qty) AS Total, f.unit\n" +
+                                            "FROM shop_fruit_order_item sfoi\n" +
+                                            "JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "JOIN shop_city sc ON sc.ID = s.City\n" +
+                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                                            "WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = 'Pending' \n" +
+                                            "GROUP BY f.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            pStmnt.setString(2, country);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                itemCount++;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return itemCount;
     }
 
 }
