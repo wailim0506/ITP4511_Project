@@ -2451,7 +2451,7 @@ public class ProjectDB {
                     "JOIN shop s ON s.ID = sfo.ShopID\n" +
                     "JOIN shop_city sc ON s.City = sc.ID\n" +
                     "JOIN country_region cr ON cr.ID = sc.CountryRegionID\n" +
-                    "WHERE cr.Name = ?\n" +
+                    "WHERE cr.Name = ? AND sfoi.status != 'Pending' \n" +
                     "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, centralLocation);
@@ -2487,6 +2487,33 @@ public class ProjectDB {
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             pStmnt.setString(2, orderId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean upadateAllOrderFromSource(String country) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_order_item sfoi\n" +
+                                            "JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "JOIN shop s ON sfo.ShopID = s.ID\n" +
+                                            "JOIN shop_city sc ON s.City = sc.ID\n" +
+                                            "JOIN country_region cr ON sc.CountryRegionID = cr.ID\n" +
+                                            "SET sfoi.Status = 'Finished'\n" +
+                                            "WHERE cr.Name = ? AND sfoi.Status = 'Delivered';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, country);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -2594,6 +2621,42 @@ public class ProjectDB {
         return isSuccess;
     }
     
+    public boolean upadateAllStockFromSource(String country, String warehouseId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE warehouse_fruit_stock wfs\n" +
+                                            "INNER JOIN (\n" +
+                                            "    SELECT f.ID AS fruitID, SUM(sfoi.Qty) AS Total, f.unit\n" +
+                                            "    FROM shop_fruit_order_item sfoi\n" +
+                                            "    JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "    JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "    JOIN shop_city sc ON sc.ID = s.City\n" +
+                                            "    JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "    JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                                            "    JOIN country_region cr ON sc.CountryRegionID = cr.ID\n" +
+                                            "    WHERE cr.Name = ? AND sfoi.Status = 'Delivered'\n" +
+                                            "    GROUP BY f.ID, f.unit\n" +
+                                            ") AS s ON s.fruitID = wfs.FruitID\n" +
+                                            "SET wfs.Qty = wfs.Qty + s.Total\n" +
+                                            "WHERE wfs.WarehouseID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, country);
+            pStmnt.setString(2, warehouseId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
     public ArrayList<TotalQtyBean> getTotalQtyByCountry(String warehouseId, String country, String status) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2681,6 +2744,38 @@ public class ProjectDB {
             pStmnt.setString(1, warehouseId);
             pStmnt.setString(2, country);
             pStmnt.setString(3, status);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                itemCount++;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return itemCount;
+    }
+    
+    public int getQtyOfDeliveredOrder(String country) {
+        int itemCount = 0;
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT sfo.ID, w.ID AS warehouseID, sfo.OrderDate, sfoi.Status, COUNT(sfoi.FruitID) AS ItemCount\n" +
+                                            "FROM shop_fruit_order sfo\n" +
+                                            "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
+                                            "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
+                                            "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
+                                            "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
+                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "JOIN shop_city sc ON s.City = sc.ID\n" +
+                                            "JOIN country_region cr ON cr.ID = sc.CountryRegionID\n" +
+                                            "WHERE cr.Name = ? AND sfoi.status = 'Delivered' \n" +
+                                            "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, country);
             ResultSet rs = pStmnt.executeQuery();
             while (rs.next()) {
                 itemCount++;

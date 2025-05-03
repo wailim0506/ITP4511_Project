@@ -72,17 +72,25 @@
                     <h3>Total Order</h3>
                     <p><jsp:getProperty name="StatusBean" property="total"/></p>
                 </div>
-                <div class="status-data statusBule">
-                    <h3>Pending</h3>
-                    <p><jsp:getProperty name="StatusBean" property="pending"/></p>
-                </div>
                 <div class="status-data statusYellow">
                     <h3>Processing</h3>
                     <p><jsp:getProperty name="StatusBean" property="processing"/></p>
                 </div>
+                <div class="status-data statusBule">
+                    <h3>Delivered</h3>
+                    <p><jsp:getProperty name="StatusBean" property="delivered"/></p>
+                </div>
                 <div class="status-data statusGreen">
                     <h3>Finished</h3>
                     <p><jsp:getProperty name="StatusBean" property="finished"/></p>
+                </div>
+            </div>
+                
+            <div class="restockAll">
+                <div class="restockAll-btn">
+                    <h2>Restock all delivered order</h2>
+                    <button type="button" class="btn btn-warning" 
+                                                onclick="window.location.href='${pageContext.request.contextPath}/Restock?action=restockAll'">Restock All</button>
                 </div>
             </div>
 
@@ -100,8 +108,8 @@
                         <i class="material-icons text-muted iconfont">filter_alt</i>
                         <select id="statusFilter" onchange="filterTable()">
                             <option value="">All Status</option>
-                            <option value="Pending">Pending</option>
                             <option value="Processing">Processing</option>
+                            <option value="Delivered">Delivered</option>
                             <option value="Finished">Finished</option>
                         </select>
                     </div>
@@ -157,7 +165,7 @@
                                         String status = order.getStatus();
                                         String statusStyle = "";
 
-                                        if ("pending".equalsIgnoreCase(status)) {
+                                        if ("delivered".equalsIgnoreCase(status)) {
                                             statusStyle = "background-color: rgb(240, 255, 255); color: black;";
                                         } else if ("processing".equalsIgnoreCase(status)) {
                                             statusStyle = "background-color: rgb(250, 250, 51); color: black;";

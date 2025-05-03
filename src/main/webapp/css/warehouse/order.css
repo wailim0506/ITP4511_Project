@@ -53,6 +53,27 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+.restockAll{
+    justify-content: center; 
+    margin-top: 20px; 
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    height: 70px;
+    padding: 13px;
+}
+
+.restockAll-btn{
+    justify-content: center; 
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 55px;
+}
+
+.restockAll-btn button {
+    font-size: 20px;
+}
+
 .country-data-btn {
     display: flex;
     flex-direction: row;
