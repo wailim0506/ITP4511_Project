@@ -29,6 +29,12 @@ $(document).ready(function () {
         $("#recordDetailsModal").modal("show");
     });
 
+    $('.markAsFinishBtn').on('click', function () {
+        if (confirm("Are you sure you want to mark this reserve record as finished?\nThe stock will be added to inventory automatically.")) {
+            window.location.href = "/ITP4511_Project/reserveFruit?action=changeToFinish&Id=" + $(this).data('orderId') + "&shopId=" + $(this).data('shopId');
+        }
+    });
+
     $('.editBtn').on('click', function () {
         var tableRow = $(this).closest('.modal-body').find('tbody tr');
         tableRow.each(function () {

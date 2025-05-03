@@ -55,7 +55,7 @@
                                 <label for="floatingInput">Username</label>
                             </div>
                             <input type="hidden" name="action" value="updateStaffName">
-                            <button class="btn btn-primary btn-sm" type="submit">Change Staff Name</button>
+                            <button class="btn btn-primary btn-sm" type="submit">Change User Name</button>
                         </form>
                         <br/>
                         <form action="/ITP4511_Project/ProfileController" method="GET" onsubmit="return confirmPasswordChange();">

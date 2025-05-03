@@ -29,6 +29,14 @@ $(document).ready(function () {
         $("#recordDetailsModal").modal("show");
     });
 
+    $('.markAsCompleteBtn').on('click', function () {
+        if (confirm("Are you sure you want to mark this borrow request as completed?\nThe stock will be added to inventory automatically.")) {
+            window.location.href = "/ITP4511_Project/borrowRecord?action=changeToComplete&Id=" + $(this).data('orderId') + "&shopId=" + $(this).data('shopId');
+        }
+
+
+    });
+
 
     $('.deleteItemBtn').on('click', function () {
         var row = $(this).closest('tr');

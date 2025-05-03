@@ -15,8 +15,7 @@ $(document).ready(function () {
 
     // Handle reset button
     $("#resetFilterBtn").on("click", function () {
-        $("#userSearch").val("");
-        $("#roleFilter").val("all");
+        window.location.href = '/ITP4511_Project/userList';
     });
 
     // Dark mode functionality is now handled by darkModeControl.js

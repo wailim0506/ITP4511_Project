@@ -99,20 +99,37 @@ public class borrowRequestController extends HttpServlet {
             rd.forward(request, response);
         } else if ("approve".equalsIgnoreCase(action)) {
             String requestId = request.getParameter("requestId");
+            String toShopIdString = request.getParameter("shopId");
             if (requestId == null || requestId.isEmpty()) {
-                session.setAttribute("errorMsg", "Invalid borrow request ID. Please try again.");
-                response.sendRedirect(request.getContextPath() +
-                        "/borrowRequest?action=all");
+                session.setAttribute("errorMsg", "Invalid borrow request ID. Please try gain.");
+                response.sendRedirect(request.getContextPath()
+                        + "/borrowRequest?action=all");
                 return;
             } else {
                 if (db.updateBorrowRequestStatus(requestId, "Approved", "", "")) {
-                    session.setAttribute("successMsg", "Borrow Request (ID: " + requestId + ") Approved.");
-                    response.sendRedirect(request.getContextPath() +
-                            "/borrowRequest?action=all");
+                    ArrayList<BorrowBean> orderItemList = db.getBorrowItemById(requestId);
+                    for (int i = 0; i < orderItemList.size(); i++) {
+                        int OriginalQty = db.getShopFruitStockQty(toShopIdString,
+                                orderItemList.get(i).getFruidId());
+                        int newQty = OriginalQty - orderItemList.get(i).getQty();
+                        if (db.updateShopFruitStock(toShopIdString, orderItemList.get(i).getFruidId(),
+                                newQty)) {
+                            continue;
+                        } else {
+                            session.setAttribute("errorMsg", "Please try again. Stock still not updated.");
+                            response.sendRedirect(request.getContextPath()
+                                    + "/borrowRequest?action=all");
+                            return;
+                        }
+                    }
+                    session.setAttribute("successMsg", "Borrow Request (ID: " + requestId + ") Approved. ");
+                    response.sendRedirect(request.getContextPath()
+                            + "/borrowRequest?action=all");
                 } else {
-                    session.setAttribute("errorMsg", "Failed to approve borrow request. Please try again.");
-                    response.sendRedirect(request.getContextPath() +
-                            "/borrowRequest?action=all");
+                    session.setAttribute("errorMsg",
+                            "Failed to approve borrow request. Please try again. Stock still not updated.");
+                    response.sendRedirect(request.getContextPath()
+                            + "/borrowRequest?action=all");
                 }
             }
         } else if ("reject".equalsIgnoreCase(action)) {
@@ -122,18 +139,18 @@ public class borrowRequestController extends HttpServlet {
 
             if (requestId == null || requestId.isEmpty()) {
                 session.setAttribute("errorMsg", "Invalid borrow request ID. Please try again.");
-                response.sendRedirect(request.getContextPath() +
-                        "/borrowRequest?action=all");
+                response.sendRedirect(request.getContextPath()
+                        + "/borrowRequest?action=all");
                 return;
             } else {
                 if (db.updateBorrowRequestStatus(requestId, "Rejected", reasonSelect, reasonText)) {
                     session.setAttribute("successMsg", "Borrow Request (ID: " + requestId + ") Rejected.");
-                    response.sendRedirect(request.getContextPath() +
-                            "/borrowRequest?action=all");
+                    response.sendRedirect(request.getContextPath()
+                            + "/borrowRequest?action=all");
                 } else {
                     session.setAttribute("errorMsg", "Failed to reject borrow request. Please try again.");
-                    response.sendRedirect(request.getContextPath() +
-                            "/borrowRequest?action=all");
+                    response.sendRedirect(request.getContextPath()
+                            + "/borrowRequest?action=all");
                 }
             }
         } else {

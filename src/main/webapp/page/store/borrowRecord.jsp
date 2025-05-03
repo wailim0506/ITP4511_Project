@@ -212,13 +212,9 @@
                                                     out.println("<i class='material-icons small'>visibility</i>");
                                                     out.println("</a>");
                                                     if (order.getStatus().equals("Approved") && completed.equals("N")) {
-                                                        out.println("<form method='post' action='/ITP4511_Project/borrowFruit'>");
-                                                        out.println("<input type='hidden' name='action' value='markAsCompleted'>");
-                                                        out.println("<input type='hidden' name='id' value='" + order.getId() + "'>");
-                                                        out.println("<button type='submit' class='btn btn-sm btn-outline-success' title='Mark as Completed'>");
+                                                        out.println("<button type='button' data-shop-id='"+ bean.getShopId() + "'class='btn btn-sm btn-outline-success markAsCompleteBtn' data-order-id='"+order.getId()+"' title='Mark as Completed'>");
                                                         out.println("<i class='material-icons small'>check_circle</i>");
                                                         out.println("</button>");
-                                                        out.println("</form>");
                                                     }
                                                     out.println("</div>");
                                                     out.println("</td>");

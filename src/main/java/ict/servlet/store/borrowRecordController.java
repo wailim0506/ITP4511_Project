@@ -66,6 +66,31 @@ public class borrowRecordController extends HttpServlet {
             twoForLoop(borrowList, borrowItemQtyList, borrowItemList);
             request.setAttribute("selectedDateRange", request.getParameter("dateRange"));
             request.setAttribute("selectedStatus", request.getParameter("status"));
+        } else if ("changeToComplete".equalsIgnoreCase(action)) {
+            String orderId = request.getParameter("Id");
+            String shopIdString = request.getParameter("shopId");
+            if (db.changeBorrowStatusToFinish(orderId)) {
+                ArrayList<BorrowBean> orderItemList = db.getBorrowItemById(orderId);
+                for (int i = 0; i < orderItemList.size(); i++) {
+                    int OriginalQty = db.getShopFruitStockQty(shopIdString,
+                            orderItemList.get(i).getFruidId());
+                    int newQty = OriginalQty + orderItemList.get(i).getQty();
+                    if (db.updateShopFruitStock(shopIdString, orderItemList.get(i).getFruidId(), newQty)) {
+                        continue;
+                    } else {
+                        session.setAttribute("errorMsg", "Please try again. Stock still not updated.");
+                        response.sendRedirect(request.getContextPath() + "/borrowRecord?action=listAll");
+                        return;
+                    }
+                }
+                session.setAttribute("successMsg", "Order Status Changed Successfully.");
+                response.sendRedirect(request.getContextPath() + "/borrowRecord?action=listAll");
+                return;
+            } else {
+                session.setAttribute("errorMsg", "Please try again. Stock still not updated.");
+                response.sendRedirect(request.getContextPath() + "/borrowRecord?action=listAll");
+                return;
+            }
         } else {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/error.jsp");

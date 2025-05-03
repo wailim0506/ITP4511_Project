@@ -135,7 +135,7 @@
                                 <a href="${pageContext.request.contextPath}/page/store/index.jsp" class="btn btn-outline-secondary">
                                     <i class="material-icons align-middle me-1 small">home</i> Return to Dashboard
                                 </a>
-                                <a href="#" class="btn btn-primary">
+                                <a href="/ITP4511_Project/reserveRecord?action=listAll" class="btn btn-primary">
                                     <i class="material-icons align-middle me-1 small">bookmark</i> View My Reservations
                                 </a>
                             </div>

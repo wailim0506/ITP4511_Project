@@ -210,13 +210,9 @@
                                                     
                                                     // Add "Mark as Complete" button for Delivered orders
                                                     if (order.getStatus().equals("Delivered")) {
-                                                        out.println("<form method='post' action='/ITP4511_Project/reserveFruit'>");
-                                                        out.println("<input type='hidden' name='action' value='markAsFinish'>");
-                                                        out.println("<input type='hidden' name='id' value='" + order.getId() + "'>");
-                                                        out.println("<button type='submit' class='btn btn-sm btn-outline-success' title='Mark as Finsished'>");
+                                                        out.println("<button type='button' data-shop-id='"+ bean.getShopId() +"' data-order-id='"+order.getId()+"' class='btn btn-sm btn-outline-success markAsFinishBtn' title='Mark as Finished'>");                                                        
                                                         out.println("<i class='material-icons small'>check_circle</i>");
                                                         out.println("</button>");
-                                                        out.println("</form>");
                                                     }
                                                     
                                                     out.println("</div>");

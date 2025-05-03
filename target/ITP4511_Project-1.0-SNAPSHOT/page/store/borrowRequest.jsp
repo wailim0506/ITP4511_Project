@@ -614,6 +614,7 @@
                                 out.println("<form method=\'post\' action=\"/ITP4511_Project/borrowRequest\">");
                                     out.println("<input type=\"hidden\" name=\"action\" value=\"approve\">");
                                     out.println("<input type=\"hidden\" name=\"requestId\" value=\"" + requestId + "\">");
+                                    out.println("<input type=\"hidden\" name=\"shopId\" value=\"" + borrowBean.getRequestToShopId() + "\">");
                                     out.println("<button type=\"button\" class=\"btn btn-outline-secondary\" data-bs-dismiss=\"modal\">Cancel</button>");
                                     out.println("<button type=\"submit\" class=\"btn btn-success\" data-bs-dismiss=\"modal\">");
                                         out.println("<i class=\"material-icons align-middle me-1 small\">check</i> Confirm Approval");

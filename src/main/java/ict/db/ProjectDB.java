@@ -91,7 +91,7 @@ public class ProjectDB {
         }
         return fruitIdList;
     }
-    
+
     public ArrayList<String> getAllFruitIDWarehouse(String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -99,9 +99,9 @@ public class ProjectDB {
         try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT wfs.FruitID AS ID\n" +
-                                            "FROM warehouse_fruit_stock wfs\n" +
-                                            "JOIN warehouse w ON w.ID = wfs.WarehouseID\n" +
-                                            "WHERE w.ID = ?;";
+                    "FROM warehouse_fruit_stock wfs\n" +
+                    "JOIN warehouse w ON w.ID = wfs.WarehouseID\n" +
+                    "WHERE w.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             pStmnt.executeQuery();
@@ -734,6 +734,27 @@ public class ProjectDB {
         return orderList;
     }
 
+    public boolean changeOrderStatusToFinish(String orderId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "Update shop_fruit_order SET Status = 'Finished' WHERE ID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
     // for shop_fruit_order
     // for shop_fruit_order_item
     public boolean insertOrderItem(String orderId, String fruitId, int qty) {
@@ -742,11 +763,12 @@ public class ProjectDB {
         boolean isSuccess = false;
         try {
             cnnct = getConnection();
-            String preQueryStatement = "INSERT INTO shop_fruit_order_item (OrderID,FruitID,Qty) VALUES(?,?,?)";
+            String preQueryStatement = "INSERT INTO shop_fruit_order_item (OrderID,FruitID,Qty,Status) VALUES(?,?,?,?)";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, orderId);
             pStmnt.setString(2, fruitId);
             pStmnt.setInt(3, qty);
+            pStmnt.setString(4, "Pending");
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;
@@ -969,6 +991,28 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return shopStockList;
+    }
+
+    public int getShopFruitStockQty(String shopId, String fruitId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int qty = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT Qty FROM shop_fruit_stock WHERE ShopID=? AND FruitID=?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, shopId);
+            pStmnt.setString(2, fruitId);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                qty = rs.getInt("Qty");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return qty;
     }
 
     public boolean updateShopFruitStock(String shopId, String fruitId, int qty) {
@@ -1433,6 +1477,27 @@ public class ProjectDB {
         return isSuccess;
     }
 
+    public boolean changeBorrowStatusToFinish(String orderId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "Update shop_borrow_request SET Completed = 'Y' WHERE ID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, orderId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
     // for shop_borrow_request
 
     // for shop_borrow_request_item
@@ -1816,7 +1881,7 @@ public class ProjectDB {
         }
         return isSuccess;
     }
-    
+
     public boolean processOrderSource(String orderId, String warehouseId) {
         boolean isSuccess = false;
         Connection cnnct = null;
@@ -1824,9 +1889,9 @@ public class ProjectDB {
         try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE shop_fruit_order_item sfoi\n" +
-                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
-                                            "JOIN warehouse w ON f.FruitCityID = w.SourceCity\n" +
-                                            "SET Status = 'Processing' WHERE sfoi.OrderID = ? AND w.ID = ?;";
+                    "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                    "JOIN warehouse w ON f.FruitCityID = w.SourceCity\n" +
+                    "SET Status = 'Processing' WHERE sfoi.OrderID = ? AND w.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, orderId);
             pStmnt.setString(2, warehouseId);
@@ -1841,8 +1906,8 @@ public class ProjectDB {
         }
         return isSuccess;
     }
-    
-    public boolean deliveredOrderCentral(String orderId){
+
+    public boolean deliveredOrderCentral(String orderId) {
         boolean isSuccess = false;
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -1862,18 +1927,18 @@ public class ProjectDB {
         }
         return isSuccess;
     }
-    
-    public boolean deliveredOrderSource(String orderId, String warehouseId){
+
+    public boolean deliveredOrderSource(String orderId, String warehouseId) {
         boolean isSuccess = false;
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE shop_fruit_order_item sfoi\n" +
-                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
-                                            "JOIN warehouse w ON f.FruitCityID = w.SourceCity\n" +
-                                            "SET Status = 'Delivered'\n" +
-                                            "WHERE sfoi.OrderID = ? AND w.ID = ?;";
+                    "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                    "JOIN warehouse w ON f.FruitCityID = w.SourceCity\n" +
+                    "SET Status = 'Delivered'\n" +
+                    "WHERE sfoi.OrderID = ? AND w.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, orderId);
             pStmnt.setString(2, warehouseId);
@@ -1921,27 +1986,27 @@ public class ProjectDB {
         ArrayList<OrderBean> order = new ArrayList<OrderBean>();
         try {
             cnnct = getConnection();
-                String preQueryStatement = "SELECT sfo.ID, sfo.ShopId, sfo.OrderDate, sfo.Status, COUNT(sfoi.FruitID) AS ItemCount\n"
-                        +
-                        "FROM shop_fruit_order sfo\n" +
-                        "JOIN shop s ON s.ID = sfo.ShopId\n" +
-                        "JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID\n" +
-                        "JOIN shop_city sc ON s.City = sc.ID\n" +
-                        "JOIN warehouse w ON sc.CountryRegionID = w.CountryRegionID\n" +
-                        "WHERE w.ID = ? AND sfo.Status != 'Pending'\n" +
-                        "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfo.Status ORDER BY sfo.ID DESC;";
-                pStmnt = cnnct.prepareStatement(preQueryStatement);
-                pStmnt.setString(1, warehouseId);
-                ResultSet rs = pStmnt.executeQuery();
-                while (rs.next()) {
-                    OrderBean ob = new OrderBean();
-                    ob.setId(rs.getString("ID"));
-                    ob.setShopId(rs.getString("ShopId"));
-                    ob.setOrderDate(rs.getString("OrderDate"));
-                    ob.setStatus(rs.getString("Status"));
-                    ob.setUnit(rs.getString("ItemCount"));
-                    order.add(ob);
-                }
+            String preQueryStatement = "SELECT sfo.ID, sfo.ShopId, sfo.OrderDate, sfo.Status, COUNT(sfoi.FruitID) AS ItemCount\n"
+                    +
+                    "FROM shop_fruit_order sfo\n" +
+                    "JOIN shop s ON s.ID = sfo.ShopId\n" +
+                    "JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID\n" +
+                    "JOIN shop_city sc ON s.City = sc.ID\n" +
+                    "JOIN warehouse w ON sc.CountryRegionID = w.CountryRegionID\n" +
+                    "WHERE w.ID = ? AND sfo.Status != 'Pending'\n" +
+                    "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfo.Status ORDER BY sfo.ID DESC;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                OrderBean ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopId"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setUnit(rs.getString("ItemCount"));
+                order.add(ob);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -1949,34 +2014,34 @@ public class ProjectDB {
         }
         return order;
     }
-    
+
     public ArrayList<OrderBean> getWarehouseDeliverSource(String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<OrderBean> order = new ArrayList<OrderBean>();
         try {
             cnnct = getConnection();
-                String preQueryStatement = "SELECT sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status, COUNT(sfoi.FruitID) AS ItemCount\n"
-                        +
-                        "FROM shop_fruit_order sfo\n" +
-                        "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
-                        "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
-                        "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
-                        "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
-                        "WHERE w.ID = ? AND sfoi.Status != 'Pending'\n" +
-                        "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
-                pStmnt = cnnct.prepareStatement(preQueryStatement);
-                pStmnt.setString(1, warehouseId);
-                ResultSet rs = pStmnt.executeQuery();
-                while (rs.next()) {
-                    OrderBean ob = new OrderBean();
-                    ob.setId(rs.getString("ID"));
-                    ob.setShopId(rs.getString("ShopId"));
-                    ob.setOrderDate(rs.getString("OrderDate"));
-                    ob.setStatus(rs.getString("Status"));
-                    ob.setUnit(rs.getString("ItemCount"));
-                    order.add(ob);
-                }
+            String preQueryStatement = "SELECT sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status, COUNT(sfoi.FruitID) AS ItemCount\n"
+                    +
+                    "FROM shop_fruit_order sfo\n" +
+                    "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
+                    "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
+                    "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
+                    "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
+                    "WHERE w.ID = ? AND sfoi.Status != 'Pending'\n" +
+                    "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                OrderBean ob = new OrderBean();
+                ob.setId(rs.getString("ID"));
+                ob.setShopId(rs.getString("ShopId"));
+                ob.setOrderDate(rs.getString("OrderDate"));
+                ob.setStatus(rs.getString("Status"));
+                ob.setUnit(rs.getString("ItemCount"));
+                order.add(ob);
+            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
@@ -2032,7 +2097,7 @@ public class ProjectDB {
         }
         return order;
     }
-    
+
     public OrderBean getOrderByIdSource(String warehouseId, String orderID) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2040,15 +2105,16 @@ public class ProjectDB {
         ArrayList<FruitsBean> fb = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT sfo.ID, sfo.ShopID, sc.City, sfo.OrderDate, sfoi.Qty, sfoi.Status, f.Name, fc.City AS FCity, f.unit, sfo.Notes\n" +
-                                            "FROM shop_fruit_order sfo\n" +
-                                            "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
-                                            "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
-                                            "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
-                                            "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
-                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
-                                            "JOIN shop_city sc ON sc.ID = s.City\n" +
-                                            "WHERE w.ID = ? AND sfo.ID = ?;";
+            String preQueryStatement = "SELECT sfo.ID, sfo.ShopID, sc.City, sfo.OrderDate, sfoi.Qty, sfoi.Status, f.Name, fc.City AS FCity, f.unit, sfo.Notes\n"
+                    +
+                    "FROM shop_fruit_order sfo\n" +
+                    "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
+                    "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
+                    "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
+                    "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
+                    "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                    "JOIN shop_city sc ON sc.ID = s.City\n" +
+                    "WHERE w.ID = ? AND sfo.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             pStmnt.setString(2, orderID);
@@ -2081,7 +2147,7 @@ public class ProjectDB {
         }
         return order;
     }
-    
+
     public OrderBean getOrderByIdRestock(String warehouseId, String orderID, String centralLocation) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2089,16 +2155,17 @@ public class ProjectDB {
         ArrayList<FruitsBean> fb = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT sfo.ID, sfo.ShopID, sc.City, sfo.OrderDate, sfoi.Qty, sfoi.Status, f.Name, fc.City AS FCity, f.unit, sfo.Notes, w.ID AS warehouseId\n" +
-                                            "FROM shop_fruit_order sfo\n" +
-                                            "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
-                                            "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
-                                            "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
-                                            "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
-                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
-                                            "JOIN shop_city sc ON sc.ID = s.City\n" +
-                                            "JOIN country_region cr ON sc.CountryRegionID = cr.ID\n" +
-                                            "WHERE w.ID = ? AND sfo.ID = ? AND cr.Name= ?;";
+            String preQueryStatement = "SELECT sfo.ID, sfo.ShopID, sc.City, sfo.OrderDate, sfoi.Qty, sfoi.Status, f.Name, fc.City AS FCity, f.unit, sfo.Notes, w.ID AS warehouseId\n"
+                    +
+                    "FROM shop_fruit_order sfo\n" +
+                    "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
+                    "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
+                    "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
+                    "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
+                    "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                    "JOIN shop_city sc ON sc.ID = s.City\n" +
+                    "JOIN country_region cr ON sc.CountryRegionID = cr.ID\n" +
+                    "WHERE w.ID = ? AND sfo.ID = ? AND cr.Name= ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             pStmnt.setString(2, orderID);
@@ -2153,7 +2220,7 @@ public class ProjectDB {
         }
         return total;
     }
-    
+
     public int getNoOfItemInOrderSource(String orderId, String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2161,11 +2228,11 @@ public class ProjectDB {
         try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT COUNT(DISTINCT f.ID) AS count\n" +
-                                            "FROM shop_fruit_order_item sfo\n" +
-                                            "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.OrderID\n" +
-                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
-                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
-                                            "WHERE sfo.OrderID = ? AND w.ID = ?;";
+                    "FROM shop_fruit_order_item sfo\n" +
+                    "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.OrderID\n" +
+                    "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                    "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                    "WHERE sfo.OrderID = ? AND w.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, orderId);
             pStmnt.setString(2, warehouseId);
@@ -2180,8 +2247,8 @@ public class ProjectDB {
         }
         return total;
     }
-    
-    //For static bar
+
+    // For static bar
     public ArrayList<WarehouseFruitStockBean> getWarehouseFruitStock(String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2212,8 +2279,8 @@ public class ProjectDB {
         }
         return warehouseStockList;
     }
-    
-    //For the stock list
+
+    // For the stock list
     public ArrayList<ShopFruitStockBean> getWarehouseStock(String warehouseId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2244,7 +2311,7 @@ public class ProjectDB {
         }
         return shopStockList;
     }
-    
+
     public boolean updateWarehouseFruitStock(String warehouseId, String fruitId, int qty) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2267,7 +2334,7 @@ public class ProjectDB {
         }
         return isSuccess;
     }
-    
+
     public ArrayList<WarehouseBean> getAllWarehouse() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2275,10 +2342,10 @@ public class ProjectDB {
         try {
             cnnct = getConnection();
             String preQueryStatement = "SELECT x.ID, x.PhoneNumber, z.name AS CountryRegionName, x.Type, fc.City\n" +
-                                "FROM warehouse x\n" +
-                                "LEFT JOIN country_region z ON x.CountryRegionID = z.ID\n" +
-                                "LEFT JOIN fruit_city fc ON fc.ID = x.SourceCity\n" +
-                                "ORDER BY x.ID;";
+                    "FROM warehouse x\n" +
+                    "LEFT JOIN country_region z ON x.CountryRegionID = z.ID\n" +
+                    "LEFT JOIN fruit_city fc ON fc.ID = x.SourceCity\n" +
+                    "ORDER BY x.ID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
             while (rs.next()) {
@@ -2297,7 +2364,7 @@ public class ProjectDB {
         }
         return warehouseList;
     }
-    
+
     public ArrayList<String> getAllWarehouseCity() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2317,7 +2384,7 @@ public class ProjectDB {
         }
         return cityList;
     }
-    
+
     public ArrayList<String> getAllWarehouseCountry() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2337,24 +2404,25 @@ public class ProjectDB {
         }
         return countryList;
     }
-    
+
     public ArrayList<OrderBean> getOrderFromSource(String centralLocation) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<OrderBean> order = new ArrayList<OrderBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT sfo.ID, w.ID AS warehouseID, sfo.OrderDate, sfoi.Status, COUNT(sfoi.FruitID) AS ItemCount\n" +
-                                            "FROM shop_fruit_order sfo\n" +
-                                            "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
-                                            "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
-                                            "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
-                                            "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
-                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
-                                            "JOIN shop_city sc ON s.City = sc.ID\n" +
-                                            "JOIN country_region cr ON cr.ID = sc.CountryRegionID\n" +
-                                            "WHERE cr.Name = ?\n" +
-                                            "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
+            String preQueryStatement = "SELECT sfo.ID, w.ID AS warehouseID, sfo.OrderDate, sfoi.Status, COUNT(sfoi.FruitID) AS ItemCount\n"
+                    +
+                    "FROM shop_fruit_order sfo\n" +
+                    "JOIN shop_fruit_order_item sfoi ON sfoi.OrderID = sfo.ID\n" +
+                    "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
+                    "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
+                    "JOIN warehouse w ON w.SourceCity = fc.ID\n" +
+                    "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                    "JOIN shop_city sc ON s.City = sc.ID\n" +
+                    "JOIN country_region cr ON cr.ID = sc.CountryRegionID\n" +
+                    "WHERE cr.Name = ?\n" +
+                    "GROUP BY sfo.ID, sfo.ShopID, sfo.OrderDate, sfoi.Status;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, centralLocation);
             ResultSet rs = pStmnt.executeQuery();
@@ -2374,7 +2442,7 @@ public class ProjectDB {
         }
         return order;
     }
-    
+
     public boolean upadateOrderFromSource(String warehouseId, String orderId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2382,10 +2450,10 @@ public class ProjectDB {
         try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE shop_fruit_order_item sfoi\n" +
-                                            "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
-                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
-                                            "SET sfoi.Status = 'Finished'\n" +
-                                            "WHERE w.ID = ? AND sfoi.OrderID = ?;";
+                    "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
+                    "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                    "SET sfoi.Status = 'Finished'\n" +
+                    "WHERE w.ID = ? AND sfoi.OrderID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             pStmnt.setString(2, orderId);
@@ -2400,7 +2468,7 @@ public class ProjectDB {
         }
         return isSuccess;
     }
-    
+
     public boolean upadateStockFromSource(String centralId, String orderId, String sourceId) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2408,12 +2476,12 @@ public class ProjectDB {
         try {
             cnnct = getConnection();
             String preQueryStatement = "UPDATE warehouse_fruit_stock AS wfs\n" +
-                                            "JOIN shop_fruit_order_item AS oi ON wfs.FruitID = oi.FruitID\n" +
-                                            "JOIN shop_fruit_order AS o ON oi.OrderID = o.ID\n" +
-                                            "JOIN fruit f ON f.ID = oi.FruitID\n" +
-                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
-                                            "SET wfs.Qty = wfs.Qty + oi.Qty\n" +
-                                            "WHERE o.ID = ? AND wfs.WarehouseID = ? AND w.ID = ?;";
+                    "JOIN shop_fruit_order_item AS oi ON wfs.FruitID = oi.FruitID\n" +
+                    "JOIN shop_fruit_order AS o ON oi.OrderID = o.ID\n" +
+                    "JOIN fruit f ON f.ID = oi.FruitID\n" +
+                    "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                    "SET wfs.Qty = wfs.Qty + oi.Qty\n" +
+                    "WHERE o.ID = ? AND wfs.WarehouseID = ? AND w.ID = ?;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, orderId);
             pStmnt.setString(2, centralId);

@@ -144,7 +144,7 @@
                             <i class="material-icons card-icon mb-3">people</i>
                             <h5 class="card-title">User List</h5>
                             <p class="card-text text-muted">View users associated with the system</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View Users</a>
+                            <a href="/ITP4511_Project/userList" class="btn btn-outline-primary mt-2">View Users</a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                             <i class="material-icons card-icon mb-3">account_circle</i>
                             <h5 class="card-title">Profile</h5>
                             <p class="card-text text-muted">View and update profile information</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Go to Profile</a>
+                            <a href="/ITP4511_Project/page/profile.jsp" class="btn btn-outline-primary mt-2">Go to Profile</a>
                         </div>
                     </div>
                 </div>
