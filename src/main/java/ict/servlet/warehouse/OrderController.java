@@ -181,11 +181,15 @@ public class OrderController extends HttpServlet {
 
         } else if ("acceptAll".equalsIgnoreCase(action) && user.getWarehouseType().equals("Source")) {
             String country = request.getParameter("country");
-
+            
+            LocalDate today = LocalDate.now();
+        
+            boolean isFifteenth = today.getDayOfMonth() == 15;
+            boolean isLastDay = today.getDayOfMonth() == today.lengthOfMonth();
             int noOfItem = db.checkStockAcceptAllGetTotalItem(user.getWareHouseId(), country);
             int noOfItemHaveStock = db.checkStockAcceptAll(user.getWareHouseId(), country);
 
-            if(noOfItem != 0){
+            if(noOfItem != 0 && (isFifteenth || isLastDay)){
                 if (noOfItem == noOfItemHaveStock) {
                     if (db.upadateOrderAcceptAll(user.getWareHouseId(), country) && db.processOrderAcceptAll(user.getWareHouseId(), country)) {
                         request.setAttribute("successMsg", "All orders from " + country + " has changed to Processing!");
@@ -195,7 +199,9 @@ public class OrderController extends HttpServlet {
                 } else {
                     request.setAttribute("errorMsg", "Not have enought stock to process the order. Please restock!");
                 }
-            } else {
+            } else if(!isFifteenth || !isLastDay){
+                 request.setAttribute("errorMsg", "Can only process orders on 15th or the last day of the month.");
+            }else{
                 request.setAttribute("errorMsg", "No orders to process!");
             }
 
