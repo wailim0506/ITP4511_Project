@@ -186,7 +186,7 @@ public class OrderController extends HttpServlet {
         
             boolean isFifteenth = today.getDayOfMonth() == 15;
             boolean isLastDay = today.getDayOfMonth() == today.lengthOfMonth();
-            int noOfItem = db.checkStockAcceptAllGetTotalItem(user.getWareHouseId(), country);
+            int noOfItem = db.checkStockAcceptAllGetTotalItem(user.getWareHouseId(), country, "Pending");
             int noOfItemHaveStock = db.checkStockAcceptAll(user.getWareHouseId(), country);
 
             if(noOfItem != 0 && (isFifteenth || isLastDay)){

@@ -53,6 +53,13 @@ public class DeliveryController extends HttpServlet {
         ArrayList<OrderBean> orders = new ArrayList<OrderBean>();
         if (user.getWarehouseType().equals("Source")) {
             orders = db.getWarehouseDeliverSource(user.getWareHouseId());
+            ArrayList<TotalQtyBean> hk = db.getTotalQtyByCountry(user.getWareHouseId(), "HK", "Processing");
+            ArrayList<TotalQtyBean> jp = db.getTotalQtyByCountry(user.getWareHouseId(), "jp", "Processing");
+            ArrayList<TotalQtyBean> us = db.getTotalQtyByCountry(user.getWareHouseId(), "us", "Processing");
+
+            request.setAttribute("TotalQtyHK", hk);
+            request.setAttribute("TotalQtyJP", jp);
+            request.setAttribute("TotalQtyUS", us);
         } else {
             orders = db.getWarehouseDeliverCentral(user.getWareHouseId());
         }
@@ -112,6 +119,13 @@ public class DeliveryController extends HttpServlet {
             orders = new ArrayList<OrderBean>();
             if (user.getWarehouseType().equals("Source")) {
                 orders = db.getWarehouseDeliverSource(user.getWareHouseId());
+                ArrayList<TotalQtyBean> hk = db.getTotalQtyByCountry(user.getWareHouseId(), "HK", "Processing");
+                ArrayList<TotalQtyBean> jp = db.getTotalQtyByCountry(user.getWareHouseId(), "jp", "Processing");
+                ArrayList<TotalQtyBean> us = db.getTotalQtyByCountry(user.getWareHouseId(), "us", "Processing");
+
+                request.setAttribute("TotalQtyHK", hk);
+                request.setAttribute("TotalQtyJP", jp);
+                request.setAttribute("TotalQtyUS", us);
             } else {
                 orders = db.getWarehouseDeliverCentral(user.getWareHouseId());
             }
@@ -149,6 +163,54 @@ public class DeliveryController extends HttpServlet {
             rd = getServletContext().getRequestDispatcher("/page/warehouse/delivery.jsp");
             rd.forward(request, response);
 
+        }else if ("deliverAll".equalsIgnoreCase(action) && user.getWarehouseType().equals("Source")) {
+            String country = request.getParameter("country");
+            int noOfItem = db.checkStockAcceptAllGetTotalItem(user.getWareHouseId(), country, "Processing");
+            
+            if(noOfItem != 0){
+                if(db.deliveredAllOrder(user.getWareHouseId(), country)){
+                    request.setAttribute("successMsg", "All orders from " + country + "status has changed to Delivered!");
+                } else {
+                    request.setAttribute("errorMsg", "Fail to process orders from " + country + ".");
+                }
+            }else{
+                request.setAttribute("errorMsg", "No orders to process!");
+            }
+
+            orders = db.getWarehouseDeliverSource(user.getWareHouseId());
+            ArrayList<TotalQtyBean> hk = db.getTotalQtyByCountry(user.getWareHouseId(), "HK", "Processing");
+            ArrayList<TotalQtyBean> jp = db.getTotalQtyByCountry(user.getWareHouseId(), "jp", "Processing");
+            ArrayList<TotalQtyBean> us = db.getTotalQtyByCountry(user.getWareHouseId(), "us", "Processing");
+
+            request.setAttribute("TotalQtyHK", hk);
+            request.setAttribute("TotalQtyJP", jp);
+            request.setAttribute("TotalQtyUS", us);
+            
+            total = 0;
+            processing = 0;
+            finished = 0;
+            delivered = 0;
+             for (OrderBean od : orders) {
+                if(od.getStatus().equals("Processing")){
+                    processing++;
+                }else if(od.getStatus().equals("Finished")){
+                    finished++;
+                }else if(od.getStatus().equals("Delivered")){
+                    delivered++;
+                }
+                 total++;
+            }
+
+            sb.setTotal(Integer.toString(total));
+            sb.setProcessing(Integer.toString(processing));
+            sb.setFinished(Integer.toString(finished));
+            sb.setDelivered(Integer.toString(delivered));
+            request.setAttribute("StatusBean", sb);
+
+            request.setAttribute("orderList", orders);
+            RequestDispatcher rd;
+            rd = getServletContext().getRequestDispatcher("/page/warehouse/delivery.jsp");
+            rd.forward(request, response);
         }
     }
 

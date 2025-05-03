@@ -1954,6 +1954,35 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+    
+    public boolean deliveredAllOrder(String warehouseId, String country) {
+        boolean isSuccess = false;
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_order_item sfoi\n" +
+                                            "JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID\n" +
+                                            "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
+                                            "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
+                                            "JOIN shop s ON s.ID = sfo.ShopID\n" +
+                                            "JOIN shop_city sc ON s.City = sc.ID\n" +
+                                            "SET sfoi.Status = 'Delivered'\n" +
+                                            "WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = 'Processing';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, warehouseId);
+            pStmnt.setString(2, country);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 
     public boolean updateWarehouseStock(String orderId, String warehouseId) {
         boolean isSuccess = false;
@@ -2633,7 +2662,7 @@ public class ProjectDB {
         return itemCount;
     }
     
-    public int checkStockAcceptAllGetTotalItem(String warehouseId, String country) {
+    public int checkStockAcceptAllGetTotalItem(String warehouseId, String country, String status) {
         int itemCount = 0;
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -2646,11 +2675,12 @@ public class ProjectDB {
                                             "JOIN shop_city sc ON sc.ID = s.City\n" +
                                             "JOIN fruit f ON f.ID = sfoi.FruitID\n" +
                                             "JOIN warehouse w ON w.SourceCity = f.FruitCityID\n" +
-                                            "WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = 'Pending' \n" +
+                                            "WHERE w.ID = ? AND sc.CountryRegionID = ? AND sfoi.Status = ? \n" +
                                             "GROUP BY f.ID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             pStmnt.setString(2, country);
+            pStmnt.setString(3, status);
             ResultSet rs = pStmnt.executeQuery();
             while (rs.next()) {
                 itemCount++;
