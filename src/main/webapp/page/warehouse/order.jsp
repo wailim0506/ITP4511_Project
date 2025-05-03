@@ -90,7 +90,7 @@
                 <div class="country-data">
                     <div class="country-data-btn">
                         <h3>Hong Kong</h3>
-                        <button type="button" class="btn btn-success" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=HK'">Accept All</button>
+                        <button type="button" class="btn btn-warning" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=HK'">Accept All</button>
                     </div>
                     <jsp:useBean id="TotalQtyHK" class="java.util.ArrayList" scope="request"/>
                     <%
@@ -110,7 +110,7 @@
                 <div class="country-data">
                     <div class="country-data-btn">
                         <h3>Japan</h3>
-                        <button type="button" class="btn btn-success" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=JP'">Accept All</button>
+                        <button type="button" class="btn btn-warning" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=JP'">Accept All</button>
                     </div>
                     <jsp:useBean id="TotalQtyJP" class="java.util.ArrayList" scope="request"/>
                     <%
@@ -130,7 +130,7 @@
                 <div class="country-data">
                     <div class="country-data-btn">
                         <h3>United States</h3> 
-                        <button type="button" class="btn btn-success" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=US'">Accept All</button>
+                        <button type="button" class="btn btn-warning" onclick="window.location.href='${pageContext.request.contextPath}/Order?action=acceptAll&country=US'">Accept All</button>
                     </div>
                     <jsp:useBean id="TotalQtyUS" class="java.util.ArrayList" scope="request"/>
                     <%
