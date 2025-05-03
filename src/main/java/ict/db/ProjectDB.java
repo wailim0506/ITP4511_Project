@@ -360,7 +360,7 @@ public class ProjectDB {
                     + "    a.UserID,\n"
                     + "    a.UserName,\n"
                     + "    d.ID AS ShopID,\n"
-                    + "    b.StaffName AS ShopStaffName,\n"
+                    + "    b.StaffName AS ShopStaffName,b.role,\n"
                     + "    d.Address AS ShopAddress,\n"
                     + "    sc.City AS ShopCity,\n"
                     + "    cr_shop.Name AS ShopCountry,\n"
@@ -398,6 +398,7 @@ public class ProjectDB {
                     ub.setShopCity(rs.getString("ShopCity"));
                     ub.setShopCountry(rs.getString("ShopCountry"));
                     ub.setPhone(rs.getString("shopPhone"));
+                    ub.setRole(rs.getString("role"));
                 } // if is warehouse user
                 else if (rs.getString("WarehouseID") != null) {
                     ub = new UserBean();

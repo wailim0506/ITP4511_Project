@@ -32,6 +32,7 @@
         <%
             UserBean bean = (UserBean)session.getAttribute("userInfo");
             String staffName = (String)bean.getStaffName();
+            String role = (String)bean.getRole();
             if (staffName == null) {
                 throw new Exception();
             }
@@ -59,6 +60,8 @@
                     <span class="fw-medium">Shop: <%=shop%>, <%=shopCity%>, <%=shopCountry%> </span>
                     <span class="mx-2 text-muted">|</span>
                     <span class="text-muted mx-2">Staff: <%=staffName %></span>
+                    <span class="text-muted mx-2">Role: <%=role %></span>
+
                 </div>
                 <div id="current-time" class="mt-2 fw-light text-primary"></div>
             </div>
