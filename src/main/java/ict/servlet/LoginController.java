@@ -85,7 +85,8 @@ public class LoginController extends HttpServlet {
                     request.setAttribute("orderList", db.getStatistics(v1, type)); // For order line chart
                     targetURL = "page/warehouse/index.jsp"; // Change to warehouse homepage path
                 } else {
-                    // Handle other user types if needed
+                    // for senior management
+                    session.setAttribute("userType", "seniorManagement");
                     targetURL = "index.jsp";
                     request.setAttribute("errorMsg", "Invalid user type");
                 }

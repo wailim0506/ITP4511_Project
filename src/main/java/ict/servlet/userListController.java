@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Comparator;
+import ict.util.PasswordCrypto;
 
 /**
  *
@@ -56,6 +57,74 @@ public class userListController extends HttpServlet {
         ArrayList<String> warehouseIdList = db.getAllWarehouseId();
         warehouseIdList.sort(Comparator.comparing(String::toString));
         request.setAttribute("warehouseIdList", warehouseIdList);
+
+        String action = request.getParameter("action");
+        if (action != null) {
+            if (action.equals("add")) {
+                String userTypeForAdd = request.getParameter("userType");
+                String userName = request.getParameter("userName");
+                String staffName = request.getParameter("staffName");
+                String password = request.getParameter("password");
+                String role = request.getParameter("role");
+                String placeId = request.getParameter("placeId");
+
+                int userCount = db.getUserCount();
+                String newUserId = "U" + String.format("%03d", userCount + 1);
+                PasswordCrypto.CryptoResult encryptedpassword = null;
+                try {
+                    encryptedpassword = PasswordCrypto.encrypt(password, newUserId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (userTypeForAdd.equals("shop")) {
+                    int newShopStaffId = db.getLastStaffId() + 1;
+                    String newShopStaffIdString = newShopStaffId + "";
+                    if (db.addNewUser(newUserId, userName, encryptedpassword.encryptedText)) {
+                        if (db.addNewShopStaff(newShopStaffIdString, staffName, placeId, newUserId, role)) {
+                            session.setAttribute("successMsg", "User added successfully!");
+                            RequestDispatcher rd;
+                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
+                            rd.forward(request, response);
+                            return;
+                        } else {
+                            session.setAttribute("errorMsg", "Failed to add user!");
+                            RequestDispatcher rd;
+                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
+                            rd.forward(request, response);
+                            return;
+                        }
+                    } else {
+                        session.setAttribute("errorMsg", "Failed to add user!");
+                        RequestDispatcher rd;
+                        rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
+                        rd.forward(request, response);
+                        return;
+                    }
+
+                } else if (userTypeForAdd.equals("warehouse")) {
+                    int newWarehouseStaffId = db.getLastWarehouseStaffId() + 1;
+                    String newWarehouseStaffIdString = newWarehouseStaffId + "";
+                    if (db.addNewUser(newUserId, userName, encryptedpassword.encryptedText)) {
+                        if (db.addNewWarehouseStaff(newWarehouseStaffIdString, staffName, placeId, newUserId, role)) {
+                            session.setAttribute("successMsg", "User added successfully!");
+                            RequestDispatcher rd;
+                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
+                            rd.forward(request, response);
+                            return;
+                        } else {
+                            session.setAttribute("errorMsg", "Failed to add user!");
+                            RequestDispatcher rd;
+                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
+                            rd.forward(request, response);
+                            return;
+                        }
+                    }
+                }
+
+                return;
+            }
+        }
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/userList.jsp");

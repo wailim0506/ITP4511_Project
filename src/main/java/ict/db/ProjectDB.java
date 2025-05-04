@@ -7,6 +7,8 @@ package ict.db;
 import java.io.*;
 import java.sql.*;
 import ict.bean.*;
+import jakarta.persistence.criteria.CriteriaBuilder.In;
+
 import java.time.LocalDate;
 
 import java.util.*;
@@ -368,7 +370,7 @@ public class ProjectDB {
                     + "    c.StaffName AS WarehouseStaffName,\n"
                     + "    cr_warehouse.Name AS WarehouseCountry, \n"
                     + "    f.Type AS WarehouseType, \n"
-                    + "    f.SourceCity AS SourceCity,\n"
+                    + "    f.SourceCity AS SourceCity,c.role AS warehouseRole,\n"
                     + "    fc.City AS SourceCityFullName,\n"
                     + "    f.PhoneNumber AS warehousePhone,\n"
                     + "    d.PhoneNumber AS shopPhone\n"
@@ -411,6 +413,7 @@ public class ProjectDB {
                     ub.setWarehouseSourceCity(rs.getString("SourceCity"));
                     ub.setWarehouseSourceCityFullName(rs.getString("SourceCityFullName"));
                     ub.setPhone(rs.getString("warehousePhone"));
+                    ub.setRole(rs.getString("warehouseRole"));
                 }
             }
             pStmnt.close();
@@ -422,8 +425,105 @@ public class ProjectDB {
         }
         return ub;
     }
+
+    public int getUserCount() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int count = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS num FROM user";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                count = rs.getInt("num");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return count;
+    }
+
+    public boolean addNewUser(String userId, String userName, String pw) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO user VALUES(?,?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, userId);
+            pStmnt.setString(2, userName);
+            pStmnt.setString(3, pw);
+            pStmnt.setString(4, "enable");
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
     // for user table
 
+    // for shop_staff table
+    public int getLastStaffId() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String lastStaffId = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT MAX(ID) AS lastStaffId FROM shop_staff";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                lastStaffId = rs.getString("lastStaffId");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return Integer.parseInt(lastStaffId);
+    }
+
+    public boolean addNewShopStaff(String userId, String staffName, String shopId, String userID, String role) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO shop_staff VALUES(?,?,?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, userId);
+            pStmnt.setString(2, staffName);
+            pStmnt.setString(3, shopId);
+            pStmnt.setString(4, userID);
+            pStmnt.setString(5, role);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
+    // for shop_staff table
     // for shop_fruit_order
     public String getNumberOfOrder() {
         Connection cnnct = null;
@@ -2807,5 +2907,54 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return warehosueIDList;
+    }
+
+    public int getLastWarehouseStaffId() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String lastStaffId = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT MAX(ID) AS lastStaffId FROM warehouse_staff";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                lastStaffId = rs.getString("lastStaffId");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return Integer.parseInt(lastStaffId);
+    }
+
+    public boolean addNewWarehouseStaff(String userId, String staffName, String warehouseId, String userID,
+            String role) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO warehouse_staff VALUES(?,?,?,?,?)";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, userId);
+            pStmnt.setString(2, staffName);
+            pStmnt.setString(3, warehouseId);
+            pStmnt.setString(4, userID);
+            pStmnt.setString(5, role);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
     }
 }

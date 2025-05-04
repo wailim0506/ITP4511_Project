@@ -41,7 +41,33 @@
             String idTitle = (userType.equals("shop"))?"Shop ID":(userType.equals("warehouse"))?"Warehouse ID":"Place ID";
         %>
         <nav:nav userType="<%=userType%>" staffName="<%=ub.getStaffName()%>"/>
-        
+        <%
+            try{
+                String errorMsg = (String) session.getAttribute("errorMsg");
+                if(errorMsg != null && !errorMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + errorMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                    session.removeAttribute("errorMsg");
+                }
+            }catch(Exception e){
+            }  
+
+            try{
+                String successMsg = (String) session.getAttribute("successMsg");
+                if(successMsg != null && !successMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + successMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                    session.removeAttribute("successMsg");
+                }
+            }catch(Exception e){
+            }  
+        %>
         <div class="container py-4">
             <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
@@ -109,11 +135,16 @@
                                     <i class="material-icons align-middle me-1 small">refresh</i>
                                 </button>
                             </div>
-                            <div class="col-md-3 col-sm-12">
-                                <button type="button" id="addUserBtn" class="btn btn-primary w-100">
-                                    <i class="material-icons align-middle me-1 small">person_add</i> Add User
-                                </button>
-                            </div>
+
+                            <%
+                                if (ub.getRole().equals("Manager")) {
+                            %>
+                                <div class="col-md-3 col-sm-12">
+                                    <button type="button" id="addUserBtn" class="btn btn-primary w-100">
+                                        <i class="material-icons align-middle me-1 small">person_add</i> Add User
+                                    </button>
+                                </div>
+                            <% } %>
                         </div>
                     </div>
                     
@@ -160,9 +191,93 @@
             </div>
         </div>
         
+        <!-- Add User Modal -->
+        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h5 class="modal-title" id="addUserModalLabel">
+                            <i class="material-icons align-middle me-2">person_add</i>Add New User
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addUserForm" method="post" action="${pageContext.request.contextPath}/userList?action=add">
+                            <input type="hidden" name="userType" value="<%=userType%>">
+                            <div class="mb-3">
+                                <label for="staffName" class="form-label">Staff Name</label>
+                                <input type="text" class="form-control" id="staffName" name="staffName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userName" class="form-label">User Name</label>
+                                <input type="text" class="form-control" id="userName" name="userName" required>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Role</label>
+                                <select class="form-select" id="role" name="role" required>
+                                    <option value="" selected disabled>Select Role</option>
+                                    <option value="Staff">Staff</option>
+                                    <option value="Manager">Manager</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="placeId" class="form-label"><%=idTitle%></label>
+                                <%
+                                    if (userType.equals("shop") || userType.equals("warehouse")) {
+                                        out.println("<select class='form-select' id='placeId' name='placeId' required readonly >");
+                                    } else {
+                                        out.println("<select class='form-select' id='placeId' name='placeId' required>");
+                                    }
+                                %>
+                                    <option value="" selected disabled>Select <%=idTitle%></option>
+                                    <%
+                                        if (userType.equals("shop")) {
+                                            ArrayList shopIdList = (ArrayList)request.getAttribute("shopIdList");
+                                            for (int i = 0; i < shopIdList.size(); i++) {
+                                                String placeId = (String)shopIdList.get(i);
+                                                if (placeId.equals(ub.getShopId())){
+                                                    out.println("<option selected  value='" + placeId + "'>" + placeId + "</option>");
+                                                }
+                                            }
+                                        } else if (userType.equals("warehouse")) {
+                                            ArrayList warehouseIdList = (ArrayList)request.getAttribute("warehouseIdList");
+                                            for (int i = 0; i < warehouseIdList.size(); i++) {
+                                                String placeId = (String)warehouseIdList.get(i);
+                                                
+                                                if (placeId.equals(ub.getWareHouseId())){
+                                                    out.println("<option selected  value='" + placeId + "'>" + placeId + "</option>");
+                                                }
+                                            }
+                                        }
+                                    %>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" form="addUserForm" class="btn btn-primary">Add User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <footer:footer userType="<%=userType%>"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
         <script src="${pageContext.request.contextPath}/js/userList.js"></script>
+        
+        <script>
+            $(document).ready(function() {
+                // Add user button click handler
+                $("#addUserBtn").click(function() {
+                    $('#addUserModal').modal('show');
+                });
+                
+            });
+        </script>
     </body>
 </html>
