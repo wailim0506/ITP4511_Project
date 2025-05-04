@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  *
@@ -43,6 +44,18 @@ public class userListController extends HttpServlet {
 
         ArrayList<UserBean> userList = db.getAllUser(userType);
         request.setAttribute("userList", userList);
+
+        ArrayList<ShopBean> shopList = db.getAllShop();
+        shopList.sort(Comparator.comparing(ShopBean::getID));
+        ArrayList<String> shopIdList = new ArrayList<>();
+        for (ShopBean shop : shopList) {
+            shopIdList.add(shop.getID());
+        }
+        request.setAttribute("shopIdList", shopIdList);
+
+        ArrayList<String> warehouseIdList = db.getAllWarehouseId();
+        warehouseIdList.sort(Comparator.comparing(String::toString));
+        request.setAttribute("warehouseIdList", warehouseIdList);
 
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/userList.jsp");

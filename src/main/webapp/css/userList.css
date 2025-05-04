@@ -179,6 +179,45 @@
   color: #e9ecef;
 }
 
+/* Dark mode toggle button */
+#darkModeToogle {
+  transition: all 0.3s ease;
+}
+
+[data-bs-theme="light"] #darkModeToogle {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+[data-bs-theme="dark"] #darkModeToogle {
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+
+/* Alert animations */
+.alertDiv {
+  animation: fadeIn 0.5s ease forwards, fadeOut 0.5s ease 4s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    display: none;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .modern-table tbody tr {

@@ -13,6 +13,8 @@ $(document).ready(function () {
     // Handle country filter
     $("#roleFilter").on("change", filterUsers);
 
+    $('#placeIdFilter').on('change', filterUsers);
+
     // Handle reset button
     $("#resetFilterBtn").on("click", function () {
         window.location.href = '/ITP4511_Project/userList';
@@ -24,15 +26,18 @@ $(document).ready(function () {
     function filterUsers() {
         const searchText = $("#userSearch").val().toLowerCase();
         const roleFilter = $("#roleFilter").val();
+        const placeIdFilter = $("#placeIdFilter").val();
 
         $(".user").each(function () {
             const userId = $(this).data("user-id").toLowerCase();
             const role = $(this).data("role");
+            const placeId = $(this).data("place-id");
 
             const matchesSearch = userId.includes(searchText);
             const matchesRole = roleFilter === "all" || role === roleFilter;
+            const matchesPlaceId = placeIdFilter === "all" || placeId === placeIdFilter;
 
-            if (matchesSearch && matchesRole) {
+            if (matchesSearch && matchesRole && matchesPlaceId) {
                 $(this).show();
             } else {
                 $(this).hide();

@@ -6,13 +6,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="ict.bean.*" %>
+<%@page import="java.util.ArrayList" %>
 <%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <%@ taglib uri="/WEB-INF/tlds/profile.tld" prefix="profile" %>
 
 <!DOCTYPE html>
-<html>
+<html id="html" lang="en" data-bs-theme="light">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,15 +57,15 @@
                     <!-- Search and Filter Bar -->
                     <div class="mb-4">
                         <div class="row g-3 mb-3">
-                            <div class="col-md-5 col-sm-12">
+                            <div class="col-md-3 col-sm-12">
                                 <div class="input-group">
                                     <span class="input-group-text border-0 bg-transparent">
                                         <i class="material-icons text-muted">search</i>
                                     </span>
-                                    <input type="text" class="form-control" id="userSearch" placeholder="Search user...">
+                                    <input type="text" class="form-control" id="userSearch" placeholder="Search User by Staff Name">
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-12">
+                            <div class="col-md-2 col-sm-12">
                                 <div class="input-group">
                                     <span class="input-group-text border-0 bg-transparent">
                                         <i class="material-icons text-muted">manage_accounts</i>
@@ -77,9 +78,40 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-3 col-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-text border-0 bg-transparent">
+                                        <i class="material-icons text-muted">place</i>
+                                    </span>
+                                    <select class="form-select" id="placeIdFilter">
+                                        <option value="all" selected><%=idTitle%></option>
+                                        <option value="--" disabled>------------------------------</option>
+                                        <%
+                                            if (userType.equals("shop")) {
+                                                ArrayList shopIdList = (ArrayList)request.getAttribute("shopIdList");
+                                                for (int i = 0; i < shopIdList.size(); i++) {
+                                                    String placeId = (String)shopIdList.get(i);
+                                                    out.println("<option value='" + placeId + "'>" + placeId + "</option>");
+                                                }
+                                            }else if (userType.equals("warehouse")) {
+                                                ArrayList warehouseIdList = (ArrayList)request.getAttribute("warehouseIdList");
+                                                for (int i = 0; i < warehouseIdList.size(); i++) {
+                                                    String placeId = (String)warehouseIdList.get(i);
+                                                    out.println("<option value='" + placeId + "'>" + placeId + "</option>");
+                                                }
+                                            } 
+                                        %>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-1 col-sm-12">
                                 <button type="button" id="resetFilterBtn" class="btn btn-outline-secondary w-100">
                                     <i class="material-icons align-middle me-1 small">refresh</i>
+                                </button>
+                            </div>
+                            <div class="col-md-3 col-sm-12">
+                                <button type="button" id="addUserBtn" class="btn btn-primary w-100">
+                                    <i class="material-icons align-middle me-1 small">person_add</i> Add User
                                 </button>
                             </div>
                         </div>
@@ -108,7 +140,7 @@
                                         String placeId = user.getPlaceId();
 
                                         
-                                        out.println("<tr class='user' data-user-id='" + userId + "' data-role='" + role + "'>");
+                                        out.println("<tr class='user' data-place-id='" +placeId+"'data-user-id='" + staffName + "' data-role='" + role + "'>");
                                         out.println("<td><div class='d-flex align-items-center'><i class='material-icons text-primary me-2'>people</i>" + userId + "</div></td>");
                                         out.println("<td>" + staffName + "</td>");
                                         out.println("<td>" + role + "</td>");
