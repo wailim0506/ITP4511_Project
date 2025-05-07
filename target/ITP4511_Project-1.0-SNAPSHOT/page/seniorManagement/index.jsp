@@ -36,7 +36,7 @@
                 throw new Exception();
             }
         %>
-        <nav:nav userType="shop" staffName="<%=staffName%>"/>
+        <nav:nav userType="seniorManagement" staffName="<%=staffName%>"/>
         <div class="container py-4">
             <!-- Hero Section -->
             <div class="hero-section text-center shadow-sm">
@@ -62,90 +62,44 @@
             
             <!-- Dashboard Cards -->
             <div class="row g-4 py-4">
-                <!-- Reserve Fruit -->
+                
+                <!-- Consumption Report -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">shopping_cart</i>
-                            <h5 class="card-title">Reserve Fruit</h5>
-                            <p class="card-text text-muted">Place reservations for fruits in the next 14 days</p>
-                            <a href="/ITP4511_Project/reserveFruit?action=listAll" class="btn btn-outline-primary mt-2">Go to Reservation</a>
+                            <i class="material-icons card-icon mb-3">bar_chart</i>
+                            <h5 class="card-title">Consumption Report</h5>
+                            <p class="card-text text-muted">View and analyze fruit consumption data</p>
+                            <a href="/ITP4511_Project/report?action=consumption" class="btn btn-outline-primary mt-2">View Reports</a>
                         </div>
                     </div>
                 </div>
                 
-                <!-- My Reservation -->
+                <!-- Manage Fruit Types -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">bookmark</i>
-                            <h5 class="card-title">My Reservations</h5>
-                            <p class="card-text text-muted">View and manage current fruit reservations</p>
-                            <a href="/ITP4511_Project/reserveRecord?action=listAll" class="btn btn-outline-primary mt-2">See Reservations</a>
+                            <i class="material-icons card-icon mb-3">category</i>
+                            <h5 class="card-title">Manage Fruit Types</h5>
+                            <p class="card-text text-muted">Add, edit, or remove fruit types in the system</p>
+                            <a href="/ITP4511_Project/fruitTypes?action=manage" class="btn btn-outline-primary mt-2">Manage Types</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Account Management -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">manage_accounts</i>
+                            <h5 class="card-title">User Account Management</h5>
+                            <p class="card-text text-muted">Manage user roles and permissions</p>
+                            <a href="/ITP4511_Project/users?action=manage" class="btn btn-outline-primary mt-2">Manage Users</a>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Borrowed Fruit -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">swap_horiz</i>
-                            <h5 class="card-title">Borrow Fruit</h5>
-                            <p class="card-text text-muted">Borrow fruits from other shops</p>
-                            <a href="/ITP4511_Project/borrowFruit?action=select" class="btn btn-outline-primary mt-2">Go to Borrow</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Borrow Record -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">history</i>
-                            <h5 class="card-title">Borrow Records</h5>
-                            <p class="card-text text-muted">View and manage your fruit borrowing history</p>
-                            <a href="/ITP4511_Project/borrowRecord?action=listAll" class="btn btn-outline-primary mt-2">View Records</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Borrow Request -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">send</i>
-                            <h5 class="card-title">Borrow Requests</h5>
-                            <p class="card-text text-muted">Handle borrow requests from other shops</p>
-                            <a href="/ITP4511_Project/borrowRequest?action=all" class="btn btn-outline-primary mt-2">Manage Requests</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Stock Management -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">inventory</i>
-                            <h5 class="card-title">Stock Management</h5>
-                            <p class="card-text text-muted">Check and manage shop's fruit inventory</p>
-                            <a href="/ITP4511_Project/stock?action=list" class="btn btn-outline-primary mt-2">View Inventory</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- User List -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card dashboard-card border-0 shadow-sm">
-                        <div class="card-body text-center p-4">
-                            <i class="material-icons card-icon mb-3">people</i>
-                            <h5 class="card-title">User List</h5>
-                            <p class="card-text text-muted">View users associated with the system</p>
-                            <a href="/ITP4511_Project/userList" class="btn btn-outline-primary mt-2">View Users</a>
-                        </div>
-                    </div>
-                </div>
-                
+
                 <!-- Shop List -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
@@ -158,6 +112,18 @@
                     </div>
                 </div>
 
+                <!-- Warehouse List -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">home</i>
+                            <h5 class="card-title">Warehouse List</h5>
+                            <p class="card-text text-muted">View all warehouses in the company network</p>
+                            <a href="/ITP4511_Project/WarehouseList" class="btn btn-outline-primary mt-2">View warehouses</a>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Profile -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
@@ -169,10 +135,10 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
-        <footer:footer userType="shop"/>
+        <footer:footer userType="seniorManagement"/>
         <i id="darkModeToogle" class="material-icons"
         style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
         

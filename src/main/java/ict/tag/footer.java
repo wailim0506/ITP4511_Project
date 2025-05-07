@@ -33,7 +33,7 @@ public class footer extends SimpleTagSupport {
             } else if ("warehouse".equalsIgnoreCase(userType)) {
                 warehouseFooter(out);
             } else {
-
+                seniorManagementFooter(out);
             }
 
             JspFragment f = getJspBody();
@@ -144,6 +144,67 @@ public class footer extends SimpleTagSupport {
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">local_shipping</i>"
                         + "                    <span>Delivery</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/page/profile.jsp\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">person</i>"
+                        + "                    <span>Profile</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "        </nav>"
+                        + "        <!-- Copyright -->"
+                        + "        <div class=\"text-center text-muted small mt-2\">"
+                        + "            <div class=\"d-flex align-items-center justify-content-center\">"
+                        + "                <i class=\"material-icons small me-1\">bakery_dining</i>"
+                        + "                <span>ACER International Bakery</span>"
+                        + "            </div>"
+                        + "            <p class=\"mb-0 mt-1\">&copy; 2025 ACER. All rights reserved.</p>"
+                        + "        </div>"
+                        + "    </div>"
+                        + "</div>");
+    }
+
+    private void seniorManagementFooter(JspWriter out) throws IOException {
+        out.println(
+                "<div class=\"mt-4 py-3\" style=\"border-top: var(--bs-border-width) solid var(--bs-border-color);\">"
+                        + "    <div class=\"container\">"
+                        + "        <!-- Navigation Links -->"
+                        + "        <nav class=\"nav justify-content-center flex-nowrap\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/page/management/index.jsp\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">home</i>"
+                        + "                    <span>Dashboard</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/report?action=consumption\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">bar_chart</i>"
+                        + "                    <span>Consumption Reports</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/fruitTypes?action=manage\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">category</i>"
+                        + "                    <span>Manage Fruit Types</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/users?action=manage\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">manage_accounts</i>"
+                        + "                    <span>User Management</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/shopList\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">storefront</i>"
+                        + "                    <span>Shop List</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/WarehouseList\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">home</i>"
+                        + "                    <span>Warehouse List</span>"
                         + "                </div>"
                         + "            </a>"
                         + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/page/profile.jsp\">"
