@@ -125,7 +125,21 @@
                                                     String placeId = (String)warehouseIdList.get(i);
                                                     out.println("<option value='" + placeId + "'>" + placeId + "</option>");
                                                 }
-                                            } 
+                                            }else{
+                                                ArrayList shopIdList = (ArrayList)request.getAttribute("shopIdList");
+                                                ArrayList warehouseIdList = (ArrayList)request.getAttribute("warehouseIdList");
+                                                out.println("<option value='--' disabled>------------Shop------------</option>");
+                                                for (int i = 0; i < shopIdList.size(); i++) {
+                                                    String placeId = (String)shopIdList.get(i);
+                                                    out.println("<option value='" + placeId + "'>" + placeId + "</option>");
+                                                }
+                                                out.println("<option value='--' disabled>----------Warehouse----------</option>");
+                                                for (int i = 0; i < warehouseIdList.size(); i++) {
+                                                    String placeId = (String)warehouseIdList.get(i);
+                                                    out.println("<option value='" + placeId + "'>" + placeId + "</option>");
+                                                }
+
+                                            }
                                         %>
                                     </select>
                                 </div>
@@ -137,7 +151,7 @@
                             </div>
 
                             <%
-                                if (ub.getRole().equals("Manager")) {
+                                if (ub.getRole().equals("Manager") || ub.getRole().equals("SeniorManagement")) {
                             %>
                                 <div class="col-md-3 col-sm-12">
                                     <button type="button" id="addUserBtn" class="btn btn-primary w-100">
@@ -157,6 +171,11 @@
                                     <th>Staff Name</th>
                                     <th>Role</th>
                                     <th><%=idTitle%></th>
+                                    <%
+                                        if (ub.getRole().equals("Manager") || ub.getRole().equals("SeniorManagement")) {
+                                            out.println("<th>Action</th>");
+                                        }
+                                    %>
                                 </tr>
                             </thead>
                             <tbody>
@@ -176,6 +195,12 @@
                                         out.println("<td>" + staffName + "</td>");
                                         out.println("<td>" + role + "</td>");
                                         out.println("<td>" + placeId + "</td>");
+                                        if (ub.getRole().equals("Manager") || ub.getRole().equals("SeniorManagement")) {
+                                            out.println("<td>"
+                                                            +"<button type='button' class='btn btn-primary btn-sm editUserBtn me-1' data-user-id='" + userId + "'><i class='material-icons'>edit</i></button>"
+                                                            +"<button type='button' class='btn btn-danger btn-sm deleteUserBtn ms-1' data-user-id='" + userId + "'><i class='material-icons'>delete</i></button>"
+                                                        +"</td>");
+                                        }
                                         out.println("</tr>");
                                     }
                                 %>
@@ -195,7 +220,7 @@
         <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header bg-light">
+                    <div class="modal-header">
                         <h5 class="modal-title" id="addUserModalLabel">
                             <i class="material-icons align-middle me-2">person_add</i>Add New User
                         </h5>
@@ -251,20 +276,33 @@
                                                     out.println("<option selected  value='" + placeId + "'>" + placeId + "</option>");
                                                 }
                                             }
+                                        }else{
+                                            ArrayList shopIdList = (ArrayList)request.getAttribute("shopIdList");
+                                            ArrayList warehouseIdList = (ArrayList)request.getAttribute("warehouseIdList");
+                                            out.println("<option value='--' disabled>------------Shop------------</option>");
+                                            for (int i = 0; i < shopIdList.size(); i++) {
+                                                String placeId = (String)shopIdList.get(i);
+                                                out.println("<option value='" + placeId + "'>" + placeId + "</option>");
+                                            }
+                                            out.println("<option value='--' disabled>----------Warehouse----------</option>");
+                                            for (int i = 0; i < warehouseIdList.size(); i++) {
+                                                String placeId = (String)warehouseIdList.get(i);
+                                                out.println("<option value='" + placeId + "'>" + placeId + "</option>");
+                                            }
                                         }
                                     %>
                                 </select>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer bg-light">
+                    <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" form="addUserForm" class="btn btn-primary">Add User</button>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <footer:footer userType="<%=userType%>"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
@@ -276,7 +314,6 @@
                 $("#addUserBtn").click(function() {
                     $('#addUserModal').modal('show');
                 });
-                
             });
         </script>
     </body>

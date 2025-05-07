@@ -70,7 +70,7 @@
                             <i class="material-icons card-icon mb-3">bar_chart</i>
                             <h5 class="card-title">Consumption Report</h5>
                             <p class="card-text text-muted">View and analyze fruit consumption data</p>
-                            <a href="/ITP4511_Project/report?action=consumption" class="btn btn-outline-primary mt-2">View Reports</a>
+                            <a href="#" class="btn btn-outline-primary mt-2">View Reports</a>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                             <i class="material-icons card-icon mb-3">assessment</i>
                             <h5 class="card-title">Reserve Needs Aggregation</h5>
                             <p class="card-text text-muted">View reserve needs by shop/city/country</p>
-                            <a href="/ITP4511_Project/reserveAggregation" class="btn btn-outline-primary mt-2">View Aggregation</a>
+                            <a href="#" class="btn btn-outline-primary mt-2">View Aggregation</a>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                             <i class="material-icons card-icon mb-3">category</i>
                             <h5 class="card-title">Manage Fruit Types</h5>
                             <p class="card-text text-muted">Add, edit, or remove fruit types in the system</p>
-                            <a href="/ITP4511_Project/fruitTypes?action=manage" class="btn btn-outline-primary mt-2">Manage Types</a>
+                            <a href="#" class="btn btn-outline-primary mt-2">Manage Types</a>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                             <i class="material-icons card-icon mb-3">manage_accounts</i>
                             <h5 class="card-title">User Account Management</h5>
                             <p class="card-text text-muted">Manage user roles and permissions</p>
-                            <a href="/ITP4511_Project/users?action=manage" class="btn btn-outline-primary mt-2">Manage Users</a>
+                            <a href="/ITP4511_Project/userList" class="btn btn-outline-primary mt-2">Manage Users</a>
                         </div>
                     </div>
                 </div>

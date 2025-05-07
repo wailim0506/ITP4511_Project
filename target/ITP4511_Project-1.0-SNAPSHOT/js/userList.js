@@ -20,6 +20,13 @@ $(document).ready(function () {
         window.location.href = '/ITP4511_Project/userList';
     });
 
+    $('.deleteUserBtn').on('click', function () {
+        var userId = $(this).data('user-id');
+        if (confirm(`Are you sure you want to delete this user ${userId}?\nThis action cannot be revert.`)) {
+            window.location.href = `/ITP4511_Project/userList?action=del&id=${userId}`;
+        }
+    });
+
     // Dark mode functionality is now handled by darkModeControl.js
 
     // Function to filter shops based on search text and filters

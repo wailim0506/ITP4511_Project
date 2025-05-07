@@ -83,22 +83,16 @@ public class userListController extends HttpServlet {
                     if (db.addNewUser(newUserId, userName, encryptedpassword.encryptedText)) {
                         if (db.addNewShopStaff(newShopStaffIdString, staffName, placeId, newUserId, role)) {
                             session.setAttribute("successMsg", "User added successfully!");
-                            RequestDispatcher rd;
-                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
-                            rd.forward(request, response);
+                            response.sendRedirect(request.getContextPath() + "/userList");
                             return;
                         } else {
                             session.setAttribute("errorMsg", "Failed to add user!");
-                            RequestDispatcher rd;
-                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
-                            rd.forward(request, response);
+                            response.sendRedirect(request.getContextPath() + "/userList");
                             return;
                         }
                     } else {
                         session.setAttribute("errorMsg", "Failed to add user!");
-                        RequestDispatcher rd;
-                        rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
-                        rd.forward(request, response);
+                        response.sendRedirect(request.getContextPath() + "/userList");
                         return;
                     }
 
@@ -108,20 +102,56 @@ public class userListController extends HttpServlet {
                     if (db.addNewUser(newUserId, userName, encryptedpassword.encryptedText)) {
                         if (db.addNewWarehouseStaff(newWarehouseStaffIdString, staffName, placeId, newUserId, role)) {
                             session.setAttribute("successMsg", "User added successfully!");
-                            RequestDispatcher rd;
-                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
-                            rd.forward(request, response);
+                            response.sendRedirect(request.getContextPath() + "/userList");
                             return;
                         } else {
                             session.setAttribute("errorMsg", "Failed to add user!");
-                            RequestDispatcher rd;
-                            rd = getServletContext().getRequestDispatcher("/page/userList.jsp");
-                            rd.forward(request, response);
+                            response.sendRedirect(request.getContextPath() + "/userList");
                             return;
+                        }
+                    }
+                } else {
+                    if (placeId.startsWith("W")) {
+                        int newWarehouseStaffId = db.getLastWarehouseStaffId() + 1;
+                        String newWarehouseStaffIdString = newWarehouseStaffId + "";
+                        if (db.addNewUser(newUserId, userName, encryptedpassword.encryptedText)) {
+                            if (db.addNewWarehouseStaff(newWarehouseStaffIdString, staffName, placeId, newUserId,
+                                    role)) {
+                                session.setAttribute("successMsg", "User added successfully!");
+                                response.sendRedirect(request.getContextPath() + "/userList");
+                                return;
+                            } else {
+                                session.setAttribute("errorMsg", "Failed to add user!");
+                                response.sendRedirect(request.getContextPath() + "/userList");
+                                return;
+                            }
+                        }
+                    } else if (placeId.startsWith("S")) {
+                        int newShopStaffId = db.getLastStaffId() + 1;
+                        String newShopStaffIdString = newShopStaffId + "";
+                        if (db.addNewUser(newUserId, userName, encryptedpassword.encryptedText)) {
+                            if (db.addNewShopStaff(newShopStaffIdString, staffName, placeId, newUserId, role)) {
+                                session.setAttribute("successMsg", "User added successfully!");
+                                response.sendRedirect(request.getContextPath() + "/userList");
+                                return;
+                            } else {
+                                session.setAttribute("errorMsg", "Failed to add user!");
+                                response.sendRedirect(request.getContextPath() + "/userList");
+                                return;
+                            }
                         }
                     }
                 }
 
+                return;
+            } else if (action.equals("del")) {
+                String userId = request.getParameter("id");
+                if (db.disableUser(userId)) {
+                    session.setAttribute("successMsg", "User deleted successfully!");
+                } else {
+                    session.setAttribute("errorMsg", "Failed to delete user!");
+                }
+                response.sendRedirect(request.getContextPath() + "/userList");
                 return;
             }
         }

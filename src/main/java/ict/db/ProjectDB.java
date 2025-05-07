@@ -481,6 +481,27 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+
+    public boolean disableUser(String userId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE user SET Status='disable' WHERE UserID=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, userId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
     // for user table
 
     // for shop_staff table
@@ -1730,7 +1751,7 @@ public class ProjectDB {
                     ub.setPlaceId(rs.getString("ShopID"));
                     userList.add(ub);
                 }
-            } else if (type.equals("manager")) {
+            } else if (type.equals("seniorManagement")) {
                 String preQueryStatement = "SELECT ws.UserID, ws.StaffName, ws.Role, ws.WarehouseID AS PlaceID\n" +
                         "FROM warehouse_staff ws\n" +
                         "JOIN user u ON ws.UserID = u.UserID \n" +
