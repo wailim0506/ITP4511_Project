@@ -196,10 +196,25 @@
                                         out.println("<td>" + role + "</td>");
                                         out.println("<td>" + placeId + "</td>");
                                         if (ub.getRole().equals("Manager") || ub.getRole().equals("SeniorManagement")) {
-                                            out.println("<td>"
+                                            if (ub.getRole().equals("Manager")){
+                                                if (placeId.equals(ub.getShopId()) || placeId.equals(ub.getWareHouseId())){
+                                                    out.println("<td>"
+                                                                +"<button type='button' class='btn btn-primary btn-sm editUserBtn me-1' data-user-id='" + userId + "'><i class='material-icons'>edit</i></button>"
+                                                                +"<button type='button' class='btn btn-danger btn-sm deleteUserBtn ms-1' data-user-id='" + userId + "'><i class='material-icons'>delete</i></button>"
+                                                            +"</td>");
+                                                }else{
+                                                    out.println("<td>"
+                                                                +"<p></p>"
+                                                                +"<p></p>"
+                                                            +"</td>");
+                                                }
+                                            }else{
+                                                out.println("<td>"
                                                             +"<button type='button' class='btn btn-primary btn-sm editUserBtn me-1' data-user-id='" + userId + "'><i class='material-icons'>edit</i></button>"
                                                             +"<button type='button' class='btn btn-danger btn-sm deleteUserBtn ms-1' data-user-id='" + userId + "'><i class='material-icons'>delete</i></button>"
                                                         +"</td>");
+                                            }
+                                            
                                         }
                                         out.println("</tr>");
                                     }
