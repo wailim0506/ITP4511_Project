@@ -15,33 +15,36 @@ import java.io.IOException;
  *
  * @author HwH
  */
-public class profile extends SimpleTagSupport{
+public class profile extends SimpleTagSupport {
     private UserBean userBean;
     private JspWriter out;
     private String type, loc;
-    
+
     public void setUserBean(UserBean userBean) {
         this.userBean = userBean;
     }
-    
-    public UserBean getUserBean() { return this.userBean; }
-    
+
+    public UserBean getUserBean() {
+        return this.userBean;
+    }
+
     @Override
     public void doTag() throws JspException {
         out = getJspContext().getOut();
 
         try {
-            if(userBean.getShopId() != null){     //Shop
+            if (userBean.getShopId() != null) { // Shop
                 shop();
-            }else if(userBean.getWareHouseId() != null){     //Warehouse
+            } else if (userBean.getWareHouseId() != null) { // Warehouse
                 type = userBean.getWarehouseType();
                 loc = (userBean.getWarehouseType().equals("Central")
-                        ? "Country:</b> " + userBean.getWarehouseCountry() 
-                        : "City:</b> " + userBean.getWarehouseSourceCityFullName() +  ", " + userBean.getWarehouseCountry());
+                        ? "Country:</b> " + userBean.getWarehouseCountry()
+                        : "City:</b> " + userBean.getWarehouseSourceCityFullName() + ", "
+                                + userBean.getWarehouseCountry());
                 warehouse();
-            }else{     //Manager
-                type = "Manager";
-            
+            } else { // senior manager
+                seniorManagement();
+
             }
 
             JspFragment f = getJspBody();
@@ -52,21 +55,28 @@ public class profile extends SimpleTagSupport{
             throw new JspException("Error in primeTag tag", ex);
         }
     }
-    
+
     private void warehouse() throws IOException {
         out.println("<p><b>Account Type:</b> Warehouse (" + type + ")</p>\n" +
-"                        <p><b>Warehouse ID:</b> " + userBean.getWareHouseId() + "</p>\n" +
-"                        <p><b>Staff Name:</b> " + userBean.getUserName() + "</p>\n" +
-"                        <p><b>Warehouse Phone:</b> " + userBean.getPhone() + "</p>\n" +
-"                        <p><b>" + loc + "</p>" );
+                "                        <p><b>Warehouse ID:</b> " + userBean.getWareHouseId() + "</p>\n" +
+                "                        <p><b>Staff Name:</b> " + userBean.getUserName() + "</p>\n" +
+                "                        <p><b>Warehouse Phone:</b> " + userBean.getPhone() + "</p>\n" +
+                "                        <p><b>" + loc + "</p>");
     }
-    
+
     private void shop() throws IOException {
         out.println("<p><b>Account Type:</b> Shop</p>\n" +
-"                        <p><b>Shop ID:</b> " + userBean.getShopId() + "</p>\n" +
-"                        <p><b>Staff Name:</b> " + userBean.getUserName() + "</p>\n" +
-"                        <p><b>Shop Phone:</b> " + userBean.getPhone() + "</p>\n" +
-"                        <p><b>Address:</b> " + userBean.getShopAddress() + "</p>\n" +
-"                        <p><b>City:</b> " + userBean.getShopCity() + ", " + userBean.getShopCountry() + "</p>");
+                "                        <p><b>Shop ID:</b> " + userBean.getShopId() + "</p>\n" +
+                "                        <p><b>Staff Name:</b> " + userBean.getUserName() + "</p>\n" +
+                "                        <p><b>Shop Phone:</b> " + userBean.getPhone() + "</p>\n" +
+                "                        <p><b>Address:</b> " + userBean.getShopAddress() + "</p>\n" +
+                "                        <p><b>City:</b> " + userBean.getShopCity() + ", " + userBean.getShopCountry()
+                + "</p>");
+    }
+
+    private void seniorManagement() throws IOException {
+        out.println("<p><b>Account Type:</b> Senior Management</p>\n" +
+                "                        <p><b>Staff Name:</b> " + userBean.getStaffName() + "</p>\n" +
+                "                        <p><b>Role:</b> Senior Management</p>");
     }
 }
