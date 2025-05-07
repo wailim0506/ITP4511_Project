@@ -72,14 +72,16 @@
                     <h4>Edit User Details</h4>
                 </div>
                 
-                <form id="editUserForm" method="post" action="${pageContext.request.contextPath}/userList">
+                <form id="editUserForm" method="post" action="${pageContext.request.contextPath}/editUser">
+                    
+                    <input type="hidden" name="action" value="edit">
+                    <input type="hidden" name="userIdToBeEdit" value="<%=user.getUserId()%>">
+                    <input type="hidden" name="placeType" value="<%=placeType%>">
                     <%
                         if (!userType.equals("seniorManagement")){
                             out.println("<input type=\"hidden\" name=\"placeId\" value=\"" + placeId + "\">");
                         }
                     %>
-                    <input type="hidden" name="action" value="edit">
-                    <input type="hidden" name="userId" value="<%=user.getUserId()%>">
                     
                     
                     <div class="row g-3 formSection">

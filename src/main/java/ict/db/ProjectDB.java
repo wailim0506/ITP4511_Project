@@ -624,6 +624,54 @@ public class ProjectDB {
         return isSuccess;
     }
 
+    public String getShopStaffIdByUserId(String uId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String staffId = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT ID FROM shop_staff WHERE UserID=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, uId);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                staffId = rs.getString("ID");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return staffId;
+    }
+
+    public boolean updateShopStaff(String staffId, String staffName, String role, String shopId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_staff SET StaffName=?, Role=?, ShopID=? WHERE ID=?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, staffName);
+            pStmnt.setString(2, role);
+            pStmnt.setString(3, shopId);
+            pStmnt.setString(4, staffId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
     // for shop_staff table
     // for shop_fruit_order
     public String getNumberOfOrder() {
@@ -3047,6 +3095,51 @@ public class ProjectDB {
             pStmnt.setString(3, warehouseId);
             pStmnt.setString(4, userID);
             pStmnt.setString(5, role);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+
+    public String getWarehouseStaffIdByUserId(String userId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String staffId = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT ID FROM warehouse_staff WHERE UserID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, userId);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                staffId = rs.getString("ID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return staffId;
+    }
+
+    public boolean updateWarehouseStaff(String staffId, String staffName, String role, String warehouseId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE warehouse_staff SET StaffName = ?, Role = ?, WarehouseID = ? WHERE ID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, staffName);
+            pStmnt.setString(2, role);
+            pStmnt.setString(3, warehouseId);
+            pStmnt.setString(4, staffId);
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;

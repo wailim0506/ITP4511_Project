@@ -69,8 +69,50 @@ public class editUserController extends HttpServlet {
             RequestDispatcher rd;
             rd = getServletContext().getRequestDispatcher("/page/editUser.jsp");
             rd.forward(request, response);
-        }
+        } else if (action.equals("edit")) {
+            String userIdToBeEdit = request.getParameter("userIdToBeEdit");
+            String placeType = request.getParameter("placeType");
+            String placeId = request.getParameter("placeId");
+            String staffName = request.getParameter("staffName");
+            String roleString = request.getParameter("role");
 
+            if (placeType.equals("warehouse")) {
+                String staffId = db.getWarehouseStaffIdByUserId(userIdToBeEdit);
+                if (staffId != null) {
+                    if (db.updateWarehouseStaff(staffId, staffName, roleString, placeId)) {
+                        session.setAttribute("successMsg", "Update successful");
+                        response.sendRedirect(request.getContextPath() + "/userList");
+                        return;
+                    } else {
+                        session.setAttribute("errorMsg", "Update failed");
+                        response.sendRedirect(request.getContextPath() + "/userList");
+                        return;
+                    }
+                } else {
+                    session.setAttribute("errorMsg", "Update failed");
+                    response.sendRedirect(request.getContextPath() + "/userList");
+                    return;
+                }
+
+            } else if (placeType.equals("shop")) {
+                String staffId = db.getShopStaffIdByUserId(userIdToBeEdit);
+                if (staffId != null) {
+                    if (db.updateShopStaff(staffId, staffName, roleString, placeId)) {
+                        session.setAttribute("successMsg", "Update successful");
+                        response.sendRedirect(request.getContextPath() + "/userList");
+                        return;
+                    } else {
+                        session.setAttribute("errorMsg", "Update failed");
+                        response.sendRedirect(request.getContextPath() + "/userList");
+                        return;
+                    }
+                } else {
+                    session.setAttribute("errorMsg", "Update failed");
+                    response.sendRedirect(request.getContextPath() + "/userList");
+                    return;
+                }
+            }
+        }
     }
 
     @Override
