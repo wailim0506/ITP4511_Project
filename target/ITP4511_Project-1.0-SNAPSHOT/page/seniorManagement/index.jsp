@@ -75,6 +75,18 @@
                     </div>
                 </div>
                 
+                <!-- Reserve Needs Aggregation -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card dashboard-card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <i class="material-icons card-icon mb-3">assessment</i>
+                            <h5 class="card-title">Reserve Needs Aggregation</h5>
+                            <p class="card-text text-muted">View reserve needs by shop/city/country</p>
+                            <a href="/ITP4511_Project/reserveAggregation" class="btn btn-outline-primary mt-2">View Aggregation</a>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Manage Fruit Types -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
