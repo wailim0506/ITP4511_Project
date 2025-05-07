@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 27, 2025 at 01:14 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: May 07, 2025 at 07:43 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -306,6 +306,26 @@ INSERT INTO `fruit_city` (`ID`, `City`, `CountryRegionID`) VALUES
 ('003', 'Vancouver', 'CA'),
 ('004', 'Guangzhou', 'CN'),
 ('005', 'Sydney', 'AU');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `senior_management_staff`
+--
+
+CREATE TABLE `senior_management_staff` (
+  `ID` char(3) NOT NULL,
+  `StaffName` varchar(50) NOT NULL,
+  `UserID` char(5) NOT NULL,
+  `Role` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `senior_management_staff`
+--
+
+INSERT INTO `senior_management_staff` (`ID`, `StaffName`, `UserID`, `Role`) VALUES
+('001', 'Michael', 'U013', 'SeniorManagement');
 
 -- --------------------------------------------------------
 
@@ -2187,7 +2207,8 @@ INSERT INTO `user` (`UserID`, `UserName`, `Password`, `Status`) VALUES
 ('U009', 'User 9', 'RebUbDA5nlNAPwGQo/UDXA==', 'enable'),
 ('U010', 'User 10', 'spOSY/FVyHoezdUEiQcpfA==', 'enable'),
 ('U011', 'User 11', 'STCVmUCH5jT5TpaD+5vUHA==', 'enable'),
-('U012', 'User 12', 'Issk9+Q7xFJmeT5FEtZrwA==', 'enable');
+('U012', 'User 12', 'Issk9+Q7xFJmeT5FEtZrwA==', 'enable'),
+('U013', 'User 13', 'Tt7oaoM86dM7RuVnK9O7bg==', 'enable');
 
 -- --------------------------------------------------------
 
@@ -2312,6 +2333,13 @@ ALTER TABLE `fruit_city`
   ADD KEY `country_region_fk` (`CountryRegionID`);
 
 --
+-- Indexes for table `senior_management_staff`
+--
+ALTER TABLE `senior_management_staff`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `UserID_fk` (`UserID`);
+
+--
 -- Indexes for table `shop`
 --
 ALTER TABLE `shop`
@@ -2413,6 +2441,12 @@ ALTER TABLE `fruit`
 --
 ALTER TABLE `fruit_city`
   ADD CONSTRAINT `country_region_fk` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
+
+--
+-- Constraints for table `senior_management_staff`
+--
+ALTER TABLE `senior_management_staff`
+  ADD CONSTRAINT `UserID_fk` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
 
 --
 -- Constraints for table `shop`

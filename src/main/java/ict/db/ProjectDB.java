@@ -373,10 +373,13 @@ public class ProjectDB {
                     + "    f.SourceCity AS SourceCity,c.role AS warehouseRole,\n"
                     + "    fc.City AS SourceCityFullName,\n"
                     + "    f.PhoneNumber AS warehousePhone,\n"
-                    + "    d.PhoneNumber AS shopPhone\n"
+                    + "    d.PhoneNumber AS shopPhone,r.ID AS SMID,\n" +
+                    "    r.StaffName AS SMStaffName,\n" +
+                    "    r.Role AS SMRole\n"
                     + "FROM user a\n"
                     + "LEFT JOIN shop_staff b ON a.UserID = b.UserID\n"
                     + "LEFT JOIN warehouse_staff c ON a.UserID = c.UserID\n"
+                    + "LEFT JOIN senior_management_staff r ON a.UserID = r.UserID\n"
                     + "LEFT JOIN shop d ON b.ShopID = d.ID\n"
                     + "LEFT JOIN shop_city sc ON d.City = sc.ID\n"
                     + "LEFT JOIN country_region cr_shop ON sc.CountryRegionID = cr_shop.ID\n"
@@ -414,6 +417,12 @@ public class ProjectDB {
                     ub.setWarehouseSourceCityFullName(rs.getString("SourceCityFullName"));
                     ub.setPhone(rs.getString("warehousePhone"));
                     ub.setRole(rs.getString("warehouseRole"));
+                } else { // senior management
+                    ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setUserName(rs.getString("UserName"));
+                    ub.setStaffName(rs.getString("SMStaffName"));
+                    ub.setRole(rs.getString("SMRole"));
                 }
             }
             pStmnt.close();

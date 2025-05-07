@@ -87,8 +87,7 @@ public class LoginController extends HttpServlet {
                 } else {
                     // for senior management
                     session.setAttribute("userType", "seniorManagement");
-                    targetURL = "index.jsp";
-                    request.setAttribute("errorMsg", "Invalid user type");
+                    targetURL = "page/seniorManagement/index.jsp";
                 }
             } else {
                 targetURL = "index.jsp";

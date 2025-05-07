@@ -22,7 +22,7 @@ public class passwordTestingTool {
                 try {
                         // Encrypt with different IV lengths
                         PasswordCrypto.CryptoResult result1 = PasswordCrypto.encrypt("123456",
-                                        "U012");
+                                        "U013");
                         System.out.println("Encrypted Text 1: " + result1.encryptedText);
                         System.out.println("IV 1: " + result1.iv);
 
