@@ -435,6 +435,77 @@ public class ProjectDB {
         return ub;
     }
 
+    public UserBean getUserDetailForEdit(String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        UserBean ub = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT \n"
+                    + "    a.UserID,\n"
+                    + "    a.UserName,\n"
+                    + "    d.ID AS ShopID,\n"
+                    + "    b.StaffName AS ShopStaffName,b.role,\n"
+                    + "    d.Address AS ShopAddress,\n"
+                    + "    sc.City AS ShopCity,\n"
+                    + "    cr_shop.Name AS ShopCountry,\n"
+                    + "    f.ID AS WarehouseID,\n"
+                    + "    c.StaffName AS WarehouseStaffName,\n"
+                    + "    cr_warehouse.Name AS WarehouseCountry, \n"
+                    + "    f.Type AS WarehouseType, \n"
+                    + "    f.SourceCity AS SourceCity,c.role AS warehouseRole,\n"
+                    + "    fc.City AS SourceCityFullName,\n"
+                    + "    f.PhoneNumber AS warehousePhone,\n"
+                    + "    d.PhoneNumber AS shopPhone,r.ID AS SMID,\n" +
+                    "    r.StaffName AS SMStaffName,\n" +
+                    "    r.Role AS SMRole\n"
+                    + "FROM user a\n"
+                    + "LEFT JOIN shop_staff b ON a.UserID = b.UserID\n"
+                    + "LEFT JOIN warehouse_staff c ON a.UserID = c.UserID\n"
+                    + "LEFT JOIN senior_management_staff r ON a.UserID = r.UserID\n"
+                    + "LEFT JOIN shop d ON b.ShopID = d.ID\n"
+                    + "LEFT JOIN shop_city sc ON d.City = sc.ID\n"
+                    + "LEFT JOIN country_region cr_shop ON sc.CountryRegionID = cr_shop.ID\n"
+                    + "LEFT JOIN warehouse f ON c.WarehouseID = f.ID\n"
+                    + "LEFT JOIN country_region cr_warehouse ON f.CountryRegionID = cr_warehouse.ID\n"
+                    + "LEFT JOIN fruit_city fc ON f.SourceCity = fc.ID\n"
+                    + "WHERE a.UserID = ? AND a.Status = 'enable' ORDER BY a.UserID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                if (rs.getString("ShopID") != null) {
+                    ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setStaffName(rs.getString("ShopStaffName"));
+                    ub.setShopId(rs.getString("ShopID"));
+                    ub.setRole(rs.getString("role"));
+                } // if is warehouse user
+                else if (rs.getString("WarehouseID") != null) {
+                    ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setStaffName(rs.getString("WarehouseStaffName"));
+                    ub.setWareHouseId(rs.getString("WarehouseID"));
+                    ub.setRole(rs.getString("warehouseRole"));
+                } else { // senior management
+                    ub = new UserBean();
+                    ub.setUserId(rs.getString("UserID"));
+                    ub.setUserName(rs.getString("UserName"));
+                    ub.setStaffName(rs.getString("SMStaffName"));
+                    ub.setRole(rs.getString("SMRole"));
+                }
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return ub;
+    }
+
     public int getUserCount() {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;

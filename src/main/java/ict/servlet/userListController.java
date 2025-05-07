@@ -153,6 +153,10 @@ public class userListController extends HttpServlet {
                 }
                 response.sendRedirect(request.getContextPath() + "/userList");
                 return;
+            } else if (action.equals("edit")) {
+                String userId = request.getParameter("id");
+                response.sendRedirect(request.getContextPath() + "/editUser?action=list&id=" + userId);
+                return;
             }
         }
 

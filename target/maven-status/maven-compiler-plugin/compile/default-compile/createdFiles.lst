@@ -18,6 +18,7 @@ ict/servlet/LoginController.class
 ict/tag/order.class
 ict/servlet/store/shopListController.class
 ict/bean/OrderBean.class
+ict/servlet/editUserController.class
 ict/bean/UserBean.class
 ict/servlet/warehouse/inventoryController.class
 ict/servlet/ProfileController.class

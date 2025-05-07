@@ -27,6 +27,11 @@ $(document).ready(function () {
         }
     });
 
+    $('.editUserBtn').on('click', function () {
+        var userId = $(this).data('user-id');
+        window.location.href = `/ITP4511_Project/userList?action=edit&id=${userId}`;
+    });
+
     // Dark mode functionality is now handled by darkModeControl.js
 
     // Function to filter shops based on search text and filters
