@@ -85,12 +85,6 @@
                     
                     
                     <div class="row g-3 formSection">
-                        <div class="col-12">
-                            <div class="d-flex align-items-center mb-3">
-                                <i class="material-icons text-muted me-2">info</i>
-                                <h5 class="mb-0">Basic Information</h5>
-                            </div>
-                        </div>
                         
                         <div class="col-md-6">
                             <div class="form-floating mb-3">

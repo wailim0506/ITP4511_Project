@@ -183,7 +183,7 @@ public class nav extends SimpleTagSupport {
                         + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">category</i> Manage Fruit</a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
-                        + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">manage_accounts</i> User Management</a>"
+                        + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">manage_accounts</i> User </a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
                         + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/shopList\"><i class=\"material-icons small align-middle me-1\">storefront</i> Shop</a>"

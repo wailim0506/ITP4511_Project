@@ -154,7 +154,7 @@
                 <div class="col-12">
                     <div class="row g-4">
                         <!-- Total Reservations Card -->
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card border-0 shadow-sm summaryCard">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
@@ -174,7 +174,7 @@
                         </div>
                         
                         <!-- Total Fruit Items Card -->
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card border-0 shadow-sm summaryCard">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
@@ -188,26 +188,6 @@
                                     </div>
                                     <div class="progress" style="height: 8px">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Fruit Types Card -->
-                        <div class="col-md-4">
-                            <div class="card border-0 shadow-sm summaryCard">
-                                <div class="card-body p-4">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="bg-warning bg-opacity-10 p-3 rounded me-3">
-                                            <i class="material-icons text-warning">category</i>
-                                        </div>
-                                        <div>
-                                            <h6 class="mb-0">Fruit Categories</h6>
-                                            <h3 class="mb-0 fw-bold">24</h3>
-                                        </div>
-                                    </div>
-                                    <div class="progress" style="height: 8px">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +226,6 @@
                                             <th>Origin</th>
                                             <th>Total Quantity</th>
                                             <th>Unit</th>
-                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -259,11 +238,6 @@
                                             <td>California, USA</td>
                                             <td>256</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Banana</td>
@@ -271,11 +245,6 @@
                                             <td>Manila, Philippines</td>
                                             <td>120</td>
                                             <td>Bunch</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Strawberry</td>
@@ -283,11 +252,6 @@
                                             <td>Osaka, Japan</td>
                                             <td>45000</td>
                                             <td>Gram (g)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Grapes</td>
@@ -295,11 +259,6 @@
                                             <td>California, USA</td>
                                             <td>75</td>
                                             <td>Bunch</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         
                                         <!-- USA -->
@@ -311,11 +270,6 @@
                                             <td>Manila, Philippines</td>
                                             <td>180</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Blueberry</td>
@@ -323,11 +277,6 @@
                                             <td>Oregon, USA</td>
                                             <td>32000</td>
                                             <td>Gram (g)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Peach</td>
@@ -335,11 +284,6 @@
                                             <td>Georgia, USA</td>
                                             <td>210</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         
                                         <!-- Hong Kong -->
@@ -351,11 +295,6 @@
                                             <td>Vietnam</td>
                                             <td>95</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Lychee</td>
@@ -363,11 +302,6 @@
                                             <td>Guangdong, China</td>
                                             <td>28000</td>
                                             <td>Gram (g)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Durian</td>
@@ -375,11 +309,6 @@
                                             <td>Thailand</td>
                                             <td>60</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Mangosteen</td>
@@ -387,11 +316,6 @@
                                             <td>Thailand</td>
                                             <td>150</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -407,7 +331,6 @@
                                             <th>Fruit Type</th>
                                             <th>Total Quantity</th>
                                             <th>Unit</th>
-                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -420,22 +343,12 @@
                                             <td>Single Fruit</td>
                                             <td>156</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Strawberry</td>
                                             <td>Berry</td>
                                             <td>25000</td>
                                             <td>Gram (g)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="2" class="align-middle">Japan</td>
@@ -445,22 +358,12 @@
                                             <td>Bunch Fruit</td>
                                             <td>120</td>
                                             <td>Bunch</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Grapes</td>
                                             <td>Bunch Fruit</td>
                                             <td>75</td>
                                             <td>Bunch</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <!-- USA Cities -->
                                         <tr>
@@ -471,22 +374,12 @@
                                             <td>Single Fruit</td>
                                             <td>95</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Blueberry</td>
                                             <td>Berry</td>
                                             <td>18000</td>
                                             <td>Gram (g)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="1" class="align-middle">USA</td>
@@ -496,11 +389,6 @@
                                             <td>Single Fruit</td>
                                             <td>210</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <!-- Hong Kong Cities -->
                                         <tr>
@@ -511,22 +399,12 @@
                                             <td>Single Fruit</td>
                                             <td>45</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Lychee</td>
                                             <td>Single Fruit</td>
                                             <td>12000</td>
                                             <td>Gram (g)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="2" class="align-middle">Hong Kong</td>
@@ -536,22 +414,12 @@
                                             <td>Single Fruit</td>
                                             <td>60</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Mangosteen</td>
                                             <td>Single Fruit</td>
                                             <td>150</td>
                                             <td>Piece (pc)</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -566,7 +434,6 @@
                                             <th>Total Orders</th>
                                             <th>Fruit Item</th>
                                             <th>Total Quantity</th>
-                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -578,33 +445,18 @@
                                             <td rowspan="1" class="align-middle">15</td>
                                             <td>Apple</td>
                                             <td>86</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="1" class="align-middle">Shinjuku Store</td>
                                             <td rowspan="1" class="align-middle">8</td>
                                             <td>Strawberry</td>
                                             <td>15000</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="1" class="align-middle">Ginza Store</td>
                                             <td rowspan="1" class="align-middle">5</td>
                                             <td>Apple</td>
                                             <td>70</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         
                                         <!-- Osaka Shops -->
@@ -615,22 +467,12 @@
                                             <td rowspan="1" class="align-middle">12</td>
                                             <td>Banana</td>
                                             <td>80</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="1" class="align-middle">Umeda Store</td>
                                             <td rowspan="1" class="align-middle">8</td>
                                             <td>Grapes</td>
                                             <td>75</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         
                                         <!-- New York Shops -->
@@ -641,22 +483,12 @@
                                             <td rowspan="1" class="align-middle">10</td>
                                             <td>Mango</td>
                                             <td>55</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="1" class="align-middle">Brooklyn Store</td>
                                             <td rowspan="1" class="align-middle">8</td>
                                             <td>Blueberry</td>
                                             <td>18000</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         
                                         <!-- Los Angeles Shop -->
@@ -667,11 +499,6 @@
                                             <td rowspan="1" class="align-middle">17</td>
                                             <td>Peach</td>
                                             <td>210</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         
                                         <!-- Hong Kong Island Shops -->
@@ -682,22 +509,12 @@
                                             <td rowspan="1" class="align-middle">12</td>
                                             <td>Dragon Fruit</td>
                                             <td>25</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="1" class="align-middle">Causeway Bay Store</td>
                                             <td rowspan="1" class="align-middle">10</td>
                                             <td>Lychee</td>
                                             <td>12000</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         
                                         <!-- Kowloon Shops -->
@@ -708,46 +525,15 @@
                                             <td rowspan="1" class="align-middle">12</td>
                                             <td>Durian</td>
                                             <td>40</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td rowspan="1" class="align-middle">Tsim Sha Tsui Store</td>
                                             <td rowspan="1" class="align-middle">8</td>
                                             <td>Mangosteen</td>
                                             <td>150</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="material-icons small">visibility</i>
-                                                </button>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
-                            
-                            <!-- Pagination -->
-                            <div class="d-flex justify-content-end mt-4">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>
