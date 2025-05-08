@@ -4,6 +4,7 @@ ict/servlet/warehouse/WarehouseListController.class
 ict/bean/WarehouseFruitStockBean.class
 ict/servlet/userListController.class
 ict/bean/CountryRegionBean.class
+ict/servlet/seniorManagement/reserveNeedController.class
 ict/servlet/store/borrowRecordController.class
 ict/db/ProjectDB.class
 ict/servlet/warehouse/DeliveryController.class

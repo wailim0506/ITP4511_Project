@@ -82,7 +82,7 @@
                             <i class="material-icons card-icon mb-3">assessment</i>
                             <h5 class="card-title">Reserve Needs Aggregation</h5>
                             <p class="card-text text-muted">View reserve needs by shop/city/country</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View Aggregation</a>
+                            <a href="/ITP4511_Project/reserveNeed" class="btn btn-outline-primary mt-2">View Aggregation</a>
                         </div>
                     </div>
                 </div>
