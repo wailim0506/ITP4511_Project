@@ -3633,7 +3633,47 @@ public class ProjectDB {
         String total = "0";
         try {
             cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS total FROM fruit;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                total = rs.getString("total");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return total;
+    }
+    
+    public String getAllFruitCountEnable() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String total = "0";
+        try {
+            cnnct = getConnection();
             String preQueryStatement = "SELECT COUNT(*) AS total FROM fruit WHERE Status = 'enable';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                total = rs.getString("total");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return total;
+    }
+    
+    public String getAllFruitCountDisable() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String total = "0";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS total FROM fruit WHERE Status = 'disable';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             ResultSet rs = pStmnt.executeQuery();
             if (rs.next()) {

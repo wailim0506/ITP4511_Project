@@ -32,6 +32,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
+         <script src="${pageContext.request.contextPath}/js/seniorManagement/fruitFilter.js"></script>
     </head>
     <body>
         <%
@@ -230,9 +231,11 @@
                                                             String img = fb.getImgName();
                                                             String city = fb.getCity();
                                                             String countryRegion = fb.getCountryRegion();
-                                                            String fruitId = fb.getId();
+                                                            String fruitId = fb.getId(); 
+                                                            String status = fb.getStatus();
+                                                            String rowClass = status.equalsIgnoreCase("enable") ? "enable-row" : "disable-row";
                                                     %>
-                                                    <tr class="fruitItem" data-fruit-name="<%=fruitName%>" data-type="<%=type%>">
+                                                    <tr class="fruitItem <%=rowClass%>" data-fruit-name="<%=fruitName%>" data-type="<%=type%>">
                                                         <td>
                                                             <div class="d-flex align-items-center">
                                                                 <img src="${pageContext.request.contextPath}/img/<%=img%>" alt="<%=fruitName%>" class="me-3 rounded fruitImg">
@@ -288,12 +291,22 @@
                         <!-- Fruit Summary -->
                         <%
                             String total = (String) request.getAttribute("totalFruit");
+                            String enable = (String) request.getAttribute("enableFruit");
+                            String disable = (String) request.getAttribute("disableFruit");
                         %>
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-body p-4">
                                 <h5 class="mb-3"><i class="material-icons align-middle me-2">summarize</i>Stock Summary</h5>
                                 <div id="inventorySummary">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Enabled Fruit:</span>
+                                        <span id="totalItems"><%=enable%></span>
+                                    </div>
                                     <div class="d-flex justify-content-between mb-2 border-bottom pb-2">
+                                        <span>Disabled Fruit:</span>
+                                        <span id="totalItems"><%=disable%></span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
                                         <span>Total Items:</span>
                                         <span id="totalItems"><%=total%></span>
                                     </div>

@@ -224,3 +224,10 @@ input[type="number"] {
 .submit-btn:hover {
     background-color: #45a049;
 }
+
+.enable-row {
+    background-color: #d4edda;
+}
+.disable-row {
+    background-color: #f8d7da;
+}

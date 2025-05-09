@@ -54,8 +54,10 @@ public class manageFruitController extends HttpServlet {
         ArrayList<String> fruitTypeList = db.getFruitType();
         request.setAttribute("fruitTypeList", fruitTypeList);
         
-        String totalFruit;
+        String totalFruit, enableFruit, disableFruit;
         totalFruit = db.getAllFruitCount();
+        enableFruit = db.getAllFruitCountEnable();
+        disableFruit = db.getAllFruitCountDisable();
 
         ArrayList<FruitsBean> fbList = db.getAllFruitManager();
         request.setAttribute("fruitsStockList", fbList);
@@ -70,11 +72,13 @@ public class manageFruitController extends HttpServlet {
                 request.setAttribute("isEditMode",true);
             }
         }catch (Exception e){
-        
+            System.out.print("Non action");
         }
         
         
         request.setAttribute("totalFruit", totalFruit);
+        request.setAttribute("enableFruit", enableFruit);
+        request.setAttribute("disableFruit", disableFruit);
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/seniorManagement/manageFruit.jsp");
         rd.forward(request, response);
