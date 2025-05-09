@@ -1832,6 +1832,414 @@ public class ProjectDB {
     }
     // for shop_borrow_request_item
 
+    // for reserveNeed.jsp
+    public ArrayList<ReserveNeedBean> getResreveNeedByCountryRegion(String cn, String startDate, String endDate) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ReserveNeedBean rb = null;
+        ArrayList<ReserveNeedBean> reserveNeedList = new ArrayList<ReserveNeedBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement;
+
+            if ("all".equalsIgnoreCase(cn)) {
+                // SQL without the country region filter
+                preQueryStatement = "SELECT \n" +
+                        "    sc.CountryRegionID AS ShopCountryID, \n" +
+                        "    cr.Name AS ShopCountryName,\n" +
+                        "    COUNT(DISTINCT sfo.ID) AS TotalOrders,\n" +
+                        "    f.Name AS FruitItem, \n" +
+                        "    f.type AS FruitType,\n" +
+                        "    f.unit AS Unit,\n" +
+                        "    fc.City AS FruitOriginCity,\n" +
+                        "    fcr.Name AS FruitOriginCountry,\n" +
+                        "    SUM(sfoi.Qty) AS TotalQuantity\n" +
+                        "FROM \n" +
+                        "    shop_fruit_order sfo\n" +
+                        "JOIN \n" +
+                        "    shop s ON sfo.ShopID = s.ID\n" +
+                        "JOIN \n" +
+                        "    shop_city sc ON s.City = sc.ID\n" +
+                        "JOIN \n" +
+                        "    country_region cr ON sc.CountryRegionID = cr.ID\n" +
+                        "JOIN \n" +
+                        "    shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID\n" +
+                        "JOIN \n" +
+                        "    fruit f ON sfoi.FruitID = f.ID\n" +
+                        "JOIN\n" +
+                        "    fruit_city fc ON f.FruitCityID = fc.ID\n" +
+                        "JOIN\n" +
+                        "    country_region fcr ON fc.CountryRegionID = fcr.ID\n" +
+                        "WHERE sfo.OrderDate Between ? AND ?\n" +
+                        "GROUP BY \n" +
+                        "    sc.CountryRegionID, f.ID\n" +
+                        "ORDER BY \n" +
+                        "    cr.Name, SUM(sfoi.Qty) DESC;";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, startDate);
+                pStmnt.setString(2, endDate);
+            } else {
+                // Original SQL with country region filter
+                preQueryStatement = "SELECT \n" +
+                        "    sc.CountryRegionID AS ShopCountryID, \n" +
+                        "    cr.Name AS ShopCountryName,\n" +
+                        "    COUNT(DISTINCT sfo.ID) AS TotalOrders,\n" +
+                        "    f.Name AS FruitItem, \n" +
+                        "    f.type AS FruitType,\n" +
+                        "    f.unit AS Unit,\n" +
+                        "    fc.City AS FruitOriginCity,\n" +
+                        "    fcr.Name AS FruitOriginCountry,\n" +
+                        "    SUM(sfoi.Qty) AS TotalQuantity\n" +
+                        "FROM \n" +
+                        "    shop_fruit_order sfo\n" +
+                        "JOIN \n" +
+                        "    shop s ON sfo.ShopID = s.ID\n" +
+                        "JOIN \n" +
+                        "    shop_city sc ON s.City = sc.ID\n" +
+                        "JOIN \n" +
+                        "    country_region cr ON sc.CountryRegionID = cr.ID\n" +
+                        "JOIN \n" +
+                        "    shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID\n" +
+                        "JOIN \n" +
+                        "    fruit f ON sfoi.FruitID = f.ID\n" +
+                        "JOIN\n" +
+                        "    fruit_city fc ON f.FruitCityID = fc.ID\n" +
+                        "JOIN\n" +
+                        "    country_region fcr ON fc.CountryRegionID = fcr.ID\n" +
+                        "WHERE sc.CountryRegionID = ?\n" +
+                        "AND sfo.OrderDate BETWEEN ? AND ?\n" +
+                        "GROUP BY \n" +
+                        "    sc.CountryRegionID, f.ID\n" +
+                        "ORDER BY \n" +
+                        "    cr.Name, SUM(sfoi.Qty) DESC;";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, cn);
+                pStmnt.setString(2, startDate);
+                pStmnt.setString(3, endDate);
+            }
+
+            ResultSet rs = pStmnt.executeQuery();
+
+            while (rs.next()) {
+                rb = new ReserveNeedBean();
+                rb.setCountryRegionName(rs.getString("ShopCountryName"));
+                rb.setTotalOrders(rs.getString("TotalOrders"));
+                rb.setFruitName(rs.getString("FruitItem"));
+                rb.setFruitType(rs.getString("FruitType"));
+                rb.setUnit(rs.getString("Unit"));
+                rb.setOriginCity(rs.getString("FruitOriginCity"));
+                rb.setOriginCountry(rs.getString("FruitOriginCountry"));
+                rb.setTotalQty(rs.getString("TotalQuantity"));
+                reserveNeedList.add(rb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reserveNeedList;
+    }
+
+    public ArrayList<ReserveNeedBean> getResreveNeedByCity(String city, String startDate, String endDate) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ReserveNeedBean rb = null;
+        ArrayList<ReserveNeedBean> reserveNeedList = new ArrayList<ReserveNeedBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement;
+
+            if ("all".equalsIgnoreCase(city)) {
+                preQueryStatement = "SELECT \n" +
+                        "    sc.ID AS CityID, \n" +
+                        "    sc.City AS CityName, \n" +
+                        "    cr.ID AS CountryID, \n" +
+                        "    cr.Name AS CountryName, \n" +
+                        "    COUNT(DISTINCT sfo.ID) AS TotalOrders, \n" +
+                        "    f.ID AS FruitID, \n" +
+                        "    f.Name AS FruitItem, \n" +
+                        "    f.type AS FruitType, \n" +
+                        "    f.unit AS Unit, \n" +
+                        "    SUM(sfoi.Qty) AS TotalQuantity \n" +
+                        "FROM \n" +
+                        "    shop_fruit_order sfo \n" +
+                        "    JOIN shop s ON sfo.ShopID = s.ID \n" +
+                        "    JOIN shop_city sc ON s.City = sc.ID \n" +
+                        "    JOIN country_region cr ON sc.CountryRegionID = cr.ID \n" +
+                        "    JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID \n" +
+                        "    JOIN fruit f ON sfoi.FruitID = f.ID \n WHERE sfo.OrderDate BETWEEN ? AND ?" +
+                        "GROUP BY \n" +
+                        "    sc.ID, \n" +
+                        "    f.ID \n" +
+                        "ORDER BY \n" +
+                        "    cr.Name, \n" +
+                        "    sc.City, \n" +
+                        "    SUM(sfoi.Qty) DESC;\n";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, startDate);
+                pStmnt.setString(2, endDate);
+            } else {
+                preQueryStatement = "SELECT \n" +
+                        "    sc.ID AS CityID, \n" +
+                        "    sc.City AS CityName, \n" +
+                        "    cr.ID AS CountryID, \n" +
+                        "    cr.Name AS CountryName, \n" +
+                        "    COUNT(DISTINCT sfo.ID) AS TotalOrders, \n" +
+                        "    f.ID AS FruitID, \n" +
+                        "    f.Name AS FruitItem, \n" +
+                        "    f.type AS FruitType, \n" +
+                        "    f.unit AS Unit, \n" +
+                        "    SUM(sfoi.Qty) AS TotalQuantity \n" +
+                        "FROM \n" +
+                        "    shop_fruit_order sfo \n" +
+                        "    JOIN shop s ON sfo.ShopID = s.ID \n" +
+                        "    JOIN shop_city sc ON s.City = sc.ID \n" +
+                        "    JOIN country_region cr ON sc.CountryRegionID = cr.ID \n" +
+                        "    JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID \n" +
+                        "    JOIN fruit f ON sfoi.FruitID = f.ID \n WHERE sc.City = ? AND sfo.OrderDate BETWEEN ? AND ?"
+                        +
+                        "GROUP BY \n" +
+                        "    sc.ID, \n" +
+                        "    f.ID \n" +
+                        "ORDER BY \n" +
+                        "    cr.Name, \n" +
+                        "    sc.City, \n" +
+                        "    SUM(sfoi.Qty) DESC;\n";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, city);
+                pStmnt.setString(2, startDate);
+                pStmnt.setString(3, endDate);
+            }
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                rb = new ReserveNeedBean();
+                rb.setCityName(rs.getString("CityName"));
+                rb.setCountryRegionName(rs.getString("CountryName"));
+                rb.setTotalOrders(rs.getString("TotalOrders"));
+                rb.setFruitName(rs.getString("FruitItem"));
+                rb.setFruitType(rs.getString("FruitType"));
+                rb.setUnit(rs.getString("Unit"));
+                rb.setTotalQty(rs.getString("TotalQuantity"));
+                reserveNeedList.add(rb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reserveNeedList;
+    }
+
+    public ArrayList<ReserveNeedBean> getResreveNeedByShop(String shop, String startDate, String endDate) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ReserveNeedBean rb = null;
+        ArrayList<ReserveNeedBean> reserveNeedList = new ArrayList<ReserveNeedBean>();
+
+        try {
+            cnnct = getConnection();
+            String preQueryStatement;
+
+            if ("all".equalsIgnoreCase(shop)) {
+                preQueryStatement = "SELECT \n" +
+                        "    s.ID AS ShopID, \n" +
+                        "    s.Address AS ShopAddress, \n" +
+                        "    sc.ID AS CityID, \n" +
+                        "    sc.City AS CityName, \n" +
+                        "    cr.ID AS CountryID, \n" +
+                        "    cr.Name AS CountryName, \n" +
+                        "    COUNT(DISTINCT sfo.ID) AS TotalOrders, \n" +
+                        "    f.ID AS FruitID, \n" +
+                        "    f.Name AS FruitItem, \n" +
+                        "    f.type AS FruitType, \n" +
+                        "    f.unit AS Unit, \n" +
+                        "    SUM(sfoi.Qty) AS TotalQuantity \n" +
+                        "FROM \n" +
+                        "    shop_fruit_order sfo \n" +
+                        "    JOIN shop s ON sfo.ShopID = s.ID \n" +
+                        "    JOIN shop_city sc ON s.City = sc.ID \n" +
+                        "    JOIN country_region cr ON sc.CountryRegionID = cr.ID \n" +
+                        "    JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID \n" +
+                        "    JOIN fruit f ON sfoi.FruitID = f.ID WHERE sfo.OrderDate BETWEEN ? AND ? \n" +
+                        "GROUP BY \n" +
+                        "    s.ID, \n" +
+                        "    f.ID \n" +
+                        "ORDER BY \n" +
+                        "    cr.Name, \n" +
+                        "    sc.City, \n" +
+                        "    s.ID, \n" +
+                        "    SUM(sfoi.Qty) DESC;\n";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, startDate);
+                pStmnt.setString(2, endDate);
+            } else {
+                preQueryStatement = "SELECT \n" +
+                        "    s.ID AS ShopID, \n" +
+                        "    s.Address AS ShopAddress, \n" +
+                        "    sc.ID AS CityID, \n" +
+                        "    sc.City AS CityName, \n" +
+                        "    cr.ID AS CountryID, \n" +
+                        "    cr.Name AS CountryName, \n" +
+                        "    COUNT(DISTINCT sfo.ID) AS TotalOrders, \n" +
+                        "    f.ID AS FruitID, \n" +
+                        "    f.Name AS FruitItem, \n" +
+                        "    f.type AS FruitType, \n" +
+                        "    f.unit AS Unit, \n" +
+                        "    SUM(sfoi.Qty) AS TotalQuantity \n" +
+                        "FROM \n" +
+                        "    shop_fruit_order sfo \n" +
+                        "    JOIN shop s ON sfo.ShopID = s.ID \n" +
+                        "    JOIN shop_city sc ON s.City = sc.ID \n" +
+                        "    JOIN country_region cr ON sc.CountryRegionID = cr.ID \n" +
+                        "    JOIN shop_fruit_order_item sfoi ON sfo.ID = sfoi.OrderID \n" +
+                        "    JOIN fruit f ON sfoi.FruitID = f.ID \n" +
+                        "WHERE \n" +
+                        "    s.Address = ? \n" +
+                        "    AND sfo.OrderDate BETWEEN ? AND ?  \n" +
+                        "GROUP BY \n" +
+                        "    s.ID, \n" +
+                        "    f.ID \n" +
+                        "ORDER BY \n" +
+                        "    ShopAddress ASC;\n";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, shop);
+                pStmnt.setString(2, startDate);
+                pStmnt.setString(3, endDate);
+            }
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                rb = new ReserveNeedBean();
+                rb.setShopAddress(rs.getString("ShopAddress"));
+                rb.setCityName(rs.getString("CityName"));
+                rb.setCountryRegionName(rs.getString("CountryName"));
+                rb.setTotalOrders(rs.getString("TotalOrders"));
+                rb.setFruitName(rs.getString("FruitItem"));
+                rb.setFruitType(rs.getString("FruitType"));
+                rb.setUnit(rs.getString("Unit"));
+                rb.setTotalQty(rs.getString("TotalQuantity"));
+                reserveNeedList.add(rb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return reserveNeedList;
+    }
+
+    public ArrayList<String> getAllShopAddress() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<String> shopAddressList = new ArrayList<String>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT Address FROM shop;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                shopAddressList.add(rs.getString("Address"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return shopAddressList;
+    }
+
+    public int getTotalReserveNumber() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int totalReserveNumber = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS t FROM shop_fruit_order;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                totalReserveNumber = rs.getInt("t");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return totalReserveNumber;
+    }
+
+    public int getTotalFruitOrdered() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        int totalReserveNumber = 0;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT SUM(Qty) AS t FROM shop_fruit_order_item;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                totalReserveNumber = rs.getInt("t");
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return totalReserveNumber;
+    }
+
+    public HashMap<String, Integer> getTopFive() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        HashMap<String, Integer> topFive = new HashMap<>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT \n" +
+                    "    f.ID AS FruitID,\n" +
+                    "    f.Name AS FruitName,\n" +
+                    "    f.type AS FruitType, \n" +
+                    "    f.unit AS Unit,\n" +
+                    "    SUM(sfoi.Qty) AS TotalQuantity\n" +
+                    "FROM \n" +
+                    "    shop_fruit_order_item sfoi\n" +
+                    "JOIN \n" +
+                    "    shop_fruit_order sfo ON sfoi.OrderID = sfo.ID\n" +
+                    "JOIN \n" +
+                    "    fruit f ON sfoi.FruitID = f.ID\n" +
+                    "WHERE f.unit = 'piece'\n" +
+                    "GROUP BY \n" +
+                    "    f.ID, f.Name, f.type, f.unit\n" +
+                    "ORDER BY \n" +
+                    "    TotalQuantity DESC\n" +
+                    "LIMIT 5;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                topFive.put(rs.getString("FruitName"), rs.getInt("TotalQuantity"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return topFive;
+    }
+
+    // for reserveNeed.jsp
+
     // ------- UserList ------- UserList ------- UserList ------- UserList
     // Get user list by type
     public ArrayList<UserBean> getAllUser(String type) {

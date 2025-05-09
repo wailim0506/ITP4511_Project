@@ -36,17 +36,11 @@
     </head>
     <body>
         <%
-            // Simulated user information
-            UserBean bean = new UserBean();
-            bean.setStaffName("Senior Manager");
-            String staffName = bean.getStaffName();
-            
-            // In real code, this would be fetched from session
-            // UserBean bean = (UserBean)session.getAttribute("userInfo");
-            // String staffName = (String)bean.getStaffName();
-            // if (staffName == null) {
-            //     throw new Exception();
-            // }
+            UserBean bean = (UserBean)session.getAttribute("userInfo");
+            String staffName = (String)bean.getStaffName();
+            if (staffName == null) {
+                throw new Exception();
+            }
         %>
         <nav:nav userType="seniorManagement" staffName="<%=staffName%>"/>
         
@@ -69,40 +63,63 @@
                             <div class="col-md-3">
                                 <div class="form-floating">
                                     <select class="form-select" id="viewLevel" name="viewLevel">
-                                        <option value="country" selected>By Country</option>
-                                        <option value="city">By City</option>
-                                        <option value="shop">By Shop</option>
+                                        <% String selectViewLevel = (String)request.getAttribute("viewLevel"); %>
+                                        <option value="c" <%= (selectViewLevel == null || selectViewLevel.equals("c")) ? "selected" : "" %>>Country/ Region</option>
+                                        <option value="city" <%= (selectViewLevel != null && selectViewLevel.equals("city")) ? "selected" : "" %>>City</option>
+                                        <option value="shop" <%= (selectViewLevel != null && selectViewLevel.equals("shop")) ? "selected" : "" %>>Shop</option>
                                     </select>
                                     <label for="viewLevel">View Level</label>
                                 </div>
                             </div>
                             
+                            
                             <!-- Country Selection -->
-                            <div class="col-md-3">
+                            <div class="col-md-3" id="countryFilterContainer" style="<%= (selectViewLevel != null && selectViewLevel.equals("city")) ? "display:none;" : "" %>">
                                 <div class="form-floating">
                                     <select class="form-select" id="countryFilter" name="countryFilter">
-                                        <option value="all" selected>All Countries</option>
-                                        <option value="Japan">Japan</option>
-                                        <option value="USA">USA</option>
-                                        <option value="Hong Kong">Hong Kong</option>
+                                        <% String selectCountry = (String)request.getAttribute("countryName"); %>
+                                        <option value="all" <%= (selectCountry == null || selectCountry.equals("all")) ? "selected" : "" %>>All Countries/ Regions</option>
+                                        <option value="JP" <%= (selectCountry != null && selectCountry.equals("JP")) ? "selected" : "" %>>Japan</option>
+                                        <option value="US" <%= (selectCountry != null && selectCountry.equals("US")) ? "selected" : "" %>>USA</option>
+                                        <option value="HK" <%= (selectCountry != null && selectCountry.equals("HK")) ? "selected" : "" %>>Hong Kong</option>
                                     </select>
-                                    <label for="countryFilter">Country</label>
+                                    <label for="countryFilter">Country/ Region</label>
                                 </div>
                             </div>
                             
-                            <!-- City Selection (Initially hidden, appears when country is selected) -->
-                            <div class="col-md-3 cityFilterContainer">
+                            
+                            <div class="col-md-3 cityFilterContainer" style="<%= (selectViewLevel != null && selectViewLevel.equals("city")) ? "" : "display:none;" %>">
                                 <div class="form-floating">
                                     <select class="form-select" id="cityFilter" name="cityFilter">
-                                        <option value="all" selected>All Cities</option>
-                                        <option value="Tokyo">Tokyo</option>
-                                        <option value="Osaka">Osaka</option>
-                                        <option value="New York">New York</option>
-                                        <option value="Los Angeles">Los Angeles</option>
-                                        <option value="Hong Kong Island">Hong Kong Island</option>
-                                        <option value="Kowloon">Kowloon</option>
+                                        <jsp:useBean id="cityList" scope="request" class="java.util.ArrayList" />
+                                        <option value="all">All Cities</option>
+                                        <% String selectCity = (String)request.getAttribute("cityName");; %>
+                                        <%
+                                            for (int i = 0; i < cityList.size(); i++) {
+                                                String cityName = (String) cityList.get(i);
+                                                out.println("<option value=\"" + cityName + "\" " + ((selectCity != null && selectCity.equals(cityName)) ? "selected" : "") + ">" + cityName + "</option>");
+                                            }
+                                        %>
                                     </select>
                                     <label for="cityFilter">City</label>
+                                </div>
+                            </div>
+
+                            <%-- shop address filter --%>
+                            <div class="col-md-3 shopFilterContainer" style="<%= (selectViewLevel != null && selectViewLevel.equals("shop")) ? "" : "display:none;" %>">
+                                <div class="form-floating">
+                                    <select class="form-select" id="shopFilter" name="shopFilter">
+                                        <jsp:useBean id="shopList" scope="request" class="java.util.ArrayList" />
+                                        <option value="all">All Shops</option>
+                                        <% String selectShop = (String)request.getAttribute("shopAddress"); %>
+                                        <%
+                                            for (int i = 0; i < shopList.size(); i++) {
+                                                String shopAddress = (String) shopList.get(i);
+                                                out.println("<option value=\"" + shopAddress + "\" " + ((selectShop != null && selectShop.equals(shopAddress)) ? "selected" : "") + ">" + shopAddress + "</option>");
+                                            }
+                                        %>
+                                    </select>
+                                    <label for="shopFilter">Shop</label>
                                 </div>
                             </div>
                             
@@ -110,38 +127,22 @@
                             <div class="col-md-3">
                                 <div class="form-floating">
                                     <select class="form-select" id="dateRangeFilter" name="dateRangeFilter">
-                                        <option value="thisMonth" selected>This Month</option>
-                                        <option value="lastMonth">Last Month</option>
-                                        <option value="last3Months">Last 3 Months</option>
-                                        <option value="custom">Custom Range</option>
+                                        <% String selectDateRange = (String)request.getAttribute("date"); %>
+                                        <option value="lastMonth" <%= (selectDateRange != null && selectDateRange.equals("lastMonth")) ? "selected" : "" %>>Last Month</option>
+                                        <option value="last3Months" <%= (selectDateRange != null && selectDateRange.equals("last3Months")) ? "selected" : "" %>>Last 3 Months</option>
+                                        <option value="last6Months" <%= (selectDateRange != null && selectDateRange.equals("last6Months")) ? "selected" : "" %>>Last 6 Months</option>
+                                        <option value="last12Months" <%= (selectDateRange == null || selectDateRange.equals("last12Months")) ? "selected" : "" %>>Last 12 Months</option>
                                     </select>
                                     <label for="dateRangeFilter">Date Range</label>
                                 </div>
                             </div>
                             
-                            <!-- Custom Date Range (Initially hidden) -->
-                            <div class="col-md-6 customDateRangeContainer d-none">
-                                <div class="row g-2">
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="date" class="form-control" id="startDate" name="startDate">
-                                            <label for="startDate">Start Date</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="date" class="form-control" id="endDate" name="endDate">
-                                            <label for="endDate">End Date</label>
-                                        </div>
-                                    </div>
+                            <div class="col-md-3 ms-auto" id="filterButtonContainer">
+                                <div class="d-flex gap-2 h-100">
+                                    <button type="reset" class="btn btn-secondary w-100 h-100">
+                                        <i class="material-icons align-middle me-2">refresh</i>Reset
+                                    </button>
                                 </div>
-                            </div>
-                            
-                            <!-- Submit Button -->
-                            <div class="col-md-3 ms-auto">
-                                <button type="submit" class="btn btn-primary w-100 h-100">
-                                    <i class="material-icons align-middle me-2">search</i>Apply Filters
-                                </button>
                             </div>
                         </div>
                     </form>
@@ -162,12 +163,10 @@
                                             <i class="material-icons text-primary">receipt</i>
                                         </div>
                                         <div>
-                                            <h6 class="mb-0">Total Reservations</h6>
-                                            <h3 class="mb-0 fw-bold">125</h3>
+                                            <h6 class="mb-0">All Time Total Reservations</h6>
+                                            <jsp:useBean id="total" scope="request" class="java.lang.Integer" />
+                                            <h3 class="mb-0 fw-bold"><%=total%></h3>
                                         </div>
-                                    </div>
-                                    <div class="progress" style="height: 8px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -182,12 +181,10 @@
                                             <i class="material-icons text-success">local_mall</i>
                                         </div>
                                         <div>
-                                            <h6 class="mb-0">Total Fruit Items</h6>
-                                            <h3 class="mb-0 fw-bold">1,482</h3>
+                                            <h6 class="mb-0">All Time Total Fruit Items</h6>
+                                            <jsp:useBean id="totalFruit" scope="request" class="java.lang.Integer" />
+                                            <h3 class="mb-0 fw-bold"><%=totalFruit%></h3>
                                         </div>
-                                    </div>
-                                    <div class="progress" style="height: 8px">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 68%" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                             </div>
@@ -202,24 +199,33 @@
                             <div class="d-flex justify-content-between align-items-center mb-4">
                                 <h4 class="mb-0" id="tableTitle">
                                     <i class="material-icons align-middle me-2">analytics</i>
-                                    <span id="tableTitleText">Reservation Needs by Country</span>
+                                    <%
+                                         if (selectViewLevel != null && selectViewLevel.equals("shop")) {
+                                            out.println("<span id=\"tableTitleText\">Reservation Needs by Shop</span>");
+                                        } else if (selectViewLevel != null && selectViewLevel.equals("city")) {
+                                            out.println("<span id=\"tableTitleText\">Reservation Needs by City</span>");
+                                        } else {
+                                            out.println("<span id=\"tableTitleText\">Reservation Needs by Country/ Region</span>");
+                                        }
+                                    %>
+                                    
                                 </h4>
                                 <div>
-                                    <button class="btn btn-outline-primary me-2">
+                                    <button class="btn btn-outline-primary me-2" id="printReportBtn">
                                         <i class="material-icons align-middle me-1 small">print</i>Print
                                     </button>
-                                    <button class="btn btn-outline-success">
-                                        <i class="material-icons align-middle me-1 small">download</i>Export
+                                    <button class="btn btn-outline-danger" id="exportPdfBtn">
+                                        <i class="material-icons align-middle me-1 small">picture_as_pdf</i>Export as PDF
                                     </button>
                                 </div>
                             </div>
                             
                             <div class="table-responsive reserveNeedTableContainer">
                                 <!-- Country View Table -->
-                                <table class="table table-hover reserveNeedTable" id="countryView">
+                                <table class="table table-hover reserveNeedTable <%= (selectViewLevel != null && !selectViewLevel.equals("c")) ? "d-none" : "" %>" id="countryView">
                                     <thead>
                                         <tr>
-                                            <th>Country</th>
+                                            <th>Country/ Region</th>
                                             <th>Total Orders</th>
                                             <th>Fruit Item</th>
                                             <th>Fruit Type</th>
@@ -229,102 +235,79 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Japan -->
-                                        <tr>
-                                            <td rowspan="4" class="align-middle">Japan</td>
-                                            <td rowspan="4" class="align-middle">48</td>
-                                            <td>Apple</td>
-                                            <td>Single Fruit</td>
-                                            <td>California, USA</td>
-                                            <td>256</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Banana</td>
-                                            <td>Bunch Fruit</td>
-                                            <td>Manila, Philippines</td>
-                                            <td>120</td>
-                                            <td>Bunch</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Strawberry</td>
-                                            <td>Berry</td>
-                                            <td>Osaka, Japan</td>
-                                            <td>45000</td>
-                                            <td>Gram (g)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grapes</td>
-                                            <td>Bunch Fruit</td>
-                                            <td>California, USA</td>
-                                            <td>75</td>
-                                            <td>Bunch</td>
-                                        </tr>
-                                        
-                                        <!-- USA -->
-                                        <tr>
-                                            <td rowspan="3" class="align-middle">USA</td>
-                                            <td rowspan="3" class="align-middle">35</td>
-                                            <td>Mango</td>
-                                            <td>Single Fruit</td>
-                                            <td>Manila, Philippines</td>
-                                            <td>180</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Blueberry</td>
-                                            <td>Berry</td>
-                                            <td>Oregon, USA</td>
-                                            <td>32000</td>
-                                            <td>Gram (g)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Peach</td>
-                                            <td>Single Fruit</td>
-                                            <td>Georgia, USA</td>
-                                            <td>210</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        
-                                        <!-- Hong Kong -->
-                                        <tr>
-                                            <td rowspan="4" class="align-middle">Hong Kong</td>
-                                            <td rowspan="4" class="align-middle">42</td>
-                                            <td>Dragon Fruit</td>
-                                            <td>Single Fruit</td>
-                                            <td>Vietnam</td>
-                                            <td>95</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lychee</td>
-                                            <td>Single Fruit</td>
-                                            <td>Guangdong, China</td>
-                                            <td>28000</td>
-                                            <td>Gram (g)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Durian</td>
-                                            <td>Single Fruit</td>
-                                            <td>Thailand</td>
-                                            <td>60</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mangosteen</td>
-                                            <td>Single Fruit</td>
-                                            <td>Thailand</td>
-                                            <td>150</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
+                                        <jsp:useBean id="reserveNeedList" scope="request" class="java.util.ArrayList" />
+                                        <%
+                                            HashMap <String, Integer> countryMap = new HashMap<String, Integer>();
+                                            countryMap.put("JP", 0);
+                                            countryMap.put("US", 0);
+                                            countryMap.put("HK", 0);
+
+                                            int JPCount = countryMap.get("JP");
+                                            int USCount = countryMap.get("US");
+                                            int HKCount = countryMap.get("HK");
+
+                                            for (int i = 0; i < reserveNeedList.size(); i++) {
+                                                
+                                                ReserveNeedBean reserveNeed = (ReserveNeedBean) reserveNeedList.get(i);
+                                                String country = reserveNeed.getCountryRegionName();
+                                                if (country.equals("Japan")) {
+                                                    JPCount++;
+                                                } else if (country.equals("United States")) {
+                                                    USCount++;
+                                                } else if (country.equals("Hong Kong")) {
+                                                    HKCount++;
+                                                }
+
+                                                countryMap.put("JP", JPCount);
+                                                countryMap.put("US", USCount);
+                                                countryMap.put("HK", HKCount);
+                                            }
+
+                                            for (int i = 0; i < reserveNeedList.size(); i++) {
+                                                ReserveNeedBean reserveNeed = (ReserveNeedBean) reserveNeedList.get(i);
+                                                int totalOrders = Integer.parseInt(reserveNeed.getTotalOrders());
+                                                String fruitItem = reserveNeed.getFruitName();
+                                                String fruitType = reserveNeed.getFruitType();
+                                                String origin = reserveNeed.getOriginCity() + ", " + reserveNeed.getOriginCountry();
+                                                int totalQuantity = Integer.parseInt(reserveNeed.getTotalQty());
+                                                String unit = reserveNeed.getUnit();
+                                                String country = (String)reserveNeed.getCountryRegionName();
+
+                                                if (i == 0 || !((ReserveNeedBean)reserveNeedList.get(i-1)).getCountryRegionName().equals(country)) {
+                                                    // First row for this country
+                                                    out.println("<tr>");
+                                                    if (country.equals("Japan")) {
+                                                        out.println("<td rowspan=\"" + countryMap.get("JP") + "\" class=\"align-middle\">Japan</td>");
+                                                        //out.println("<td rowspan=\"" + countryMap.get("JP") + "\" class=\"align-middle\">" + totalOrders + "</td>");
+                                                    } else if (country.equals("United States")) {
+                                                        out.println("<td rowspan=\"" + countryMap.get("US") + "\" class=\"align-middle\">USA</td>");
+                                                        //out.println("<td rowspan=\"" + countryMap.get("US") + "\" class=\"align-middle\">" + totalOrders + "</td>");
+                                                    } else if (country.equals("Hong Kong")) {
+                                                        out.println("<td rowspan=\"" + countryMap.get("HK") + "\" class=\"align-middle\">Hong Kong</td>");
+                                                        //out.println("<td rowspan=\"" + countryMap.get("HK") + "\" class=\"align-middle\">" + totalOrders + "</td>");
+                                                    }
+                                                } else {
+                                                    // Continuation row for this country
+                                                    out.println("<tr>");
+                                                }
+
+                                                // Add the individual fruit data cells (these appear on every row)
+                                                out.println("<td>" + totalOrders + "</td>");
+                                                out.println("<td>" + fruitItem + "</td>");
+                                                out.println("<td>" + fruitType + "</td>");
+                                                out.println("<td>" + origin + "</td>");
+                                                out.println("<td>" + totalQuantity + "</td>");
+                                                out.println("<td>" + unit + "</td>");
+                                                out.println("</tr>");
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                                 
-                                <!-- City View Table (Initially Hidden) -->
-                                <table class="table table-hover reserveNeedTable d-none" id="cityView">
+                                <table class="table table-hover reserveNeedTable <%= (selectViewLevel != null && selectViewLevel.equals("city")) ? "" : "d-none" %>" id="cityView">
                                     <thead>
                                         <tr>
-                                            <th>Country</th>
+                                            <th>Country/ Region</th>
                                             <th>City</th>
                                             <th>Total Orders</th>
                                             <th>Fruit Item</th>
@@ -334,101 +317,90 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Japan Cities -->
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">Japan</td>
-                                            <td rowspan="2" class="align-middle">Tokyo</td>
-                                            <td rowspan="2" class="align-middle">28</td>
-                                            <td>Apple</td>
-                                            <td>Single Fruit</td>
-                                            <td>156</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Strawberry</td>
-                                            <td>Berry</td>
-                                            <td>25000</td>
-                                            <td>Gram (g)</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">Japan</td>
-                                            <td rowspan="2" class="align-middle">Osaka</td>
-                                            <td rowspan="2" class="align-middle">20</td>
-                                            <td>Banana</td>
-                                            <td>Bunch Fruit</td>
-                                            <td>120</td>
-                                            <td>Bunch</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Grapes</td>
-                                            <td>Bunch Fruit</td>
-                                            <td>75</td>
-                                            <td>Bunch</td>
-                                        </tr>
-                                        <!-- USA Cities -->
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">USA</td>
-                                            <td rowspan="2" class="align-middle">New York</td>
-                                            <td rowspan="2" class="align-middle">18</td>
-                                            <td>Mango</td>
-                                            <td>Single Fruit</td>
-                                            <td>95</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Blueberry</td>
-                                            <td>Berry</td>
-                                            <td>18000</td>
-                                            <td>Gram (g)</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">USA</td>
-                                            <td rowspan="1" class="align-middle">Los Angeles</td>
-                                            <td rowspan="1" class="align-middle">17</td>
-                                            <td>Peach</td>
-                                            <td>Single Fruit</td>
-                                            <td>210</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <!-- Hong Kong Cities -->
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">Hong Kong</td>
-                                            <td rowspan="2" class="align-middle">Hong Kong Island</td>
-                                            <td rowspan="2" class="align-middle">22</td>
-                                            <td>Dragon Fruit</td>
-                                            <td>Single Fruit</td>
-                                            <td>45</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lychee</td>
-                                            <td>Single Fruit</td>
-                                            <td>12000</td>
-                                            <td>Gram (g)</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">Hong Kong</td>
-                                            <td rowspan="2" class="align-middle">Kowloon</td>
-                                            <td rowspan="2" class="align-middle">20</td>
-                                            <td>Durian</td>
-                                            <td>Single Fruit</td>
-                                            <td>60</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mangosteen</td>
-                                            <td>Single Fruit</td>
-                                            <td>150</td>
-                                            <td>Piece (pc)</td>
-                                        </tr>
+                                            <jsp:useBean id="reserveNeedList2" scope="request" class="java.util.ArrayList" />
+
+                                            <%
+                                                {
+                                                HashMap<String, Integer> cityCountMap = new HashMap<>();
+                                                HashMap<String, HashMap<String, Integer>> countryCityCountMap = new HashMap<>();
+                                                
+                                                // First pass: count rows for each city within each country
+                                                for (int i = 0; i < reserveNeedList2.size(); i++) {
+                                                    ReserveNeedBean reserveNeed = (ReserveNeedBean) reserveNeedList2.get(i);
+                                                    String country = reserveNeed.getCountryRegionName();
+                                                    String city = reserveNeed.getCityName();
+                                                    
+                                                    // Count cities per country
+                                                    if (!countryCityCountMap.containsKey(country)) {
+                                                        countryCityCountMap.put(country, new HashMap<>());
+                                                    }
+                                                    
+                                                    HashMap<String, Integer> cities = countryCityCountMap.get(country);
+                                                    cities.put(city, cities.getOrDefault(city, 0) + 1);
+                                                    
+                                                    // Count items per city
+                                                    String key = country + "-" + city;
+                                                    cityCountMap.put(key, cityCountMap.getOrDefault(key, 0) + 1);
+                                                }
+                                                
+                                                // Variables to track current country/city for rowspan
+                                                String currentCountry = "";
+                                                String currentCity = "";
+                                                
+                                                // Second pass: generate table rows
+                                                for (int i = 0; i < reserveNeedList2.size(); i++) {
+                                                    ReserveNeedBean reserveNeed = (ReserveNeedBean) reserveNeedList2.get(i);
+                                                    String country = reserveNeed.getCountryRegionName();
+                                                    String city = reserveNeed.getCityName();
+                                                    int totalOrders = Integer.parseInt(reserveNeed.getTotalOrders());
+                                                    String fruitItem = reserveNeed.getFruitName();
+                                                    String fruitType = reserveNeed.getFruitType();
+                                                    int totalQuantity = Integer.parseInt(reserveNeed.getTotalQty());
+                                                    String unit = reserveNeed.getUnit();
+                                                    String cityKey = country + "-" + city;
+                                                    
+                                                    out.println("<tr>");
+                                                    
+                                                    // New country - add country cell with appropriate rowspan
+                                                    if (!country.equals(currentCountry)) {
+                                                        int countryRowCount = 0;
+                                                        HashMap<String, Integer> cities = countryCityCountMap.get(country);
+                                                        for (int count : cities.values()) {
+                                                            countryRowCount += count;
+                                                        }
+                                                        out.println("<td rowspan=\"" + countryRowCount + "\" class=\"align-middle\">" + country + "</td>");
+                                                        currentCountry = country;
+                                                        currentCity = ""; // Reset current city when country changes
+                                                    }
+                                                    
+                                                    // New city - add city cell with appropriate rowspan
+                                                    if (!city.equals(currentCity)) {
+                                                        int cityRowCount = cityCountMap.get(cityKey);
+                                                        out.println("<td rowspan=\"" + cityRowCount + "\" class=\"align-middle\">" + city + "</td>");
+                                                        //out.println("<td rowspan=\"" + cityRowCount + "\" class=\"align-middle\">" + totalOrders + "</td>");
+                                                        currentCity = city;
+                                                    }
+                                                    
+                                                    // Add fruit-specific data (these appear on every row)
+                                                    out.println("<td>" + totalOrders + "</td>");
+                                                    out.println("<td>" + fruitItem + "</td>");
+                                                    out.println("<td>" + fruitType + "</td>");
+                                                    out.println("<td>" + totalQuantity + "</td>");
+                                                    out.println("<td>" + unit + "</td>");
+                                                    
+                                                    out.println("</tr>");
+                                                }
+                                                }
+                                            %>
+                                    
                                     </tbody>
                                 </table>
                                 
                                 <!-- Shop View Table (Initially Hidden) -->
-                                <table class="table table-hover reserveNeedTable d-none" id="shopView">
+                                <table class="table table-hover reserveNeedTable <%= (selectViewLevel != null && !selectViewLevel.equals("shop")) ? "d-none" : "" %>" id="shopView">
                                     <thead>
                                         <tr>
-                                            <th>Country</th>
+                                            <th>Country/ Region</th>
                                             <th>City</th>
                                             <th>Shop</th>
                                             <th>Total Orders</th>
@@ -437,101 +409,113 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Tokyo Shops -->
-                                        <tr>
-                                            <td rowspan="3" class="align-middle">Japan</td>
-                                            <td rowspan="3" class="align-middle">Tokyo</td>
-                                            <td rowspan="1" class="align-middle">Shibuya Store</td>
-                                            <td rowspan="1" class="align-middle">15</td>
-                                            <td>Apple</td>
-                                            <td>86</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">Shinjuku Store</td>
-                                            <td rowspan="1" class="align-middle">8</td>
-                                            <td>Strawberry</td>
-                                            <td>15000</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">Ginza Store</td>
-                                            <td rowspan="1" class="align-middle">5</td>
-                                            <td>Apple</td>
-                                            <td>70</td>
-                                        </tr>
-                                        
-                                        <!-- Osaka Shops -->
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">Japan</td>
-                                            <td rowspan="2" class="align-middle">Osaka</td>
-                                            <td rowspan="1" class="align-middle">Namba Store</td>
-                                            <td rowspan="1" class="align-middle">12</td>
-                                            <td>Banana</td>
-                                            <td>80</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">Umeda Store</td>
-                                            <td rowspan="1" class="align-middle">8</td>
-                                            <td>Grapes</td>
-                                            <td>75</td>
-                                        </tr>
-                                        
-                                        <!-- New York Shops -->
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">USA</td>
-                                            <td rowspan="2" class="align-middle">New York</td>
-                                            <td rowspan="1" class="align-middle">Manhattan Store</td>
-                                            <td rowspan="1" class="align-middle">10</td>
-                                            <td>Mango</td>
-                                            <td>55</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">Brooklyn Store</td>
-                                            <td rowspan="1" class="align-middle">8</td>
-                                            <td>Blueberry</td>
-                                            <td>18000</td>
-                                        </tr>
-                                        
-                                        <!-- Los Angeles Shop -->
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">USA</td>
-                                            <td rowspan="1" class="align-middle">Los Angeles</td>
-                                            <td rowspan="1" class="align-middle">Downtown Store</td>
-                                            <td rowspan="1" class="align-middle">17</td>
-                                            <td>Peach</td>
-                                            <td>210</td>
-                                        </tr>
-                                        
-                                        <!-- Hong Kong Island Shops -->
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">Hong Kong</td>
-                                            <td rowspan="2" class="align-middle">Hong Kong Island</td>
-                                            <td rowspan="1" class="align-middle">Central Store</td>
-                                            <td rowspan="1" class="align-middle">12</td>
-                                            <td>Dragon Fruit</td>
-                                            <td>25</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">Causeway Bay Store</td>
-                                            <td rowspan="1" class="align-middle">10</td>
-                                            <td>Lychee</td>
-                                            <td>12000</td>
-                                        </tr>
-                                        
-                                        <!-- Kowloon Shops -->
-                                        <tr>
-                                            <td rowspan="2" class="align-middle">Hong Kong</td>
-                                            <td rowspan="2" class="align-middle">Kowloon</td>
-                                            <td rowspan="1" class="align-middle">Mong Kok Store</td>
-                                            <td rowspan="1" class="align-middle">12</td>
-                                            <td>Durian</td>
-                                            <td>40</td>
-                                        </tr>
-                                        <tr>
-                                            <td rowspan="1" class="align-middle">Tsim Sha Tsui Store</td>
-                                            <td rowspan="1" class="align-middle">8</td>
-                                            <td>Mangosteen</td>
-                                            <td>150</td>
-                                        </tr>
+                                        <jsp:useBean id="reserveNeedList3" scope="request" class="java.util.ArrayList" />
+                                        <%
+                                            {
+                                            HashMap<String, Integer> shopCountMap = new HashMap<>();
+                                            HashMap<String, HashMap<String, Integer>> cityShopCountMap = new HashMap<>();
+                                            HashMap<String, HashMap<String, HashMap<String, Integer>>> countryWithCityAndShopCounts = new HashMap<>();
+                                            
+                                            // First pass: count items for each shop/city/country combination
+                                            for (int i = 0; i < reserveNeedList3.size(); i++) {
+                                                ReserveNeedBean reserveNeed = (ReserveNeedBean) reserveNeedList3.get(i);
+                                                String country = reserveNeed.getCountryRegionName();
+                                                String city = reserveNeed.getCityName();
+                                                String shop = reserveNeed.getShopAddress();
+                                                
+                                                // Initialize country map if needed
+                                                if (!countryWithCityAndShopCounts.containsKey(country)) {
+                                                    countryWithCityAndShopCounts.put(country, new HashMap<>());
+                                                }
+                                                
+                                                // Get city map for this country
+                                                HashMap<String, HashMap<String, Integer>> cityMap = countryWithCityAndShopCounts.get(country);
+                                                
+                                                // Initialize city map if needed
+                                                if (!cityMap.containsKey(city)) {
+                                                    cityMap.put(city, new HashMap<>());
+                                                }
+                                                
+                                                // Get shop map for this city
+                                                HashMap<String, Integer> shops = cityMap.get(city);
+                                                
+                                                // Count items per shop
+                                                shops.put(shop, shops.getOrDefault(shop, 0) + 1);
+                                                
+                                                // Count overall per shop
+                                                String shopKey = country + "-" + city + "-" + shop;
+                                                shopCountMap.put(shopKey, shopCountMap.getOrDefault(shopKey, 0) + 1);
+                                            }
+                                            
+                                            // Variables to track current values
+                                            String currentCountry = "";
+                                            String currentCity = "";
+                                            String currentShop = "";
+                                            
+                                            // Second pass: generate table rows
+                                            for (int i = 0; i < reserveNeedList3.size(); i++) {
+                                                ReserveNeedBean reserveNeed = (ReserveNeedBean) reserveNeedList3.get(i);
+                                                String country = reserveNeed.getCountryRegionName();
+                                                String city = reserveNeed.getCityName();
+                                                String shop = reserveNeed.getShopAddress();
+                                                int totalOrders = Integer.parseInt(reserveNeed.getTotalOrders());
+                                                String fruitItem = reserveNeed.getFruitName();
+                                                int totalQuantity = Integer.parseInt(reserveNeed.getTotalQty());
+                                                String shopKey = country + "-" + city + "-" + shop;
+                                                
+                                                out.println("<tr>");
+                                                
+                                                // New country - add country cell with appropriate rowspan
+                                                if (!country.equals(currentCountry)) {
+                                                    int countryRowCount = 0;
+                                                    HashMap<String, HashMap<String, Integer>> cityMap = countryWithCityAndShopCounts.get(country);
+                                                    
+                                                    // Count all rows for this country
+                                                    for (String cityName : cityMap.keySet()) {
+                                                        HashMap<String, Integer> shops = cityMap.get(cityName);
+                                                        for (int count : shops.values()) {
+                                                            countryRowCount += count;
+                                                        }
+                                                    }
+                                                    
+                                                    out.println("<td rowspan=\"" + countryRowCount + "\" class=\"align-middle\">" + country + "</td>");
+                                                    currentCountry = country;
+                                                    currentCity = ""; // Reset current city when country changes
+                                                    currentShop = ""; // Reset current shop when country changes
+                                                }
+                                                
+                                                // New city - add city cell with appropriate rowspan
+                                                if (!city.equals(currentCity)) {
+                                                    int cityRowCount = 0;
+                                                    HashMap<String, Integer> shops = countryWithCityAndShopCounts.get(country).get(city);
+                                                    
+                                                    // Count all rows for this city
+                                                    for (int count : shops.values()) {
+                                                        cityRowCount += count;
+                                                    }
+                                                    
+                                                    out.println("<td rowspan=\"" + cityRowCount + "\" class=\"align-middle\">" + city + "</td>");
+                                                    currentCity = city;
+                                                    currentShop = ""; // Reset current shop when city changes
+                                                }
+                                                
+                                                // New shop - add shop cell with appropriate rowspan
+                                                if (!shop.equals(currentShop)) {
+                                                    int shopRowCount = shopCountMap.get(shopKey);
+                                                    out.println("<td rowspan=\"" + shopRowCount + "\" class=\"align-middle\">" + shop + "</td>");
+                                                    //out.println("<td rowspan=\"" + shopRowCount + "\" class=\"align-middle\">" + totalOrders + "</td>");
+                                                    currentShop = shop;
+                                                }
+                                                
+                                                // Add fruit-specific data (these appear on every row)
+                                                out.println("<td>" + totalOrders + "</td>");
+                                                out.println("<td>" + fruitItem + "</td>");
+                                                out.println("<td>" + totalQuantity + "</td>");
+                                                
+                                                out.println("</tr>");
+                                            }
+                                            }
+                                        %>
                                     </tbody>
                                 </table>
                             </div>
@@ -543,63 +527,69 @@
                 <div class="col-12">
                     <div class="row g-4">
                         <!-- Left Chart -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <h4 class="mb-4">Top Requested Fruits</h4>
                                     <div class="chartPlaceholder">
-                                        <!-- This would be replaced by an actual chart in a real implementation -->
+                                       
+                                        
                                         <div class="chartContainer">
-                                            <div class="chartBar" style="height: 180px; background-color: rgba(13, 110, 253, 0.5); width: 80%;">
+                                            <%-- <div class="chartBar" style="height: 230px; background-color: rgba(13, 110, 253, 0.5); width: 80%;">
                                                 <span class="chartLabel">Apple</span>
-                                                <span class="chartValue">256</span>
+                                                <span class="chartValue">1000</span>
                                             </div>
-                                            <div class="chartBar" style="height: 150px; background-color: rgba(25, 135, 84, 0.5); width: 80%;">
+                                            <div class="chartBar" style="height: 200px; background-color: rgba(25, 135, 84, 0.5); width: 80%;">
                                                 <span class="chartLabel">Banana</span>
                                                 <span class="chartValue">210</span>
                                             </div>
-                                            <div class="chartBar" style="height: 130px; background-color: rgba(220, 53, 69, 0.5); width: 80%;">
+                                            <div class="chartBar" style="height: 180px; background-color: rgba(220, 53, 69, 0.5); width: 80%;">
                                                 <span class="chartLabel">Mango</span>
                                                 <span class="chartValue">180</span>
                                             </div>
-                                            <div class="chartBar" style="height: 110px; background-color: rgba(255, 193, 7, 0.5); width: 80%;">
+                                            <div class="chartBar" style="height: 160px; background-color: rgba(255, 193, 7, 0.5); width: 80%;">
                                                 <span class="chartLabel">Durian</span>
                                                 <span class="chartValue">150</span>
                                             </div>
-                                            <div class="chartBar" style="height: 90px; background-color: rgba(108, 117, 125, 0.5); width: 80%;">
+                                            <div class="chartBar" style="height: 140px; background-color: rgba(108, 117, 125, 0.5); width: 80%;">
                                                 <span class="chartLabel">Peach</span>
                                                 <span class="chartValue">120</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Right Chart -->
-                        <div class="col-md-6">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-body p-4">
-                                    <h4 class="mb-4">Needs by Country</h4>
-                                    <div class="chartPlaceholder">
-                                        <!-- This would be replaced by an actual chart in a real implementation -->
-                                        <div class="pieChartContainer">
-                                            <div class="pieChart">
-                                                <div class="pieSlice" style="--percentage: 38%; --color: rgba(13, 110, 253, 0.7);">
-                                                    <span class="pieLabel">Japan</span>
-                                                </div>
-                                                <div class="pieSlice" style="--percentage: 28%; --color: rgba(25, 135, 84, 0.7);">
-                                                    <span class="pieLabel">USA</span>
-                                                </div>
-                                                <div class="pieSlice" style="--percentage: 34%; --color: rgba(220, 53, 69, 0.7);">
-                                                    <span class="pieLabel">Hong Kong</span>
-                                                </div>
-                                            </div>
-                                            <div class="pieLegend">
-                                                <div class="legendItem"><span class="legendColor" style="background-color: rgba(13, 110, 253, 0.7);"></span>Japan (38%)</div>
-                                                <div class="legendItem"><span class="legendColor" style="background-color: rgba(25, 135, 84, 0.7);"></span>USA (28%)</div>
-                                                <div class="legendItem"><span class="legendColor" style="background-color: rgba(220, 53, 69, 0.7);"></span>Hong Kong (34%)</div>
-                                            </div>
+                                            </div> --%>
+                                            <%
+                                                String[] colors = {
+                                                    "rgba(13, 110, 253, 0.5)",  // blue
+                                                    "rgba(25, 135, 84, 0.5)",   // green
+                                                    "rgba(220, 53, 69, 0.5)",   // red
+                                                    "rgba(255, 193, 7, 0.5)",   // yellow
+                                                    "rgba(108, 117, 125, 0.5)"  // gray
+                                                };
+
+                                                String[] heights = {
+                                                    "230",
+                                                    "200",
+                                                    "180",
+                                                    "160",
+                                                    "140"
+                                                };
+                                                HashMap<String, Integer> top5 = (HashMap<String, Integer>)request.getAttribute("top5");
+                                                int heightIndex = 0;
+                                                // Get the keys from the top5 HashMap
+                                                Object[] fruitNames = top5.keySet().toArray();
+                                                
+                                                // Use a normal for loop to iterate through the keys
+                                                for (int i = 0; i < fruitNames.length; i++) {
+                                                    String fruitName = (String) fruitNames[i];
+                                                    int quantity = top5.get(fruitName);
+                                                    String color = colors[i];
+                                                    String height = heights[i];
+                                                    out.println("<div class=\"chartBar\" style=\"height: " + height + "px; background-color: " + color + "; width: 80%;\">");
+                                                    out.println("<span class=\"chartLabel\">" + fruitName + "</span>");
+                                                    out.println("<span class=\"chartValue\">" + quantity + "</span>");
+                                                    out.println("</div>");
+                                                }
+
+                                            %>
+
                                         </div>
                                     </div>
                                 </div>

@@ -30,6 +30,7 @@ ict\servlet\warehouse\OrderController.class
 ict\test\test.class
 ict\servlet\warehouse\RestockController.class
 ict\util\PasswordCrypto$CryptoResult.class
+ict\bean\ReserveNeedBean.class
 ict\servlet\warehouse\WarehouseListController.class
 ict\tag\footer.class
 ict\util\PasswordCrypto.class
