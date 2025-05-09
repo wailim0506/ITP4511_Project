@@ -50,9 +50,14 @@ public class manageFruitController extends HttpServlet {
         }
 
         ArrayList<CountryRegionBean> countryRegionList = db.getFruitCountryRegion();
-        request.setAttribute("countryRegionList", countryRegionList);
+        ArrayList<CountryRegionBean> allCountryRegionList = db.getAllCountryRegion();
         ArrayList<String> fruitTypeList = db.getFruitType();
+        ArrayList<FruitCityBean> fruitCity = db.getFruitCity();
+        
+        request.setAttribute("countryRegionList", countryRegionList);
+        request.setAttribute("allCountryRegionList", allCountryRegionList);
         request.setAttribute("fruitTypeList", fruitTypeList);
+        request.setAttribute("fruitCity", fruitCity);
 
         String totalFruit, enableFruit, disableFruit;
         totalFruit = db.getAllFruitCount();
@@ -61,6 +66,8 @@ public class manageFruitController extends HttpServlet {
 
         ArrayList<FruitsBean> fbList = db.getAllFruitManager();
         request.setAttribute("isEditMode", false);
+        request.setAttribute("isAddFruit", false);
+        request.setAttribute("isAddSource", false);
 
         String action = request.getParameter("action");
         if (action != null && action.equals("edit")) {
@@ -95,16 +102,22 @@ public class manageFruitController extends HttpServlet {
             enableFruit = db.getAllFruitCountEnable();
             disableFruit = db.getAllFruitCountDisable();
             fbList = db.getAllFruitManager();
+        } else if (action != null && action.equals("addFruit")) {
+            String newFruitID = db.getNewFruitID();
+            
+            request.setAttribute("newFruitID", newFruitID);
+            request.setAttribute("isAddFruit", true);
+        } else if (action != null && action.equals("addSource")) {
+            String newWarehouseID = db.getNewWarehouseID();
+            
+            request.setAttribute("newWarehouseID", newWarehouseID);
+            request.setAttribute("isAddSource", true);
         }
 
-        request.setAttribute(
-                "fruitsStockList", fbList);
-        request.setAttribute(
-                "totalFruit", totalFruit);
-        request.setAttribute(
-                "enableFruit", enableFruit);
-        request.setAttribute(
-                "disableFruit", disableFruit);
+        request.setAttribute("fruitsStockList", fbList);
+        request.setAttribute("totalFruit", totalFruit);
+        request.setAttribute("enableFruit", enableFruit);
+        request.setAttribute("disableFruit", disableFruit);
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/seniorManagement/manageFruit.jsp");
 

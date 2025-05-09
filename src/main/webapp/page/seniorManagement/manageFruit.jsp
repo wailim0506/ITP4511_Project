@@ -43,6 +43,8 @@
             }
             
             boolean isEditMode =(boolean) request.getAttribute("isEditMode");
+            boolean isAddFruit =(boolean) request.getAttribute("isAddFruit");
+            boolean isAddSource =(boolean) request.getAttribute("isAddSource");
                         
             try{
                 String errorMsg = (String) session.getAttribute("errorMsg");
@@ -72,6 +74,9 @@
         %>
         <nav:nav userType="seniorManagement" staffName="<%=staffName%>"/>
         <jsp:useBean id="fruitTypeList" class="java.util.ArrayList" scope="request"/>
+        <jsp:useBean id="countryRegionList" class="java.util.ArrayList" scope="request"/>
+        <jsp:useBean id="allCountryRegionList" class="java.util.ArrayList" scope="request"/>
+        <jsp:useBean id="fruitCity" class="java.util.ArrayList" scope="request"/>
         <%
             if(isEditMode){
                 FruitsBean fbForEdit =(FruitsBean) request.getAttribute("fruitsBean");
@@ -128,10 +133,113 @@
                         <button type="button" class="btn btn-<%=btnStatus%>"
                                 onclick="if (confirm('<%=status.equals("Disable") ? "All stock will be cleared and all order of the fruit will be finished"
                                         + ". Are you sure you want to disable this fruit?" : "Are you sure you want to enable this fruit?"%>')) {
-                    window.location.href = '${pageContext.request.contextPath}/manageFruit?action=<%=status%>&fruitID=<%=fbForEdit.getId()%>';
-                            }">
+                                            window.location.href = '${pageContext.request.contextPath}/manageFruit?action=<%=status%>&fruitID=<%=fbForEdit.getId()%>';
+                                                    }">
                             <%=status%>
                         </button><button type="submit" class="btn btn-success <%=enableChange%>">Change</button>
+                        <button type="button" class="btn btn-dark" 
+                                onclick="window.location.href = '${pageContext.request.contextPath}/manageFruit '">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <%
+            }
+        %>
+        <%
+            if(isAddFruit){
+                String newFruitID = (String) request.getAttribute("newFruitID");
+                String formattedID = "F" + String.format("%03d", Integer.parseInt(newFruitID));
+        %>
+        <div class="modal <%= isAddFruit ? "show" : "" %>">
+            <div class="modal-content">
+                <form action="${pageContext.request.contextPath}/manageFruit" method="post">
+                    <input type="hidden" name="formAction" value="addFruit" >
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="newFruitID" value="<%=formattedID%>" disabled>
+                        <label for="newFruitID">FruitID</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="addFruitName" maxlength="20" required>
+                        <label for="addFruitName">Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="addFruitCity" required>
+                            <%
+                                for (int i = 0; i < fruitCity.size(); i++) {
+                                    FruitCityBean fcb = (FruitCityBean) fruitCity.get(i);
+                                    out.println("<option value=\"" + fcb.getCountryRegionID() + "\">" + fcb.getCity() + "</option>");
+                                }
+                            %>
+                        </select>
+                        <label for="addFruitCity">City</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="addFruitType" required>
+                            <%
+                                for (int i = 0; i < fruitTypeList.size(); i++) {
+                                    String type = (String) fruitTypeList.get(i);
+                                    out.println("<option value=\"" + type + "\">" + type + "</option>");
+                                }
+                            %>
+                        </select>
+                        <label for="addFruitType">Type</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="addFruitUnit" maxlength="10"  required>
+                        <label for="addFruitUnit">Unit</label>
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Fruit Image File</label>
+                        <input class="form-control" type="file" id="formFile">
+                    </div>
+                    <div class="button">
+                        <button type="submit" class="btn btn-success">Add</button>
+                        <button type="button" class="btn btn-dark" 
+                                onclick="window.location.href = '${pageContext.request.contextPath}/manageFruit '">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <%
+            }
+        %>
+        <%
+            if(isAddSource){
+                String newWarehouseID = (String) request.getAttribute("newWarehouseID");
+                String formattedWID = "W" + String.format("%03d", Integer.parseInt(newWarehouseID));
+        %>
+        <div class="modal <%= isAddSource ? "show" : "" %>">
+            <div class="modal-content">
+                <form action="${pageContext.request.contextPath}/manageFruit" method="post">
+                    <input type="hidden" name="formAction" value="addSource" >
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="newSourceID" value="<%=formattedWID%>" disabled>
+                        <label for="newSourceID">WarehouseID</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="addSourceCountry" required>
+                            <%
+                                for (int i = 0; i < allCountryRegionList.size(); i++) {
+                                    CountryRegionBean cb = (CountryRegionBean) allCountryRegionList.get(i);
+                                    out.println("<option value=\""+cb.getId()+"\">"+cb.getName()+"</option>");
+                                }
+                            %>
+                        </select>
+                        <label for="addSourceCountry">Country/Regions</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="addSourceCity" maxlength="50"  required>
+                        <label for="addSourceCity">City</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="addSourcePhone" maxlength="20"  required>
+                        <label for="addSourcePhone">Phone</label>
+                    </div>
+                    <div class="button">
+                        <button type="submit" class="btn btn-success">Add</button>
                         <button type="button" class="btn btn-dark" 
                                 onclick="window.location.href = '${pageContext.request.contextPath}/manageFruit '">Cancel</button>
                     </div>
@@ -195,7 +303,6 @@
                                                     <span class="input-group-text border-0 bg-transparent">
                                                         <i class="material-icons text-muted">public</i>
                                                     </span>
-                                                    <jsp:useBean id="countryRegionList" class="java.util.ArrayList" scope="request"/>
                                                     <select class="form-select" id="countryFilter">
                                                         <option value="all" selected>All Countries/Regions</option>
                                                         <option value="--" disabled>------------------------------</option>
@@ -284,10 +391,12 @@
                                 <div id="inventorySummary">
                                     <div class="d-flex justify-content-between mb-2 border-bottom pb-2">
                                         <div class="button-container">
-                                            <button type="button" class="btn btn-success">
+                                            <button type="button" class="btn btn-success" 
+                                                    onclick="window.location.href = '${pageContext.request.contextPath}/manageFruit?action=addFruit'">
                                                 <i class="material-icons">category</i>Add new fruit
                                             </button>
-                                            <button type="button" class="btn btn-warning">
+                                            <button type="button" class="btn btn-warning"
+                                                    onclick="window.location.href = '${pageContext.request.contextPath}/manageFruit?action=addSource'">
                                                 <i class="material-icons">warehouse</i>Add new source
                                             </button>
                                         </div>

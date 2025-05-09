@@ -27,6 +27,7 @@ ict\bean\ShopBean.class
 ict\test\passwordTestingTool.class
 ict\servlet\warehouse\inventoryController.class
 ict\bean\FruitsBean.class
+ict\bean\FruitCityBean.class
 ict\servlet\warehouse\OrderController.class
 ict\test\test.class
 ict\servlet\warehouse\RestockController.class

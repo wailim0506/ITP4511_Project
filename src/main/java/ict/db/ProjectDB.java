@@ -372,6 +372,35 @@ public class ProjectDB {
     }
     // for country_region table
 
+    public ArrayList<FruitCityBean> getFruitCity() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        FruitCityBean fcb = null;
+        ArrayList<FruitCityBean> city = new ArrayList<FruitCityBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT * FROM fruit_city;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fcb = new FruitCityBean();
+                fcb.setId(rs.getString("ID"));
+                fcb.setCity(rs.getString("City"));
+                fcb.setCountryRegionID(rs.getString("CountryRegionID"));
+                city.add(fcb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return city;
+    }
+    
+    
     // for user table
     public String getPassword(String user) {
         Connection cnnct = null;
@@ -3834,5 +3863,45 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return isSuccess;
+    }
+    
+    public String getNewFruitID() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String total = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) + 1 AS newID FROM fruit;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                total = rs.getString("newID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return total;
+    }
+    
+    public String getNewWarehouseID() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String total = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) + 1 AS newID FROM warehouse;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                total = rs.getString("newID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return total;
     }
 }
