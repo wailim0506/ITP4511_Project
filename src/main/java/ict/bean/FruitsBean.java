@@ -11,7 +11,15 @@ import java.io.Serializable;
  * @author HwH
  */
 public class FruitsBean implements Serializable {
-    private String name, city, countryRegion, imgName, id, type, unit, qty;
+    private String name, city, countryRegion, imgName, id, type, unit, qty, status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public FruitsBean() {
     }

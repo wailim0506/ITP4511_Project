@@ -70,6 +70,39 @@ public class ProjectDB {
         }
         return fruits;
     }
+    
+    public ArrayList<FruitsBean> getAllFruitManager() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        FruitsBean fb = null;
+        ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit,x.Status FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            while (rs.next()) {
+                fb = new FruitsBean();
+                fb.setId(rs.getString("ID"));
+                fb.setName(rs.getString("Name"));
+                fb.setCountryRegion(rs.getString("CountryRegion"));
+                fb.setImgName(rs.getString("ImgName"));
+                fb.setCity(rs.getString("city"));
+                fb.setType(rs.getString("type"));
+                fb.setUnit(rs.getString("unit"));
+                fb.setStatus(rs.getString("status"));
+                fruits.add(fb);
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fruits;
+    }
 
     public ArrayList<String> getAllFruitID() {
         Connection cnnct = null;
@@ -152,6 +185,40 @@ public class ProjectDB {
             e.printStackTrace();
         }
         return fruits;
+    }
+    
+    public FruitsBean getFruitById(String id){
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        FruitsBean fb = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit, x.Status \n" +
+                                            "FROM fruit x, country_region y, fruit_city z \n" +
+                                            "WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and x.ID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, id);
+            pStmnt.executeQuery();
+            ResultSet rs = pStmnt.getResultSet();
+            if (rs.next()) {
+                fb = new FruitsBean();
+                fb.setId(rs.getString("ID"));
+                fb.setName(rs.getString("Name"));
+                fb.setCountryRegion(rs.getString("CountryRegion"));
+                fb.setImgName(rs.getString("ImgName"));
+                fb.setCity(rs.getString("city"));
+                fb.setUnit(rs.getString("unit"));
+                fb.setType(rs.getString("type"));
+                fb.setStatus(rs.getString("Status"));
+            }
+            pStmnt.close();
+            cnnct.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fb;
     }
 
     public ArrayList<FruitsBean> getFruitsByType(String type) {
@@ -2998,7 +3065,7 @@ public class ProjectDB {
         }
         return shopStockList;
     }
-
+    
     public boolean updateWarehouseFruitStock(String warehouseId, String fruitId, int qty) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
@@ -3558,5 +3625,25 @@ public class ProjectDB {
             ex.printStackTrace();
         }
         return isSuccess;
+    }
+    
+    public String getAllFruitCount() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String total = "0";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) AS total FROM fruit WHERE Status = 'enable';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                total = rs.getString("total");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return total;
     }
 }

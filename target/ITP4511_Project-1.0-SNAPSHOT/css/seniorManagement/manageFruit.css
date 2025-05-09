@@ -1,0 +1,226 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2025年5月9日, 下午6:38:21
+    Author     : HwH
+*/
+body {
+    font-family: "Poppins", sans-serif;
+}
+
+.headerSection {
+    background-color: rgba(13, 110, 253, 0.05);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    margin-top: 25px;
+}
+
+.fruit {
+    display: flex;
+    flex-direction: row;
+}
+
+.fruit-list {
+    flex: 1 1 70%;
+}
+
+.fruit-statistcs {
+    flex: 1 1 30%;
+}
+
+.fruit-statistcs {
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    min-height: 100px;
+}
+
+
+html[data-bs-theme="dark"] .headerSection {
+    background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+}
+
+.stockTableContainer {
+    max-height: 500px;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--bs-body-bg);
+    border: 1px solid var(--bs-border-color);
+}
+
+.fruitImg {
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+
+.fruitItem {
+    transition: all 0.2s;
+}
+
+.fruitItem:hover {
+    background-color: var(--bs-tertiary-bg);
+}
+
+.stockControl {
+    max-width: 150px;
+}
+
+.stockInput {
+    max-width: 60px;
+
+    text-align: center;
+    font-weight: 500;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+.stockInput:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+}
+
+.modifiedValue {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-body-color);
+}
+
+.stockValue {
+    font-weight: 500;
+    font-size: 1.1em;
+}
+
+.stockUnit {
+    color: var(--bs-body-color);
+}
+
+/* Table header dark mode fix */
+html[data-bs-theme="dark"] .table-light {
+    /* --bs-table-bg: var(--bs-dark-bg-subtle);
+    --bs-table-color: var(--bs-body-color);
+    color: var(--bs-body-color); */
+}
+
+/* Dark mode specific overrides */
+html[data-bs-theme="dark"] .stockReadMode,
+html[data-bs-theme="dark"] .stockEditMode {
+    color: var(--bs-body-color);
+}
+
+/* Remove spinner buttons from number inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.alertDiv {
+    animation: fadeIn 0.5s ease forwards, fadeOut 0.5s ease 4s forwards;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.button-container button {
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-container button i{
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal.show {
+    display: flex;
+}
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+    width: 600px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+.form-data p{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-data {
+    flex: 1 1 70%;
+}
+
+.form-img {
+    flex: 1 1 30%;
+}
+
+.form-img img{
+    max-height: 200px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.readWrite {
+    width: 300px;
+}
+
+.button {
+    gap: 15px;
+    display: flex;
+    padding-top: 15px;
+    justify-content: right;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.submit-btn:hover {
+    background-color: #45a049;
+}

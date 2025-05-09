@@ -9,6 +9,7 @@ ict\servlet\store\borrowRequestController.class
 ict\servlet\seniorManagement\reserveNeedController.class
 ict\servlet\editUserController.class
 ict\servlet\LoginController.class
+ict\servlet\seniorManagement\manageFruitController.class
 ict\servlet\warehouse\DeliveryController.class
 ict\bean\StatusBean.class
 ict\servlet\store\borrowRecordController.class
