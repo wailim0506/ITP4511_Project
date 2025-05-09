@@ -73,17 +73,19 @@ public class manageFruitController extends HttpServlet {
             String fruitStatus = action.equals("Enable") ? "enable" : "disable";
 
             if (action.equals("Disable")) {
-                if (db.updateFruitDisableShopStock(fruitId) 
-                        && db.updateFruitDisableWarehouseStock(fruitId)
-                        && db.updateFruitDisableOrder(fruitId) 
-                        && db.updateFruitDisableBorrow(fruitId)) {
-                    session.setAttribute("successMsg", "Update fruitID: " + fruitId + " status successful! Please try again.");
+
+                if (db.updateFruitStatusById(fruitId, fruitStatus)) {
+                    db.updateFruitDisableShopStock(fruitId);
+                    db.updateFruitDisableWarehouseStock(fruitId);
+                    db.updateFruitDisableOrder(fruitId);
+                    db.updateFruitDisableBorrow(fruitId);
+                    session.setAttribute("successMsg", "Update fruitID: " + fruitId + " status successful!");
                 } else {
                     session.setAttribute("errorMsg", "Update fruitID: " + fruitId + " status failed! Please try again.");
                 }
             } else {
-                if(db.updateFruitStatusById(fruitId, fruitStatus)){
-                    session.setAttribute("successMsg", "Update fruitID: " + fruitId + " status successful! Please try again.");
+                if (db.updateFruitStatusById(fruitId, fruitStatus)) {
+                    session.setAttribute("successMsg", "Update fruitID: " + fruitId + " status successful!");
                 } else {
                     session.setAttribute("errorMsg", "Update fruitID: " + fruitId + " status failed! Please try again.");
                 }
@@ -95,16 +97,21 @@ public class manageFruitController extends HttpServlet {
             fbList = db.getAllFruitManager();
         }
 
-        request.setAttribute("fruitsStockList", fbList);
-        request.setAttribute("totalFruit", totalFruit);
-        request.setAttribute("enableFruit", enableFruit);
-        request.setAttribute("disableFruit", disableFruit);
+        request.setAttribute(
+                "fruitsStockList", fbList);
+        request.setAttribute(
+                "totalFruit", totalFruit);
+        request.setAttribute(
+                "enableFruit", enableFruit);
+        request.setAttribute(
+                "disableFruit", disableFruit);
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/seniorManagement/manageFruit.jsp");
+
         rd.forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
