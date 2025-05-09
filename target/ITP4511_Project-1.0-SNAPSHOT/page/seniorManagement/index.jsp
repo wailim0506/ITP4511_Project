@@ -94,7 +94,7 @@
                             <i class="material-icons card-icon mb-3">category</i>
                             <h5 class="card-title">Manage Fruit Types</h5>
                             <p class="card-text text-muted">Add, edit, or remove fruit types in the system</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">Manage Types</a>
+                            <a href="/ITP4511_Project/manageFruit" class="btn btn-outline-primary mt-2">Manage Types</a>
                         </div>
                     </div>
                 </div>
