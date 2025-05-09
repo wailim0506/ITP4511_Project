@@ -3686,4 +3686,29 @@ public class ProjectDB {
         }
         return total;
     }
+    
+    public boolean updateFruitById(String fruitId, String name, String type, String unit, String imgName) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE fruit SET Name = ?, type = ?, unit = ?, ImgName = ? WHERE ID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, name);
+            pStmnt.setString(2, type);
+            pStmnt.setString(3, unit);
+            pStmnt.setString(4, imgName);
+            pStmnt.setString(5, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 }

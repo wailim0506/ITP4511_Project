@@ -76,11 +76,14 @@
             if(isEditMode){
                 FruitsBean fbForEdit =(FruitsBean) request.getAttribute("fruitsBean");
                 String status = fbForEdit.getStatus().equals("enable")?"Disable":"Enable";
+                String enableChange = status.equals("Enable")?"hideBtn":"";
                 String btnStatus = status.equals("Disable")?"danger":"success";
         %>
         <div class="modal <%= isEditMode ? "show" : "" %>">
             <div class="modal-content">
-                <form action="submit.jsp" method="post">
+                <form action="${pageContext.request.contextPath}/manageFruit" method="post">
+                    <input type="hidden" name="formAction" value="change" >
+                    <input type="hidden" name="editFruitId" value="<%=fbForEdit.getId()%>" >
                     <div class="form-edit">
                         <div class="form-row">
                             <div class="form-data">
@@ -123,7 +126,7 @@
 
                     <div class="button">
                         <button type="button" class="btn btn-<%=btnStatus%>"><%=status%></button>
-                        <button type="submit" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success <%=enableChange%>">Change</button>
                         <button type="button" class="btn btn-dark" 
                                 onclick="window.location.href = '${pageContext.request.contextPath}/manageFruit '">Cancel</button>
                     </div>

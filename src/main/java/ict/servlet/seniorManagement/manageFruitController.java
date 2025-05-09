@@ -32,7 +32,7 @@ public class manageFruitController extends HttpServlet {
         String dbUrl = this.getServletContext().getInitParameter("dbUrl");
         db = new ProjectDB(dbUrl, dbUser, dbPassword);
     }
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -48,12 +48,12 @@ public class manageFruitController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         }
-        
+
         ArrayList<CountryRegionBean> countryRegionList = db.getFruitCountryRegion();
         request.setAttribute("countryRegionList", countryRegionList);
         ArrayList<String> fruitTypeList = db.getFruitType();
         request.setAttribute("fruitTypeList", fruitTypeList);
-        
+
         String totalFruit, enableFruit, disableFruit;
         totalFruit = db.getAllFruitCount();
         enableFruit = db.getAllFruitCountEnable();
@@ -62,20 +62,15 @@ public class manageFruitController extends HttpServlet {
         ArrayList<FruitsBean> fbList = db.getAllFruitManager();
         request.setAttribute("fruitsStockList", fbList);
         request.setAttribute("isEditMode", false);
-        
-        try{
-            String action = request.getParameter("action");
-            if(action.equals("edit")){
-                String fruitId = request.getParameter("fruitID");
-                FruitsBean fb = db.getFruitById(fruitId);
-                request.setAttribute("fruitsBean", fb);
-                request.setAttribute("isEditMode",true);
-            }
-        }catch (Exception e){
-            System.out.print("Non action");
+
+        String action = request.getParameter("action");
+        if (action != null && action.equals("edit")) {
+            String fruitId = request.getParameter("fruitID");
+            FruitsBean fb = db.getFruitById(fruitId);
+            request.setAttribute("fruitsBean", fb);
+            request.setAttribute("isEditMode", true);
         }
-        
-        
+
         request.setAttribute("totalFruit", totalFruit);
         request.setAttribute("enableFruit", enableFruit);
         request.setAttribute("disableFruit", disableFruit);
@@ -96,6 +91,7 @@ public class manageFruitController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         processRequest(request, response);
     }
 
@@ -110,6 +106,28 @@ public class manageFruitController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        UserBean user = (UserBean) session.getAttribute("userInfo");
+
+        String formAction = request.getParameter("formAction");
+        if(formAction.equals("change")){
+            String fruitId = request.getParameter("editFruitId");
+            String name = request.getParameter("editName");
+            String type = request.getParameter("editType");
+            String unit = request.getParameter("editUnit");
+            String imgName = request.getParameter("editImg");
+        
+            if(db.updateFruitById(fruitId, name, type, unit, imgName)){
+                session.setAttribute("successMsg", "Update fruitID: " + fruitId + " successful! Please try again.");
+            }else{
+                session.setAttribute("errorMsg", "Update fruitID: " + fruitId + " failed! Please try again.");
+            }
+            
+        }
+        
+        
+        
+        
         processRequest(request, response);
     }
 

@@ -213,21 +213,14 @@ input[type="number"] {
     justify-content: right;
 }
 
-.submit-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-.submit-btn:hover {
-    background-color: #45a049;
+.hideBtn {
+    display: none;
 }
 
 .enable-row {
     background-color: #d4edda;
 }
+
 .disable-row {
     background-color: #f8d7da;
 }
