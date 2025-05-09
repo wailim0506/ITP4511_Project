@@ -37,6 +37,10 @@
             String userType = (String) session.getAttribute("userType");
             UserBean ub = (UserBean) session.getAttribute("userInfo");
             
+            if(userType.equals("warehouse")){
+                userType = ub.getWarehouseType().equals("Central")?"Central":"Source";
+            }
+            
             String msg = (String) request.getAttribute("msg");
             String msgCollapse = (msg!=null)?"":"collapse";
             String errorMsg = (String) request.getAttribute("errorMsg");

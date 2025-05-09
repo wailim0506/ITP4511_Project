@@ -37,6 +37,10 @@
             String userType = (String) session.getAttribute("userType");
             UserBean ub = (UserBean) session.getAttribute("userInfo");
             
+            if(userType.equals("warehouse")){
+                userType = ub.getWarehouseType().equals("Central")?"Central":"Source";
+            }
+            
             String type = (userType.equals("shop"))?"shop":(userType.equals("warehouse"))?"warehouse":"all";
             String idTitle = (userType.equals("shop"))?"Shop ID":(userType.equals("warehouse"))?"Warehouse ID":"Place ID";
         %>

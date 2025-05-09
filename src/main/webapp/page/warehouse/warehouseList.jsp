@@ -35,7 +35,7 @@
             UserBean ub = (UserBean)session.getAttribute("userInfo");
             String userType = (String) session.getAttribute("userType");
         %>
-        <nav:nav userType="<%=userType%>" staffName="<%=ub.getStaffName()%>"/>
+        <nav:nav userType="<%=ub.getWarehouseType()%>" staffName="<%=ub.getStaffName()%>"/>
         <div class="container py-4">
             <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
@@ -151,7 +151,7 @@
         
         
         
-        <footer:footer userType="<%=userType%>"/>
+        <footer:footer userType="<%=ub.getWarehouseType()%>"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
            

@@ -59,7 +59,7 @@ public class profile extends SimpleTagSupport {
     private void warehouse() throws IOException {
         out.println("<p><b>Account Type:</b> Warehouse (" + type + ")</p>\n" +
                 "                        <p><b>Warehouse ID:</b> " + userBean.getWareHouseId() + "</p>\n" +
-                "                        <p><b>Staff Name:</b> " + userBean.getUserName() + "</p>\n" +
+                "                        <p><b>Staff Name (Type):</b> " + userBean.getUserName() + " (" + userBean.getRole() + ")" + "</p>\n" +
                 "                        <p><b>Warehouse Phone:</b> " + userBean.getPhone() + "</p>\n" +
                 "                        <p><b>" + loc + "</p>");
     }

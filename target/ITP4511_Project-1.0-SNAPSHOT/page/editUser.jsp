@@ -41,6 +41,9 @@
             String type = (userType.equals("shop"))?"shop":(userType.equals("warehouse"))?"warehouse":"all";
             String idTitle = (userType.equals("shop"))?"Shop ID":(userType.equals("warehouse"))?"Warehouse ID":"Place ID";
             
+            if(userType.equals("warehouse")){
+                userType = ub.getWarehouseType().equals("Central")?"Central":"Source";
+            }
        
             UserBean user = (UserBean) request.getAttribute("userInfo");  //user to be edited
             String role = user.getRole();

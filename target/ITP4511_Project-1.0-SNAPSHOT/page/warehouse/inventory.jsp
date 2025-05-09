@@ -34,7 +34,7 @@
         <%
             UserBean ub = (UserBean)session.getAttribute("userInfo");
         %>
-        <nav:nav userType="warehouse" staffName="<%=ub.getStaffName()%>"/>
+        <nav:nav userType="<%=ub.getWarehouseType()%>" staffName="<%=ub.getStaffName()%>"/>
         <jsp:useBean id="StatusBean" class="ict.bean.StatusBean" scope="request"/>
         <%
             try{
@@ -277,7 +277,7 @@
         </div>
                 
         </div>
-        <footer:footer userType="warehouse"/>
+        <footer:footer userType="<%=ub.getWarehouseType()%>"/>
         <i id="darkModeToogle" class="material-icons"
            style="position:fixed; bottom: 20px; right: 20px; cursor: pointer; font-size: 32px; border-radius: 50%; padding: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">wb_sunny</i>
         <script src="${pageContext.request.contextPath}/js/store/stock.js"></script>

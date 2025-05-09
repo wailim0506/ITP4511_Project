@@ -30,7 +30,9 @@ public class footer extends SimpleTagSupport {
         try {
             if ("shop".equalsIgnoreCase(userType)) {
                 shopFooter(out);
-            } else if ("warehouse".equalsIgnoreCase(userType)) {
+            } else if ("Source".equalsIgnoreCase(userType)) {
+                warehouseFooterSource(out);
+            } else if("Central".equalsIgnoreCase(userType)){
                 warehouseFooter(out);
             } else {
                 seniorManagementFooter(out);
@@ -116,6 +118,55 @@ public class footer extends SimpleTagSupport {
 
     }
 
+    private void warehouseFooterSource(JspWriter out) throws IOException {
+        out.println(
+                "<div class=\"mt-4 py-3\" style=\"border-top: var(--bs-border-width) solid var(--bs-border-color);\">"
+                        + "    <div class=\"container\">"
+                        + "        <!-- Navigation Links -->"
+                        + "        <nav class=\"nav justify-content-center flex-nowrap\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/page/warehouse/index.jsp\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">home</i>"
+                        + "                    <span>Dashboard</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/inventory?action=list\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">inventory_2</i>"
+                        + "                    <span>Inventory</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/Order?action=list\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">receipt_long</i>"
+                        + "                    <span>Order</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/Delivery?action=list\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">local_shipping</i>"
+                        + "                    <span>Delivery</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/page/profile.jsp\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">person</i>"
+                        + "                    <span>Profile</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "        </nav>"
+                        + "        <!-- Copyright -->"
+                        + "        <div class=\"text-center text-muted small mt-2\">"
+                        + "            <div class=\"d-flex align-items-center justify-content-center\">"
+                        + "                <i class=\"material-icons small me-1\">bakery_dining</i>"
+                        + "                <span>ACER International Bakery</span>"
+                        + "            </div>"
+                        + "            <p class=\"mb-0 mt-1\">&copy; 2025 ACER. All rights reserved.</p>"
+                        + "        </div>"
+                        + "    </div>"
+                        + "</div>");
+    }
+    
     private void warehouseFooter(JspWriter out) throws IOException {
         out.println(
                 "<div class=\"mt-4 py-3\" style=\"border-top: var(--bs-border-width) solid var(--bs-border-color);\">"
@@ -132,6 +183,12 @@ public class footer extends SimpleTagSupport {
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">inventory_2</i>"
                         + "                    <span>Inventory</span>"
+                        + "                </div>"
+                        + "            </a>"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/Restock?action=list\">"
+                        + "                <div class=\"d-flex align-items-center\">"
+                        + "                    <i class=\"material-icons small me-1\">move_to_inbox</i>"
+                        + "                    <span>Restock</span>"
                         + "                </div>"
                         + "            </a>"
                         + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/Order?action=list\">"

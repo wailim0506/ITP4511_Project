@@ -34,7 +34,9 @@ public class nav extends SimpleTagSupport {
         try {
             if ("shop".equalsIgnoreCase(userType)) {
                 shopNav(out, staffName);
-            } else if ("warehouse".equalsIgnoreCase(userType)) {
+            } else if ("Central".equalsIgnoreCase(userType)) {
+                warehouseNavCentral(out);
+            } else if ("Source".equalsIgnoreCase(userType)) {
                 warehouseNav(out);
             } else {
                 seniorManagementNav(out);
@@ -155,12 +157,62 @@ public class nav extends SimpleTagSupport {
                         + "    </div>"
                         + "</nav>");
     }
+    
+    private void warehouseNavCentral(JspWriter out) throws IOException {
+        out.println(
+                "<nav class=\"navbar navbar-expand-lg sticky-top shadow-sm\" style=\"border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);\">"
+                        + "    <div class=\"container\">"
+                        + "        <a class=\"navbar-brand d-flex align-items-center\" href=\"/ITP4511_Project/page/warehouse/index.jsp\">"
+                        + "            <i class=\"material-icons text-primary me-2\">bakery_dining</i>"
+                        + "            <span class=\"fw-bold\">ACER</span>"
+                        + "        </a>"
+                        + "        <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarNav\" "
+                        + "                aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">"
+                        + "            <span class=\"navbar-toggler-icon\"></span>"
+                        + "        </button>"
+                        + "        <div class=\"collapse navbar-collapse\" id=\"navbarNav\">"
+                        + "            <ul class=\"navbar-nav me-auto\">"
+                        + "                <li class=\"nav-item\">"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/page/warehouse/index.jsp\"><i class=\"material-icons small align-middle me-1\">home</i> Dashboard</a>"
+                        + "                </li>"
+                        + "                <li class=\"nav-item\">"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/inventory?action=list\"><i class=\"material-icons small align-middle me-1\">inventory_2</i> Inventory</a>"
+                        + "                </li>"
+                        + "                <li class=\"nav-item\">"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/Restock?action=list\"><i class=\"material-icons small align-middle me-1\">move_to_inbox</i> Restock</a>"
+                        + "                </li>"
+                        + "                <li class=\"nav-item\">"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/Order?action=list\"><i class=\"material-icons small align-middle me-1\">receipt_long</i> Order</a>"
+                        + "                </li>"
+                        + "                <li class=\"nav-item\">"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/Delivery?action=list\"><i class=\"material-icons small align-middle me-1\">local_shipping</i> Delivery</a>"
+                        + "                </li>"
+                        + "            </ul>"
+                        + "            <div class=\"d-flex align-items-center\">"
+                        + "                <div class=\"dropdown\">"
+                        + "                    <a class=\"btn btn-outline-secondary dropdown-toggle d-flex align-items-center\" href=\"#\" role=\"button\" "
+                        + "                       id=\"userDropdown\" data-bs-toggle=\"dropdown\" aria-expanded=\"false\">"
+                        + "                        <i class=\"material-icons me-2\">account_circle</i>"
+                        + "                        <span>" + staffName + "</span>"
+                        + "                    </a>"
+                        + "                    <ul class=\"dropdown-menu dropdown-menu-end shadow\" aria-labelledby=\"userDropdown\">"
+                        + "                        <li><a class=\"dropdown-item\" href=\"/ITP4511_Project/page/profile.jsp\"><i class=\"material-icons small me-2\">person</i>Profile</a></li>"
+                        + "                        <li><hr class=\"dropdown-divider\"></li>"
+                        + "                        <li><a class=\"dropdown-item\" href=\""
+                        + "/ITP4511_Project/login?action=logout\"><i class=\"material-icons small me-2\">logout</i>Logout</a></li>"
+                        + "                    </ul>"
+                        + "                </div>"
+                        + "            </div>"
+                        + "        </div>"
+                        + "    </div>"
+                        + "</nav>");
+    }
 
     private void seniorManagementNav(JspWriter out) throws IOException {
         out.println(
                 "<nav class=\"navbar navbar-expand-lg sticky-top shadow-sm\" style=\"border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);\">"
                         + "    <div class=\"container\">"
-                        + "        <a class=\"navbar-brand d-flex align-items-center\" href=\"/ITP4511_Project/page/management/index.jsp\">"
+                        + "        <a class=\"navbar-brand d-flex align-items-center\" href=\"/ITP4511_Project/page/seniorManagement/index.jsp\">"
                         + "            <i class=\"material-icons text-primary me-2\">bakery_dining</i>"
                         + "            <span class=\"fw-bold\">ACER</span>"
                         + "        </a>"
