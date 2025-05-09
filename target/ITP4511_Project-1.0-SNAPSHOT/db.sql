@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- 主机： 127.0.0.1
--- 生成日期： 2025-05-08 13:25:55
--- 服务器版本： 10.4.32-MariaDB
--- PHP 版本： 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: May 09, 2025 at 03:06 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,14 +18,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 数据库： `itp4511_project_db`
+-- Database: `itp4511_project_db`
 --
 CREATE DATABASE IF NOT EXISTS `itp4511_project_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `itp4511_project_db`;
+
 -- --------------------------------------------------------
 
 --
--- 表的结构 `country_region`
+-- Table structure for table `country_region`
 --
 
 CREATE TABLE `country_region` (
@@ -34,7 +35,7 @@ CREATE TABLE `country_region` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `country_region`
+-- Dumping data for table `country_region`
 --
 
 INSERT INTO `country_region` (`ID`, `Name`) VALUES
@@ -257,7 +258,7 @@ INSERT INTO `country_region` (`ID`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `fruit`
+-- Table structure for table `fruit`
 --
 
 CREATE TABLE `fruit` (
@@ -271,7 +272,7 @@ CREATE TABLE `fruit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `fruit`
+-- Dumping data for table `fruit`
 --
 
 INSERT INTO `fruit` (`ID`, `Name`, `type`, `unit`, `ImgName`, `FruitCityID`, `Status`) VALUES
@@ -287,7 +288,7 @@ INSERT INTO `fruit` (`ID`, `Name`, `type`, `unit`, `ImgName`, `FruitCityID`, `St
 -- --------------------------------------------------------
 
 --
--- 表的结构 `fruit_city`
+-- Table structure for table `fruit_city`
 --
 
 CREATE TABLE `fruit_city` (
@@ -297,7 +298,7 @@ CREATE TABLE `fruit_city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `fruit_city`
+-- Dumping data for table `fruit_city`
 --
 
 INSERT INTO `fruit_city` (`ID`, `City`, `CountryRegionID`) VALUES
@@ -310,7 +311,7 @@ INSERT INTO `fruit_city` (`ID`, `City`, `CountryRegionID`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `senior_management_staff`
+-- Table structure for table `senior_management_staff`
 --
 
 CREATE TABLE `senior_management_staff` (
@@ -321,7 +322,7 @@ CREATE TABLE `senior_management_staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `senior_management_staff`
+-- Dumping data for table `senior_management_staff`
 --
 
 INSERT INTO `senior_management_staff` (`ID`, `StaffName`, `UserID`, `Role`) VALUES
@@ -330,7 +331,7 @@ INSERT INTO `senior_management_staff` (`ID`, `StaffName`, `UserID`, `Role`) VALU
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop`
+-- Table structure for table `shop`
 --
 
 CREATE TABLE `shop` (
@@ -341,7 +342,7 @@ CREATE TABLE `shop` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop`
+-- Dumping data for table `shop`
 --
 
 INSERT INTO `shop` (`ID`, `Address`, `City`, `PhoneNumber`) VALUES
@@ -521,7 +522,7 @@ INSERT INTO `shop` (`ID`, `Address`, `City`, `PhoneNumber`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop_borrow_request`
+-- Table structure for table `shop_borrow_request`
 --
 
 CREATE TABLE `shop_borrow_request` (
@@ -538,7 +539,7 @@ CREATE TABLE `shop_borrow_request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop_borrow_request`
+-- Dumping data for table `shop_borrow_request`
 --
 
 INSERT INTO `shop_borrow_request` (`ID`, `RequestBy`, `RequestTo`, `RequestDate`, `DeliveryDate`, `Status`, `Completed`, `Notes`, `RejectReason`, `RejectDetail`) VALUES
@@ -554,7 +555,7 @@ INSERT INTO `shop_borrow_request` (`ID`, `RequestBy`, `RequestTo`, `RequestDate`
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop_borrow_request_item`
+-- Table structure for table `shop_borrow_request_item`
 --
 
 CREATE TABLE `shop_borrow_request_item` (
@@ -564,7 +565,7 @@ CREATE TABLE `shop_borrow_request_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop_borrow_request_item`
+-- Dumping data for table `shop_borrow_request_item`
 --
 
 INSERT INTO `shop_borrow_request_item` (`BorrowRequestID`, `FruitID`, `Qty`) VALUES
@@ -587,7 +588,7 @@ INSERT INTO `shop_borrow_request_item` (`BorrowRequestID`, `FruitID`, `Qty`) VAL
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop_city`
+-- Table structure for table `shop_city`
 --
 
 CREATE TABLE `shop_city` (
@@ -597,7 +598,7 @@ CREATE TABLE `shop_city` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop_city`
+-- Dumping data for table `shop_city`
 --
 
 INSERT INTO `shop_city` (`ID`, `City`, `CountryRegionID`) VALUES
@@ -663,7 +664,7 @@ INSERT INTO `shop_city` (`ID`, `City`, `CountryRegionID`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop_fruit_order`
+-- Table structure for table `shop_fruit_order`
 --
 
 CREATE TABLE `shop_fruit_order` (
@@ -676,33 +677,85 @@ CREATE TABLE `shop_fruit_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop_fruit_order`
+-- Dumping data for table `shop_fruit_order`
 --
 
 INSERT INTO `shop_fruit_order` (`ID`, `ShopID`, `OrderDate`, `DeliveryDate`, `Status`, `Notes`) VALUES
-('O0001', 'S023', '2025-02-12', NULL, 'Finished', ''),
-('O0002', 'S102', '2025-02-04', NULL, 'Finished', ''),
-('O0003', 'S024', '2025-02-10', NULL, 'Finished', ''),
-('O0004', 'S023', '2025-02-20', NULL, 'Finished', ''),
-('O0005', 'S024', '2025-02-27', NULL, 'Finished', ''),
-('O0006', 'S102', '2025-02-25', NULL, 'Finished', ''),
-('O0007', 'S023', '2025-03-12', NULL, 'Finished', ''),
-('O0008', 'S024', '2025-03-07', NULL, 'Finished', ''),
-('O0009', 'S102', '2025-03-09', NULL, 'Finished', ''),
-('O0010', 'S023', '2025-03-21', NULL, 'Finished', ''),
-('O0011', 'S024', '2025-03-24', NULL, 'Finished', ''),
-('O0012', 'S102', '2025-03-30', NULL, 'Finished', ''),
-('O0013', 'S023', '2025-04-02', NULL, 'Finished', ''),
-('O0014', 'S024', '2025-04-09', NULL, 'Finished', ''),
-('O0015', 'S102', '2025-04-12', NULL, 'Finished', ''),
-('O0016', 'S023', '2025-04-15', NULL, 'Delivered', ''),
+('O0001', 'S023', '2025-02-12', '2025-02-15', 'Finished', ''),
+('O0002', 'S102', '2025-02-04', '2025-02-07', 'Finished', ''),
+('O0003', 'S024', '2025-02-10', '2025-02-14', 'Finished', ''),
+('O0004', 'S023', '2025-02-20', '2025-02-23', 'Finished', ''),
+('O0005', 'S024', '2025-02-27', '2025-03-02', 'Finished', ''),
+('O0006', 'S102', '2025-02-25', '2025-02-28', 'Finished', ''),
+('O0007', 'S023', '2025-03-12', '2025-03-15', 'Finished', ''),
+('O0008', 'S024', '2025-03-07', '2025-03-10', 'Finished', ''),
+('O0009', 'S102', '2025-03-09', '2025-03-12', 'Finished', ''),
+('O0010', 'S023', '2025-03-21', '2025-03-24', 'Finished', ''),
+('O0011', 'S024', '2025-03-24', '2025-03-27', 'Finished', ''),
+('O0012', 'S102', '2025-03-30', '2025-04-02', 'Finished', ''),
+('O0013', 'S023', '2025-04-02', '2025-04-05', 'Finished', ''),
+('O0014', 'S024', '2025-04-09', '2025-04-12', 'Finished', ''),
+('O0015', 'S102', '2025-04-12', '2025-04-15', 'Finished', ''),
+('O0016', 'S023', '2025-04-15', '2025-04-18', 'Delivered', ''),
 ('O0017', 'S024', '2025-04-15', NULL, 'Pending', ''),
-('O0018', 'S102', '2025-04-15', NULL, 'Pending', '');
+('O0018', 'S102', '2025-04-15', NULL, 'Pending', ''),
+('O0019', 'S046', '2025-01-05', '2025-01-08', 'Finished', 'Lunar New Year preparation'),
+('O0020', 'S047', '2025-01-06', '2025-01-09', 'Finished', 'Seasonal stock'),
+('O0021', 'S051', '2025-01-10', '2025-01-13', 'Finished', 'Weekly restock'),
+('O0022', 'S055', '2025-01-15', '2025-01-18', 'Finished', 'Sale promotion'),
+('O0023', 'S001', '2025-01-17', '2025-01-20', 'Finished', 'Special event'),
+('O0024', 'S002', '2025-01-20', '2025-01-23', 'Finished', ''),
+('O0025', 'S025', '2025-01-22', '2025-01-25', 'Finished', 'Customer special order'),
+('O0026', 'S026', '2025-01-25', '2025-01-28', 'Finished', ''),
+('O0027', 'S125', '2025-01-27', '2025-01-30', 'Finished', 'Tourist season preparation'),
+('O0028', 'S126', '2025-01-30', '2025-02-02', 'Finished', ''),
+('O0029', 'S023', '2025-02-01', '2025-02-04', 'Finished', 'Valentine preparation'),
+('O0030', 'S024', '2025-02-03', '2025-02-06', 'Finished', ''),
+('O0031', 'S102', '2025-02-06', '2025-02-09', 'Finished', 'Weekly restock'),
+('O0032', 'S103', '2025-02-08', '2025-02-11', 'Finished', ''),
+('O0033', 'S051', '2025-02-11', '2025-02-14', 'Finished', 'Valentine special'),
+('O0034', 'S052', '2025-02-13', '2025-02-16', 'Finished', ''),
+('O0035', 'S046', '2025-02-15', '2025-02-18', 'Finished', 'Weekend promotion'),
+('O0036', 'S047', '2025-02-18', '2025-02-21', 'Finished', ''),
+('O0037', 'S001', '2025-02-20', '2025-02-23', 'Finished', 'Special event'),
+('O0038', 'S002', '2025-02-22', '2025-02-25', 'Finished', ''),
+('O0039', 'S125', '2025-02-24', '2025-02-27', 'Finished', 'Tourist season preparation'),
+('O0040', 'S126', '2025-02-26', '2025-03-01', 'Finished', ''),
+('O0041', 'S023', '2025-03-01', '2025-03-04', 'Finished', 'Monthly promotion'),
+('O0042', 'S024', '2025-03-03', '2025-03-06', 'Finished', ''),
+('O0043', 'S102', '2025-03-05', '2025-03-08', 'Finished', 'Weekly restock'),
+('O0044', 'S103', '2025-03-08', '2025-03-11', 'Finished', ''),
+('O0045', 'S051', '2025-03-10', '2025-03-13', 'Finished', 'Spring festival preparation'),
+('O0046', 'S052', '2025-03-12', '2025-03-15', 'Finished', ''),
+('O0047', 'S046', '2025-03-15', '2025-03-18', 'Finished', 'Weekend promotion'),
+('O0048', 'S047', '2025-03-17', '2025-03-20', 'Finished', ''),
+('O0049', 'S001', '2025-03-19', '2025-03-22', 'Finished', 'Special event'),
+('O0050', 'S002', '2025-03-22', '2025-03-25', 'Finished', ''),
+('O0051', 'S125', '2025-03-24', '2025-03-27', 'Finished', 'Tourist season preparation'),
+('O0052', 'S126', '2025-03-26', '2025-03-29', 'Finished', ''),
+('O0053', 'S023', '2025-03-28', '2025-03-31', 'Finished', 'End of month special'),
+('O0054', 'S024', '2025-03-31', '2025-04-03', 'Finished', ''),
+('O0055', 'S102', '2025-04-01', '2025-04-04', 'Finished', 'Weekly restock'),
+('O0056', 'S103', '2025-04-03', '2025-04-06', 'Finished', ''),
+('O0057', 'S051', '2025-04-05', '2025-04-08', 'Finished', 'Easter preparation'),
+('O0058', 'S052', '2025-04-07', '2025-04-10', 'Finished', ''),
+('O0059', 'S046', '2025-04-08', '2025-04-11', 'Finished', 'Weekend promotion'),
+('O0060', 'S047', '2025-04-10', '2025-04-13', 'Finished', ''),
+('O0061', 'S001', '2025-04-11', '2025-04-14', 'Finished', 'Special event'),
+('O0062', 'S002', '2025-04-13', '2025-04-16', 'Finished', ''),
+('O0063', 'S125', '2025-04-14', '2025-04-17', 'Delivered', 'Tourist season preparation'),
+('O0064', 'S126', '2025-04-15', NULL, 'Processing', ''),
+('O0065', 'S023', '2025-04-16', NULL, 'Pending', 'Monthly promotion'),
+('O0066', 'S024', '2025-04-16', NULL, 'Pending', ''),
+('O0067', 'S102', '2025-04-17', NULL, 'Pending', 'Weekly restock'),
+('O0068', 'S103', '2025-04-17', NULL, 'Pending', ''),
+('O0069', 'S051', '2025-04-18', NULL, 'Pending', 'Spring festival preparation'),
+('O0070', 'S052', '2025-04-18', NULL, 'Pending', '');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop_fruit_order_item`
+-- Table structure for table `shop_fruit_order_item`
 --
 
 CREATE TABLE `shop_fruit_order_item` (
@@ -713,7 +766,7 @@ CREATE TABLE `shop_fruit_order_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop_fruit_order_item`
+-- Dumping data for table `shop_fruit_order_item`
 --
 
 INSERT INTO `shop_fruit_order_item` (`OrderID`, `FruitID`, `Qty`, `Status`) VALUES
@@ -758,12 +811,119 @@ INSERT INTO `shop_fruit_order_item` (`OrderID`, `FruitID`, `Qty`, `Status`) VALU
 ('O0015', 'F001', 1, 'Pending'),
 ('O0016', 'F002', 1, 'Pending'),
 ('O0017', 'F002', 1, 'Pending'),
-('O0018', 'F003', 1, 'Pending');
+('O0018', 'F003', 1, 'Pending'),
+('O0019', 'F001', 25, 'Finished'),
+('O0019', 'F002', 18, 'Finished'),
+('O0019', 'F005', 500, 'Finished'),
+('O0020', 'F003', 15, 'Finished'),
+('O0020', 'F004', 30, 'Finished'),
+('O0020', 'F007', 800, 'Finished'),
+('O0021', 'F001', 45, 'Finished'),
+('O0021', 'F004', 20, 'Finished'),
+('O0022', 'F002', 22, 'Finished'),
+('O0022', 'F005', 650, 'Finished'),
+('O0022', 'F008', 10, 'Finished'),
+('O0023', 'F001', 30, 'Finished'),
+('O0023', 'F006', 5, 'Finished'),
+('O0024', 'F003', 12, 'Finished'),
+('O0024', 'F007', 700, 'Finished'),
+('O0025', 'F004', 40, 'Finished'),
+('O0025', 'F008', 15, 'Finished'),
+('O0026', 'F002', 35, 'Finished'),
+('O0026', 'F005', 450, 'Finished'),
+('O0027', 'F001', 28, 'Finished'),
+('O0027', 'F003', 14, 'Finished'),
+('O0028', 'F004', 22, 'Finished'),
+('O0028', 'F007', 600, 'Finished'),
+('O0029', 'F002', 40, 'Finished'),
+('O0029', 'F006', 8, 'Finished'),
+('O0030', 'F001', 32, 'Finished'),
+('O0030', 'F005', 520, 'Finished'),
+('O0031', 'F003', 18, 'Finished'),
+('O0031', 'F008', 12, 'Finished'),
+('O0032', 'F002', 25, 'Finished'),
+('O0032', 'F004', 30, 'Finished'),
+('O0033', 'F001', 45, 'Finished'),
+('O0033', 'F007', 850, 'Finished'),
+('O0034', 'F006', 7, 'Finished'),
+('O0034', 'F008', 18, 'Finished'),
+('O0035', 'F002', 30, 'Finished'),
+('O0035', 'F004', 25, 'Finished'),
+('O0036', 'F001', 38, 'Finished'),
+('O0036', 'F005', 580, 'Finished'),
+('O0037', 'F003', 20, 'Finished'),
+('O0037', 'F007', 750, 'Finished'),
+('O0038', 'F001', 42, 'Finished'),
+('O0038', 'F006', 6, 'Finished'),
+('O0039', 'F002', 35, 'Finished'),
+('O0039', 'F008', 16, 'Finished'),
+('O0040', 'F004', 28, 'Finished'),
+('O0040', 'F005', 620, 'Finished'),
+('O0041', 'F001', 48, 'Finished'),
+('O0041', 'F003', 22, 'Finished'),
+('O0042', 'F002', 38, 'Finished'),
+('O0042', 'F007', 900, 'Finished'),
+('O0043', 'F004', 35, 'Finished'),
+('O0043', 'F008', 20, 'Finished'),
+('O0044', 'F001', 40, 'Finished'),
+('O0044', 'F006', 9, 'Finished'),
+('O0045', 'F002', 45, 'Finished'),
+('O0045', 'F005', 680, 'Finished'),
+('O0046', 'F003', 25, 'Finished'),
+('O0046', 'F007', 820, 'Finished'),
+('O0047', 'F001', 52, 'Finished'),
+('O0047', 'F004', 32, 'Finished'),
+('O0048', 'F002', 42, 'Finished'),
+('O0048', 'F008', 22, 'Finished'),
+('O0049', 'F003', 28, 'Finished'),
+('O0049', 'F006', 7, 'Finished'),
+('O0050', 'F001', 46, 'Finished'),
+('O0050', 'F005', 720, 'Finished'),
+('O0051', 'F002', 50, 'Finished'),
+('O0051', 'F004', 40, 'Finished'),
+('O0052', 'F003', 30, 'Finished'),
+('O0052', 'F007', 950, 'Finished'),
+('O0053', 'F001', 55, 'Finished'),
+('O0053', 'F008', 25, 'Finished'),
+('O0054', 'F002', 48, 'Finished'),
+('O0054', 'F006', 10, 'Finished'),
+('O0055', 'F001', 60, 'Finished'),
+('O0055', 'F004', 45, 'Finished'),
+('O0056', 'F003', 32, 'Finished'),
+('O0056', 'F005', 750, 'Finished'),
+('O0057', 'F002', 52, 'Finished'),
+('O0057', 'F007', 1000, 'Finished'),
+('O0058', 'F001', 65, 'Finished'),
+('O0058', 'F008', 28, 'Finished'),
+('O0059', 'F003', 35, 'Finished'),
+('O0059', 'F006', 12, 'Finished'),
+('O0060', 'F002', 55, 'Finished'),
+('O0060', 'F004', 50, 'Finished'),
+('O0061', 'F001', 70, 'Finished'),
+('O0061', 'F005', 800, 'Finished'),
+('O0062', 'F003', 38, 'Finished'),
+('O0062', 'F007', 1050, 'Finished'),
+('O0063', 'F002', 58, 'Delivered'),
+('O0063', 'F008', 30, 'Delivered'),
+('O0064', 'F001', 75, 'Processing'),
+('O0064', 'F004', 55, 'Processing'),
+('O0065', 'F002', 60, 'Pending'),
+('O0065', 'F005', 850, 'Pending'),
+('O0066', 'F003', 40, 'Pending'),
+('O0066', 'F007', 1100, 'Pending'),
+('O0067', 'F001', 80, 'Pending'),
+('O0067', 'F008', 32, 'Pending'),
+('O0068', 'F002', 62, 'Pending'),
+('O0068', 'F006', 15, 'Pending'),
+('O0069', 'F001', 85, 'Pending'),
+('O0069', 'F004', 60, 'Pending'),
+('O0070', 'F003', 45, 'Pending'),
+('O0070', 'F005', 900, 'Pending');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop_fruit_stock`
+-- Table structure for table `shop_fruit_stock`
 --
 
 CREATE TABLE `shop_fruit_stock` (
@@ -773,7 +933,7 @@ CREATE TABLE `shop_fruit_stock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop_fruit_stock`
+-- Dumping data for table `shop_fruit_stock`
 --
 
 INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
@@ -2157,7 +2317,7 @@ INSERT INTO `shop_fruit_stock` (`ShopID`, `FruitID`, `Qty`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `shop_staff`
+-- Table structure for table `shop_staff`
 --
 
 CREATE TABLE `shop_staff` (
@@ -2169,7 +2329,7 @@ CREATE TABLE `shop_staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `shop_staff`
+-- Dumping data for table `shop_staff`
 --
 
 INSERT INTO `shop_staff` (`ID`, `StaffName`, `ShopID`, `UserID`, `Role`) VALUES
@@ -2181,7 +2341,7 @@ INSERT INTO `shop_staff` (`ID`, `StaffName`, `ShopID`, `UserID`, `Role`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -2192,7 +2352,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`UserID`, `UserName`, `Password`, `Status`) VALUES
@@ -2213,7 +2373,7 @@ INSERT INTO `user` (`UserID`, `UserName`, `Password`, `Status`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `warehouse`
+-- Table structure for table `warehouse`
 --
 
 CREATE TABLE `warehouse` (
@@ -2225,7 +2385,7 @@ CREATE TABLE `warehouse` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `warehouse`
+-- Dumping data for table `warehouse`
 --
 
 INSERT INTO `warehouse` (`ID`, `CountryRegionID`, `Type`, `SourceCity`, `PhoneNumber`) VALUES
@@ -2241,7 +2401,7 @@ INSERT INTO `warehouse` (`ID`, `CountryRegionID`, `Type`, `SourceCity`, `PhoneNu
 -- --------------------------------------------------------
 
 --
--- 表的结构 `warehouse_fruit_stock`
+-- Table structure for table `warehouse_fruit_stock`
 --
 
 CREATE TABLE `warehouse_fruit_stock` (
@@ -2251,7 +2411,7 @@ CREATE TABLE `warehouse_fruit_stock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `warehouse_fruit_stock`
+-- Dumping data for table `warehouse_fruit_stock`
 --
 
 INSERT INTO `warehouse_fruit_stock` (`WarehouseID`, `FruitID`, `Qty`) VALUES
@@ -2291,7 +2451,7 @@ INSERT INTO `warehouse_fruit_stock` (`WarehouseID`, `FruitID`, `Qty`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `warehouse_staff`
+-- Table structure for table `warehouse_staff`
 --
 
 CREATE TABLE `warehouse_staff` (
@@ -2303,7 +2463,7 @@ CREATE TABLE `warehouse_staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- 转存表中的数据 `warehouse_staff`
+-- Dumping data for table `warehouse_staff`
 --
 
 INSERT INTO `warehouse_staff` (`ID`, `StaffName`, `WarehouseID`, `UserID`, `Role`) VALUES
@@ -2317,45 +2477,45 @@ INSERT INTO `warehouse_staff` (`ID`, `StaffName`, `WarehouseID`, `UserID`, `Role
 ('008', 'Sam', 'W008', 'U009', 'Staff');
 
 --
--- 转储表的索引
+-- Indexes for dumped tables
 --
 
 --
--- 表的索引 `country_region`
+-- Indexes for table `country_region`
 --
 ALTER TABLE `country_region`
   ADD PRIMARY KEY (`ID`);
 
 --
--- 表的索引 `fruit`
+-- Indexes for table `fruit`
 --
 ALTER TABLE `fruit`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FruitCityID_fk` (`FruitCityID`);
 
 --
--- 表的索引 `fruit_city`
+-- Indexes for table `fruit_city`
 --
 ALTER TABLE `fruit_city`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `country_region_fk` (`CountryRegionID`);
 
 --
--- 表的索引 `senior_management_staff`
+-- Indexes for table `senior_management_staff`
 --
 ALTER TABLE `senior_management_staff`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `UserID_fk` (`UserID`);
 
 --
--- 表的索引 `shop`
+-- Indexes for table `shop`
 --
 ALTER TABLE `shop`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `city_fk` (`City`);
 
 --
--- 表的索引 `shop_borrow_request`
+-- Indexes for table `shop_borrow_request`
 --
 ALTER TABLE `shop_borrow_request`
   ADD PRIMARY KEY (`ID`),
@@ -2363,42 +2523,42 @@ ALTER TABLE `shop_borrow_request`
   ADD KEY `to_fk` (`RequestTo`);
 
 --
--- 表的索引 `shop_borrow_request_item`
+-- Indexes for table `shop_borrow_request_item`
 --
 ALTER TABLE `shop_borrow_request_item`
   ADD PRIMARY KEY (`BorrowRequestID`,`FruitID`),
   ADD KEY `fruit_fk` (`FruitID`);
 
 --
--- 表的索引 `shop_city`
+-- Indexes for table `shop_city`
 --
 ALTER TABLE `shop_city`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `FK_shop_city_country_region` (`CountryRegionID`);
 
 --
--- 表的索引 `shop_fruit_order`
+-- Indexes for table `shop_fruit_order`
 --
 ALTER TABLE `shop_fruit_order`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `ShopID_fk2` (`ShopID`);
 
 --
--- 表的索引 `shop_fruit_order_item`
+-- Indexes for table `shop_fruit_order_item`
 --
 ALTER TABLE `shop_fruit_order_item`
   ADD PRIMARY KEY (`OrderID`,`FruitID`),
   ADD KEY `FruitID_fk2` (`FruitID`);
 
 --
--- 表的索引 `shop_fruit_stock`
+-- Indexes for table `shop_fruit_stock`
 --
 ALTER TABLE `shop_fruit_stock`
   ADD PRIMARY KEY (`ShopID`,`FruitID`),
   ADD KEY `FruitID_fk` (`FruitID`);
 
 --
--- 表的索引 `shop_staff`
+-- Indexes for table `shop_staff`
 --
 ALTER TABLE `shop_staff`
   ADD PRIMARY KEY (`ID`),
@@ -2406,13 +2566,13 @@ ALTER TABLE `shop_staff`
   ADD KEY `UserID` (`UserID`);
 
 --
--- 表的索引 `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`UserID`);
 
 --
--- 表的索引 `warehouse`
+-- Indexes for table `warehouse`
 --
 ALTER TABLE `warehouse`
   ADD PRIMARY KEY (`ID`),
@@ -2420,14 +2580,14 @@ ALTER TABLE `warehouse`
   ADD KEY `SourceCity_fk` (`SourceCity`);
 
 --
--- 表的索引 `warehouse_fruit_stock`
+-- Indexes for table `warehouse_fruit_stock`
 --
 ALTER TABLE `warehouse_fruit_stock`
   ADD PRIMARY KEY (`WarehouseID`,`FruitID`),
   ADD KEY `FruitID` (`FruitID`);
 
 --
--- 表的索引 `warehouse_staff`
+-- Indexes for table `warehouse_staff`
 --
 ALTER TABLE `warehouse_staff`
   ADD PRIMARY KEY (`ID`),
@@ -2435,35 +2595,35 @@ ALTER TABLE `warehouse_staff`
   ADD KEY `UserID` (`UserID`);
 
 --
--- 限制导出的表
+-- Constraints for dumped tables
 --
 
 --
--- 限制表 `fruit`
+-- Constraints for table `fruit`
 --
 ALTER TABLE `fruit`
   ADD CONSTRAINT `FruitCityID_fk` FOREIGN KEY (`FruitCityID`) REFERENCES `fruit_city` (`ID`);
 
 --
--- 限制表 `fruit_city`
+-- Constraints for table `fruit_city`
 --
 ALTER TABLE `fruit_city`
   ADD CONSTRAINT `country_region_fk` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
 
 --
--- 限制表 `senior_management_staff`
+-- Constraints for table `senior_management_staff`
 --
 ALTER TABLE `senior_management_staff`
   ADD CONSTRAINT `UserID_fk` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
 
 --
--- 限制表 `shop`
+-- Constraints for table `shop`
 --
 ALTER TABLE `shop`
   ADD CONSTRAINT `city_fk` FOREIGN KEY (`City`) REFERENCES `shop_city` (`ID`);
 
 --
--- 限制表 `shop_borrow_request`
+-- Constraints for table `shop_borrow_request`
 --
 ALTER TABLE `shop_borrow_request`
   ADD CONSTRAINT `by_fk` FOREIGN KEY (`RequestBy`) REFERENCES `shop` (`ID`),
@@ -2471,61 +2631,61 @@ ALTER TABLE `shop_borrow_request`
   ADD CONSTRAINT `to_fk` FOREIGN KEY (`RequestTo`) REFERENCES `shop` (`ID`);
 
 --
--- 限制表 `shop_borrow_request_item`
+-- Constraints for table `shop_borrow_request_item`
 --
 ALTER TABLE `shop_borrow_request_item`
   ADD CONSTRAINT `fruit_fk` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`),
   ADD CONSTRAINT `id_fk` FOREIGN KEY (`BorrowRequestID`) REFERENCES `shop_borrow_request` (`ID`);
 
 --
--- 限制表 `shop_city`
+-- Constraints for table `shop_city`
 --
 ALTER TABLE `shop_city`
   ADD CONSTRAINT `FK_shop_city_country_region` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
 
 --
--- 限制表 `shop_fruit_order`
+-- Constraints for table `shop_fruit_order`
 --
 ALTER TABLE `shop_fruit_order`
   ADD CONSTRAINT `ShopID_fk2` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`);
 
 --
--- 限制表 `shop_fruit_order_item`
+-- Constraints for table `shop_fruit_order_item`
 --
 ALTER TABLE `shop_fruit_order_item`
   ADD CONSTRAINT `FruitID_fk2` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`),
   ADD CONSTRAINT `OrderID_fk2` FOREIGN KEY (`OrderID`) REFERENCES `shop_fruit_order` (`ID`);
 
 --
--- 限制表 `shop_fruit_stock`
+-- Constraints for table `shop_fruit_stock`
 --
 ALTER TABLE `shop_fruit_stock`
   ADD CONSTRAINT `FruitID_fk` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`),
   ADD CONSTRAINT `ShopID_fk` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`);
 
 --
--- 限制表 `shop_staff`
+-- Constraints for table `shop_staff`
 --
 ALTER TABLE `shop_staff`
   ADD CONSTRAINT `shop_staff_ibfk_1` FOREIGN KEY (`ShopID`) REFERENCES `shop` (`ID`),
   ADD CONSTRAINT `shop_staff_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
 
 --
--- 限制表 `warehouse`
+-- Constraints for table `warehouse`
 --
 ALTER TABLE `warehouse`
   ADD CONSTRAINT `SourceCity_fk` FOREIGN KEY (`SourceCity`) REFERENCES `fruit_city` (`ID`),
   ADD CONSTRAINT `c_fk` FOREIGN KEY (`CountryRegionID`) REFERENCES `country_region` (`ID`);
 
 --
--- 限制表 `warehouse_fruit_stock`
+-- Constraints for table `warehouse_fruit_stock`
 --
 ALTER TABLE `warehouse_fruit_stock`
   ADD CONSTRAINT `warehouse_fruit_stock_ibfk_1` FOREIGN KEY (`WarehouseID`) REFERENCES `warehouse` (`ID`),
   ADD CONSTRAINT `warehouse_fruit_stock_ibfk_2` FOREIGN KEY (`FruitID`) REFERENCES `fruit` (`ID`);
 
 --
--- 限制表 `warehouse_staff`
+-- Constraints for table `warehouse_staff`
 --
 ALTER TABLE `warehouse_staff`
   ADD CONSTRAINT `warehouse_staff_ibfk_1` FOREIGN KEY (`WarehouseID`) REFERENCES `warehouse` (`ID`),
