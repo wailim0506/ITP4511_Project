@@ -3711,4 +3711,128 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+    
+    public boolean updateFruitStatusById(String fruitId, String status) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE fruit SET Status = ? WHERE ID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, status);
+            pStmnt.setString(2, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean updateFruitDisableShopStock(String fruitId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_stock SET Qty = 0 WHERE FruitID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean updateFruitDisableWarehouseStock(String fruitId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE warehouse_fruit_stock SET Qty = 0 WHERE FruitID = ?;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean updateFruitDisableOrder(String fruitId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_fruit_order_item sfoi, shop_fruit_order sfo\n" +
+                                        "SET sfoi.Status = 'Finished', sfo.Notes = CONCAT(COALESCE(sfo.Notes, ''), ' " + fruitId + " has removed from the shelves')\n" +
+                                        "WHERE sfoi.OrderID = sfo.ID AND sfoi.FruitID = ? AND sfoi.status != 'Finished';";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean updateFruitDisableBorrow(String fruitId) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "UPDATE shop_borrow_request sbr\n" +
+                                        "JOIN shop_borrow_request_item sbri ON sbri.BorrowRequestID = sbr.ID\n" +
+                                        "SET \n" +
+                                        "    sbr.Status = CASE \n" +
+                                        "        WHEN sbr.Status = 'Pending' THEN 'Rejected'\n" +
+                                        "        ELSE sbr.Status \n" +
+                                        "    END,\n" +
+                                        "    sbr.RejectReason = CASE \n" +
+                                        "        WHEN sbr.Status = 'Pending' THEN CONCAT(COALESCE(sbr.RejectReason, ''), '" + fruitId + ", has removed from the shelves')\n" +
+                                        "        ELSE sbr.RejectReason \n" +
+                                        "    END,\n" +
+                                        "    sbr.Notes = CASE \n" +
+                                        "        WHEN sbr.Status = 'Approved' THEN CONCAT(COALESCE(sbr.Notes, ''), '" + fruitId + " has removed from the shelves')\n" +
+                                        "        ELSE sbr.Notes \n" +
+                                        "    END\n" +
+                                        "WHERE sbri.FruitID = ? \n" +
+                                        "AND sbr.Status IN ('Pending', 'Approved');";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, fruitId);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 }

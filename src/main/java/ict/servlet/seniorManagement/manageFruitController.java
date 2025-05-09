@@ -60,7 +60,6 @@ public class manageFruitController extends HttpServlet {
         disableFruit = db.getAllFruitCountDisable();
 
         ArrayList<FruitsBean> fbList = db.getAllFruitManager();
-        request.setAttribute("fruitsStockList", fbList);
         request.setAttribute("isEditMode", false);
 
         String action = request.getParameter("action");
@@ -69,8 +68,34 @@ public class manageFruitController extends HttpServlet {
             FruitsBean fb = db.getFruitById(fruitId);
             request.setAttribute("fruitsBean", fb);
             request.setAttribute("isEditMode", true);
+        } else if (action != null && (action.equals("Enable") || action.equals("Disable"))) {
+            String fruitId = request.getParameter("fruitID");
+            String fruitStatus = action.equals("Enable") ? "enable" : "disable";
+
+            if (action.equals("Disable")) {
+                if (db.updateFruitDisableShopStock(fruitId) 
+                        && db.updateFruitDisableWarehouseStock(fruitId)
+                        && db.updateFruitDisableOrder(fruitId) 
+                        && db.updateFruitDisableBorrow(fruitId)) {
+                    session.setAttribute("successMsg", "Update fruitID: " + fruitId + " status successful! Please try again.");
+                } else {
+                    session.setAttribute("errorMsg", "Update fruitID: " + fruitId + " status failed! Please try again.");
+                }
+            } else {
+                if(db.updateFruitStatusById(fruitId, fruitStatus)){
+                    session.setAttribute("successMsg", "Update fruitID: " + fruitId + " status successful! Please try again.");
+                } else {
+                    session.setAttribute("errorMsg", "Update fruitID: " + fruitId + " status failed! Please try again.");
+                }
+            }
+
+            totalFruit = db.getAllFruitCount();
+            enableFruit = db.getAllFruitCountEnable();
+            disableFruit = db.getAllFruitCountDisable();
+            fbList = db.getAllFruitManager();
         }
 
+        request.setAttribute("fruitsStockList", fbList);
         request.setAttribute("totalFruit", totalFruit);
         request.setAttribute("enableFruit", enableFruit);
         request.setAttribute("disableFruit", disableFruit);
@@ -110,24 +135,21 @@ public class manageFruitController extends HttpServlet {
         UserBean user = (UserBean) session.getAttribute("userInfo");
 
         String formAction = request.getParameter("formAction");
-        if(formAction.equals("change")){
+        if (formAction.equals("change")) {
             String fruitId = request.getParameter("editFruitId");
             String name = request.getParameter("editName");
             String type = request.getParameter("editType");
             String unit = request.getParameter("editUnit");
             String imgName = request.getParameter("editImg");
-        
-            if(db.updateFruitById(fruitId, name, type, unit, imgName)){
+
+            if (db.updateFruitById(fruitId, name, type, unit, imgName)) {
                 session.setAttribute("successMsg", "Update fruitID: " + fruitId + " successful! Please try again.");
-            }else{
+            } else {
                 session.setAttribute("errorMsg", "Update fruitID: " + fruitId + " failed! Please try again.");
             }
-            
+
         }
-        
-        
-        
-        
+
         processRequest(request, response);
     }
 

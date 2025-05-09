@@ -32,7 +32,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
-         <script src="${pageContext.request.contextPath}/js/seniorManagement/fruitFilter.js"></script>
+        <script src="${pageContext.request.contextPath}/js/seniorManagement/fruitFilter.js"></script>
     </head>
     <body>
         <%
@@ -125,8 +125,13 @@
                     </div>
 
                     <div class="button">
-                        <button type="button" class="btn btn-<%=btnStatus%>"><%=status%></button>
-                        <button type="submit" class="btn btn-success <%=enableChange%>">Change</button>
+                        <button type="button" class="btn btn-<%=btnStatus%>"
+                                onclick="if (confirm('<%=status.equals("Disable") ? "All stock will be cleared and all order of the fruit will be finished"
+                                        + ". Are you sure you want to disable this fruit?" : "Are you sure you want to enable this fruit?"%>')) {
+                    window.location.href = '${pageContext.request.contextPath}/manageFruit?action=<%=status%>&fruitID=<%=fbForEdit.getId()%>';
+                            }">
+                            <%=status%>
+                        </button><button type="submit" class="btn btn-success <%=enableChange%>">Change</button>
                         <button type="button" class="btn btn-dark" 
                                 onclick="window.location.href = '${pageContext.request.contextPath}/manageFruit '">Cancel</button>
                     </div>
