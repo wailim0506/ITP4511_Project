@@ -185,6 +185,36 @@ public class manageFruitController extends HttpServlet {
             }else{
                 session.setAttribute("errorMsg", "Fail to add fruit: " + fb.getName() + " failed! Please try again.");
             }
+        } if (formAction.equals("addSource")) {
+            String newSourceID = db.getNewWarehouseID();
+            String formattedID = "W" + String.format("%03d", Integer.valueOf(newSourceID));
+            String newCityID = db.getNewFruitCityID();
+            String formattedCityID = String.format("%03d", Integer.valueOf(newCityID));
+            String countryRegion = request.getParameter("addSourceCountry");
+            String city = request.getParameter("addSourceCity");
+            
+            if(db.checkFruitCity(city, countryRegion)){
+                session.setAttribute("errorMsg", "City: " + city + ", " + countryRegion +" is exists! Please try again.");
+            } else {
+                db.insertNewCity(formattedCityID, city, countryRegion);
+                
+                WarehouseBean wb = new WarehouseBean();
+                wb.setId(formattedID);
+                wb.setCountryRegion(countryRegion);
+                wb.setType("Source");
+                wb.setCity(formattedCityID);
+                wb.setPhoneNumber(request.getParameter("addSourcePhone"));
+                
+                if(db.insertNewSource(wb)){
+                    session.setAttribute("successMsg", "Add new Source: " + formattedID + " successful!");
+                } else {
+                    session.setAttribute("errorMsg", "Fail to add new source! Please try again.");
+                }
+            }
+            
+            
+        
+        
         }
 
         processRequest(request, response);

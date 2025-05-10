@@ -3951,4 +3951,98 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+    
+    public boolean checkFruitCity(String city, String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ResultSet rs = null;
+        boolean isSuccess = false;
+
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) FROM fruit_city WHERE City = ? AND CountryRegionID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, city);
+            pStmnt.setString(2, id);
+            rs = pStmnt.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                isSuccess = count >= 1;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
+        return isSuccess;
+    }
+    
+    public String getNewFruitCityID() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String total = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT COUNT(*) + 1 AS newID FROM fruit_city;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                total = rs.getString("newID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return total;
+    }
+    
+    public boolean insertNewCity(String cityId, String city, String id) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO fruit_city VALUES(?, ?, ?);";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, cityId);
+            pStmnt.setString(2, city);
+            pStmnt.setString(3, id);
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
+    
+    public boolean insertNewSource(WarehouseBean wb) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO warehouse VALUES(?, ?, ?, ?, ?);";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, wb.getId());
+            pStmnt.setString(2, wb.getCountryRegion());
+            pStmnt.setString(3, wb.getType());
+            pStmnt.setString(4, wb.getCity());
+            pStmnt.setString(5, wb.getPhoneNumber());
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 }
