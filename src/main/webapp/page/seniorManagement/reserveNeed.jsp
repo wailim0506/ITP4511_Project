@@ -31,6 +31,10 @@
         <!-- JavaScript libraries -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- HTML2PDF.js library with improved version -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- Custom PDF helpers -->
+        <script src="${pageContext.request.contextPath}/js/seniorManagement/pdfExport.js"></script>
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
         <script src="${pageContext.request.contextPath}/js/seniorManagement/reserveNeed.js"></script>
     </head>
@@ -163,9 +167,9 @@
                                             <i class="material-icons text-primary">receipt</i>
                                         </div>
                                         <div>
-                                            <h6 class="mb-0">All Time Total Reservations</h6>
                                             <jsp:useBean id="total" scope="request" class="java.lang.Integer" />
-                                            <h3 class="mb-0 fw-bold"><%=total%></h3>
+                                            <h6 class="mb-0">All Time Total Reservations</h6><h3 id='total'><%=total%></h3>
+                                            <!--<h3 class="mb-0 fw-bold"><%=total%></h3>-->
                                         </div>
                                     </div>
                                 </div>
@@ -181,9 +185,9 @@
                                             <i class="material-icons text-success">local_mall</i>
                                         </div>
                                         <div>
-                                            <h6 class="mb-0">All Time Total Fruit Items</h6>
                                             <jsp:useBean id="totalFruit" scope="request" class="java.lang.Integer" />
-                                            <h3 class="mb-0 fw-bold"><%=totalFruit%></h3>
+                                            <h6 class="mb-0">All Time Total Fruit Items</h6><h3 id='totalFruit'><%=totalFruit%></h3>
+                                            <!--<h3 class="mb-0 fw-bold"><%=totalFruit%></h3>-->
                                         </div>
                                     </div>
                                 </div>
@@ -211,6 +215,10 @@
                                     
                                 </h4>
                                 <div>
+                                    <%-- AI analysis --%>
+                                    <button class="btn btn-outline-secondary me-2" id="aiAnalysisBtn">
+                                        <i class="material-icons align-middle me-1 small">analytics</i>AI Analysis
+                                    </button>
                                     <button class="btn btn-outline-primary me-2" id="printReportBtn">
                                         <i class="material-icons align-middle me-1 small">print</i>Print
                                     </button>
@@ -535,33 +543,13 @@
                                        
                                         
                                         <div class="chartContainer">
-                                            <%-- <div class="chartBar" style="height: 230px; background-color: rgba(13, 110, 253, 0.5); width: 80%;">
-                                                <span class="chartLabel">Apple</span>
-                                                <span class="chartValue">1000</span>
-                                            </div>
-                                            <div class="chartBar" style="height: 200px; background-color: rgba(25, 135, 84, 0.5); width: 80%;">
-                                                <span class="chartLabel">Banana</span>
-                                                <span class="chartValue">210</span>
-                                            </div>
-                                            <div class="chartBar" style="height: 180px; background-color: rgba(220, 53, 69, 0.5); width: 80%;">
-                                                <span class="chartLabel">Mango</span>
-                                                <span class="chartValue">180</span>
-                                            </div>
-                                            <div class="chartBar" style="height: 160px; background-color: rgba(255, 193, 7, 0.5); width: 80%;">
-                                                <span class="chartLabel">Durian</span>
-                                                <span class="chartValue">150</span>
-                                            </div>
-                                            <div class="chartBar" style="height: 140px; background-color: rgba(108, 117, 125, 0.5); width: 80%;">
-                                                <span class="chartLabel">Peach</span>
-                                                <span class="chartValue">120</span>
-                                            </div> --%>
                                             <%
                                                 String[] colors = {
-                                                    "rgba(13, 110, 253, 0.5)",  // blue
-                                                    "rgba(25, 135, 84, 0.5)",   // green
-                                                    "rgba(220, 53, 69, 0.5)",   // red
-                                                    "rgba(255, 193, 7, 0.5)",   // yellow
-                                                    "rgba(108, 117, 125, 0.5)"  // gray
+                                                    "rgba(13, 110, 253, 0.5)",
+                                                    "rgba(25, 135, 84, 0.5)", 
+                                                    "rgba(220, 53, 69, 0.5)", 
+                                                    "rgba(255, 193, 7, 0.5)", 
+                                                    "rgba(108, 117, 125, 0.5)"
                                                 };
 
                                                 String[] heights = {
@@ -602,6 +590,63 @@
         
         <!-- Footer -->
         <footer:footer userType="seniorManagement"/>
+        
+        <!-- AI Analysis Modal -->
+        <div class="modal fade" id="aiAnalysisModal" tabindex="-1" aria-labelledby="aiAnalysisModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header bg-primary bg-opacity-10">
+                        <h5 class="modal-title" id="aiAnalysisModalLabel">
+                            <i class="material-icons align-middle me-2">psychology</i>
+                            AI Analysis Insights
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div id="aiAnalysisLoading" class="text-center py-5">
+                            <div class="spinner-border text-primary mb-3" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mb-0">Analyzing your data...</p>
+                            <p class="text-muted small">This may take a moment.</p>
+                        </div>
+                        <div id="aiAnalysisContent" class="d-none">
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-3">Data Summary</h6>
+                                <div id="aiDataSummary" class="border-start border-4 border-primary ps-3"></div>
+                            </div>
+                            <div class="mb-4">
+                                <h6 class="fw-bold mb-3">Key Insights</h6>
+                                <div id="aiKeyInsights" class="border-start border-4 border-success ps-3"></div>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-3">Recommendations</h6>
+                                <div id="aiRecommendations" class="border-start border-4 border-warning ps-3"></div>
+                            </div>
+                        </div>
+                        <div style="position: absolute; bottom: 24px; right: 24px; z-index: 1055; font-size: 0.95rem; opacity: 0.85;">
+                            <div class="d-flex align-items-center bg-white bg-opacity-75 rounded shadow-sm px-2 py-1" style="border: 1px solid #eee;">
+                                <img src="/ITP4511_Project/img/deepseek.png" alt="Deepseek Logo" style="max-width: 26px; height: 26px;">
+                                <span class="ms-2 text-muted" style="font-size: 1em;">Supported by Deepseek API</span>
+                            </div>
+                        </div>
+                        <div id="aiAnalysisError" class="d-none">
+                            <div class="alert alert-danger" role="alert">
+                                <i class="material-icons align-middle me-2">error_outline</i>
+                                <span id="aiErrorMessage">An error occurred while analyzing the data.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary d-none" id="downloadAnalysisBtn">
+                            <i class="material-icons align-middle me-1 small">download</i>
+                            Download Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Dark Mode Toggle Button -->
         <i id="darkModeToogle" class="material-icons"

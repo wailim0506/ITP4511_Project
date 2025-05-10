@@ -41,11 +41,11 @@
             <!-- Hero Section -->
             <div class="hero-section text-center shadow-sm">
                 <h1 class="display-5 fw-bold text-primary">Acer International Bakery</h1>
-                <p class="lead mb-4">Shop Management Dashboard</p>
+                <p class="lead mb-4">Senior Management Dashboard</p>
                 
                 <!-- Shop Information - Simplified Design -->
                 <div class="d-flex align-items-center justify-content-center mb-3">
-                    <i class="material-icons text-primary me-2" style="font-size: 1.2rem;">store</i>
+                    <!--<i class="material-icons text-primary me-2" style="font-size: 1.2rem;">store</i>-->
                     <%
                         bean = (UserBean)session.getAttribute("userInfo");
                         staffName = (String)bean.getStaffName();
@@ -80,9 +80,9 @@
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
                             <i class="material-icons card-icon mb-3">assessment</i>
-                            <h5 class="card-title">Reserve Needs Aggregation</h5>
+                            <h5 class="card-title">Reserve Needs Report</h5>
                             <p class="card-text text-muted">View reserve needs by shop/city/country</p>
-                            <a href="/ITP4511_Project/reserveNeed?viewLevel=c&cn=all&date=last12Months" class="btn btn-outline-primary mt-2">View Aggregation</a>
+                            <a href="/ITP4511_Project/reserveNeed?viewLevel=c&cn=all&date=last12Months" class="btn btn-outline-primary mt-2">View Report</a>
                         </div>
                     </div>
                 </div>

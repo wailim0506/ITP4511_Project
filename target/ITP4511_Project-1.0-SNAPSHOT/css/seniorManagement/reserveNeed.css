@@ -143,11 +143,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   .chartContainer {
     padding: 20px 0;
   }
-
   .chartBar {
     margin: 0 5px;
   }
-
   .pieChart {
     width: 150px;
     height: 150px;
@@ -159,6 +157,140 @@ html[data-bs-theme="dark"] .reserveNeedTable th {
   background-color: var(--bs-body-bg);
 }
 
-html[data-bs-theme="dark"] .headerSection {
-  background-color: rgba(13, 110, 253, 0.1);
+/* AI Analysis Modal Styling */
+#aiAnalysisModal .modal-content {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+#aiAnalysisModal .modal-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(13, 110, 253, 0.1);
+}
+
+#aiAnalysisModal .modal-title {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+#aiAnalysisModal .modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+#aiAnalysisContent h6 {
+  color: var(--bs-primary);
+}
+
+#aiDataSummary,
+#aiKeyInsights,
+#aiRecommendations {
+  margin-bottom: 1.5rem;
+}
+
+#aiDataSummary p,
+#aiKeyInsights li,
+#aiRecommendations li {
+  margin-bottom: 0.5rem;
+}
+
+#aiAnalysisLoading {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Dark mode specific styles for AI Analysis Modal */
+html[data-bs-theme="dark"] #aiAnalysisModal .modal-header {
+  background-color: rgba(13, 110, 253, 0.2) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+html[data-bs-theme="dark"] #aiDataSummary {
+  border-color: rgba(13, 110, 253, 0.7) !important;
+}
+html[data-bs-theme="dark"] #aiKeyInsights {
+  border-color: rgba(25, 135, 84, 0.7) !important;
+}
+html[data-bs-theme="dark"] #aiRecommendations {
+  border-color: rgba(255, 193, 7, 0.7) !important;
+}
+
+/* Print styles */
+@media print {
+  @page {
+    margin: 1cm;
+    size: A4 portrait;
+  }
+  body {
+    font-size: 12pt;
+    color: #000 !important;
+    background: #fff !important;
+  }
+  .headerSection {
+    background-color: transparent !important;
+    text-align: center !important;
+    padding: 1cm 0 !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .card {
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin-bottom: 1cm !important;
+  }
+
+  .chartBar {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+
+  /* Make all tables visible for printing */
+  .reserveNeedTable.d-none {
+    display: table !important;
+  }
+
+  /* Hide non-printable elements */
+  nav,
+  footer,
+  #darkModeToogle,
+  #filterForm,
+  #filterButtonContainer,
+  #printReportBtn,
+  #exportPdfBtn {
+    display: none !important;
+  }
+
+  /* Better table styles for print */
+  .reserveNeedTable {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  .reserveNeedTable th {
+    background-color: #f0f0f0 !important;
+    color: #000 !important;
+    border-bottom: 2px solid #000 !important;
+    font-weight: bold !important;
+  }
+
+  .reserveNeedTable td {
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  /* Ensure charts print properly */
+  .chartContainer {
+    display: flex !important;
+    justify-content: space-around !important;
+    height: 250px !important;
+  }
+
+  /* Hide AI Analysis Button in print */
+  #aiAnalysisBtn {
+    display: none !important;
+  }
 }

@@ -157,7 +157,7 @@ public class nav extends SimpleTagSupport {
                         + "    </div>"
                         + "</nav>");
     }
-    
+
     private void warehouseNavCentral(JspWriter out) throws IOException {
         out.println(
                 "<nav class=\"navbar navbar-expand-lg sticky-top shadow-sm\" style=\"border-bottom: var(--bs-border-width) solid var(--bs-border-color); z-index: 1000; background-color: var(--bs-body-bg);\">"
@@ -229,7 +229,7 @@ public class nav extends SimpleTagSupport {
                         + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">bar_chart</i> Consumption Reports</a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
-                        + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">assessment</i> Reserve Needs</a>"
+                        + "                    <a class=\"nav-link\" href=\"/ITP4511_Project/reserveNeed?viewLevel=c&cn=all&date=last12Months\"><i class=\"material-icons small align-middle me-1\">assessment</i> Reserve Needs</a>"
                         + "                </li>"
                         + "                <li class=\"nav-item\">"
                         + "                    <a class=\"nav-link\" href=\"#\"><i class=\"material-icons small align-middle me-1\">category</i> Manage Fruit</a>"

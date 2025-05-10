@@ -32,7 +32,7 @@ public class footer extends SimpleTagSupport {
                 shopFooter(out);
             } else if ("Source".equalsIgnoreCase(userType)) {
                 warehouseFooterSource(out);
-            } else if("Central".equalsIgnoreCase(userType)){
+            } else if ("Central".equalsIgnoreCase(userType)) {
                 warehouseFooter(out);
             } else {
                 seniorManagementFooter(out);
@@ -166,7 +166,7 @@ public class footer extends SimpleTagSupport {
                         + "    </div>"
                         + "</div>");
     }
-    
+
     private void warehouseFooter(JspWriter out) throws IOException {
         out.println(
                 "<div class=\"mt-4 py-3\" style=\"border-top: var(--bs-border-width) solid var(--bs-border-color);\">"
@@ -240,7 +240,7 @@ public class footer extends SimpleTagSupport {
                         + "                    <span>Consumption Reports</span>"
                         + "                </div>"
                         + "            </a>"
-                        + "            <a class=\"nav-link text-secondary\" href=\"#\">"
+                        + "            <a class=\"nav-link text-secondary\" href=\"/ITP4511_Project/reserveNeed?viewLevel=c&cn=all&date=last12Months\">"
                         + "                <div class=\"d-flex align-items-center\">"
                         + "                    <i class=\"material-icons small me-1\">assessment</i>"
                         + "                    <span>Reserve Needs</span>"
