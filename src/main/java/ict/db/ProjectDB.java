@@ -3904,4 +3904,51 @@ public class ProjectDB {
         }
         return total;
     }
+    
+    public String getFruitCityIdByCRId(String countryRegionID) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        String fruitCityID = "";
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT ID FROM fruit_city WHERE CountryRegionID = ?";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, countryRegionID);
+            ResultSet rs = pStmnt.executeQuery();
+            if (rs.next()) {
+                fruitCityID = rs.getString("ID");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return fruitCityID;
+    }
+    
+    public boolean insertNewFruit(FruitsBean fb) {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        boolean isSuccess = false;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "INSERT INTO fruit VALUES(?, ?, ?, ?, ?, ?, 'enable');";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            pStmnt.setString(1, fb.getId());
+            pStmnt.setString(2, fb.getName());
+            pStmnt.setString(3, fb.getType());
+            pStmnt.setString(4, fb.getUnit());
+            pStmnt.setString(5, fb.getImgName());
+            pStmnt.setString(6, fb.getCountryRegion());
+            int rowCount = pStmnt.executeUpdate();
+            if (rowCount >= 1) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return isSuccess;
+    }
 }

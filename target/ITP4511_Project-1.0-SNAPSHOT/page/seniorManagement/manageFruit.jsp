@@ -33,6 +33,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
         <script src="${pageContext.request.contextPath}/js/seniorManagement/fruitFilter.js"></script>
+        <script src="${pageContext.request.contextPath}/js/seniorManagement/getFileName.js"></script>
     </head>
     <body>
         <%
@@ -156,43 +157,56 @@
                 <form action="${pageContext.request.contextPath}/manageFruit" method="post">
                     <input type="hidden" name="formAction" value="addFruit" >
 
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="newFruitID" value="<%=formattedID%>" disabled>
-                        <label for="newFruitID">FruitID</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="addFruitName" maxlength="20" required>
-                        <label for="addFruitName">Name</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <select class="form-select" name="addFruitCity" required>
-                            <%
-                                for (int i = 0; i < fruitCity.size(); i++) {
-                                    FruitCityBean fcb = (FruitCityBean) fruitCity.get(i);
-                                    out.println("<option value=\"" + fcb.getCountryRegionID() + "\">" + fcb.getCity() + "</option>");
-                                }
-                            %>
-                        </select>
-                        <label for="addFruitCity">City</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <select class="form-select" name="addFruitType" required>
-                            <%
-                                for (int i = 0; i < fruitTypeList.size(); i++) {
-                                    String type = (String) fruitTypeList.get(i);
-                                    out.println("<option value=\"" + type + "\">" + type + "</option>");
-                                }
-                            %>
-                        </select>
-                        <label for="addFruitType">Type</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="addFruitUnit" maxlength="10"  required>
-                        <label for="addFruitUnit">Unit</label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Fruit Image File</label>
-                        <input class="form-control" type="file" id="formFile">
+                    <div class="form-row">
+                        <div class="form-data">
+                            <div class="readWrite">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="newFruitID" value="<%=formattedID%>" disabled>
+                                    <label for="newFruitID">FruitID</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="addFruitName" maxlength="20" required>
+                                    <label for="addFruitName">Name</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" name="addFruitCity" required>
+                                        <%
+                                            for (int i = 0; i < fruitCity.size(); i++) {
+                                                FruitCityBean fcb = (FruitCityBean) fruitCity.get(i);
+                                                out.println("<option value=\"" + fcb.getCountryRegionID() + "\">" + fcb.getCity() + "</option>");
+                                            }
+                                        %>
+                                    </select>
+                                    <label for="addFruitCity">City</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" name="addFruitType" required>
+                                        <%
+                                            for (int i = 0; i < fruitTypeList.size(); i++) {
+                                                String type = (String) fruitTypeList.get(i);
+                                                out.println("<option value=\"" + type + "\">" + type + "</option>");
+                                            }
+                                        %>
+                                    </select>
+                                    <label for="addFruitType">Type</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" name="addFruitUnit" maxlength="10"  required>
+                                    <label for="addFruitUnit">Unit</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Fruit Image File</label>
+                                    <input class="form-control" type="file" id="formFile" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label form-img">Image Preview</label>
+                            <div id="previewBox">
+                                <img class="imagePreview" id="imagePreview" src="#" alt="Image Preview">
+                                <span id="noImageText">No image selected</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="button">
                         <button type="submit" class="btn btn-success">Add</button>
@@ -201,7 +215,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </div><input type="hidden" name="filename" id="filename">
         <%
             }
         %>
@@ -332,7 +346,7 @@
                                                         <th style="width: 40%">Fruit</th>
                                                         <th style="width: 20%">Type</th>
                                                         <th style="width: 15%">Unit</th>
-                                                        <th style="width: 25%">Action</th>
+                                                        <th style="width: 15%">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

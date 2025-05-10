@@ -163,11 +163,28 @@ public class manageFruitController extends HttpServlet {
             String imgName = request.getParameter("editImg");
 
             if (db.updateFruitById(fruitId, name, type, unit, imgName)) {
-                session.setAttribute("successMsg", "Update fruitID: " + fruitId + " successful! Please try again.");
+                session.setAttribute("successMsg", "Update fruitID: " + fruitId + " successful!");
             } else {
                 session.setAttribute("errorMsg", "Update fruitID: " + fruitId + " failed! Please try again.");
             }
-
+        } if (formAction.equals("addFruit")) {
+            String fruitCityID = db.getFruitCityIdByCRId(request.getParameter("addFruitCity"));
+            String newFruitID = db.getNewFruitID();
+            String formattedID = "F" + String.format("%03d", Integer.valueOf(newFruitID));
+            
+            FruitsBean fb = new FruitsBean();
+            fb.setId(formattedID);
+            fb.setName(request.getParameter("addFruitName"));
+            fb.setType(request.getParameter("addFruitType"));
+            fb.setUnit(request.getParameter("addFruitUnit"));
+            fb.setImgName(request.getParameter("filename"));
+            fb.setCountryRegion(fruitCityID);
+            
+            if(db.insertNewFruit(fb)){
+                session.setAttribute("successMsg", "Add new fruit: " + fb.getName() + " successful!");
+            }else{
+                session.setAttribute("errorMsg", "Fail to add fruit: " + fb.getName() + " failed! Please try again.");
+            }
         }
 
         processRequest(request, response);
