@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author 19647
+ * @author HwH
  */
 @WebServlet(name = "manageFruitController", urlPatterns = {"/manageFruit"})
 public class manageFruitController extends HttpServlet {
@@ -120,7 +120,6 @@ public class manageFruitController extends HttpServlet {
         request.setAttribute("disableFruit", disableFruit);
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/seniorManagement/manageFruit.jsp");
-
         rd.forward(request, response);
     }
 

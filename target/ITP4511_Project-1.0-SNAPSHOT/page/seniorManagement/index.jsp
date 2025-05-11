@@ -70,7 +70,7 @@
                             <i class="material-icons card-icon mb-3">bar_chart</i>
                             <h5 class="card-title">Consumption Report</h5>
                             <p class="card-text text-muted">View and analyze fruit consumption data</p>
-                            <a href="#" class="btn btn-outline-primary mt-2">View Reports</a>
+                            <a href="/ITP4511_Project/consumption" class="btn btn-outline-primary mt-2">View Reports</a>
                         </div>
                     </div>
                 </div>

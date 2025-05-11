@@ -6,6 +6,7 @@ ict\tag\order.class
 ict\servlet\ProfileController.class
 ict\servlet\store\borrowFruitController.class
 ict\servlet\store\borrowRequestController.class
+ict\servlet\seniorManagement\consumptionReportController.class
 ict\servlet\seniorManagement\reserveNeedController.class
 ict\servlet\editUserController.class
 ict\servlet\LoginController.class
