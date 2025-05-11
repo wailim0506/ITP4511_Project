@@ -4045,4 +4045,40 @@ public class ProjectDB {
         }
         return isSuccess;
     }
+    
+    public ArrayList<ConsumptionBean> getTotalConsumption() {
+        Connection cnnct = null;
+        PreparedStatement pStmnt = null;
+        ArrayList<ConsumptionBean> cbList = new ArrayList<ConsumptionBean>();
+        ConsumptionBean cb = null;
+        try {
+            cnnct = getConnection();
+            String preQueryStatement = "SELECT f.ID, f.Name, f.ImgName, fc.City, cr.Name AS country, SUM(sfoi.Qty) AS total, f.unit\n" +
+                                            "FROM shop_fruit_order_item sfoi\n" +
+                                            "JOIN shop_fruit_order sfo ON sfo.ID = sfoi.OrderID \n" +
+                                            "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
+                                            "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
+                                            "JOIN country_region cr ON cr.ID = fc.CountryRegionID\n" +
+                                            "WHERE f.Status = 'enable' AND sfo.Status != 'Pending'\n" +
+                                            "GROUP BY sfoi.FruitID;";
+            pStmnt = cnnct.prepareStatement(preQueryStatement);
+            ResultSet rs = pStmnt.executeQuery();
+            while (rs.next()) {
+                cb = new ConsumptionBean();
+                cb.setFruitId(rs.getString("ID"));
+                cb.setFruitName(rs.getString("Name"));
+                cb.setFruitImg(rs.getString("ImgName"));
+                cb.setFruitCity(rs.getString("City"));
+                cb.setFruitCountry(rs.getString("country"));
+                cb.setTotal(rs.getString("total"));
+                cb.setFruitUnit(rs.getString("unit"));
+                cbList.add(cb);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return cbList;
+    }
 }

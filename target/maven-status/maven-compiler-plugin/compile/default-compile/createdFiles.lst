@@ -39,6 +39,7 @@ ict\tag\footer.class
 ict\util\PasswordCrypto.class
 hk\edu\ive\itp4511\itp4511_project\JakartaRestConfiguration.class
 ict\bean\OrderBean.class
+ict\bean\ConsumptionBean.class
 ict\tag\profile.class
 ict\bean\BorrowBean.class
 ict\bean\WarehouseFruitStockBean.class

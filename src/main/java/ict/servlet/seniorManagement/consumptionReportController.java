@@ -4,7 +4,8 @@
  */
 package ict.servlet.seniorManagement;
 
-import ict.bean.UserBean;
+import ict.bean.*;
+import ict.db.ProjectDB;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.*;
 
 /**
  *
@@ -22,15 +24,15 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "consumptionReportController", urlPatterns = {"/consumption"})
 public class consumptionReportController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private ProjectDB db;
+
+    public void init() {
+        String dbUser = this.getServletContext().getInitParameter("dbUser");
+        String dbPassword = this.getServletContext().getInitParameter("dbPassword");
+        String dbUrl = this.getServletContext().getInitParameter("dbUrl");
+        db = new ProjectDB(dbUrl, dbUser, dbPassword);
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -47,8 +49,11 @@ public class consumptionReportController extends HttpServlet {
             return;
         }
         
+        ArrayList<String> shopCityList = db.getAllShopCity();
+        ArrayList<ConsumptionBean> cbList = db.getTotalConsumption();
         
-        
+        request.setAttribute("cbList", cbList);
+        request.setAttribute("shopCityList", shopCityList);
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/seniorManagement/consumption.jsp");
         rd.forward(request, response);
