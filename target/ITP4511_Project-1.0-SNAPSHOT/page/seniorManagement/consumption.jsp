@@ -42,7 +42,33 @@
             }
         %>
         <nav:nav userType="seniorManagement" staffName="<%=staffName%>"/>
+        <%    
+            try{
+                String errorMsg = (String) session.getAttribute("errorMsg");
+                if(errorMsg != null && !errorMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-danger alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + errorMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                    session.removeAttribute("errorMsg");
+                }
+            }catch(Exception e){
+            }  
 
+            try{
+                String successMsg = (String) session.getAttribute("successMsg");
+                if(successMsg != null && !successMsg.isEmpty()){
+                    out.println("<div class='alertDiv' style='display: flex;justify-content: center; align-items: center;margin-top: 20px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;margin-top: 0;padding-bottom: 20px;'>" +
+                                "<div class=\"alert alert-success alert-dismissible fade show\" style='width: 80%; text-align: center; position: relative;'>" + 
+                                "<span>" + successMsg + "</span>" +
+                                "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\" style='position: absolute; right: 10px; top: 50%; transform: translateY(-50%);'></button>" +
+                                "</div></div>");                    
+                    session.removeAttribute("successMsg");
+                }
+            }catch(Exception e){
+            } 
+        %>
         <div class="container">
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Consumption Report</h2>
@@ -53,7 +79,7 @@
                 <div class="filter-title">
                     <i class="material-icons align-middle me-2">filter_list</i><h4>Filter Orders</h4>
                 </div>
-                <form>
+                <form action="${pageContext.request.contextPath}/consumption" method="POST">
                     <div class="mb-4">
                         <div class="row g-3 mb-3">
                             <div class="col-md-3 col-sm-12">
@@ -123,12 +149,10 @@
                     %>
                     <div class="fruit-card">
                         <img src="${pageContext.request.contextPath}/img/<%=cb.getFruitImg()%>" alt="Apple">
-                        <div class="fruit-info">
-                            
+                        <div class="fruit-info">                 
                             <h5><%=cb.getFruitName()%></h5>
                             <p><%=cb.getFruitCity()%>, <%=cb.getFruitCountry()%></p>
                             <h4><%=cb.getTotal()%> <%=cb.getFruitUnit()%></h4>
-                            
                         </div>
                     </div>
                     <%

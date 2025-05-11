@@ -25,6 +25,8 @@ import java.util.*;
 public class consumptionReportController extends HttpServlet {
 
     private ProjectDB db;
+    private boolean requested = false;
+    ArrayList<ConsumptionBean> cbList;
 
     public void init() {
         String dbUser = this.getServletContext().getInitParameter("dbUser");
@@ -50,10 +52,13 @@ public class consumptionReportController extends HttpServlet {
         }
         
         ArrayList<String> shopCityList = db.getAllShopCity();
-        ArrayList<ConsumptionBean> cbList = db.getTotalConsumption();
         
+        if(!requested){
+            cbList = db.getTotalConsumption();
+        }
         request.setAttribute("cbList", cbList);
         request.setAttribute("shopCityList", shopCityList);
+        requested = false;
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/seniorManagement/consumption.jsp");
         rd.forward(request, response);
@@ -71,6 +76,7 @@ public class consumptionReportController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         processRequest(request, response);
     }
 
@@ -85,6 +91,34 @@ public class consumptionReportController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        requested = true;
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession(false);
+        
+        String country = request.getParameter("countryRegion");
+        String city = request.getParameter("city");
+        String shop = request.getParameter("shop");
+        
+        if(country != null && city == null && shop.isBlank()){      //country or region
+            requested = true;
+            cbList = db.getTotalConsumptionByRegion(country); 
+        } else if (country == null && city != null && shop.isBlank()){      //city
+            requested = true;
+            cbList = db.getTotalConsumptionByCity(city);
+        } else if (country == null && city == null && !shop.isBlank()){     //shop
+            if(db.checkShop(shop)){
+                requested = true;
+                cbList = db.getTotalConsumptionByShop(shop);
+            } else {
+                session.setAttribute("errorMsg", "Shop not found! Please try again.");
+            }
+        } else if(country == null && city == null && shop.isBlank()){       //not select
+            requested = false;
+            session.setAttribute("errorMsg", "Filter not selected! Please try again.");
+        } else {        //select more than one
+            requested = false;
+            session.setAttribute("errorMsg", "Can only select one condition at once! Please try again.");
+        }
         processRequest(request, response);
     }
 
