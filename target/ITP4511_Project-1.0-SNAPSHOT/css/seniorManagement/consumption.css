@@ -102,6 +102,18 @@ body {
     display: flex;
     flex-direction:row;
     align-items: center;
+    justify-content: space-between;
+}
+
+.fruitList-tit{
+    gap: 5px;
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+}
+
+.fruitList-title button{
+   
 }
 
 .fruitList-title i{

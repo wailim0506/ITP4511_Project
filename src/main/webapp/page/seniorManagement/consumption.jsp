@@ -172,8 +172,11 @@
             <jsp:useBean id="cbList" class="java.util.ArrayList" scope="request"/>                        
             <div class="fruitList">
                 <div class="fruitList-title">
-                    <i class="material-icons card-icon mb-1">category</i>
-                    <h4>Fruit Consumption</h4>
+                    <div class="fruitList-tit">
+                        <i class="material-icons card-icon mb-1">category</i>
+                        <h4>Fruit Consumption</h4>
+                    </div>
+                    <button class="btn btn-warning" onclick="window.print()">Print Report</button>
                 </div>
                 <div class="fruit">
                     <%
