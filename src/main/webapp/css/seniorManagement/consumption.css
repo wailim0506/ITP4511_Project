@@ -128,3 +128,28 @@ body {
     margin: 20px auto;
 
 }
+
+.statistics {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.pieChart, lineChart {
+    flex: 1 1 50%;
+}
+
+.selectedFilter{
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.selectedFilter p {
+    font-size: 20px;
+    margin: 0px;
+}

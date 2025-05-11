@@ -60,6 +60,7 @@ public class consumptionReportController extends HttpServlet {
         }
         request.setAttribute("cbList", cbList);
         request.setAttribute("shopCityList", shopCityList);
+        request.setAttribute("requested", requested);
         requested = false;
         RequestDispatcher rd;
         rd = getServletContext().getRequestDispatcher("/page/seniorManagement/consumption.jsp");
@@ -104,17 +105,23 @@ public class consumptionReportController extends HttpServlet {
 
         if (season != null) {
             getSeasonDayRange(season);
+            request.setAttribute("rangeFrom", rangeFrom);
+            request.setAttribute("rangeTo", rangeTo);
+            request.setAttribute("season", season);
+            
             if (country != null && city == null && shop.isBlank()) {      //country or region
                 requested = true;
-                System.out.print(rangeFrom + rangeTo);
                 cbList = db.getTotalConsumptionByRegion(country, rangeFrom, rangeTo);
+                request.setAttribute("type", "<b>Country / Region:</b> " + country);
             } else if (country == null && city != null && shop.isBlank()) {      //city
                 requested = true;
                 cbList = db.getTotalConsumptionByCity(city, rangeFrom, rangeTo);
+                request.setAttribute("type", "City: " + city);
             } else if (country == null && city == null && !shop.isBlank()) {     //shop
                 if (db.checkShop(shop)) {
                     requested = true;
                     cbList = db.getTotalConsumptionByShop(shop, rangeFrom, rangeTo);
+                    request.setAttribute("type", "Shop: " + shop);
                 } else {
                     session.setAttribute("errorMsg", "Shop not found! Please try again.");
                 }

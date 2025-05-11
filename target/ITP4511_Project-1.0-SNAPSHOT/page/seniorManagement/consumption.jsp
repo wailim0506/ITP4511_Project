@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import ="ict.bean.*, java.util.*" %>
-
+<%@page errorPage="${pageContext.request.contextPath}/error.jsp" %>
 <%@ taglib uri="/WEB-INF/tlds/nav.tld" prefix="nav" %>
 <%@ taglib uri="/WEB-INF/tlds/footer.tld" prefix="footer" %>
 <!DOCTYPE html>
@@ -37,6 +37,7 @@
     <body>
         <%
             UserBean bean = (UserBean)session.getAttribute("userInfo");
+            boolean requested = (boolean)request.getAttribute("requested");
             String staffName = (String)bean.getStaffName();
             if (staffName == null) {
                 throw new Exception();
@@ -152,6 +153,22 @@
                 </form>
             </div>
 
+            <%
+                if(requested){
+                String rangeFrom = (String)request.getAttribute("rangeFrom");
+                String rangeTo = (String)request.getAttribute("rangeTo");
+                String season = (String)request.getAttribute("season");
+                String type = (String)request.getAttribute("type");
+            %>
+            <div class="selectedFilter">
+                <p><%=type%></p>
+                <p><b>Season:</b> <%=season%></p>
+                <p><b>Date Range:</b> <%=rangeFrom%> - <%=rangeTo%></p>
+            </div>
+            <%
+                }
+            %>
+
             <jsp:useBean id="cbList" class="java.util.ArrayList" scope="request"/>                        
             <div class="fruitList">
                 <div class="fruitList-title">
@@ -183,24 +200,30 @@
                 </div>
             </div>
 
+            <script>
+                window.fruitData = [
+                <%
+                                    for(Object obj:cbList){
+                                        ConsumptionBean cb = (ConsumptionBean)obj;
+                %>
+                    {
+                        name: '<%=cb.getFruitName()%>',
+                        total: <%=cb.getTotal()%>
+                    },
+                <%
+                                    }
+                %>
+                ];
+            </script>
+
             <div class="statistics">
                 <div class="pieChart">
                     <h3>Fruit Consumption Distribution</h3>
-                    <script>
-                        window.fruitData = [
-                        <%
-                                        for(Object obj:cbList){
-                                            ConsumptionBean cb = (ConsumptionBean)obj;
-                        %>
-                            {
-                                name: '<%=cb.getFruitName()%>',
-                                total: <%=cb.getTotal()%>
-                            },
-                        <%
-                                        }
-                        %>
-                        ];
-                    </script>
+
+                </div>
+                <div class="lineChart">
+                    <h3>Fruit Consumption Totals</h3>
+
                 </div>
             </div>
         </div>
