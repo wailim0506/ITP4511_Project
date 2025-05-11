@@ -627,7 +627,7 @@
                         <div style="position: absolute; bottom: 24px; right: 24px; z-index: 1055; font-size: 0.95rem; opacity: 0.85;">
                             <div class="d-flex align-items-center bg-white bg-opacity-75 rounded shadow-sm px-2 py-1" style="border: 1px solid #eee;">
                                 <img src="/ITP4511_Project/img/deepseek.png" alt="Deepseek Logo" style="max-width: 26px; height: 26px;">
-                                <span class="ms-2 text-muted" style="font-size: 1em;">Supported by Deepseek API</span>
+                                <span class="ms-2 text-muted" style="font-size: 1em;">Powered by Deepseek API</span>
                             </div>
                         </div>
                         <div id="aiAnalysisError" class="d-none">
