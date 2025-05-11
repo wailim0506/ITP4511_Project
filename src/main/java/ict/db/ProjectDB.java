@@ -4082,7 +4082,7 @@ public class ProjectDB {
         return cbList;
     }
     
-    public ArrayList<ConsumptionBean> getTotalConsumptionByRegion(String region) {
+    public ArrayList<ConsumptionBean> getTotalConsumptionByRegion(String region, String rangeFrom, String rangeTo) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<ConsumptionBean> cbList = new ArrayList<ConsumptionBean>();
@@ -4097,10 +4097,12 @@ public class ProjectDB {
                                             "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
                                             "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
                                             "JOIN country_region cr ON cr.ID = fc.CountryRegionID\n" +
-                                            "WHERE f.Status = 'enable' AND sfo.Status != 'Pending' AND sc.CountryRegionID = ? \n" +
+                                            "WHERE f.Status = 'enable' AND sfo.Status != 'Pending' AND sc.CountryRegionID = ? AND sfo.OrderDate BETWEEN  ? AND  ? \n" +
                                             "GROUP BY sfoi.FruitID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, region);
+            pStmnt.setString(2, rangeFrom);
+            pStmnt.setString(3, rangeTo);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
             while (rs.next()) {
@@ -4122,7 +4124,7 @@ public class ProjectDB {
         return cbList;
     }
     
-    public ArrayList<ConsumptionBean> getTotalConsumptionByCity(String city) {
+    public ArrayList<ConsumptionBean> getTotalConsumptionByCity(String city, String rangeFrom, String rangeTo) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<ConsumptionBean> cbList = new ArrayList<ConsumptionBean>();
@@ -4137,10 +4139,12 @@ public class ProjectDB {
                                             "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
                                             "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
                                             "JOIN country_region cr ON cr.ID = fc.CountryRegionID\n" +
-                                            "WHERE f.Status = 'enable' AND sfo.Status != 'Pending' AND sc.City = ? \n" +
+                                            "WHERE f.Status = 'enable' AND sfo.Status != 'Pending' AND sc.City = ? AND sfo.OrderDate BETWEEN  ? AND  ? \n" +
                                             "GROUP BY sfoi.FruitID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, city);
+            pStmnt.setString(2, rangeFrom);
+            pStmnt.setString(3, rangeTo);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
             while (rs.next()) {
@@ -4162,7 +4166,7 @@ public class ProjectDB {
         return cbList;
     }
     
-    public ArrayList<ConsumptionBean> getTotalConsumptionByShop(String shopId) {
+    public ArrayList<ConsumptionBean> getTotalConsumptionByShop(String shopId, String rangeFrom, String rangeTo) {
         Connection cnnct = null;
         PreparedStatement pStmnt = null;
         ArrayList<ConsumptionBean> cbList = new ArrayList<ConsumptionBean>();
@@ -4177,10 +4181,12 @@ public class ProjectDB {
                                             "JOIN fruit f ON sfoi.FruitID = f.ID\n" +
                                             "JOIN fruit_city fc ON fc.ID = f.FruitCityID\n" +
                                             "JOIN country_region cr ON cr.ID = fc.CountryRegionID\n" +
-                                            "WHERE f.Status = 'enable' AND sfo.Status != 'Pending' AND s.ID = ? \n" +
+                                            "WHERE f.Status = 'enable' AND sfo.Status != 'Pending' AND s.ID = ? AND sfo.OrderDate BETWEEN  ? AND  ?\n" +
                                             "GROUP BY sfoi.FruitID;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, shopId);
+            pStmnt.setString(2, rangeFrom);
+            pStmnt.setString(3, rangeTo);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
             while (rs.next()) {

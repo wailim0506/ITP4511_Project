@@ -11,10 +11,12 @@ C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\servlet\wareho
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\servlet\store\shopListController.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\tag\nav.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\bean\FruitCityBean.java
+C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\bean\ConsumptionBean.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\servlet\warehouse\WarehouseListController.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\util\PasswordCrypto.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\tag\order.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\bean\TotalQtyBean.java
+C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\servlet\seniorManagement\consumptionReportController.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\servlet\store\borrowFruitController.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\servlet\seniorManagement\reserveNeedController.java
 C:\Users\19647\Documents\GitHub\ITP4511_Project\src\main\java\ict\servlet\warehouse\inventoryController.java

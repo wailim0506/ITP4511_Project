@@ -32,6 +32,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/darkModeControl.js"></script>
+        <script src="${pageContext.request.contextPath}/js/seniorManagement/pieChart.js"></script>
     </head>
     <body>
         <%
@@ -131,10 +132,26 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-3 col-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-text border-0 bg-transparent">
+                                        <i class="material-icons text-muted">calendar_month</i>
+                                    </span>
+                                    <select class="form-select" name="season">
+                                        <option value="--" disabled selected>Season</option>
+                                        <option value="spring">Spring</option>
+                                        <option value="summer">Summer</option>
+                                        <option value="autumn">Autumn</option>
+                                        <option value="winter">Winter</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
-                                 
+
             <jsp:useBean id="cbList" class="java.util.ArrayList" scope="request"/>                        
             <div class="fruitList">
                 <div class="fruitList-title">
@@ -143,9 +160,13 @@
                 </div>
                 <div class="fruit">
                     <%
-                        for(Object obj:cbList){
-                            ConsumptionBean cb = (ConsumptionBean)obj;
-                            
+                        if (cbList.isEmpty()) {
+                    %>
+                    <p>No records found</p>
+                    <%
+                        } else {
+                            for (Object obj : cbList) {
+                                ConsumptionBean cb = (ConsumptionBean) obj;
                     %>
                     <div class="fruit-card">
                         <img src="${pageContext.request.contextPath}/img/<%=cb.getFruitImg()%>" alt="Apple">
@@ -156,11 +177,32 @@
                         </div>
                     </div>
                     <%
+                            }
                         }
                     %>
                 </div>
             </div>
 
+            <div class="statistics">
+                <div class="pieChart">
+                    <h3>Fruit Consumption Distribution</h3>
+                    <script>
+                        window.fruitData = [
+                        <%
+                                        for(Object obj:cbList){
+                                            ConsumptionBean cb = (ConsumptionBean)obj;
+                        %>
+                            {
+                                name: '<%=cb.getFruitName()%>',
+                                total: <%=cb.getTotal()%>
+                            },
+                        <%
+                                        }
+                        %>
+                        ];
+                    </script>
+                </div>
+            </div>
         </div>
 
         <footer:footer userType="seniorManagement"/>
