@@ -173,7 +173,7 @@
                                         <%
                                             for (int i = 0; i < fruitCity.size(); i++) {
                                                 FruitCityBean fcb = (FruitCityBean) fruitCity.get(i);
-                                                out.println("<option value=\"" + fcb.getCountryRegionID() + "\">" + fcb.getCity() + "</option>");
+                                                out.println("<option value=\"" + fcb.getCity() + "\">" + fcb.getCity() + "</option>");
                                             }
                                         %>
                                     </select>

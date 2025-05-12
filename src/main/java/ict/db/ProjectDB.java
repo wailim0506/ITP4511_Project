@@ -3911,7 +3911,7 @@ public class ProjectDB {
         String fruitCityID = "";
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT ID FROM fruit_city WHERE CountryRegionID = ?";
+            String preQueryStatement = "SELECT ID FROM fruit_city WHERE City = ?";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, countryRegionID);
             ResultSet rs = pStmnt.executeQuery();
