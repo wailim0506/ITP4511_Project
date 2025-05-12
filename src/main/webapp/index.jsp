@@ -68,7 +68,7 @@
                                     Remember me
                                 </label>
                             </div>
-                            <a href="#" class="small text-decoration-none">Forgot password?</a>
+                           
                         </div>
                         
                         <button type="submit" class="btn login-btn w-100 text-white">Sign In</button>
