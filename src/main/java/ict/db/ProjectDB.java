@@ -2447,8 +2447,12 @@ public class ProjectDB {
                 pStmnt = cnnct.prepareStatement(preQueryStatement);
                 pStmnt.setString(1, staffName);
                 pStmnt.setString(2, UserID);
+            } else if (type.equals("senior")) {
+                String preQueryStatement = "UPDATE senior_management_staff SET staffname = ? WHERE UserID = ?";
+                pStmnt = cnnct.prepareStatement(preQueryStatement);
+                pStmnt.setString(1, staffName);
+                pStmnt.setString(2, UserID);
             }
-
             int rowCount = pStmnt.executeUpdate();
             if (rowCount >= 1) {
                 isSuccess = true;

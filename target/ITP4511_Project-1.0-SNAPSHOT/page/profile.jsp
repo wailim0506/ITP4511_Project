@@ -64,7 +64,7 @@
                         <br/>
                         <form action="/ITP4511_Project/ProfileController" method="GET" onsubmit="return confirmPasswordChange();">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingInput" name="oPass" minlength="8" maxlength="20" required>
+                                <input type="password" class="form-control" id="floatingInput" name="oPass" maxlength="20" required>
                                 <label for="floatingInput">Old Password</label>
                             </div>
                             <div class="form-floating mb-3">

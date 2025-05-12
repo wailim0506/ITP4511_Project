@@ -66,7 +66,15 @@ public class ProfileController extends HttpServlet {
 
         String action = request.getParameter("action");
         if ("updateStaffName".equalsIgnoreCase(action)) {               //Update staff name
-            String type = (user.getShopId()!=null)?"shop":"warehouse";
+            String type;
+            if(user.getShopId()!=null){
+                type = "shop";
+            }else if(user.getWareHouseId()!=null){
+                type = "warehouse";
+            }else{
+                type = "senior";
+            }
+            
             String newStaffName = request.getParameter("staffName");
             boolean isSuccess= db.updateStaffName(newStaffName, user.getUserId(), type);
             
