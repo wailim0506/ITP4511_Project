@@ -46,7 +46,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and x.Status = 'enable';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.executeQuery();
             ResultSet rs = pStmnt.getResultSet();
@@ -161,7 +161,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ?;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ? and x.Status = 'enable';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
             pStmnt.executeQuery();
@@ -228,7 +228,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and x.type=?;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and x.type=? and x.Status = 'enable';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, type);
             pStmnt.executeQuery();
@@ -261,7 +261,7 @@ public class ProjectDB {
         ArrayList<FruitsBean> fruits = new ArrayList<FruitsBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ? and x.type=?;";
+            String preQueryStatement = "SELECT x.ID,x.Name,x.ImgName,z.city,y.Name AS CountryRegion,x.type,x.unit FROM fruit x, country_region y, fruit_city z WHERE x.FruitCityID = z.ID and z.CountryRegionID = y.ID and y.ID = ? and x.type=? and x.Status = 'enable';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, id);
             pStmnt.setString(2, type);
@@ -1314,7 +1314,7 @@ public class ProjectDB {
         ArrayList<ShopFruitStockBean> shopStockList = new ArrayList<ShopFruitStockBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM shop_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE ShopID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID ;";
+            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM shop_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE ShopID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID and y.Status = 'enable' ;";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, shopId);
             ResultSet rs = pStmnt.executeQuery();
@@ -3038,7 +3038,7 @@ public class ProjectDB {
         ArrayList<WarehouseFruitStockBean> warehouseStockList = new ArrayList<WarehouseFruitStockBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM warehouse_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE WarehouseID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID;";
+            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM warehouse_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE WarehouseID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID AND y.Status = 'enable';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             ResultSet rs = pStmnt.executeQuery();
@@ -3070,7 +3070,7 @@ public class ProjectDB {
         ArrayList<ShopFruitStockBean> shopStockList = new ArrayList<ShopFruitStockBean>();
         try {
             cnnct = getConnection();
-            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM warehouse_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE WarehouseID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID;";
+            String preQueryStatement = "SELECT x.*,y.Name,y.type,y.unit,y.ImgName,z.City,aa.Name AS CR FROM warehouse_fruit_stock x, fruit y, fruit_city z, country_region aa WHERE WarehouseID = ? and x.FruitID = y.ID and y.FruitCityID = z.ID and z.CountryRegionID = aa.ID and y.Status = 'enable';";
             pStmnt = cnnct.prepareStatement(preQueryStatement);
             pStmnt.setString(1, warehouseId);
             ResultSet rs = pStmnt.executeQuery();
