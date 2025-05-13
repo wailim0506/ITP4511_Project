@@ -38,14 +38,11 @@
         %>
         <nav:nav userType="seniorManagement" staffName="<%=staffName%>"/>
         <div class="container py-4">
-            <!-- Hero Section -->
             <div class="hero-section text-center shadow-sm">
                 <h1 class="display-5 fw-bold text-primary">Acer International Bakery</h1>
                 <p class="lead mb-4">Senior Management Dashboard</p>
                 
-                <!-- Shop Information - Simplified Design -->
                 <div class="d-flex align-items-center justify-content-center mb-3">
-                    <!--<i class="material-icons text-primary me-2" style="font-size: 1.2rem;">store</i>-->
                     <%
                         bean = (UserBean)session.getAttribute("userInfo");
                         staffName = (String)bean.getStaffName();
@@ -60,10 +57,8 @@
                 <div id="current-time" class="mt-2 fw-light text-primary"></div>
             </div>
             
-            <!-- Dashboard Cards -->
             <div class="row g-4 py-4">
                 
-                <!-- Consumption Report -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -75,7 +70,6 @@
                     </div>
                 </div>
                 
-                <!-- Reserve Needs Aggregation -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -87,7 +81,6 @@
                     </div>
                 </div>
                 
-                <!-- Manage Fruit Types -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -99,7 +92,6 @@
                     </div>
                 </div>
 
-                <!-- User Account Management -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -112,7 +104,6 @@
                 </div>
                 
 
-                <!-- Shop List -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -124,7 +115,6 @@
                     </div>
                 </div>
 
-                <!-- Warehouse List -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -136,7 +126,6 @@
                     </div>
                 </div>
                 
-                <!-- Profile -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">

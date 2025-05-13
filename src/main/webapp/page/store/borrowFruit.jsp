@@ -68,22 +68,18 @@
             }  
         %>
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Borrow Fruits</h2>
                 <p class="lead">Borrow fruits from other shops in your city for immediate needs</p>
             </div>
             <form id="borrowingForm" action="/ITP4511_Project/borrowFruit" method="post">
                 <input type="hidden" name="action" value="borrow">
-                <!-- Main Content -->
                 <div class="row g-4">
-                    <!-- Borrowing Form -->
                     <div class="col-lg-8">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body p-4">
                                 <h4 class="mb-4"><i class="material-icons align-middle me-2">swap_horiz</i>Find Fruits to Borrow</h4>
 
-                                <!-- Shop Selection Section -->
                                 <div class="mb-4">
                                     <h5 class="mb-3"><i class="material-icons align-middle me-2 small">store</i>Select a Shop</h5>
                                     <div class="row">
@@ -113,9 +109,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Fruit Selection Section (Initially Hidden) -->
                                 <div id="fruitSelectionSection" class="d-none">
-                                    <!-- Search and Filter Bar -->
                                     <div class="mb-4">
                                         <div class="row g-3 mb-3">
                                             <div class="col-md-6 col-sm-12">
@@ -144,11 +138,9 @@
                                     </div>
 
 
-                                    <!-- Available Fruits List -->
                                     <div class="fruitSelectionContainer mb-4">
                                         <h5 class="mb-3"><i class="material-icons align-middle me-2 small">inventory_2</i>Available Fruits at <span id="selectedShopName">Shop</span></h5>
                                         <div class="fruitSelection">
-                                            <!-- Fruit Items - Each shop's fruits have a data-shop attribute to filter by shop -->
                                             <%
                                                 ArrayList<ArrayList<ShopFruitStockBean>> shopStockList = (ArrayList<ArrayList<ShopFruitStockBean>>) request.getAttribute("shopStockList");
                                                 if (shopStockList.size() == 0) {
@@ -215,9 +207,7 @@
                         </div>
                     </div>
 
-                    <!-- Sidebar -->
                     <div class="col-lg-4">
-                        <!-- Request Summary -->
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-body p-4">
                                 <h5 class="mb-3"><i class="material-icons align-middle me-2">receipt</i>Your Request</h5>
@@ -232,7 +222,6 @@
                             </div>
                         </div>
 
-                        <!-- Borrowing Guidelines -->
                         <div class="card border-0 shadow-sm mb-4">
                             <div class="card-body p-4">
                                 <h5 class="mb-3"><i class="material-icons align-middle me-2">info</i>Guidelines</h5>

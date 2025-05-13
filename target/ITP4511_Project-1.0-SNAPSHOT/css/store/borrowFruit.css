@@ -45,13 +45,11 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* Dark mode specific styles */
 [data-bs-theme="dark"] .headerSection,
 [data-bs-theme="dark"] .fruitSelectionContainer {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Improved card visibility in dark mode */
 [data-bs-theme="dark"] .card {
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;

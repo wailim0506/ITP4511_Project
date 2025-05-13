@@ -3,44 +3,40 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/JavaScript.js to edit this template
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const fruitData = window.fruitData || [];
     const pieCanvas = document.createElement('canvas');
     pieCanvas.id = 'fruitPieChart';
     pieCanvas.width = 500;
     pieCanvas.height = 400;
     document.querySelector('.pieChart').appendChild(pieCanvas);
-    
+
     const pieCtx = pieCanvas.getContext('2d');
     const totalSum = fruitData.reduce((sum, fruit) => sum + fruit.total, 0);
     const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5'];
-    
+
     let startAngle = 0;
     fruitData.forEach((fruit, index) => {
         const sliceAngle = (fruit.total / totalSum) * 2 * Math.PI;
-        
-        // Draw pie slice
+
         pieCtx.beginPath();
         pieCtx.moveTo(200, 200);
         pieCtx.arc(200, 200, 150, startAngle, startAngle + sliceAngle);
         pieCtx.fillStyle = colors[index % colors.length];
         pieCtx.fill();
-        
-        // Calculate angles for label and connector line
+
         const textAngle = startAngle + sliceAngle / 2;
         const labelDistance = 180;
         const lineStartDistance = 150;
         const lineMidDistance = 165;
-        
-        // Calculate positions
+
         const lineStartX = 200 + Math.cos(textAngle) * lineStartDistance;
         const lineStartY = 200 + Math.sin(textAngle) * lineStartDistance;
         const lineMidX = 200 + Math.cos(textAngle) * lineMidDistance;
         const lineMidY = 200 + Math.sin(textAngle) * lineMidDistance;
         const textX = 200 + Math.cos(textAngle) * labelDistance;
         const textY = 200 + Math.sin(textAngle) * labelDistance;
-        
-        // Draw connector line
+
         pieCtx.beginPath();
         pieCtx.moveTo(lineStartX, lineStartY);
         pieCtx.lineTo(lineMidX, lineMidY);
@@ -48,14 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
         pieCtx.strokeStyle = '#000';
         pieCtx.lineWidth = 1;
         pieCtx.stroke();
-        
-        // Draw label
+
         pieCtx.fillStyle = '#000';
         pieCtx.font = '14px Arial';
         pieCtx.textBaseline = 'middle';
         pieCtx.textAlign = textAngle > Math.PI ? 'right' : 'left';
-        pieCtx.fillText(`${fruit.name} (${Math.round(fruit.total/totalSum*100)}%)`, textX, textY);
-        
+        pieCtx.fillText(`${fruit.name} (${Math.round(fruit.total / totalSum * 100)}%)`, textX, textY);
+
         startAngle += sliceAngle;
     });
 
@@ -68,22 +63,20 @@ document.addEventListener('DOMContentLoaded', function() {
     lineCanvas.width = 700;
     lineCanvas.height = 400;
     document.querySelector('.lineChart').appendChild(lineCanvas);
-    
+
     const lineCtx = lineCanvas.getContext('2d');
     const maxTotal = Math.max(...fruitData.map(fruit => fruit.total));
-    const yScale = (maxTotal > 0) ? (300 / maxTotal) : 1; 
-    const xStep = 600 / (fruitData.length + 1); 
+    const yScale = (maxTotal > 0) ? (300 / maxTotal) : 1;
+    const xStep = 600 / (fruitData.length + 1);
 
-    // Draw axes
     lineCtx.beginPath();
-    lineCtx.moveTo(50, 50); 
+    lineCtx.moveTo(50, 50);
     lineCtx.lineTo(50, 350);
     lineCtx.lineTo(650, 350);
     lineCtx.strokeStyle = '#000';
     lineCtx.lineWidth = 2;
     lineCtx.stroke();
 
-    // Draw Y-axis labels
     const yTicks = 5;
     for (let i = 0; i <= yTicks; i++) {
         const yValue = (maxTotal / yTicks) * i;
@@ -94,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
         lineCtx.fillText(Math.round(yValue), 45, yPos);
     }
 
-    // Draw X-axis labels and points
     lineCtx.beginPath();
     lineCtx.strokeStyle = '#FF6B6B';
     lineCtx.lineWidth = 2;
@@ -115,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     lineCtx.stroke();
 
-    // Draw points
     fruitData.forEach((fruit, index) => {
         const x = 50 + (index + 1) * xStep;
         const y = 350 - (fruit.total * yScale);

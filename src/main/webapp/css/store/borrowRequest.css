@@ -79,7 +79,6 @@ body {
   }
 }
 
-/* Dark Mode Styles */
 html[data-bs-theme="dark"] .headerSection {
   background-color: #212529;
   color: #f8f9fa;
@@ -153,12 +152,10 @@ html[data-bs-theme="dark"] .input-group-text.bg-transparent {
   color: #f8f9fa;
 }
 
-/* Fix for modal backdrops in dark mode */
 html[data-bs-theme="dark"] .modal-backdrop {
   opacity: 0.7 !important;
 }
 
-/* Style for dark mode toggle button */
 html[data-bs-theme="dark"] #darkModeToogle {
   background-color: #212529;
   color: #f8f9fa;

@@ -72,15 +72,12 @@
         %>
 
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Borrow Records</h2>
                 <p class="lead">View and manage your fruit borrowing history</p>
             </div>
 
-            <!-- Main Content -->
             <div class="row g-4">
-                <!-- Filters and Search -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
@@ -159,7 +156,6 @@
                     </div>
                 </div>
 
-                <!-- Reservation Records Table -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
@@ -231,7 +227,6 @@
                     </div>
                 </div>
 
-                <!-- Information Panel -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm mt-2">
                         <div class="card-body p-4">
@@ -258,7 +253,6 @@
             </div>
         </div>
 
-        <%-- Detail Modal --%>
         <jsp:useBean id="orderItemList" class="java.util.ArrayList" scope="request"/>
         <% 
             for (int i = 0; i < orderList.size(); i++) { 

@@ -55,14 +55,11 @@
             }  
         %>
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Reserve Fruits</h2>
                 <p class="lead">Reserve fruits for your bakery needs in the next 14 days</p>
             </div>
-            <!-- Main Content -->
             <div class="row g-4">
-                <!-- Reservation Form -->
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
@@ -73,11 +70,9 @@
                             %>
                             <form id="reservationForm" action="/ITP4511_Project/reserveFruit" method="post">
                                 <input type="hidden" name="action" value="submit">
-                                <!-- Fruit Selection -->
                                 <div class="mb-4">
                                     <label class="form-label fw-medium">Select Fruits <span class="text-danger">*</span></label>
 
-                                    <!-- Search and Filter Bar -->
                                     <div class="mb-3">
                                         <div class="row g-2">
                                             <div class="col-md-4 col-sm-12">
@@ -150,7 +145,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Scrollable Container for Fruits -->
                                     <div class="fruitSelectionContainer">
                                         <div class="fruitSelection">
                                             <%
@@ -198,14 +192,12 @@
                                     </div>
                                 </div>
 
-                                <!-- Notes -->
                                 <div class="mb-4">
                                     <label for="notes" class="form-label fw-medium">Additional Notes</label>
                                     <textarea class="form-control" id="notes" name="notes" rows="3" 
                                               placeholder="Any specific requirements or comments"></textarea>
                                 </div>
 
-                                <!-- Buttons -->
                                 <div class="d-flex justify-content-end gap-2 mt-4">
                                     <button type="button" id="resetFormBtn" class="btn btn-outline-danger me-auto">
                                         <i class="material-icons align-middle me-1 small">refresh</i> Reset
@@ -267,24 +259,16 @@
                     </div>
                 </div>
 
-                <!-- Sidebar -->
                 <div class="col-lg-4">
-                    <!-- Reservation Summary -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">receipt</i>Your Selection</h5>
                             <div id="reservationSummary" class="mb-3">
                                 <p class="text-muted text-center py-4">No items selected yet</p>
                             </div>
-                            <%-- <hr> --%>
-                            <%-- <div class="d-flex justify-content-between">
-                                <span>Total Items:</span>
-                                <span id="totalItems">0</span>
-                            </div> --%>
                         </div>
                     </div>
 
-                    <!-- Reservation Guidelines -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">info</i>Guidelines</h5>
@@ -297,10 +281,6 @@
                                     <i class="material-icons text-muted align-middle me-2 small">edit</i>
                                     Reservations can be modified only when the status is "Pending"
                                 </li>
-                                <%-- <li class="list-group-item border-0 ps-0 py-2">
-                                    <i class="material-icons text-muted align-middle me-2 small">inventory</i>
-                                    Quantity is limited to current stock availability
-                                </li> --%>
                                 <li class="list-group-item border-0 ps-0 py-2">
                                     <i class="material-icons text-muted align-middle me-2 small">swap_horiz</i>
                                     For immediate fruit requirements, we advise borrowing from other shops within the same city

@@ -13,7 +13,6 @@ $(document).ready(function () {
 
     setReserveDate();
 
-    // Set min and max date for date input
     const today = new Date();
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -21,7 +20,6 @@ $(document).ready(function () {
     const maxDate = new Date(today);
     maxDate.setDate(maxDate.getDate() + 14);
 
-    // Format dates for HTML date input: YYYY-MM-DD
     const formatDate = (date) => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -32,13 +30,11 @@ $(document).ready(function () {
     $('#deliveryDate').attr('min', formatDate(tomorrow));
     $('#deliveryDate').attr('max', formatDate(maxDate));
 
-    // Update summary when quantity changes
     $('input[type=number]').on('change', function () {
         updateLocalStorage();
         updateSummary();
     });
 
-    // Search and filter functionality
     $('#fruitSearch').on('input', function () {
         filterFruits();
     });
@@ -66,13 +62,12 @@ $(document).ready(function () {
 
     $("#reservationForm").on("submit", function (event) {
         event.preventDefault();
-        localStorage.removeItem('fruitQuantities'); // Clear local storage
-        localStorage.removeItem('fruitName'); // Clear local storage
-        localStorage.removeItem('fruitUnit'); // Clear local storage
+        localStorage.removeItem('fruitQuantities');
+        localStorage.removeItem('fruitName');
+        localStorage.removeItem('fruitUnit');
         this.submit();
     });
 
-    // Initialize fruit count and summary
     updateFruitCount();
     updateSummary();
 
@@ -140,7 +135,6 @@ $(document).ready(function () {
         const fruitUnits = JSON.parse(localStorage.getItem('fruitUnit')) || {};
 
 
-        //loop fruitQuantities to get fruit information
         for (const fruitId in fruitQuantities) {
             const qty = fruitQuantities[fruitId] || 0;
             if (qty > 0) {
@@ -164,70 +158,54 @@ $(document).ready(function () {
         $('#totalItems').text(totalItems);
     }
 
-    // Also save when using search filter
     $('#fruitSearch').on('input', function () {
         filterFruits();
-        // No need to save here as we're not reloading the page
     });
 
     function InitializeLocalStorage() {
         if ($('input[type=number]').length === 0) {
             return;
         }
-        // Initialize local storage for fruit quantities
         var fruits = {};
 
-        // Loop through all fruit quantity inputs
         $('input[type=number]').each(function () {
             var inputName = $(this).data('name');
-            // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
                 fruits[fruitId] = 0;
             }
         });
 
-        // Store in localStorage if needed
         localStorage.setItem('fruitQuantities', JSON.stringify(fruits));
 
         var fruitsName = {};
-        //store all fruit name
         $('input[type=number]').each(function () {
             var inputName = $(this).data('name');
-            // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
                 var fruitName = $(this).closest('.fruitItem').find('h5').text();
                 fruitsName[fruitId] = fruitName;
             }
         });
-        // Store in localStorage if needed
         localStorage.setItem('fruitName', JSON.stringify(fruitsName));
 
-        //store fruit unit
         var fruitsUnit = {};
-        //store all fruit unit
         $('input[type=number]').each(function () {
             var inputName = $(this).data('name');
-            // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
                 var unit = $(this).data('unit');
                 fruitsUnit[fruitId] = unit;
             }
         });
-        // Store in localStorage if needed
         localStorage.setItem('fruitUnit', JSON.stringify(fruitsUnit));
     }
 
     function updateLocalStorage() {
-        // Update local storage with current fruit quantities
         var fruits = JSON.parse(localStorage.getItem('fruitQuantities')) || {};
 
-        // Loop through all fruit quantity inputs
         $('input[type=number]').each(function () {
             var inputName = $(this).data('name');
-            // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
                 var qty = parseInt($(this).val()) || 0;
@@ -235,18 +213,14 @@ $(document).ready(function () {
             }
         });
 
-        // Store in localStorage
         localStorage.setItem('fruitQuantities', JSON.stringify(fruits));
     }
 
     function fillInputBoxWithLocalStorage() {
-        // Fill input boxes with values from local storage
         var fruits = JSON.parse(localStorage.getItem('fruitQuantities')) || {};
 
-        // Loop through all fruit quantity inputs
         $('input[type=number]').each(function () {
             var inputName = $(this).data('name');
-            // Extract fruit ID from the input name pattern "fruit_X_qty"
             if (inputName && inputName.startsWith('fruit_')) {
                 var fruitId = inputName.split('_')[1];
                 var qty = fruits[fruitId] || 0;
@@ -256,12 +230,10 @@ $(document).ready(function () {
     }
 
     function setReserveDate() {
-        // Set reserveCollectDate to either the 14th or last day of the month
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
 
-        // Calculate the last day of current month
         const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
         if (currentDate <= new Date(currentYear, currentMonth, 14)) {
@@ -274,7 +246,6 @@ $(document).ready(function () {
         const collectDate = new Date(currentYear, currentMonth, collectDay);
         const formattedDate = collectDate.toISOString().slice(0, 10);
 
-        // Change from .val() to .text() as we're working with a paragraph element, not an input
         $("#reserveCollectDate").text(formattedDate);
     }
 });

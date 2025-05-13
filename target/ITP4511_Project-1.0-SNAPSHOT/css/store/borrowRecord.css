@@ -7,14 +7,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : wailim0506
 */
 
-/* Header section styling */
 .headerSection {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-radius: 10px;
   padding: 2rem 1.5rem;
 }
 
-/* Card styling */
 .card {
   transition: all 0.2s ease;
   overflow: hidden;
@@ -24,12 +22,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Reservation records container */
 .reservationRecordsContainer {
   position: relative;
 }
 
-/* Table styling */
 .table th {
   font-weight: 600;
   color: var(--bs-gray-700);
@@ -43,7 +39,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   background-color: rgba(var(--bs-primary-rgb), 0.05);
 }
 
-/* Info card styling */
 .infoCard {
   transition: all 0.2s ease;
   border-left: 3px solid var(--bs-primary);
@@ -54,14 +49,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* Modal styling */
 .modal-content {
   border: none;
   border-radius: 10px;
   overflow: hidden;
 }
 
-/* Timeline in modal */
 .statusTimeline {
   position: relative;
 }
@@ -83,7 +76,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   height: 20px;
 }
 
-/* Dark mode adjustments */
 [data-bs-theme="dark"] .infoCard {
   background-color: rgba(255, 255, 255, 0.05) !important;
 }

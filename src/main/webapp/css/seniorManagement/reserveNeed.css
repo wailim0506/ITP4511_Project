@@ -7,14 +7,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : wailim0506
 */
 
-/* Header Section */
 .headerSection {
   background-color: rgba(13, 110, 253, 0.05);
   padding: 2rem;
   border-radius: 0.5rem;
 }
 
-/* Card and Table Styling */
 .card {
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
@@ -40,13 +38,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   z-index: 1;
 }
 
-/* Filter section styling */
 .cityFilterContainer,
 .customDateRangeContainer {
   transition: all 0.3s ease;
 }
 
-/* Chart placeholders styling */
 .chartPlaceholder {
   height: 300px;
   width: 100%;
@@ -85,45 +81,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   font-weight: bold;
 }
 
-/* Pie chart styling */
-.pieChartContainer {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pieChart {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-
-.pieSlice {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-  transform-origin: center left;
-  background-color: var(--color, #ccc);
-  transform: rotate(calc((var(--percentage, 0) - 25) * 3.6deg));
-}
-
-.pieLabel {
-  display: none; /* Hide labels as they're hard to position correctly */
-}
-
-.pieLegend {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
-
 .legendItem {
   display: flex;
   align-items: center;
@@ -138,7 +95,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   border-radius: 3px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .chartContainer {
     padding: 20px 0;
@@ -152,12 +108,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   }
 }
 
-/* Dark mode specific styles */
 html[data-bs-theme="dark"] .reserveNeedTable th {
   background-color: var(--bs-body-bg);
 }
 
-/* AI Analysis Modal Styling */
 #aiAnalysisModal .modal-content {
   border-radius: 0.75rem;
   overflow: hidden;
@@ -203,7 +157,6 @@ html[data-bs-theme="dark"] .reserveNeedTable th {
   align-items: center;
 }
 
-/* Dark mode specific styles for AI Analysis Modal */
 html[data-bs-theme="dark"] #aiAnalysisModal .modal-header {
   background-color: rgba(13, 110, 253, 0.2) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -218,7 +171,6 @@ html[data-bs-theme="dark"] #aiRecommendations {
   border-color: rgba(255, 193, 7, 0.7) !important;
 }
 
-/* Print styles */
 @media print {
   @page {
     margin: 1cm;
@@ -249,12 +201,10 @@ html[data-bs-theme="dark"] #aiRecommendations {
     -webkit-print-color-adjust: exact !important;
   }
 
-  /* Make all tables visible for printing */
   .reserveNeedTable.d-none {
     display: table !important;
   }
 
-  /* Hide non-printable elements */
   nav,
   footer,
   #darkModeToogle,
@@ -265,7 +215,6 @@ html[data-bs-theme="dark"] #aiRecommendations {
     display: none !important;
   }
 
-  /* Better table styles for print */
   .reserveNeedTable {
     width: 100% !important;
     border-collapse: collapse !important;
@@ -282,14 +231,12 @@ html[data-bs-theme="dark"] #aiRecommendations {
     border-bottom: 1px solid #ddd !important;
   }
 
-  /* Ensure charts print properly */
   .chartContainer {
     display: flex !important;
     justify-content: space-around !important;
     height: 250px !important;
   }
 
-  /* Hide AI Analysis Button in print */
   #aiAnalysisBtn {
     display: none !important;
   }

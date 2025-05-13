@@ -4,18 +4,12 @@
  */
 
 $(document).ready(function () {
-    // Initialize shop count
-    //updateShopCount();
-
-    // Handle search functionality
     $("#userSearch").on("keyup", filterUsers);
 
-    // Handle country filter
     $("#roleFilter").on("change", filterUsers);
 
     $('#placeIdFilter').on('change', filterUsers);
 
-    // Handle reset button
     $("#resetFilterBtn").on("click", function () {
         window.location.href = '/ITP4511_Project/userList';
     });
@@ -32,9 +26,6 @@ $(document).ready(function () {
         window.location.href = `/ITP4511_Project/userList?action=edit&id=${userId}`;
     });
 
-    // Dark mode functionality is now handled by darkModeControl.js
-
-    // Function to filter shops based on search text and filters
     function filterUsers() {
         const searchText = $("#userSearch").val().toLowerCase();
         const roleFilter = $("#roleFilter").val();
@@ -59,7 +50,6 @@ $(document).ready(function () {
         updateShopCount();
     }
 
-    // Function to update the shop count display
     function updateShopCount() {
         const totalShops = $(".user").length;
         const visibleShops = $(".user:visible").length;

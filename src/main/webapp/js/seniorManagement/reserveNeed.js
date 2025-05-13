@@ -30,7 +30,6 @@ $(document).ready(function () {
         window.location.href = '/ITP4511_Project/reserveNeed?viewLevel=c&cn=all&date=last12Months';
     });
 
-    // Dynamically update UI when view level changes
     $('#viewLevel').on('change', function () {
         updateFilterVisibility();
         var viewLevel = $(this).val();
@@ -50,7 +49,6 @@ $(document).ready(function () {
         window.location.href = url;
     });
 
-    // Show/hide custom date range based on selection
     $('#dateRangeFilter').on('change', function () {
         var viewLevel = $('#viewLevel').val();
         var country = $('#countryFilter').val();
@@ -87,7 +85,6 @@ $(document).ready(function () {
         window.location.href = url;
     });
 
-    // Handle country filter changes - would update city dropdown options in real implementation
     $('#countryFilter').on('change', function () {
         var viewLevel = $('#viewLevel').val();
         var country = $(this).val();
@@ -114,21 +111,16 @@ $(document).ready(function () {
         window.location.href = url;
     });
 
-    // Print report button functionality - completely revised
     $('#printReportBtn').on('click', function () {
-        // Create a new window for better print control
         let printWindow = window.open('', '_blank');
 
-        // Get current view information
         const viewLevel = $('#viewLevel').val();
         let viewTitle = "Reservation Needs by Country/Region";
         if (viewLevel === 'city') viewTitle = "Reservation Needs by City";
         if (viewLevel === 'shop') viewTitle = "Reservation Needs by Shop";
 
-        // Get date range text
         const dateRange = $('#dateRangeFilter option:selected').text();
 
-        // Prepare print content with styling
         let printContent = `
             <!DOCTYPE html>
             <html>
@@ -262,7 +254,6 @@ $(document).ready(function () {
                 <div class="table-section">
                     <h3>${viewTitle}</h3>`;
 
-        // Add the appropriate table based on current view
         if (viewLevel === 'c') {
             printContent += $('#countryView').parent().html();
         } else if (viewLevel === 'city') {
@@ -271,7 +262,6 @@ $(document).ready(function () {
             printContent += $('#shopView').parent().html();
         }
 
-        // Add chart section
         printContent += `
                 </div>
                 
@@ -279,7 +269,6 @@ $(document).ready(function () {
                     <h3 class="chart-title">Top Requested Fruits</h3>
                     <div class="chart-container">`;
 
-        // Clone the chart bars
         $('.chartBar').each(function () {
             const style = $(this).attr('style');
             const label = $(this).find('.chartLabel').text();
@@ -292,7 +281,6 @@ $(document).ready(function () {
                 </div>`;
         });
 
-        // Close the HTML structure
         printContent += `
                     </div>
                 </div>
@@ -304,37 +292,29 @@ $(document).ready(function () {
             </html>
         `;
 
-        // Write to the new window and print
         printWindow.document.write(printContent);
         printWindow.document.close();
 
-        // Wait for resources to load then print
         printWindow.onload = function () {
             setTimeout(function () {
                 printWindow.print();
-                // Some browsers may close the window after printing, some may not
             }, 500);
         };
     });
 
-    // Export to PDF button functionality - completely revised
     $('#exportPdfBtn').on('click', function () {
-        // Show loading indicator
         const loadingElement = $('<div class="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-light bg-opacity-75" style="z-index:9999">' +
             '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>' +
             '<span class="ms-2">Generating PDF...</span></div>');
         $('body').append(loadingElement);
 
-        // Get current view information
         const viewLevel = $('#viewLevel').val();
         let viewTitle = "Reservation Needs by Country/Region";
         if (viewLevel === 'city') viewTitle = "Reservation Needs by City";
         if (viewLevel === 'shop') viewTitle = "Reservation Needs by Shop";
 
-        // Get date range text
         const dateRange = $('#dateRangeFilter option:selected').text();
 
-        // Create a dedicated container for PDF output
         const pdfContainer = document.createElement('div');
         pdfContainer.innerHTML = `
             <div class="pdf-container" style="width:210mm; padding:10mm; font-family:Arial, sans-serif;">
@@ -371,7 +351,6 @@ $(document).ready(function () {
             </div>
         `;
 
-        // Clone the appropriate table
         let tableHtml = '';
         if (viewLevel === 'c') {
             tableHtml = $('#countryView').clone();
@@ -381,7 +360,6 @@ $(document).ready(function () {
             tableHtml = $('#shopView').clone();
         }
 
-        // Style the table for PDF
         tableHtml.find('th').css({
             'background-color': '#f5f5f5',
             'padding': '8px',
@@ -400,13 +378,10 @@ $(document).ready(function () {
             'font-size': '11px'
         });
 
-        // Make the table visible for PDF export
         tableHtml.removeClass('d-none');
 
-        // Add table to container
         pdfContainer.querySelector('.table-wrapper').appendChild(tableHtml[0]);
 
-        // Clone and add chart bars
         $('.chartBar').each(function () {
             const barClone = $(this).clone();
             const label = $(this).find('.chartLabel').text();
@@ -442,11 +417,9 @@ $(document).ready(function () {
             $(chartBarDiv).after(labelPara);
         });
 
-        // Generate filename based on current date
         const now = new Date();
         const filename = `ACER_ReserveNeeds_Report_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}.pdf`;
 
-        // Define PDF options
         const options = {
             margin: [10, 10],
             filename: filename,
@@ -464,7 +437,6 @@ $(document).ready(function () {
             }
         };
 
-        // Generate and download PDF
         html2pdf().from(pdfContainer).set(options).save()
             .then(() => {
                 // Remove loading indicator when done
@@ -477,19 +449,15 @@ $(document).ready(function () {
             });
     });
 
-    // AI Analysis button functionality
     $('#aiAnalysisBtn').on('click', function () {
-        // Open the modal
         const analysisModal = new bootstrap.Modal(document.getElementById('aiAnalysisModal'));
         analysisModal.show();
 
-        // Reset modal state
         $('#aiAnalysisLoading').removeClass('d-none');
         $('#aiAnalysisContent').addClass('d-none');
         $('#aiAnalysisError').addClass('d-none');
         $('#downloadAnalysisBtn').addClass('d-none');
 
-        // Get current view and date range
         const viewLevel = $('#viewLevel').val();
         let viewTitle = "Country/Region";
         if (viewLevel === 'city') viewTitle = "City";
@@ -499,7 +467,6 @@ $(document).ready(function () {
         const totalReservations = $('#total').text();
         const totalFruitItems = $('#totalFruit').text();
 
-        // Extract data from the currently visible table
         let tableData = [];
         let visibleTable;
 
@@ -511,23 +478,19 @@ $(document).ready(function () {
             visibleTable = $('#shopView');
         }
 
-        // Extract table headers
         let headers = [];
         visibleTable.find('thead th').each(function () {
             headers.push($(this).text().trim());
         });
 
-        // Extract table rows
         visibleTable.find('tbody tr').each(function () {
             let rowData = {};
             let cells = $(this).find('td');
 
             for (let i = 0; i < cells.length; i++) {
-                // For cells with rowspan, we need to check if they exist
                 let headerIndex = Math.min(i, headers.length - 1);
                 let value = $(cells[i]).text().trim();
 
-                // Handle cells with rowspan (they might be empty in subsequent rows)
                 if (value) {
                     rowData[headers[headerIndex]] = value;
                 }
@@ -536,7 +499,6 @@ $(document).ready(function () {
             tableData.push(rowData);
         });
 
-        // Prepare the prompt for the AI
         const prompt = `
             You are a data analyst for ACER Fruit Company. Please analyze the following fruit reservation data and provide business insights.
 
@@ -556,7 +518,6 @@ $(document).ready(function () {
             Keep each section clearly separated and labeled. Do not include any other sections or headings. Do not format in markdown.Do not use *.
             `;
 
-        // Send request to the DeepSeek API
         const requestBody = {
             model: 'deepseek-chat',
             messages: [
@@ -583,45 +544,36 @@ $(document).ready(function () {
                 return response.json();
             })
             .then(data => {
-                // Hide loading state
                 $('#aiAnalysisLoading').addClass('d-none');
 
                 if (data.error) {
-                    // Show error message
                     $('#aiAnalysisError').removeClass('d-none');
                     $('#aiErrorMessage').text(`Error: ${data.error.message}`);
                 } else if (data.choices && data.choices[0] && data.choices[0].message) {
-                    // Parse and display AI response
                     const response = data.choices[0].message.content;
 
-                    // Process the response to extract the three sections
                     const parsedResponse = parseAIResponse(response);
 
                     $('#aiDataSummary').html(parsedResponse.summary);
                     $('#aiKeyInsights').html(parsedResponse.insights);
                     $('#aiRecommendations').html(parsedResponse.recommendations);
 
-                    // Show the content and download button
                     $('#aiAnalysisContent').removeClass('d-none');
                     $('#downloadAnalysisBtn').removeClass('d-none');
 
-                    // Store the full response for download
                     $('#downloadAnalysisBtn').data('analysis', response);
                 } else {
-                    // Handle unexpected response
                     $('#aiAnalysisError').removeClass('d-none');
                     $('#aiErrorMessage').text('Unexpected API response format.');
                 }
             })
             .catch(error => {
-                // Hide loading, show error
                 $('#aiAnalysisLoading').addClass('d-none');
                 $('#aiAnalysisError').removeClass('d-none');
                 $('#aiErrorMessage').text(`Error: ${error.message}`);
             });
     });
 
-    // Handle download analysis button
     $('#downloadAnalysisBtn').on('click', function () {
         const analysis = $(this).data('analysis');
 
@@ -634,7 +586,6 @@ $(document).ready(function () {
             const dateRange = $('#dateRangeFilter option:selected').text().replace(/\s+/g, '_');
             const filename = `ACER_AI_Analysis_${viewTitle}_${dateRange}_${new Date().toISOString().slice(0, 10)}.txt`;
 
-            // Create and trigger download
             const blob = new Blob([analysis], { type: 'text/plain' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
@@ -643,9 +594,7 @@ $(document).ready(function () {
         }
     });
 
-    // Helper function to parse AI response into sections
     function parseAIResponse(response) {
-        // Default result structure
         const result = {
             summary: '',
             insights: '',
@@ -653,25 +602,21 @@ $(document).ready(function () {
         };
 
         try {
-            // Look for data summary section with improved regex patterns
             const summaryMatch = response.match(/(?:DATA SUMMARY|Data Summary|1\.\s*Data Summary):(.*?)(?=(?:KEY INSIGHTS|Key Insights|2\.\s*Key Insights))/si);
             if (summaryMatch && summaryMatch[1]) {
                 result.summary = formatSection(summaryMatch[1]);
             }
 
-            // Look for key insights section with improved regex patterns
             const insightsMatch = response.match(/(?:KEY INSIGHTS|Key Insights|2\.\s*Key Insights):(.*?)(?=(?:RECOMMENDATIONS|Recommendations|3\.\s*Recommendations))/si);
             if (insightsMatch && insightsMatch[1]) {
                 result.insights = formatSection(insightsMatch[1]);
             }
 
-            // Look for recommendations section with improved regex patterns
             const recommendationsMatch = response.match(/(?:RECOMMENDATIONS|Recommendations|3\.\s*Recommendations):(.*?)(?=$)/si);
             if (recommendationsMatch && recommendationsMatch[1]) {
                 result.recommendations = formatSection(recommendationsMatch[1]);
             }
 
-            // Fallback for numbered sections with no colon
             if (!result.summary) {
                 const altSummaryMatch = response.match(/(?:1\.\s*Data Summary\s*)(.*?)(?=(?:2\.\s*Key Insights))/si);
                 if (altSummaryMatch && altSummaryMatch[1]) {
@@ -693,43 +638,34 @@ $(document).ready(function () {
                 }
             }
 
-            // If we couldn't parse structured sections, try to intelligently divide the content
             if (!result.summary && !result.insights && !result.recommendations) {
                 console.log("Falling back to content division");
                 const paragraphs = response.split(/\n\n+/).filter(p => p.trim());
 
                 if (paragraphs.length >= 3) {
-                    // If we have at least 3 paragraphs, distribute them
                     result.summary = formatSection(paragraphs[0]);
 
-                    // Middle paragraphs go to insights
                     const middleParagraphs = paragraphs.slice(1, paragraphs.length - 1).join("\n\n");
                     result.insights = formatSection(middleParagraphs);
 
-                    // Last paragraph goes to recommendations
                     result.recommendations = formatSection(paragraphs[paragraphs.length - 1]);
                 } else {
-                    // Not enough paragraphs, put everything in summary
                     result.summary = formatSection(response);
                 }
             }
         } catch (error) {
             console.error("Error parsing AI response:", error);
-            // Fallback to returning the raw response with basic formatting
             result.summary = `<p>${response.replace(/\n/g, '<br>')}</p>`;
         }
 
         return result;
     }
 
-    // Helper function to format a section of text with proper HTML
     function formatSection(text) {
         if (!text) return '';
 
-        // Clean up the text
         text = text.trim();
 
-        // Check for bullet points or numbered lists
         const hasBullets = text.match(/^[-*•]\s+/m);
         const hasNumbers = text.match(/^\d+\.\s+/m);
 
@@ -745,14 +681,12 @@ $(document).ready(function () {
                 const itemMatch = item.match(/^([-*•]|\d+\.)\s+(.*)/);
 
                 if (itemMatch) {
-                    // This is a list item
                     if (!inList) {
                         inList = true;
                         currentList = `<${listType}>`;
                     }
                     currentList += `<li>${itemMatch[2]}</li>`;
                 } else {
-                    // Not a list item
                     if (inList) {
                         inList = false;
                         currentList += `</${listType}>`;
@@ -763,7 +697,6 @@ $(document).ready(function () {
                 }
             }
 
-            // Close any open list
             if (inList) {
                 currentList += `</${listType}>`;
                 listItems.push(currentList);
@@ -772,7 +705,6 @@ $(document).ready(function () {
             return listItems.join('');
         }
 
-        // Default handling: convert line breaks to <p> tags
         return text.split(/\n\n+/).map(para => `<p>${para.replace(/\n/g, ' ')}</p>`).join('');
     }
 });

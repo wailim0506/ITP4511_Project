@@ -58,7 +58,6 @@ body {
   margin-top: 1rem;
 }
 
-/* Dark Mode Adjustments */
 [data-bs-theme="dark"] .editUserHeader,
 [data-bs-theme="dark"] .editUserForm {
   background-color: #2c3034;
@@ -104,7 +103,6 @@ body {
   color: #ffc107;
 }
 
-/* Dark mode toggle button */
 #darkModeToogle {
   transition: all 0.3s ease;
 }
@@ -119,7 +117,6 @@ body {
   color: #f8f9fa;
 }
 
-/* Alert animations */
 .alertDiv {
   animation: fadeIn 0.5s ease forwards, fadeOut 0.5s ease 4s forwards;
 }

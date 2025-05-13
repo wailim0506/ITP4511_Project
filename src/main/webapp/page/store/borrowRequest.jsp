@@ -73,17 +73,13 @@
         %>
 
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Incoming Borrow Requests</h2>
                 <p class="lead">Review and respond to fruit borrow requests from other shops</p>
             </div>
 
-            <!-- Main Content -->
             <div class="row g-4">
-                <!-- Requests Column -->
                 <div class="col-lg-8">
-                    <!-- Filters and Search -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">filter_list</i>Filter Requests</h5>
@@ -263,9 +259,7 @@
                     </div>
                 </div>
 
-                <!-- Sidebar -->
                 <div class="col-lg-4">
-                    <!-- Request Statistics -->
                     <%
                         String pendingNumIn30Day = (String)request.getAttribute("pendingNumIn30Day");
                         String approvedNumIn30Day = (String)request.getAttribute("approvedNumIn30Day");
@@ -302,7 +296,6 @@
                         </div>
                     </div>
 
-                    <!-- Available Stock -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">inventory_2</i>Your Available Stock</h5>
@@ -336,7 +329,6 @@
                         </div>
                     </div>
 
-                    <!-- Guidelines -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">info</i>Guidelines</h5>
@@ -364,8 +356,6 @@
             </div>
         </div>
 
-        <!-- Modals -->
-        <!-- Request Details Modal -->
         <%
             for (int i = 0; i < pendingBorrowRequestList.size(); i++) {
                 BorrowBean borrowBean = (BorrowBean) pendingBorrowRequestList.get(i);
@@ -591,7 +581,6 @@
             }
         %>
 
-        <!-- Approve Modal -->
         <%
             for (int i = 0; i < pendingBorrowRequestList.size(); i++) {
                 BorrowBean borrowBean = (BorrowBean) pendingBorrowRequestList.get(i);
@@ -628,7 +617,6 @@
         %>
 
         
-        <!-- Reject Modal -->
         <%
             for (int i = 0; i < pendingBorrowRequestList.size(); i++) {
                 BorrowBean borrowBean = (BorrowBean) pendingBorrowRequestList.get(i);

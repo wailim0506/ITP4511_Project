@@ -27,14 +27,12 @@
             String errorMsgCollapse = (errorMsg!=null)?"":"collapse";
         %>
         <div class="login-container">
-            <!-- Logo Header -->
             <div class="login-header">
                 <i class="material-icons logo-icon">bakery_dining</i>
                 <h2 class="fw-bold">ACER Bakery</h2>
                 <p class="text-muted">Web Management System</p>
             </div>
             
-            <!-- Login Form Card -->
             <div class="login-card card">
                 <div class="login-body">
                     <h4 class="mb-4">Sign In to Your Account</h4>

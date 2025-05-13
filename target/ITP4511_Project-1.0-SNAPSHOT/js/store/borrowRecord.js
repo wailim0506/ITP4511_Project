@@ -4,7 +4,6 @@
  */
 
 $(document).ready(function () {
-    // Initialize tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
@@ -40,7 +39,7 @@ $(document).ready(function () {
 
     $('.deleteItemBtn').on('click', function () {
         var row = $(this).closest('tr');
-        row.remove(); // Remove the row from the table
+        row.remove();
     });
 
     function filterById() {

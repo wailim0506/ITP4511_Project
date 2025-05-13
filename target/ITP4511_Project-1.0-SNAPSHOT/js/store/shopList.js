@@ -4,19 +4,14 @@
  */
 
 $(document).ready(function () {
-    // Initialize shop count
     updateShopCount();
 
-    // Handle search functionality
     $("#shopSearch").on("keyup", filterShops);
 
-    // Handle country filter
     $("#countryFilter").on("change", filterShops);
 
-    // Handle city filter
     $("#cityFilter").on("change", filterShops);
 
-    // Handle reset button
     $("#resetFilterBtn").on("click", function () {
         $("#shopSearch").val("");
         $("#countryFilter").val("all");
@@ -24,9 +19,7 @@ $(document).ready(function () {
         filterShops();
     });
 
-    // Dark mode functionality is now handled by darkModeControl.js
 
-    // Function to filter shops based on search text and filters
     function filterShops() {
         const searchText = $("#shopSearch").val().toLowerCase();
         const countryFilter = $("#countryFilter").val();
@@ -51,7 +44,6 @@ $(document).ready(function () {
         updateShopCount();
     }
 
-    // Function to update the shop count display
     function updateShopCount() {
         const totalShops = $(".shopItem").length;
         const visibleShops = $(".shopItem:visible").length;

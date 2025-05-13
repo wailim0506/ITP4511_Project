@@ -11,31 +11,30 @@ body {
 }
 
 .status {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center; 
-    margin-top: 25px; 
-    gap: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  gap: 50px;
 }
 
-.status-data{
-    flex: 1 1 30%;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+.status-data {
+  flex: 1 1 30%;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 .status-data h3 {
-    font-size: 23px;
-    color: gray;
+  font-size: 23px;
+  color: gray;
 }
 
 .status-data p {
-    font-size: 28px;
-    font-weight: bold;
+  font-size: 28px;
+  font-weight: bold;
 }
-
 
 .headerSection {
   background-color: #f8f9fa;
@@ -104,20 +103,17 @@ html[data-bs-theme="dark"] .headerSection {
   color: var(--bs-body-color);
 }
 
-/* Table header dark mode fix */
 html[data-bs-theme="dark"] .table-light {
   /* --bs-table-bg: var(--bs-dark-bg-subtle);
   --bs-table-color: var(--bs-body-color);
   color: var(--bs-body-color); */
 }
 
-/* Dark mode specific overrides */
 html[data-bs-theme="dark"] .stockReadMode,
 html[data-bs-theme="dark"] .stockEditMode {
   color: var(--bs-body-color);
 }
 
-/* Remove spinner buttons from number inputs */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

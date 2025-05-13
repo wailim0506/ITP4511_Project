@@ -22,7 +22,6 @@
   border-radius: 0.5rem;
 }
 
-/* Dark mode specific styles */
 [data-bs-theme="dark"] .dashboard-card {
   border: 1px solid #495057 !important;
 }
@@ -40,7 +39,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-/* Clock styles */
 #current-time {
   font-size: 1.1rem;
   transition: color 0.3s;
@@ -56,6 +54,5 @@
 }
 
 #current-time span {
-  /* Removing monospace font to maintain consistency with the date */
   font-weight: 500;
 }

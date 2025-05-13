@@ -72,15 +72,12 @@
         %>
 
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Reservation Records</h2>
                 <p class="lead">View and manage your fruit reservation history</p>
             </div>
 
-            <!-- Main Content -->
             <div class="row g-4">
-                <!-- Filters and Search -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
@@ -162,7 +159,6 @@
                     </div>
                 </div>
 
-                <!-- Reservation Records Table -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
@@ -208,7 +204,6 @@
                                                     out.println("<i class='material-icons small'>visibility</i>");
                                                     out.println("</a>");
                                                     
-                                                    // Add "Mark as Complete" button for Delivered orders
                                                     if (order.getStatus().equals("Delivered")) {
                                                         out.println("<button type='button' data-shop-id='"+ bean.getShopId() +"' data-order-id='"+order.getId()+"' class='btn btn-sm btn-outline-success markAsFinishBtn' title='Mark as Finished'>");                                                        
                                                         out.println("<i class='material-icons small'>check_circle</i>");
@@ -230,7 +225,6 @@
                     </div>
                 </div>
 
-                <!-- Information Panel -->
                 <div class="col-12">
                     <div class="card border-0 shadow-sm mt-2">
                         <div class="card-body p-4">
@@ -259,7 +253,6 @@
             </div>
         </div>
 
-        <!-- Modal for Order Details -->
         <jsp:useBean id="orderItemList" class="java.util.ArrayList" scope="request"/>
         <% 
             for (int i = 0; i < orderList.size(); i++) { 

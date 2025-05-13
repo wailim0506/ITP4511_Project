@@ -91,10 +91,6 @@ public class borrowFruitController extends HttpServlet {
                 e.printStackTrace();
             }
 
-            // for (int i = 0; i < selectedFruitID.size(); i++) {
-            // out.println("Selected Fruit ID: " + selectedFruitID.get(i));
-            // out.println("Selected Fruit Quantity: " + selectedFruitQty.get(i));
-            // }
             if (selectedFruitID.size() == 0) {
                 session.setAttribute("errorMsg", "Please select at least one fruit to borrow.");
                 response.sendRedirect(request.getContextPath()

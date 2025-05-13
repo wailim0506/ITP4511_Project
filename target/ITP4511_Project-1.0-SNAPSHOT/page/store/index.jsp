@@ -39,12 +39,10 @@
         %>
         <nav:nav userType="shop" staffName="<%=staffName%>"/>
         <div class="container py-4">
-            <!-- Hero Section -->
             <div class="hero-section text-center shadow-sm">
                 <h1 class="display-5 fw-bold text-primary">Acer International Bakery</h1>
                 <p class="lead mb-4">Shop Management Dashboard</p>
                 
-                <!-- Shop Information - Simplified Design -->
                 <div class="d-flex align-items-center justify-content-center mb-3">
                     <i class="material-icons text-primary me-2" style="font-size: 1.2rem;">store</i>
                     <%
@@ -66,9 +64,7 @@
                 <div id="current-time" class="mt-2 fw-light text-primary"></div>
             </div>
             
-            <!-- Dashboard Cards -->
             <div class="row g-4 py-4">
-                <!-- Reserve Fruit -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -80,7 +76,6 @@
                     </div>
                 </div>
                 
-                <!-- My Reservation -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -92,7 +87,6 @@
                     </div>
                 </div>
                 
-                <!-- Borrowed Fruit -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -104,7 +98,6 @@
                     </div>
                 </div>
                 
-                <!-- Borrow Record -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -116,7 +109,6 @@
                     </div>
                 </div>
                 
-                <!-- Borrow Request -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -128,7 +120,6 @@
                     </div>
                 </div>
                 
-                <!-- Stock Management -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -140,7 +131,6 @@
                     </div>
                 </div>
                 
-                <!-- User List -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -152,7 +142,6 @@
                     </div>
                 </div>
                 
-                <!-- Shop List -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">
@@ -164,7 +153,6 @@
                     </div>
                 </div>
 
-                <!-- Profile -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card dashboard-card border-0 shadow-sm">
                         <div class="card-body text-center p-4">

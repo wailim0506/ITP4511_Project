@@ -4,11 +4,9 @@
  */
 
 $(document).ready(function () {
-    // Initialize the page
     updateFruitCount();
     hideAllFruitSections();
 
-    // Shop selection handling
     $("#shopFilter").change(function () {
         let selectedShopId = $(this).val();
         $("#selectedShopId").val(selectedShopId);
@@ -22,31 +20,25 @@ $(document).ready(function () {
         $("input[type='number']").val(0);
         $("#requestSummary").html('<p class="text-muted text-center py-4">No items selected yet</p>');
 
-        // Update the fruit counts after displaying the filtered items
         updateFruitCount();
     });
 
-    // Search and filter controls
     $("#fruitSearch").on("keyup", filterFruits);
     $("#typeFilter").on("change", filterFruits);
 
-    // Quantity input change
     $("input[type='number']").on("change", function () {
         updateRequestSummary();
     });
 
-    // Reset form button
     $("#resetFormBtn").click(function () {
         resetForm();
     });
 
-    // Function to filter fruits based on search text and type
     function filterFruits() {
         let searchText = $('#fruitSearch').val().toLowerCase();
         let type = $('#typeFilter').val();
         let shopId = $('#shopFilter').val();
 
-        // Only filter visible shop's fruits
         $(`.fruitItem[data-shop="${shopId}"]`).each(function () {
             let fruitName = $(this).data('fruit-name').toLowerCase();
             let fruitType = $(this).data('type').toLowerCase();
@@ -66,7 +58,6 @@ $(document).ready(function () {
         updateFruitCount();
     }
 
-    // Helper Functions
     function hideAllFruitSections() {
         $(".fruitItem").hide();
     }
@@ -112,17 +103,13 @@ $(document).ready(function () {
     }
 
     function resetForm() {
-        // Reset all quantity inputs to 0
         $("input[type='number']").val(0);
 
-        // Reset the search and filter
         $("#fruitSearch").val("");
         $("#typeFilter").val("all");
 
-        // Reset the summary
         updateRequestSummary();
 
-        // Show all fruits for the selected shop
         filterFruits();
     }
 });

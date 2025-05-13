@@ -5,7 +5,6 @@
 
 $(document).ready(function () {
     getCutOffDate();
-    // Format the collection date if it's provided in ISO format
     const collectionDateElement = $('#collectionDate');
     const dateText = collectionDateElement.text();
 
@@ -25,18 +24,15 @@ $(document).ready(function () {
         }
     }
 
-    // Clear any localStorage data related to reservation
     localStorage.removeItem('fruitQuantities');
     localStorage.removeItem('fruitName');
     localStorage.removeItem('fruitUnit');
 
     function getCutOffDate() {
-        // Set reserveCollectDate to either the 14th or last day of the month
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
 
-        // Calculate the last day of current month
         const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
         if (currentDate <= new Date(currentYear, currentMonth, 14)) {
@@ -49,7 +45,6 @@ $(document).ready(function () {
         const collectDate = new Date(currentYear, currentMonth, collectDay);
         const formattedDate = collectDate.toISOString().slice(0, 10);
 
-        // Change from .val() to .text() as we're working with a paragraph element, not an input
         $("#reserveCollectDate").text(formattedDate);
     }
 });

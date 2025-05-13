@@ -4,7 +4,6 @@
  */
 
 $(document).ready(function () {
-    // Initialize tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
@@ -54,17 +53,16 @@ $(document).ready(function () {
 
     $('.deleteItemBtn').on('click', function () {
         var row = $(this).closest('tr');
-        row.remove(); // Remove the row from the table
+        row.remove();
     });
 
 
-    // Rebind delete functionality for dynamically added rows
     $(document).on('click', '.deleteItemBtn', function () {
         $(this).closest('tr').remove();
     });
 
     $('.addNewItemBtn').on('click', function () {
-        const modal = $(this).closest('.modal'); // Scope to the specific modal
+        const modal = $(this).closest('.modal');
         const selectedFruit = modal.find('.newFruitSelect option:selected');
         const fruitId = selectedFruit.val();
         const fruitName = selectedFruit.data('name');
@@ -93,12 +91,11 @@ $(document).ready(function () {
                 </td>
             </tr>
         `;
-        modal.find('tbody.orderItemsTable').append(newRow); // Append the new row to the correct table body
-        modal.find('.newFruitSelect').val(''); // Reset the selection box
-        modal.find('.newFruitQty').val(''); // Reset the quantity input
+        modal.find('tbody.orderItemsTable').append(newRow);
+        modal.find('.newFruitSelect').val('');
+        modal.find('.newFruitQty').val('');
     });
 
-    // Rebind delete functionality for dynamically added rows
     $(document).on('click', '.deleteItemBtn', function () {
         $(this).closest('tr').remove();
     });

@@ -62,13 +62,11 @@
         <nav:nav userType="<%=userType%>" staffName="<%=ub.getStaffName()%>"/>
         
         <div class="container editUserContainer">
-            <!-- Header Section -->
             <div class="editUserHeader">
                 <h2 class="display-6 fw-bold text-primary">Edit User</h2>
                 <p class="text-muted mb-0">Update user information and access rights</p>
             </div>
             
-            <!-- Main Content -->
             <div class="editUserForm">
                 <div class="formTitle">
                     <i class="material-icons text-primary me-2">edit</i>

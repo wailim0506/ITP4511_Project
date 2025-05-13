@@ -16,7 +16,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
 }
 
-/* Search & Filter Container */
 .searchFilterContainer {
   background-color: rgba(13, 110, 253, 0.03);
   border: 1px solid rgba(13, 110, 253, 0.1);
@@ -28,7 +27,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   background-color: rgba(13, 110, 253, 0.04);
 }
 
-/* Form Control Styling */
 .custom-input,
 .custom-select {
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -43,7 +41,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   border-color: #0d6efd;
 }
 
-/* Modern Table Styling */
 .modern-table {
   margin-bottom: 0;
   border-collapse: separate;
@@ -80,7 +77,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
-/* Modern Table Styling */
 .table {
   border-collapse: separate;
   border-spacing: 0 10px;
@@ -127,7 +123,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   border-bottom-right-radius: 8px;
 }
 
-/* Country Badges */
 .country-badge {
   display: inline-block;
   padding: 0.25rem 0.75rem;
@@ -151,7 +146,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   color: #10b981;
 }
 
-/* Shop Count Badge */
 .shopCount {
   background-color: rgba(13, 110, 253, 0.1);
   color: #0d6efd;
@@ -161,7 +155,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   border-radius: 20px;
 }
 
-/* Result Info */
 .result-badge {
   display: inline-block;
   background-color: rgba(0, 0, 0, 0.05);
@@ -176,7 +169,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   font-weight: 600;
 }
 
-/* Dark mode support */
 [data-bs-theme="dark"] .headerSection {
   background: linear-gradient(135deg, #212529 0%, #343a40 100%);
 }
@@ -200,7 +192,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   color: #adb5bd;
 }
 
-/* Dark Mode Table Styling */
 [data-bs-theme="dark"] .table thead th {
   background-color: #343a40;
   color: #ced4da;
@@ -218,7 +209,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
   color: #e9ecef;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .modern-table tbody tr {
     margin-bottom: 1rem;

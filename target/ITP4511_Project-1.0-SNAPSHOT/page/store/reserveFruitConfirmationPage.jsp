@@ -41,26 +41,21 @@
         %>
         <nav:nav userType="shop" staffName="<%=staffName%>"/>
         <% 
-            //get order detail from shop_fruit_order
             OrderBean orderDetail = (OrderBean)request.getAttribute("orderDetail");
             if (orderDetail == null) {
                 throw new Exception();
             }
         %>
-        <!-- get order item from shop_fruit_order_item -->
         <jsp:useBean id="orderItemList" class="java.util.ArrayList" scope="request"/>
 
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Reservation Submitted</h2>
                 <p class="text-muted small mb-0">Your reservation has been successfully submitted and will be processed</p>
             </div>
 
-            <!-- Main Content -->
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-8">
-                    <!-- Success Card -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <div class="text-center mb-4">
@@ -71,7 +66,6 @@
                                 <p class="text-muted">Reservation ID: <span class="fw-medium"><%=orderDetail.getId()%></span></p>
                             </div>
                             
-                            <!-- Collection Details -->
                             <div class="collectionDetails p-3 mb-4 rounded">
                                 <h5 class="mb-3"><i class="material-icons align-middle me-2">calendar_today</i>Collection Details</h5>
                                 <div class="row">
@@ -86,7 +80,6 @@
                                 </div>
                             </div>
                             
-                            <!-- Order Summary -->
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">receipt</i>Reservation Summary</h5>
                             <div class="table-responsive mb-4">
                                 <table class="table orderSummaryTable">
@@ -120,7 +113,6 @@
                                 </table>
                             </div>
                             
-                            <!-- Additional Notes -->
                             <% if((orderDetail.getNotes() != null) && !orderDetail.getNotes().isEmpty()) { %>
                                 <div class="additionalNotes mb-4">
                                     <h5 class="mb-2"><i class="material-icons align-middle me-2">note</i>Additional Notes</h5>
@@ -130,7 +122,6 @@
                                 </div>
                             <% } %>
                             
-                            <!-- Buttons -->
                             <div class="d-flex flex-column flex-sm-row justify-content-center gap-2 mt-4">
                                 <a href="${pageContext.request.contextPath}/page/store/index.jsp" class="btn btn-outline-secondary">
                                     <i class="material-icons align-middle me-1 small">home</i> Return to Dashboard
@@ -142,7 +133,6 @@
                         </div>
                     </div>
                     
-                    <!-- Information Card -->
                     <div class="card border-0 shadow-sm">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">info</i>What Happens Next?</h5>

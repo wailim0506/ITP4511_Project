@@ -67,15 +67,12 @@
             }  
         %>
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">Stock Management</h2>
                 <p class="lead">Manage your shop's fruit Stock levels</p>
             </div>
 
-            <!-- Main Content -->
             <div class="row g-4">
-                <!-- Stock Management Section -->
                 <div class="col-lg-9">
                     <div class="card border-0 shadow-sm mb-4">
                         <form method="post" action="/ITP4511_Project/stock" id="stockForm">
@@ -89,7 +86,6 @@
                                     </button>
                                 </div>
 
-                                <!-- Search and Filter Bar -->
                                 <div class="mb-4">
                                     <div class="row g-3 mb-3">
                                         <div class="col-md-3 col-sm-12">
@@ -144,7 +140,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Stock Table -->
                                 <div class="stockTableContainer mb-4">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
@@ -221,9 +216,7 @@
                     </div>
                 </div>
 
-                <!-- Summary Section -->
                 <div class="col-lg-3">
-                    <!-- Inventory Summary -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">summarize</i>Stock Summary</h5>
@@ -240,7 +233,6 @@
                         </div>
                     </div>
 
-                    <!-- Guidelines -->
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body p-4">
                             <h5 class="mb-3"><i class="material-icons align-middle me-2">info</i>Guidelines</h5>
@@ -267,10 +259,8 @@
                 </div>
             </div>
             
-            <!-- Hidden Form for Submission -->
             <form id="stockForm" action="/ITP4511_Project/updateStock" method="post" style="display:none;">
                 <input type="hidden" name="action" value="update">
-                <!-- Hidden inputs will be dynamically added here before submission -->
             </form>
         </div>
 

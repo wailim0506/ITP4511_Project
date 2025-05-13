@@ -69,23 +69,20 @@ public class LoginController extends HttpServlet {
 
             if (password.equals(
                     PasswordCrypto.decrypt(passwordFromDB, Base64.getEncoder().encodeToString(getDecrptionIV)))) {
-                // obtain session from request
                 HttpSession session = request.getSession(true);
                 UserBean bean = db.getUserDetail(username);
-                // store the userInfo to the session
                 session.setAttribute("userInfo", bean);
                 if (bean.getShopId() != null) {
                     session.setAttribute("userType", "shop");
                     session.setAttribute("role", bean.getRole());
-                    targetURL = "page/store/index.jsp"; // Change to shop homepage path
+                    targetURL = "page/store/index.jsp";
                 } else if (bean.getWareHouseId() != null) {
                     session.setAttribute("userType", "warehouse");
                     int type = (bean.getWarehouseType().equals("Central")) ? 0 : 1;
                     String v1 = (type == 0) ? bean.getWarehouseCountry() : bean.getWarehouseSourceCity();
                     request.setAttribute("orderList", db.getStatistics(v1, type)); // For order line chart
-                    targetURL = "page/warehouse/index.jsp"; // Change to warehouse homepage path
+                    targetURL = "page/warehouse/index.jsp";
                 } else {
-                    // for senior management
                     session.setAttribute("userType", "seniorManagement");
                     targetURL = "page/seniorManagement/index.jsp";
                 }
@@ -125,9 +122,7 @@ public class LoginController extends HttpServlet {
             throws IOException, ServletException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            // remove the attribute from session
             session.removeAttribute("userInfo");
-            // invalidate the session
             session.invalidate();
 
             Cookie[] cookies = request.getCookies();

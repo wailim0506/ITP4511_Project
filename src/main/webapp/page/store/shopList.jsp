@@ -41,18 +41,15 @@
         <nav:nav userType="<%=userType%>" staffName="<%=staffName%>"/>
         
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">AIB Shop Directory</h2>
                 <p class="lead">View all AIB bakery shops across the globe</p>
             </div>
             
-            <!-- Main Content -->
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
                     <h4 class="mb-4"><i class="material-icons align-middle me-2">store</i>Shops Directory</h4>
                     
-                    <!-- Search and Filter Bar -->
                     <div class="mb-4">
                         <div class="row g-3 mb-3">
                             <div class="col-md-5 col-sm-12">
@@ -92,15 +89,6 @@
                                                 out.println("<option value='" + city + "'>" + city + "</option>");
                                             }
                                         %>
-                                        <%-- <option value="Tokyo">Tokyo</option>
-                                        <option value="Osaka">Osaka</option>
-                                        <option value="Kyoto">Kyoto</option>
-                                        <option value="New York">New York</option>
-                                        <option value="Los Angeles">Los Angeles</option>
-                                        <option value="San Francisco">San Francisco</option>
-                                        <option value="Central">Central</option>
-                                        <option value="Tsim Sha Tsui">Tsim Sha Tsui</option>
-                                        <option value="Mong Kok">Mong Kok</option> --%>
                                     </select>
                                 </div>
                             </div>
@@ -112,7 +100,6 @@
                         </div>
                     </div>
                     
-                    <!-- Shop Table -->
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -149,7 +136,6 @@
                         </table>
                     </div>
                     
-                    <!-- Result Info -->
                     <div class="text-center mt-4 shopResultInfo d-none">
                         <span class="badge bg-secondary">Showing <span id="visibleShopCount">0</span> of <span id="totalShopCount">0</span> shops</span>
                     </div>

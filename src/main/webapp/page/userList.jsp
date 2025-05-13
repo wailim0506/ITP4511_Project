@@ -73,18 +73,15 @@
             }  
         %>
         <div class="container py-4">
-            <!-- Header Section -->
             <div class="headerSection text-center shadow-sm mb-4">
                 <h2 class="display-6 fw-bold text-primary">AIB User List</h2>
                 <p class="lead">View all AIB bakery <%=userType%> users</p>
             </div>
             
-            <!-- Main Content -->
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
                     <h4 class="mb-4"><i class="material-icons align-middle me-2">people</i>User List</h4>
                     
-                    <!-- Search and Filter Bar -->
                     <div class="mb-4">
                         <div class="row g-3 mb-3">
                             <div class="col-md-3 col-sm-12">
@@ -166,7 +163,6 @@
                         </div>
                     </div>
                     
-                    <!-- Shop Table -->
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -227,7 +223,6 @@
                         </table>
                     </div>
                     
-                    <!-- Result Info -->
                     <div class="text-center mt-4 userResultInfo d-none">
                         <span class="badge bg-secondary">Showing <span id="visibleUserCount">0</span> of <span id="totalUserCount">0</span> users</span>
                     </div>
@@ -235,7 +230,6 @@
             </div>
         </div>
         
-        <!-- Add User Modal -->
         <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -329,7 +323,6 @@
         
         <script>
             $(document).ready(function() {
-                // Add user button click handler
                 $("#addUserBtn").click(function() {
                     $('#addUserModal').modal('show');
                 });

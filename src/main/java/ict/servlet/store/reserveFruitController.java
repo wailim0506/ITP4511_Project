@@ -82,7 +82,7 @@ public class reserveFruitController extends HttpServlet {
             cutOffDateEnd = today.getYear() + "-" + todayMonth + "-"
                     + lastDateOfMonth.get(todayMonth);
         }
-        // check are there order within
+
         boolean haveOrder = db.checkOrderWithinCutOff(user.getShopId(), cutOffDateStart, cutOffDateEnd);
         if (haveOrder) {
             request.setAttribute("haveOrder", true);
