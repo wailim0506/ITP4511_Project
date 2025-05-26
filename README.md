@@ -32,6 +32,7 @@
     - [PDF Export Capability](#pdf-export-capability)
     - [Real-time Stock Tracking](#real-time-stock-tracking)
     - [Responsive Design](#responsive-design)
+  - [UI Design](#ui-design)
   - [Known Issues](#known-issues)
   - [License](#license)
   - [Acknowledgments](#acknowledgments)
@@ -272,6 +273,12 @@ The system provides real-time visibility of fruit inventory across all locations
 
 ### Responsive Design
 The application uses Bootstrap 5 to ensure a seamless experience across desktop and mobile devices.
+
+## UI Design
+![Image](https://github.com/user-attachments/assets/61dc84ff-56b7-49c9-a678-07aefb72aa75) <br>
+![Image](https://github.com/user-attachments/assets/3121d094-ebe5-45fe-9917-0e0ce0b3b000) <br>
+![Image](https://github.com/user-attachments/assets/3696d035-f8a9-40cd-9c88-c52e03e4a25d) <br>
+![Image](https://github.com/user-attachments/assets/45bec267-cae3-46ad-9406-da1b3b8da31f) <br>
 
 ## Known Issues
 
